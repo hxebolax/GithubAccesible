@@ -33,3 +33,6 @@ adjuntos/repos/
 # Herramientas locales.
 .claude/
 *.parcial
+
+# Borradores personales (anuncios), no se publican.
+adjuntos/anuncio_*.txt
