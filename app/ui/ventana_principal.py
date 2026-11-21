@@ -288,8 +288,6 @@ class VentanaPrincipal(wx.Frame):
 		panel = self.panel_actual
 		if panel is not None:
 			panel.cargar()
-		if self._clave_actual() == "notificaciones":
-			self._sin_leer = 0
 
 	def _al_abrir_menu(self, evento: wx.MenuEvent) -> None:
 		if evento.GetMenu() is self.menu_acciones:
@@ -649,7 +647,7 @@ class VentanaPrincipal(wx.Frame):
 				datos = [(n.get("id"), n.get("updated_at") or "") for n in lista]
 				self.ctx.tareas.enviar(lambda tarea: self.ctx.almacen.marcar_avisadas(cuenta, datos), nombre="notificaciones:guardar")
 			sin_leer = sum(1 for n in lista if n.get("unread"))
-			self._marcar_contador(sin_leer)
+			self.marcar_contador_notificaciones(sin_leer)
 			if self._primera_comprobacion:
 				self._primera_comprobacion = False
 				if nuevas:
@@ -669,7 +667,10 @@ class VentanaPrincipal(wx.Frame):
 		self.ctx.tareas.enviar(lambda tarea: obtener(), al_terminar=recibidas, al_fallar=fallo, clave_unica="notificaciones:sondeo",
 			nombre="notificaciones:sondeo")
 
-	def _marcar_contador(self, sin_leer: int) -> None:
+	def marcar_contador_notificaciones(self, sin_leer: int) -> None:
+		"""Pone «Notificaciones (n)» en la lista de secciones, o solo el nombre si no hay."""
+		if not self:
+			return
 		self._sin_leer = sin_leer
 		indice = [c for c, _d in self.definiciones].index("notificaciones")
 		titulo = dict(self.definiciones)["notificaciones"].titulo

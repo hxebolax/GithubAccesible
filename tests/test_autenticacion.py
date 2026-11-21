@@ -52,6 +52,21 @@ def test_flujo_sin_id_de_cliente_lo_explica():
 		auth.FlujoDispositivo("", sesion=SesionPost([])).pedir_codigo()
 
 
+def test_flujo_con_id_de_cliente_inexistente_lo_explica():
+	class Sesion404(SesionPost):
+		def post(self, url, data=None, headers=None, timeout=None):
+			return respuesta(404, {"error": "Not Found"})
+
+	with pytest.raises(auth.ErrorAutenticacion, match="no es válido"):
+		auth.FlujoDispositivo("malo", sesion=Sesion404([])).pedir_codigo()
+
+
+def test_flujo_device_flow_desactivado_lo_explica():
+	flujo = auth.FlujoDispositivo("c", sesion=SesionPost([{"error": "device_flow_disabled"}]))
+	with pytest.raises(auth.ErrorAutenticacion, match="Enable Device Flow"):
+		flujo.pedir_codigo()
+
+
 def test_flujo_cancelado():
 	flujo = auth.FlujoDispositivo("c", sesion=SesionPost([]))
 	codigo = auth.CodigoDispositivo("D", "X", "u", 900, 5)
@@ -131,3 +146,104 @@ def test_gestor_de_cuentas_guarda_el_token_aparte():
 def test_cliente_anonimo_sin_cuentas():
 	gestor = auth.GestorCuentas(ConfigFalsa(), SecretosFalsos())
 	assert gestor.activa() is None and not gestor.cliente().autenticado
+
+
+# ── Tokens que caducan (aplicación OAuth con «Expire user access tokens») ──
+
+
+def test_flujo_guarda_la_renovacion_si_el_token_caduca():
+	sesion = SesionPost([{"access_token": "ghu_a", "refresh_token": "ghr_a", "expires_in": 28800,
+		"refresh_token_expires_in": 15897600}])
+	flujo = auth.FlujoDispositivo("cliente", sesion=sesion)
+	token, estado = flujo.comprobar_una_vez(auth.CodigoDispositivo("D", "X", "u", 900, 0))
+	assert (token, estado) == ("ghu_a", "ok")
+	assert flujo.renovacion["refresh_token"] == "ghr_a" and flujo.renovacion["id_cliente"] == "cliente"
+
+
+def test_flujo_sin_caducidad_no_guarda_renovacion():
+	flujo = auth.FlujoDispositivo("c", sesion=SesionPost([{"access_token": "gho_a"}]))
+	flujo.comprobar_una_vez(auth.CodigoDispositivo("D", "X", "u", 900, 0))
+	assert flujo.renovacion is None
+
+
+def test_renovar_no_envia_secreto_de_cliente():
+	sesion = SesionPost([{"access_token": "ghu_b", "refresh_token": "ghr_b", "expires_in": 28800}])
+	token, datos = auth.FlujoDispositivo("cliente", sesion=sesion).renovar("ghr_a")
+	assert token == "ghu_b" and datos["refresh_token"] == "ghr_b"
+	url, enviado = sesion.envios[0]
+	assert url == "https://github.com/login/oauth/access_token"
+	assert enviado == {"client_id": "cliente", "grant_type": "refresh_token", "refresh_token": "ghr_a"}
+
+
+def _gestor_con_token_que_caduca(monkeypatch, caduca_en=28800):
+	import json
+	import time
+
+	config, secretos = ConfigFalsa(), SecretosFalsos()
+	gestor = auth.GestorCuentas(config, secretos)
+	ana = auth.Cuenta("ana", metodo=auth.METODO_DISPOSITIVO)
+	gestor.anadir(ana, "ghu_viejo")
+	gestor.guardar_renovacion(ana, {"refresh_token": "ghr_viejo", "caduca": time.time() + caduca_en, "id_cliente": "c"})
+	llamadas = []
+
+	def renovar(self, token_renovacion):
+		llamadas.append(token_renovacion)
+		return "ghu_nuevo", {"refresh_token": "ghr_nuevo", "caduca": time.time() + 28800, "id_cliente": "c"}
+
+	monkeypatch.setattr(auth.FlujoDispositivo, "renovar", renovar)
+	return gestor, secretos, ana, llamadas, json
+
+
+def test_gestor_renueva_y_guarda_los_dos_tokens(monkeypatch):
+	gestor, secretos, ana, llamadas, json = _gestor_con_token_que_caduca(monkeypatch)
+	cliente = gestor.cliente(ana)
+	assert gestor.renovar(ana, "ghu_viejo") == "ghu_nuevo"
+	assert secretos[ana.nombre_secreto] == "ghu_nuevo"
+	assert json.loads(secretos[f"{ana.nombre_secreto}:renovacion"])["refresh_token"] == "ghr_nuevo"
+	assert cliente.token == "ghu_nuevo", "el cliente ya abierto pasa a usar el token nuevo"
+	# Otro hilo que tenía el token viejo no gasta otra vez el de renovación.
+	assert gestor.renovar(ana, "ghu_viejo") == "ghu_nuevo"
+	assert llamadas == ["ghr_viejo"]
+	gestor.eliminar(ana)
+	assert not secretos, "al quitar la cuenta no queda ni el token ni su renovación"
+
+
+def test_token_a_punto_de_caducar_se_renueva_antes_de_usarlo(monkeypatch):
+	gestor, _s, ana, llamadas, _j = _gestor_con_token_que_caduca(monkeypatch, caduca_en=10)
+	assert gestor.token(ana) == "ghu_nuevo"
+	assert llamadas == ["ghr_viejo"]
+
+
+def test_sin_renovacion_el_token_se_usa_tal_cual(monkeypatch):
+	gestor, _s, ana, llamadas, _j = _gestor_con_token_que_caduca(monkeypatch)
+	gestor.guardar_renovacion(ana, None)
+	assert gestor.token(ana) == "ghu_viejo" and gestor.renovar(ana, "ghu_viejo") is None
+	assert llamadas == []
+
+
+def test_cliente_renueva_ante_un_401_y_repite_la_peticion():
+	from tests.test_github_cliente import SesionFalsa
+
+	sesion = SesionFalsa([respuesta(401, {"message": "Bad credentials"}), respuesta(200, {"login": "ana"})])
+	renovaciones = []
+
+	def renovar(rechazado):
+		renovaciones.append(rechazado)
+		return "ghu_nuevo"
+
+	from app.services.github.cliente import ClienteGitHub
+
+	cliente = ClienteGitHub("ghu_viejo", crear_sesion=lambda: sesion, renovar=renovar)
+	assert cliente.get("/user") == {"login": "ana"}
+	assert renovaciones == ["ghu_viejo"]
+	assert sesion.peticiones[1][2]["headers"]["Authorization"] == "Bearer ghu_nuevo"
+
+
+def test_cliente_sin_poder_renovar_avisa_de_volver_a_entrar():
+	from app.services.github.cliente import ClienteGitHub, NoAutorizado
+	from tests.test_github_cliente import SesionFalsa
+
+	sesion = SesionFalsa([respuesta(401, {"message": "Bad credentials"})])
+	cliente = ClienteGitHub("ghu_viejo", crear_sesion=lambda: sesion, renovar=lambda _r: None)
+	with pytest.raises(NoAutorizado, match="Vuelva a iniciar sesión"):
+		cliente.get("/user")

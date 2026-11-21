@@ -23,7 +23,7 @@ La primera vez la aplicación le pregunta si quiere iniciar sesión. También pu
 
 Para GitHub Enterprise Server escriba la dirección de su servidor en el campo «Servidor». Puede tener varias cuentas y cambiar entre ellas con Control+Mayúsculas+U. Los tokens se guardan cifrados con su usuario de Windows: si copia la carpeta a otro equipo, tendrá que volver a iniciar sesión.
 
-Para el inicio con el navegador hace falta el identificador de la aplicación OAuth (Client ID) en Preferencias, Cuentas. Si el campo está vacío, use un token o la sesión de GitHub CLI.
+El inicio con el navegador funciona sin configurar nada. Si el token que da GitHub caduca, la aplicación lo renueva sola. En GitHub Enterprise Server hay que registrar una aplicación OAuth en el propio servidor y escribir su identificador (Client ID) en Preferencias, Cuentas; los pasos están en [Activar el inicio de sesión con el navegador](https://github.com/hxebolax/GithubAccesible/blob/main/docs/oauth.md).
 
 ## La ventana principal
 

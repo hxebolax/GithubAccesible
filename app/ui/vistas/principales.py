@@ -267,6 +267,18 @@ def vista_notificaciones() -> DefinicionVista:
 		en_segundo_plano(panel, panel.ctx, lambda: api.marcar_repo_leidas(nombre),
 			exito=_("Notificaciones de {n} marcadas como leídas.").format(n=nombre), al_terminar=lambda _r: panel.cargar(anunciar=False))
 
+	def al_cambiar(panel):
+		# El contador de la lista de secciones («Notificaciones (2)») sigue a lo que se ve
+		# aquí al momento, sin esperar al siguiente sondeo. Si quedan páginas sin cargar,
+		# lo cargado no basta para contar: se pide un sondeo nuevo.
+		ventana = panel.ctx.ventana_principal
+		if ventana is None or not hasattr(ventana, "marcar_contador_notificaciones"):
+			return
+		if panel.hay_mas:
+			ventana.comprobar_notificaciones()
+		else:
+			ventana.marcar_contador_notificaciones(sum(1 for n in panel.elementos if n.get("unread")))
+
 	def cambiar_filtro(panel, _e):
 		opciones = [_("Solo no leídas"), _("Todas, también las leídas")]
 		eleccion = elegir_uno(panel, _("Filtro de notificaciones"), _("&Mostrar:"), opciones, 1 if panel.datos.get("todas") else 0)
@@ -296,6 +308,7 @@ def vista_notificaciones() -> DefinicionVista:
 		],
 		texto_vacio=_("No tiene notificaciones pendientes."),
 		url=lambda n: f.url_web_de_api((n.get("subject") or {}).get("url")) or "https://github.com/notifications",
+		al_cambiar=al_cambiar,
 	)
 
 

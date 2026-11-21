@@ -100,6 +100,8 @@ class DefinicionVista:
 	:param detalle: ``(elemento, contexto) -> str`` con todos los datos para Ctrl+I.
 	:param paginada: si al llegar al final se piden más páginas.
 	:param texto_busqueda: ``(elemento) -> str`` para el filtro rápido (por defecto, las columnas).
+	:param al_cambiar: ``(panel) -> None`` tras cargar, quitar o sustituir elementos
+		(por ejemplo, para que el contador de notificaciones no se quede atrás).
 	"""
 
 	id: str
@@ -115,6 +117,7 @@ class DefinicionVista:
 	texto_busqueda: Callable[[Any], str] | None = None
 	sonido_carga: bool = True
 	requiere_sesion: bool = True
+	al_cambiar: Callable[[Any], None] | None = None
 
 	def columnas_visibles(self, config: Any) -> list[Columna]:
 		"""Columnas según Preferencias (orden y visibilidad) o las de por defecto."""
@@ -362,6 +365,7 @@ class PanelLista(wx.Panel):
 			for elemento in self.visibles[anteriores:]:
 				self.lista.agregar_fila(self.fila_de(elemento))
 		self._actualizar_estado()
+		self._avisar_cambio()
 		if self.lista.numero_filas() and self.lista.fila_actual() == wx.NOT_FOUND:
 			self.lista.enfocar_fila(0, anunciar=False)
 		if not anunciar:
@@ -399,6 +403,7 @@ class PanelLista(wx.Panel):
 			self.visibles.pop(fila)
 			self.lista.eliminar_fila(fila)
 		self._actualizar_estado()
+		self._avisar_cambio()
 
 	def sustituir(self, antiguo: Any, nuevo: Any) -> None:
 		"""Pone ``nuevo`` en lugar de ``antiguo`` (tras editarlo) sin mover el foco."""
@@ -408,6 +413,15 @@ class PanelLista(wx.Panel):
 			fila = self.visibles.index(antiguo)
 			self.visibles[fila] = nuevo
 			self.lista.actualizar_fila(fila, self.fila_de(nuevo))
+		self._avisar_cambio()
+
+	def _avisar_cambio(self) -> None:
+		if self.definicion.al_cambiar is None:
+			return
+		try:
+			self.definicion.al_cambiar(self)
+		except Exception:  # noqa: BLE001 - un aviso fallido no debe romper la lista
+			log.warning("Falló el aviso de cambio de la vista %s", self.definicion.id, exc_info=True)
 
 	# ── Acciones ──────────────────────────────────────────────────────────────
 

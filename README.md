@@ -142,6 +142,10 @@ Sin el menú: `.venv\Scripts\python.exe -m pytest` y `.venv\Scripts\python.exe m
 
 La clave privada de firma es imprescindible para publicar versiones que acepten las instalaciones existentes: guarde una copia fuera del equipo.
 
+### Inicio de sesión con el navegador (aplicación OAuth)
+
+El inicio «con el navegador y un código» necesita el Client ID de una aplicación OAuth con «Enable Device Flow» marcado. Es un dato público (no se usa secreto de cliente). Cómo registrarla, probarla desde Preferencias y dejarla fija en `ID_CLIENTE_OAUTH` está en [docs/oauth.md](docs/oauth.md).
+
 ### Estructura
 
 - `main.py`: arranque en el orden correcto, con red de seguridad.

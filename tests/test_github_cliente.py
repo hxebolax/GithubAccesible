@@ -105,6 +105,19 @@ def test_etag_respuesta_304_devuelve_lo_guardado():
 	assert sesion.peticiones[1][2]["headers"]["If-None-Match"] == '"abc"'
 
 
+def test_escribir_vacia_la_cache_y_no_devuelve_datos_viejos():
+	# Tras marcar una notificación como leída, la lista no debe salir de la caché.
+	cliente, sesion = cliente_con(
+		respuesta(200, [{"id": 1, "unread": True}], {"ETag": '"abc"'}),
+		respuesta(205),
+		respuesta(200, [], {"ETag": '"def"'}),
+	)
+	assert cliente.get("/notifications") == [{"id": 1, "unread": True}]
+	cliente.patch("/notifications/threads/1")
+	assert cliente.get("/notifications") == []
+	assert "If-None-Match" not in sesion.peticiones[2][2]["headers"]
+
+
 @pytest.mark.parametrize(("codigo", "clase"), [(401, NoAutorizado), (404, NoEncontrado), (422, ErrorValidacion), (403, SinPermiso)])
 def test_errores_con_mensaje_en_espanol(codigo, clase):
 	cliente, _s = cliente_con(respuesta(codigo, {"message": "x", "errors": [{"message": "el nombre ya existe"}]}))

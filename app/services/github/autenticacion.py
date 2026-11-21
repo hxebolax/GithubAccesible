@@ -20,6 +20,7 @@ almacén de secretos cifrado con DPAPI (``data/config/secretos.dat``).
 from __future__ import annotations
 
 import builtins
+import json
 import logging
 import os
 import shutil
@@ -41,7 +42,7 @@ log = logging.getLogger(__name__)
 # Es un dato PÚBLICO: el flujo de dispositivo no usa secreto de cliente. Se puede
 # cambiar en Preferencias, Cuentas (por ejemplo, para GitHub Enterprise, donde hay
 # que registrar una aplicación OAuth propia en el servidor).
-ID_CLIENTE_OAUTH = ""
+ID_CLIENTE_OAUTH = "Ov23liFN65507ngE2CFC"
 
 # Ámbitos que pide la aplicación para poder hacerlo todo. La persona puede pedir
 # menos en el diálogo de inicio de sesión.
@@ -250,6 +251,35 @@ class FlujoDispositivo:
 		self.host = normalizar_host(host)
 		self._sesion = sesion or requests.Session()
 		self._dormir: Callable[[float], None] = time.sleep
+		# Si la aplicación OAuth tiene «Expire user access tokens», GitHub da también un token
+		# de renovación (válido 6 meses): aquí queda lo necesario para renovar sin molestar.
+		self.renovacion: dict[str, Any] | None = None
+
+	def _datos_renovacion(self, cuerpo: dict[str, Any]) -> dict[str, Any] | None:
+		if not cuerpo.get("refresh_token"):
+			return None
+		ahora = time.time()
+		return {
+			"refresh_token": cuerpo["refresh_token"],
+			"caduca": ahora + int(cuerpo.get("expires_in") or 28800),
+			"caduca_renovacion": ahora + int(cuerpo.get("refresh_token_expires_in") or 15897600),
+			"id_cliente": self.id_cliente,
+		}
+
+	def renovar(self, token_renovacion: str) -> tuple[str, dict[str, Any] | None]:
+		"""Pide un token nuevo con el de renovación. Devuelve ``(token, datos_renovacion)``.
+
+		Los tokens del flujo de dispositivo se renuevan sin secreto de cliente. GitHub
+		invalida el token y el de renovación anteriores en cuanto se usa este.
+		"""
+		cuerpo = self._post(self.url_token, {
+			"client_id": self.id_cliente,
+			"grant_type": "refresh_token",
+			"refresh_token": token_renovacion,
+		})
+		if not cuerpo.get("access_token"):
+			raise ErrorAutenticacion(str(cuerpo.get("error_description") or cuerpo.get("error") or "sin token"))
+		return cuerpo["access_token"], self._datos_renovacion(cuerpo)
 
 	@property
 	def url_codigo(self) -> str:
@@ -264,6 +294,9 @@ class FlujoDispositivo:
 			respuesta = self._sesion.post(url, data=datos, headers={"Accept": "application/json"}, timeout=(10, 30))
 		except requests.RequestException as error:
 			raise ErrorAutenticacion(_("No se pudo conectar con GitHub. Compruebe la conexión a Internet.")) from error
+		if respuesta.status_code == 404:
+			# GitHub responde 404 cuando el Client ID no existe (mal copiado o de otro servidor).
+			raise ErrorAutenticacion(_(_MENSAJES_DISPOSITIVO["incorrect_client_credentials"]))
 		try:
 			cuerpo = respuesta.json()
 		except ValueError as error:
@@ -306,6 +339,7 @@ class FlujoDispositivo:
 			"grant_type": "urn:ietf:params:oauth:grant-type:device_code",
 		})
 		if cuerpo.get("access_token"):
+			self.renovacion = self._datos_renovacion(cuerpo)
 			return cuerpo["access_token"], "ok"
 		error = cuerpo.get("error", "")
 		if error == "authorization_pending":
@@ -431,6 +465,8 @@ class GestorCuentas:
 		self._secretos = secretos
 		self._candado = threading.RLock()
 		self._clientes: dict[str, ClienteGitHub] = {}
+		# Aparte del candado general: renovar hace una petición de red y no debe bloquear lo demás.
+		self._candado_renovar = threading.Lock()
 		self._oyentes: list[Callable[[Cuenta | None], None]] = []
 
 	def suscribir(self, funcion: Callable[[Cuenta | None], None]) -> None:
@@ -462,7 +498,82 @@ class GestorCuentas:
 		token = self._secretos.obtener(cuenta.nombre_secreto)
 		if token:
 			_registrar(token)
+		datos = self.renovacion(cuenta)
+		if token and datos and float(datos.get("caduca") or 0) - time.time() < 300:
+			# A punto de caducar: se renueva antes de dárselo a quien lo pida (git, por
+			# ejemplo, no sabría renovarlo él solo).
+			token = self.renovar(cuenta, token) or token
 		return token
+
+	@staticmethod
+	def _nombre_renovacion(cuenta: Cuenta) -> str:
+		return f"{cuenta.nombre_secreto}:renovacion"
+
+	def _guardar_juntos(self, cambios: dict[str, str | None]) -> None:
+		# El token nuevo y su renovación se guardan a la vez: GitHub invalida los anteriores,
+		# y guardar solo uno dejaría la cuenta sin forma de renovar.
+		if hasattr(self._secretos, "guardar_varios"):
+			self._secretos.guardar_varios(cambios)
+			return
+		for nombre, valor in cambios.items():
+			if valor is None:
+				self._secretos.borrar(nombre)
+			else:
+				self._secretos.guardar(nombre, valor)
+
+	def renovacion(self, cuenta: Cuenta) -> dict[str, Any] | None:
+		"""Datos para renovar el token de la cuenta (solo existen si su token caduca)."""
+		texto = self._secretos.obtener(self._nombre_renovacion(cuenta))
+		if not texto:
+			return None
+		try:
+			datos = json.loads(texto)
+		except ValueError:
+			log.warning("Datos de renovación ilegibles para %s; se descartan.", cuenta.clave)
+			return None
+		return datos if isinstance(datos, dict) and datos.get("refresh_token") else None
+
+	def guardar_renovacion(self, cuenta: Cuenta, datos: dict[str, Any] | None) -> None:
+		"""Guarda (cifrados) o borra los datos de renovación del token de la cuenta."""
+		if datos:
+			_registrar(datos["refresh_token"])
+		self._guardar_juntos({self._nombre_renovacion(cuenta): json.dumps(datos) if datos else None})
+
+	def renovar(self, cuenta: Cuenta, token_rechazado: str | None = None) -> str | None:
+		"""Renueva el token de la cuenta. Devuelve el nuevo, o ``None`` si no se puede.
+
+		Si otro hilo ya lo renovó (el guardado ya no es el rechazado), devuelve ese sin
+		gastar el token de renovación, que GitHub solo acepta una vez.
+		"""
+		with self._candado_renovar:
+			actual = self._secretos.obtener(cuenta.nombre_secreto)
+			if token_rechazado and actual and actual != token_rechazado:
+				return actual
+			datos = self.renovacion(cuenta)
+			if not datos:
+				return None
+			if float(datos.get("caduca_renovacion") or 0) and float(datos["caduca_renovacion"]) < time.time():
+				log.warning("El token de renovación de %s caducó (6 meses sin uso): hay que volver a iniciar sesión.", cuenta.clave)
+				return None
+			try:
+				flujo = FlujoDispositivo(datos.get("id_cliente") or ID_CLIENTE_OAUTH, host=cuenta.host)
+				nuevo, nuevos_datos = flujo.renovar(datos["refresh_token"])
+			except ErrorAutenticacion as error:
+				log.warning("No se pudo renovar el token de %s: %s", cuenta.clave, error)
+				return None
+			_registrar(nuevo)
+			if nuevos_datos:
+				_registrar(nuevos_datos["refresh_token"])
+			self._guardar_juntos({
+				cuenta.nombre_secreto: nuevo,
+				self._nombre_renovacion(cuenta): json.dumps(nuevos_datos) if nuevos_datos else None,
+			})
+			with self._candado:
+				cliente = self._clientes.get(cuenta.clave)
+			if cliente is not None:
+				cliente.cambiar_token(nuevo)
+			log.info("Token de %s renovado.", cuenta.clave)
+			return nuevo
 
 	def anadir(self, cuenta: Cuenta, token: str, activar: bool = True) -> None:
 		"""Añade o actualiza una cuenta y guarda su token cifrado."""
@@ -480,7 +591,7 @@ class GestorCuentas:
 
 	def eliminar(self, cuenta: Cuenta) -> None:
 		with self._candado:
-			self._secretos.borrar(cuenta.nombre_secreto)
+			self._guardar_juntos({cuenta.nombre_secreto: None, self._nombre_renovacion(cuenta): None})
 			lista = [c for c in self.cuentas() if c.clave != cuenta.clave]
 			self._config.establecer(self.CLAVE_LISTA, [c.a_dict() for c in lista])
 			self._clientes.pop(cuenta.clave, None)
@@ -509,7 +620,8 @@ class GestorCuentas:
 				return anonimo
 			cliente = self._clientes.get(cuenta.clave)
 			if cliente is None:
-				cliente = ClienteGitHub(self.token(cuenta), cuenta.host)
+				cliente = ClienteGitHub(self.token(cuenta), cuenta.host,
+					renovar=lambda rechazado, c=cuenta: self.renovar(c, rechazado))
 				self._clientes[cuenta.clave] = cliente
 			return cliente
 

@@ -86,6 +86,33 @@ def test_notificaciones_nuevas_se_anuncian_una_vez(app_wx):
 		ventana.Destroy()
 
 
+def test_contador_de_notificaciones_sigue_a_la_lista(app_wx):
+	# Al marcar como leídas o recargar la lista, «Notificaciones (2)» debe cambiar al momento.
+	from app.services.github.cliente import Pagina
+
+	ctx, api, _a = crear_contexto()
+
+	def notif(numero):
+		return {"id": str(numero), "unread": True, "updated_at": "2026-01-01T00:00:00Z", "reason": "subscribed",
+			"subject": {"title": f"Aviso {numero}", "type": "Issue"}, "repository": {"full_name": "a/b"}}
+
+	api.notificaciones.return_value = Pagina([notif(1), notif(2)])
+	ventana = _ventana(ctx)
+	try:
+		indice = [c for c, _d in ventana.definiciones].index("notificaciones")
+		panel = ventana.paneles["notificaciones"]
+		panel.cargar()
+		assert ventana.secciones.GetString(indice).endswith("(2)")
+		accion = next(a for a in panel.definicion.acciones if a.atajo == "Ctrl+L")
+		accion.funcion(panel, panel.elementos[0])
+		assert ventana.secciones.GetString(indice).endswith("(1)")
+		api.notificaciones.return_value = Pagina([])
+		panel.cargar()
+		assert ventana.secciones.GetString(indice) == "Notificaciones"
+	finally:
+		ventana.Destroy()
+
+
 def test_dialogo_de_inicio_de_sesion(app_wx):
 	from app.ui.sesion import DialogoInicioSesion
 

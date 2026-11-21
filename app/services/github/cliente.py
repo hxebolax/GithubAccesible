@@ -347,8 +347,13 @@ class ClienteGitHub:
 		crear_sesion: Callable[[], requests.Session] | None = None,
 		usar_etag: bool = True,
 		tiempo: tuple[float, float] = (10.0, 60.0),
+		renovar: Callable[[str | None], str | None] | None = None,
 	) -> None:
+		# ``renovar(token_rechazado) -> token_nuevo | None``: si GitHub rechaza el token (401)
+		# y se puede renovar (tokens que caducan a las 8 horas), se pide uno nuevo y la
+		# petición se repite una sola vez.
 		self.host = normalizar_host(host)
+		self._renovar = renovar
 		self.base_rest, self.url_graphql = urls_api(self.host)
 		self._token = (token or "").strip() or None
 		self.agente = agente
@@ -392,6 +397,13 @@ class ClienteGitHub:
 	def autenticado(self) -> bool:
 		return bool(self._token)
 
+	def cambiar_token(self, token: str | None) -> None:
+		"""Usa otro token a partir de ahora (por ejemplo, tras renovarlo)."""
+		self._token = (token or "").strip() or None
+		if self._token:
+			_registrar_secreto(self._token)
+		self.vaciar_cache()
+
 	def cabeceras_base(self, aceptar: str | None = None) -> dict[str, str]:
 		cabeceras = {
 			"Accept": aceptar or ACEPTAR_JSON,
@@ -425,6 +437,7 @@ class ClienteGitHub:
 		flujo: bool = False,
 		tiempo: tuple[float, float] | None = None,
 		permitir: tuple[int, ...] = (),
+		_renovado: bool = False,
 	) -> requests.Response:
 		"""Hace la petición y devuelve la respuesta, o lanza ``ErrorGitHub``.
 
@@ -469,8 +482,21 @@ class ClienteGitHub:
 			respuesta._datos_cache = entrada.datos  # type: ignore[attr-defined]
 			respuesta._enlace_cache = entrada.enlace  # type: ignore[attr-defined]
 			return respuesta
+		if respuesta.status_code == 401 and not _renovado and self._renovar is not None and self._token:
+			rechazado = self._token
+			nuevo = self._renovar(rechazado)
+			if nuevo and nuevo != rechazado:
+				log.info("Token renovado; se repite %s %s", metodo, url)
+				self.cambiar_token(nuevo)
+				return self.peticion(metodo, ruta, params=params, json_datos=json_datos, datos=datos, cabeceras=cabeceras,
+					aceptar=aceptar, condicional=condicional, flujo=flujo, tiempo=tiempo, permitir=permitir, _renovado=True)
 		if respuesta.status_code >= 400 and respuesta.status_code not in permitir:
 			self._lanzar(respuesta, metodo, url)
+		if metodo not in ("GET", "HEAD") and respuesta.status_code < 400:
+			# Tras cambiar algo (marcar una notificación como leída, dar estrella, cerrar una
+			# issue…), GitHub puede seguir contestando 304 a la lista anterior un rato y la
+			# caché devolvería datos viejos. Las escrituras son pocas: se vacía entera.
+			self.vaciar_cache()
 		if metodo == "GET" and condicional and self.usar_etag and not flujo and respuesta.status_code == 200:
 			etag = respuesta.headers.get("ETag")
 			if etag:

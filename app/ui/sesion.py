@@ -54,6 +54,7 @@ class DialogoInicioSesion(wx.Dialog):
 		self.cuenta: auth.Cuenta | None = None
 		self._tarea = None
 		self._cancelado = False
+		self._flujo: auth.FlujoDispositivo | None = None
 		raiz = wx.BoxSizer(wx.VERTICAL)
 
 		raiz.Add(wx.StaticText(self, label=_("&Servidor (github.com o el de su empresa):")), 0, wx.LEFT | wx.TOP, 8)
@@ -230,6 +231,7 @@ class DialogoInicioSesion(wx.Dialog):
 	def _flujo_dispositivo(self, host: str) -> None:
 		ambitos = auth.AMBITOS_COMPLETOS if self.ambitos.GetSelection() == 1 else auth.AMBITOS_BASICOS
 		flujo = auth.FlujoDispositivo(id_cliente(self.ctx), ambitos, host)
+		self._flujo = flujo
 		self.boton_iniciar.Disable()
 		self._poner_estado(_("Pidiendo un código a GitHub…"))
 
@@ -261,6 +263,10 @@ class DialogoInicioSesion(wx.Dialog):
 	def _terminado(self, resultado: tuple[auth.Cuenta, str]) -> None:
 		cuenta, token = resultado
 		self.ctx.cuentas.anadir(cuenta, token)
+		# Solo el flujo de dispositivo da token de renovación; con otro método se borra el viejo.
+		flujo = getattr(self, "_flujo", None)
+		renovacion = flujo.renovacion if flujo is not None and cuenta.metodo == auth.METODO_DISPOSITIVO else None
+		self.ctx.cuentas.guardar_renovacion(cuenta, renovacion)
 		self.cuenta = cuenta
 		self.ctx.sonar("completado")
 		self.ctx.avisar(_("Sesión iniciada como {u}.").format(u=cuenta.descripcion()))

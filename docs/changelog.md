@@ -2,6 +2,19 @@
 
 Cada versión tiene su apartado, de la más reciente a la más antigua. Dentro de cada versión, los cambios se agrupan en Novedades, Mejoras y Correcciones, contados con palabras de quien usa la aplicación.
 
+## Versión 1.0.1 - 2026-11-21
+
+### Novedades
+
+- Ya se puede iniciar sesión con el navegador y un código sin configurar nada: la aplicación trae su propio identificador de GitHub.
+- Si GitHub da un token que caduca, la aplicación lo renueva sola antes de que caduque o cuando GitHub lo rechaza, sin pedir otra vez el inicio de sesión.
+
+### Correcciones
+
+- El número de notificaciones de la lista de secciones («Notificaciones (2)») ya cambia en cuanto se marcan como leídas o hechas, o se actualiza la lista; antes se quedaba con el número antiguo.
+- Tras cambiar algo en GitHub (marcar como leída, dar estrella, cerrar…), las listas ya no muestran datos antiguos guardados.
+- Si el identificador de la aplicación OAuth está mal, se dice claramente en lugar de dar un error genérico.
+
 ## Versión 1.0.0 - 2026-11-21
 
 ### Novedades
