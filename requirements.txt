@@ -1,0 +1,12 @@
+# Dependencias de la aplicación. Versión mínima con ">=" para recibir
+# correcciones; las exactas probadas se guardan con "entorno.bat congelar".
+# wxPython 4.3 trae de serie el estado accesible de CheckListBox y ruedas para Python 3.15.
+wxPython>=4.3.2
+# Voz directa (NVDA, JAWS o SAPI). Sin él, la aplicación funciona igual.
+accessible_output2>=0.17
+# Verificación de la firma Ed25519 del actualizador y cifrado de secretos opcional.
+cryptography>=45
+# HTTP robusto (API de GitHub, descargas): plantilla del agente red-http.
+# Conversión de Markdown a HTML (README, issues, comentarios, manual).
+Markdown>=3.7
+requests>=2.32

@@ -1,0 +1,4 @@
+# Los .bat necesitan CRLF: con LF, goto y las etiquetas fallan.
+*.bat text eol=crlf
+*.wav binary
+*.ico binary
