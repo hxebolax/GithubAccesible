@@ -108,6 +108,12 @@ def paginas(paquetes: list[str]) -> tuple[Pagina, ...]:
 				N_("Dice «marcada, Etiqueta» en lugar de «Etiqueta, marcada».")),
 			Opcion("accesibilidad.casillas_decir_posicion", N_("Casillas: decir la posición (&3 de 10)"), BOOL,
 				N_("Añade «3 de 10» al anuncio de la casilla.")),
+			Opcion("accesibilidad.explicacion_controles", N_("Explicaciones: leerlas al lle&gar a botones y casillas"), BOOL,
+				N_("El lector de pantalla lee la explicación del control (la misma de Control+H) al llegar a un botón o una "
+					"casilla. Desactívelo si prefiere oírla solo cuando la pida con Control+H.")),
+			Opcion("accesibilidad.explicacion_filas", N_("Explicaciones: leerlas también en cada fila de las listas de casilla&s"), BOOL,
+				N_("Sin esta opción, al moverse por una lista de casillas solo se oye cada fila y su estado. Con ella, el lector "
+					"repite la explicación de la lista en cada fila. Control+H la dice siempre.")),
 			Opcion("accesibilidad.diff_decir_tipo", N_("Diferencias: mostrar la columna del t&ipo de línea"), BOOL,
 				N_("Columna «Añadida», «Eliminada» o «Sin cambios» en el visor de diferencias (el lector la lee al moverse).")),
 			Opcion("accesibilidad.diff_decir_numero", N_("Diferencias: mostrar el número de &línea"), BOOL,
@@ -285,7 +291,7 @@ class DialogoPreferenciasGitHub(DialogoPreferencias):
 		self._orden_actual[indice], self._orden_actual[destino] = self._orden_actual[destino], self._orden_actual[indice]
 		self._columnas_elegidas[self._vista().id] = [i for i in self._orden_actual if i in marcadas]
 		self._mostrar_columnas(destino)
-		self.lista_columnas.SetFocus()
+		# El foco se queda donde estaba (el botón o la lista): se puede seguir pulsando Subir o Bajar.
 		self.ctx.anunciar(_("{c}, posición {p}").format(c=self.lista_columnas.GetString(destino), p=destino + 1))
 
 	def _original(self) -> None:

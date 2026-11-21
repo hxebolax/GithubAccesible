@@ -3,9 +3,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: githubaccesible 1.0.1\n"
+"Project-Id-Version: githubaccesible 1.0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-21 19:04+0100\n"
+"POT-Creation-Date: 2026-11-21 19:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,7 +58,7 @@ msgstr ""
 msgid "Error desconocido."
 msgstr ""
 
-#: app/core/red.py:519 app/services/git_local.py:276 app/ui/git/clonar.py:227 app/ui/git/ventana_git.py:567
+#: app/core/red.py:519 app/services/git_local.py:276 app/ui/git/clonar.py:227 app/ui/git/ventana_git.py:576
 msgid "Operación cancelada."
 msgstr ""
 
@@ -472,7 +472,7 @@ msgstr ""
 msgid "GitHub ha respondido con el error {c} al leer las tendencias."
 msgstr ""
 
-#: app/services/conflictos.py:220 app/services/git_local.py:763 app/ui/git/operaciones.py:202 app/ui/git/operaciones.py:219 app/ui/git/ventana_git.py:489 app/ui/git/ventana_git.py:745
+#: app/services/conflictos.py:220 app/services/git_local.py:763 app/ui/git/operaciones.py:202 app/ui/git/operaciones.py:219 app/ui/git/ventana_git.py:498 app/ui/git/ventana_git.py:754
 msgid "reorganización"
 msgstr ""
 
@@ -508,11 +508,11 @@ msgstr ""
 msgid "Falta el texto escrito a mano."
 msgstr ""
 
-#: app/services/conflictos.py:313 app/ui/git/ventana_git.py:1453 app/ui/git/ventana_git.py:1453
+#: app/services/conflictos.py:313 app/ui/git/ventana_git.py:1462 app/ui/git/ventana_git.py:1462
 msgid "su versión"
 msgstr ""
 
-#: app/services/conflictos.py:314 app/ui/git/ventana_git.py:1453 app/ui/git/ventana_git.py:1453
+#: app/services/conflictos.py:314 app/ui/git/ventana_git.py:1462 app/ui/git/ventana_git.py:1462
 msgid "la otra versión"
 msgstr ""
 
@@ -592,7 +592,7 @@ msgstr ""
 msgid "Bloque"
 msgstr ""
 
-#: app/services/diferencias.py:56 app/ui/detalle/pull_request.py:333 app/ui/detalle/pull_request.py:361 app/ui/git/ventana_git.py:868 app/ui/git/ventana_git.py:1410
+#: app/services/diferencias.py:56 app/ui/detalle/pull_request.py:333 app/ui/detalle/pull_request.py:361 app/ui/git/ventana_git.py:877 app/ui/git/ventana_git.py:1419
 msgid "Archivo"
 msgstr ""
 
@@ -922,7 +922,7 @@ msgstr ""
 msgid "{c} en conflicto"
 msgstr ""
 
-#: app/services/git_local.py:769 app/ui/git/operaciones.py:225 app/ui/git/ventana_git.py:488 app/ui/git/ventana_git.py:772
+#: app/services/git_local.py:769 app/ui/git/operaciones.py:225 app/ui/git/ventana_git.py:497 app/ui/git/ventana_git.py:781
 msgid "bisección"
 msgstr ""
 
@@ -1171,7 +1171,7 @@ msgstr ""
 msgid "Lista vacía o sin resultados"
 msgstr ""
 
-#: app/services/sonidos.py:53 app/ui/accesibilidad/dialogos.py:254 app/ui/detalle/comun_detalle.py:252 app/ui/detalle/conversacion.py:394 app/ui/dialogo_preferencias.py:417 app/ui/dialogo_texto.py:56 app/ui/git/dialogos.py:221 app/ui/git/dialogos.py:259 app/ui/git/ventana_git.py:446 app/ui/git/ventana_git.py:712 app/ui/git/ventana_git.py:719 app/ui/herramientas/claves.py:189 app/ui/herramientas/claves.py:264 app/ui/repositorio/paneles.py:100 app/ui/vistas/base.py:476 app/ui/vistas/base.py:579
+#: app/services/sonidos.py:53 app/ui/accesibilidad/dialogos.py:254 app/ui/detalle/comun_detalle.py:252 app/ui/detalle/conversacion.py:394 app/ui/dialogo_preferencias.py:418 app/ui/dialogo_texto.py:56 app/ui/git/dialogos.py:221 app/ui/git/dialogos.py:259 app/ui/git/ventana_git.py:455 app/ui/git/ventana_git.py:721 app/ui/git/ventana_git.py:728 app/ui/herramientas/claves.py:189 app/ui/herramientas/claves.py:264 app/ui/repositorio/paneles.py:100 app/ui/vistas/base.py:476 app/ui/vistas/base.py:579
 msgid "Error"
 msgstr ""
 
@@ -1243,93 +1243,93 @@ msgstr ""
 msgid "Copiado al portapapeles"
 msgstr ""
 
-#: app/ui/accesibilidad/ayuda.py:89
+#: app/ui/accesibilidad/ayuda.py:96
 msgid "Botón. Actívelo con la barra espaciadora o Intro."
 msgstr ""
 
-#: app/ui/accesibilidad/ayuda.py:91 app/ui/accesibilidad/casillas.py:130
+#: app/ui/accesibilidad/ayuda.py:98 app/ui/accesibilidad/casillas.py:130
 msgid "Lista de casillas. Muévase con las flechas y marque o desmarque con la barra espaciadora."
 msgstr ""
 
-#: app/ui/accesibilidad/ayuda.py:93
+#: app/ui/accesibilidad/ayuda.py:100
 msgid "Casilla de verificación. Márquela o desmárquela con la barra espaciadora."
 msgstr ""
 
-#: app/ui/accesibilidad/ayuda.py:95
+#: app/ui/accesibilidad/ayuda.py:102
 msgid "Botón de opción. Elija entre las opciones del grupo con las flechas."
 msgstr ""
 
-#: app/ui/accesibilidad/ayuda.py:97
+#: app/ui/accesibilidad/ayuda.py:104
 msgid "Campo numérico. Escriba un número o cámbielo con las flechas arriba y abajo."
 msgstr ""
 
-#: app/ui/accesibilidad/ayuda.py:99
+#: app/ui/accesibilidad/ayuda.py:106
 msgid "Lista desplegable. Ábrala con Alt+flecha abajo y elija con las flechas."
 msgstr ""
 
-#: app/ui/accesibilidad/ayuda.py:102
+#: app/ui/accesibilidad/ayuda.py:109
 msgid "Texto de solo lectura. Recórralo con las flechas y cópielo si lo necesita."
 msgstr ""
 
-#: app/ui/accesibilidad/ayuda.py:103
+#: app/ui/accesibilidad/ayuda.py:110
 msgid "Campo de texto. Escriba aquí el valor."
 msgstr ""
 
-#: app/ui/accesibilidad/ayuda.py:105 app/ui/accesibilidad/lista.py:104
+#: app/ui/accesibilidad/ayuda.py:112 app/ui/accesibilidad/lista.py:104
 msgid "Lista. Arriba y abajo cambian de elemento; izquierda y derecha recorren las columnas; Control más un número lee esa columna; Intro abre el elemento."
 msgstr ""
 
-#: app/ui/accesibilidad/ayuda.py:110
+#: app/ui/accesibilidad/ayuda.py:117
 msgid "Lista de opciones. Elija con las flechas."
 msgstr ""
 
-#: app/ui/accesibilidad/ayuda.py:112
+#: app/ui/accesibilidad/ayuda.py:119
 msgid "Árbol. Muévase con las flechas; derecha despliega una rama e izquierda la pliega."
 msgstr ""
 
-#: app/ui/accesibilidad/ayuda.py:114
+#: app/ui/accesibilidad/ayuda.py:121
 msgid "Selector de ruta. Escriba la ruta o use el botón Seleccionar."
 msgstr ""
 
-#: app/ui/accesibilidad/ayuda.py:116
+#: app/ui/accesibilidad/ayuda.py:123
 msgid "Selector de fecha. Cambie día, mes y año con las flechas."
 msgstr ""
 
-#: app/ui/accesibilidad/ayuda.py:118
+#: app/ui/accesibilidad/ayuda.py:125
 msgid "Selector de hora. Cambie horas y minutos con las flechas."
 msgstr ""
 
-#: app/ui/accesibilidad/ayuda.py:120
+#: app/ui/accesibilidad/ayuda.py:127
 msgid "Control deslizante. Cambie el valor con las flechas; Re Pág y Av Pág dan saltos mayores."
 msgstr ""
 
-#: app/ui/accesibilidad/ayuda.py:122
+#: app/ui/accesibilidad/ayuda.py:129
 msgid "Barra de progreso. Indica cuánto se ha completado."
 msgstr ""
 
-#: app/ui/accesibilidad/ayuda.py:124
+#: app/ui/accesibilidad/ayuda.py:131
 msgid "Pestañas. Cambie de pestaña con Control+Tab o con las flechas."
 msgstr ""
 
-#: app/ui/accesibilidad/ayuda.py:162
+#: app/ui/accesibilidad/ayuda.py:223
 msgid "No hay ningún control con el foco."
 msgstr ""
 
-#: app/ui/accesibilidad/ayuda.py:164
+#: app/ui/accesibilidad/ayuda.py:225
 msgid "Este control"
 msgstr ""
 
-#: app/ui/accesibilidad/ayuda.py:167
+#: app/ui/accesibilidad/ayuda.py:228
 #, python-brace-format
 msgid "{nombre}. {ayuda}"
 msgstr ""
 
-#: app/ui/accesibilidad/ayuda.py:169
+#: app/ui/accesibilidad/ayuda.py:230
 #, python-brace-format
 msgid "{nombre}. No hay ayuda para este control."
 msgstr ""
 
-#: app/ui/accesibilidad/ayuda.py:177 app/ui/dialogo_preferencias.py:506 app/ui/visor_ayuda.py:322
+#: app/ui/accesibilidad/ayuda.py:238 app/ui/dialogo_preferencias.py:507 app/ui/visor_ayuda.py:322
 msgid "Ayuda"
 msgstr ""
 
@@ -1358,11 +1358,11 @@ msgstr ""
 msgid "Sin datos"
 msgstr ""
 
-#: app/ui/accesibilidad/composicion.py:99 app/ui/comunes.py:116
+#: app/ui/accesibilidad/composicion.py:99 app/ui/comunes.py:117
 msgid "marcada"
 msgstr ""
 
-#: app/ui/accesibilidad/composicion.py:99 app/ui/comunes.py:116
+#: app/ui/accesibilidad/composicion.py:99 app/ui/comunes.py:117
 msgid "no marcada"
 msgstr ""
 
@@ -1392,11 +1392,11 @@ msgstr ""
 msgid "Cancelar"
 msgstr ""
 
-#: app/ui/accesibilidad/dialogos.py:169 app/ui/git/dialogos.py:239 app/ui/git/ventana_git.py:398
+#: app/ui/accesibilidad/dialogos.py:169 app/ui/git/dialogos.py:239 app/ui/git/ventana_git.py:407
 msgid "Cerrar"
 msgstr ""
 
-#: app/ui/accesibilidad/dialogos.py:189 app/ui/accesibilidad/dialogos.py:197 app/ui/detalle/acciones.py:576 app/ui/detalle/archivos.py:510 app/ui/detalle/pull_request.py:321 app/ui/git/ventana_git.py:1205 app/ui/git/ventana_git.py:1248 app/ui/repositorio/vistas.py:1424
+#: app/ui/accesibilidad/dialogos.py:189 app/ui/accesibilidad/dialogos.py:197 app/ui/detalle/acciones.py:576 app/ui/detalle/archivos.py:510 app/ui/detalle/pull_request.py:321 app/ui/git/ventana_git.py:1214 app/ui/git/ventana_git.py:1257 app/ui/repositorio/vistas.py:1424
 msgid "Mensaje"
 msgstr ""
 
@@ -1408,19 +1408,19 @@ msgstr ""
 msgid "Confirmación"
 msgstr ""
 
-#: app/ui/accesibilidad/dialogos.py:342 app/ui/accesibilidad/dialogos.py:344 app/ui/dialogo_preferencias.py:158
+#: app/ui/accesibilidad/dialogos.py:342 app/ui/accesibilidad/dialogos.py:344 app/ui/dialogo_preferencias.py:159
 msgid "&Sí"
 msgstr ""
 
-#: app/ui/accesibilidad/dialogos.py:342 app/ui/accesibilidad/dialogos.py:344 app/ui/dialogo_preferencias.py:158
+#: app/ui/accesibilidad/dialogos.py:342 app/ui/accesibilidad/dialogos.py:344 app/ui/dialogo_preferencias.py:159
 msgid "&No"
 msgstr ""
 
-#: app/ui/accesibilidad/dialogos.py:342 app/ui/accesibilidad/dialogos.py:346 app/ui/busqueda.py:223 app/ui/dialogo_actualizacion.py:246 app/ui/dialogo_preferencias.py:242
+#: app/ui/accesibilidad/dialogos.py:342 app/ui/accesibilidad/dialogos.py:346 app/ui/busqueda.py:224 app/ui/dialogo_actualizacion.py:246 app/ui/dialogo_preferencias.py:243
 msgid "&Cancelar"
 msgstr ""
 
-#: app/ui/accesibilidad/dialogos.py:346 app/ui/accesibilidad/dialogos.py:348 app/ui/dialogo_actualizacion.py:64 app/ui/dialogo_error.py:69 app/ui/dialogo_preferencias.py:148 app/ui/dialogo_preferencias.py:241 app/ui/dialogo_texto.py:47 main.py:58
+#: app/ui/accesibilidad/dialogos.py:346 app/ui/accesibilidad/dialogos.py:348 app/ui/dialogo_actualizacion.py:64 app/ui/dialogo_error.py:69 app/ui/dialogo_preferencias.py:149 app/ui/dialogo_preferencias.py:242 app/ui/dialogo_texto.py:47 main.py:58
 msgid "&Aceptar"
 msgstr ""
 
@@ -1441,7 +1441,7 @@ msgstr ""
 msgid "&Seleccionar..."
 msgstr ""
 
-#: app/ui/accesibilidad/nombres.py:182 app/ui/dialogo_preferencias.py:321
+#: app/ui/accesibilidad/nombres.py:182 app/ui/dialogo_preferencias.py:322
 msgid "E&xaminar..."
 msgstr ""
 
@@ -1457,7 +1457,7 @@ msgstr ""
 msgid "Progreso"
 msgstr ""
 
-#: app/ui/accesibilidad/progreso.py:45 app/ui/detalle/acciones.py:550 app/ui/detalle/acciones.py:553 app/ui/detalle/acciones.py:579 app/ui/detalle/issue.py:339 app/ui/detalle/organizacion.py:295 app/ui/detalle/pull_request.py:333 app/ui/detalle/pull_request.py:347 app/ui/detalle/pull_request.py:361 app/ui/dialogo_actualizacion.py:166 app/ui/git/ventana_git.py:870 app/ui/git/ventana_git.py:1333 app/ui/repositorio/vistas.py:503 app/ui/repositorio/vistas.py:805 app/ui/repositorio/vistas.py:900 app/ui/repositorio/vistas.py:1038 app/ui/repositorio/vistas.py:1461 app/ui/repositorio/vistas.py:1518 app/ui/repositorio/vistas.py:1863 app/ui/vistas/principales.py:92 app/ui/vistas/principales.py:293 app/ui/vistas/principales.py:379 app/ui/vistas/principales.py:517 app/ui/vistas/principales.py:560 app/ui/vistas/principales.py:628 app/ui/vistas/principales.py:709
+#: app/ui/accesibilidad/progreso.py:45 app/ui/detalle/acciones.py:550 app/ui/detalle/acciones.py:553 app/ui/detalle/acciones.py:579 app/ui/detalle/issue.py:339 app/ui/detalle/organizacion.py:295 app/ui/detalle/pull_request.py:333 app/ui/detalle/pull_request.py:347 app/ui/detalle/pull_request.py:361 app/ui/dialogo_actualizacion.py:166 app/ui/git/ventana_git.py:879 app/ui/git/ventana_git.py:1342 app/ui/repositorio/vistas.py:503 app/ui/repositorio/vistas.py:805 app/ui/repositorio/vistas.py:900 app/ui/repositorio/vistas.py:1038 app/ui/repositorio/vistas.py:1461 app/ui/repositorio/vistas.py:1518 app/ui/repositorio/vistas.py:1863 app/ui/vistas/principales.py:92 app/ui/vistas/principales.py:293 app/ui/vistas/principales.py:379 app/ui/vistas/principales.py:517 app/ui/vistas/principales.py:560 app/ui/vistas/principales.py:628 app/ui/vistas/principales.py:709
 msgid "Estado"
 msgstr ""
 
@@ -1553,333 +1553,333 @@ msgstr ""
 msgid "&Salir"
 msgstr ""
 
-#: app/ui/busqueda.py:138
+#: app/ui/busqueda.py:139
 msgid "&Nombre de la búsqueda:"
 msgstr ""
 
-#: app/ui/busqueda.py:138 app/ui/busqueda.py:147 app/ui/busqueda.py:561
+#: app/ui/busqueda.py:139 app/ui/busqueda.py:148 app/ui/busqueda.py:566
 msgid "Guardar la búsqueda"
 msgstr ""
 
-#: app/ui/busqueda.py:146
+#: app/ui/busqueda.py:147
 #, python-brace-format
 msgid "Ya hay una búsqueda guardada con el nombre «{n}». ¿Sustituirla?"
 msgstr ""
 
-#: app/ui/busqueda.py:153
+#: app/ui/busqueda.py:154
 #, python-brace-format
 msgid "Búsqueda «{n}» guardada."
 msgstr ""
 
-#: app/ui/busqueda.py:160
+#: app/ui/busqueda.py:161
 #, python-brace-format
 msgid "{n}, mínimo:"
 msgstr ""
 
-#: app/ui/busqueda.py:160
+#: app/ui/busqueda.py:161
 #, python-brace-format
 msgid "{n}, máximo:"
 msgstr ""
 
-#: app/ui/busqueda.py:162
+#: app/ui/busqueda.py:163
 #, python-brace-format
 msgid "{n}, desde (AAAA-MM-DD):"
 msgstr ""
 
-#: app/ui/busqueda.py:162
+#: app/ui/busqueda.py:163
 #, python-brace-format
 msgid "{n}, hasta (AAAA-MM-DD):"
 msgstr ""
 
-#: app/ui/busqueda.py:170 app/ui/busqueda.py:541 app/ui/busqueda.py:549
+#: app/ui/busqueda.py:171 app/ui/busqueda.py:546 app/ui/busqueda.py:554
 msgid "Buscar en GitHub"
 msgstr ""
 
-#: app/ui/busqueda.py:184
+#: app/ui/busqueda.py:185
 msgid "&Buscar:"
 msgstr ""
 
-#: app/ui/busqueda.py:187
+#: app/ui/busqueda.py:188
 msgid "Qué se busca: repositorios, código, issues y pull requests, usuarios, commits, temas, etiquetas, discusiones o tendencias. Al cambiarlo cambian las pestañas de filtros."
 msgstr ""
 
-#: app/ui/busqueda.py:191
+#: app/ui/busqueda.py:192
 msgid "&Texto (admite calificadores):"
 msgstr ""
 
-#: app/ui/busqueda.py:193
+#: app/ui/busqueda.py:194
 msgid "Palabras que buscar y, si quiere, calificadores como language:python o repo:dueño/nombre. Puede dejarlo vacío si elige algún filtro. En las tendencias de la página de GitHub, filtra los resultados en este equipo."
 msgstr ""
 
-#: app/ui/busqueda.py:200
+#: app/ui/busqueda.py:201
 msgid "Filtros guiados. Control+Tabulador pasa a la pestaña siguiente."
 msgstr ""
 
-#: app/ui/busqueda.py:204
+#: app/ui/busqueda.py:205
 msgid "Consulta resu&ltante:"
 msgstr ""
 
-#: app/ui/busqueda.py:206
+#: app/ui/busqueda.py:207
 msgid "Lo que se enviará a GitHub, el orden y, si los hay, los problemas que impiden buscar. Se actualiza al cambiar cualquier filtro."
 msgstr ""
 
-#: app/ui/busqueda.py:211
+#: app/ui/busqueda.py:212
 msgid "B&uscar"
 msgstr ""
 
-#: app/ui/busqueda.py:212
+#: app/ui/busqueda.py:213
 msgid "Comprueba la consulta y muestra los resultados en la sección «Resultados de la búsqueda»."
 msgstr ""
 
-#: app/ui/busqueda.py:214 app/ui/detalle/usuario.py:208 app/ui/repositorio/ventana.py:142 app/ui/vistas/base.py:441 app/ui/vistas/principales.py:568
+#: app/ui/busqueda.py:215 app/ui/detalle/usuario.py:208 app/ui/repositorio/ventana.py:142 app/ui/vistas/base.py:441 app/ui/vistas/principales.py:568
 msgid "Abrir en el &navegador"
 msgstr ""
 
-#: app/ui/busqueda.py:215
+#: app/ui/busqueda.py:216
 msgid "Abre esta búsqueda en github.com. Es la única forma de usar expresiones regulares y symbol: en el código."
 msgstr ""
 
-#: app/ui/busqueda.py:217
+#: app/ui/busqueda.py:218
 msgid "E&jemplos de calificadores…"
 msgstr ""
 
-#: app/ui/busqueda.py:218
+#: app/ui/busqueda.py:219
 msgid "Explica los calificadores de búsqueda de GitHub con ejemplos."
 msgstr ""
 
-#: app/ui/busqueda.py:220
+#: app/ui/busqueda.py:221
 msgid "Guardar bú&squeda…"
 msgstr ""
 
-#: app/ui/busqueda.py:221
+#: app/ui/busqueda.py:222
 msgid "Guarda esta búsqueda con un nombre para repetirla desde la pestaña «Historial y guardadas»."
 msgstr ""
 
-#: app/ui/busqueda.py:224
+#: app/ui/busqueda.py:225
 msgid "Cierra sin buscar (también con Escape)."
 msgstr ""
 
-#: app/ui/busqueda.py:239
+#: app/ui/busqueda.py:240
 msgid "&Historial de búsquedas:"
 msgstr ""
 
-#: app/ui/busqueda.py:240
+#: app/ui/busqueda.py:241
 msgid "(búsqueda nueva)"
 msgstr ""
 
-#: app/ui/busqueda.py:242
+#: app/ui/busqueda.py:243
 msgid "Elija una búsqueda anterior para repetirla con los mismos filtros."
 msgstr ""
 
-#: app/ui/busqueda.py:245
+#: app/ui/busqueda.py:246
 msgid "Búsquedas &guardadas:"
 msgstr ""
 
-#: app/ui/busqueda.py:247
+#: app/ui/busqueda.py:248
 msgid "Búsquedas que guardó con un nombre. Al elegir una se cargan su tipo, texto y filtros."
 msgstr ""
 
-#: app/ui/busqueda.py:251
+#: app/ui/busqueda.py:252
 msgid "&Renombrar la guardada…"
 msgstr ""
 
-#: app/ui/busqueda.py:252
+#: app/ui/busqueda.py:253
 msgid "Cambia el nombre de la búsqueda guardada elegida."
 msgstr ""
 
-#: app/ui/busqueda.py:254
+#: app/ui/busqueda.py:255
 msgid "B&orrar la guardada…"
 msgstr ""
 
-#: app/ui/busqueda.py:255
+#: app/ui/busqueda.py:256
 msgid "Borra la búsqueda guardada elegida (pide confirmación)."
 msgstr ""
 
-#: app/ui/busqueda.py:261
+#: app/ui/busqueda.py:262
 msgid "Historial y guardadas"
 msgstr ""
 
-#: app/ui/busqueda.py:265 app/ui/editor.py:105 app/ui/repositorio/dialogos.py:174 app/ui/repositorio/dialogos.py:190
+#: app/ui/busqueda.py:266 app/ui/editor.py:105 app/ui/repositorio/dialogos.py:174 app/ui/repositorio/dialogos.py:190
 msgid "(ninguna)"
 msgstr ""
 
-#: app/ui/busqueda.py:270 app/ui/detalle/organizacion.py:91 app/ui/detalle/usuario.py:102 app/ui/detalle/usuario.py:188
+#: app/ui/busqueda.py:271 app/ui/detalle/organizacion.py:91 app/ui/detalle/usuario.py:102 app/ui/detalle/usuario.py:188
 msgid "Repositorios"
 msgstr ""
 
-#: app/ui/busqueda.py:310
+#: app/ui/busqueda.py:315
 msgid "&Ordenar por:"
 msgstr ""
 
-#: app/ui/busqueda.py:310
+#: app/ui/busqueda.py:315
 msgid "&Dirección:"
 msgstr ""
 
-#: app/ui/busqueda.py:330
+#: app/ui/busqueda.py:335
 msgid "Mínimo o desde. "
 msgstr ""
 
-#: app/ui/busqueda.py:330
+#: app/ui/busqueda.py:335
 msgid "Máximo o hasta. "
 msgstr ""
 
-#: app/ui/busqueda.py:343
+#: app/ui/busqueda.py:348
 msgid "Espacio marca o desmarca."
 msgstr ""
 
-#: app/ui/busqueda.py:357
+#: app/ui/busqueda.py:362
 msgid "Orden de los resultados. «Mejor coincidencia» es el de GitHub."
 msgstr ""
 
-#: app/ui/busqueda.py:361
+#: app/ui/busqueda.py:366
 msgid "Sentido del orden. No se aplica a «Mejor coincidencia»."
 msgstr ""
 
-#: app/ui/busqueda.py:362
+#: app/ui/busqueda.py:367
 msgid "Descendente (de mayor a menor)"
 msgstr ""
 
-#: app/ui/busqueda.py:362
+#: app/ui/busqueda.py:367
 msgid "Ascendente (de menor a mayor)"
 msgstr ""
 
-#: app/ui/busqueda.py:504
+#: app/ui/busqueda.py:509
 #, python-brace-format
 msgid "Se leerá la página {u}"
 msgstr ""
 
-#: app/ui/busqueda.py:506
+#: app/ui/busqueda.py:511
 #, python-brace-format
 msgid "El texto «{t}» filtra los resultados en este equipo."
 msgstr ""
 
-#: app/ui/busqueda.py:508
+#: app/ui/busqueda.py:513
 msgid "(consulta vacía)"
 msgstr ""
 
-#: app/ui/busqueda.py:512 app/ui/detalle/usuario.py:217 app/ui/vistas/principales.py:50 app/ui/vistas/principales.py:717
+#: app/ui/busqueda.py:517 app/ui/detalle/usuario.py:217 app/ui/vistas/principales.py:50 app/ui/vistas/principales.py:717
 msgid "Estrellas"
 msgstr ""
 
-#: app/ui/busqueda.py:513
+#: app/ui/busqueda.py:518
 msgid "ascendente"
 msgstr ""
 
-#: app/ui/busqueda.py:513
+#: app/ui/busqueda.py:518
 msgid "descendente"
-msgstr ""
-
-#: app/ui/busqueda.py:514
-#, python-brace-format
-msgid "Orden: {o}, {s}."
-msgstr ""
-
-#: app/ui/busqueda.py:516
-#, python-brace-format
-msgid "Búsqueda {t}: solo issues, sin orden, una sola página y como mucho 10 búsquedas por minuto."
-msgstr ""
-
-#: app/ui/busqueda.py:517
-msgid "semántica"
-msgstr ""
-
-#: app/ui/busqueda.py:517
-msgid "híbrida"
 msgstr ""
 
 #: app/ui/busqueda.py:519
 #, python-brace-format
-msgid "En el repositorio {r}."
+msgid "Orden: {o}, {s}."
 msgstr ""
 
 #: app/ui/busqueda.py:521
+#, python-brace-format
+msgid "Búsqueda {t}: solo issues, sin orden, una sola página y como mucho 10 búsquedas por minuto."
+msgstr ""
+
+#: app/ui/busqueda.py:522
+msgid "semántica"
+msgstr ""
+
+#: app/ui/busqueda.py:522
+msgid "híbrida"
+msgstr ""
+
+#: app/ui/busqueda.py:524
+#, python-brace-format
+msgid "En el repositorio {r}."
+msgstr ""
+
+#: app/ui/busqueda.py:526
 msgid "La API usa la búsqueda de código antigua: para expresiones regulares o symbol: use «Abrir en el navegador»."
 msgstr ""
 
-#: app/ui/busqueda.py:523
+#: app/ui/busqueda.py:528
 #, python-brace-format
 msgid "Problema: {m}"
 msgstr ""
 
-#: app/ui/busqueda.py:549
+#: app/ui/busqueda.py:554
 msgid "Escriba algo que buscar (o elija algún filtro) antes de abrirlo en el navegador."
 msgstr ""
 
-#: app/ui/busqueda.py:556
+#: app/ui/busqueda.py:561
 msgid "Ejemplos de búsqueda"
 msgstr ""
 
-#: app/ui/busqueda.py:556
+#: app/ui/busqueda.py:561
 msgid "&Ejemplos:"
 msgstr ""
 
-#: app/ui/busqueda.py:561
+#: app/ui/busqueda.py:566
 msgid "No hay nada que guardar: escriba un texto o elija algún filtro."
 msgstr ""
 
-#: app/ui/busqueda.py:600
+#: app/ui/busqueda.py:605
 msgid "Elija primero una búsqueda en «Búsquedas guardadas»."
 msgstr ""
 
-#: app/ui/busqueda.py:600
+#: app/ui/busqueda.py:605
 msgid "Búsquedas guardadas"
 msgstr ""
 
-#: app/ui/busqueda.py:609 app/ui/git/ventana_git.py:1133
+#: app/ui/busqueda.py:614 app/ui/git/ventana_git.py:1142
 msgid "&Nombre nuevo:"
 msgstr ""
 
-#: app/ui/busqueda.py:609 app/ui/busqueda.py:614
+#: app/ui/busqueda.py:614 app/ui/busqueda.py:619
 msgid "Renombrar la búsqueda guardada"
-msgstr ""
-
-#: app/ui/busqueda.py:614
-#, python-brace-format
-msgid "Ya hay otra búsqueda guardada con el nombre «{n}»."
 msgstr ""
 
 #: app/ui/busqueda.py:619
 #, python-brace-format
+msgid "Ya hay otra búsqueda guardada con el nombre «{n}»."
+msgstr ""
+
+#: app/ui/busqueda.py:624
+#, python-brace-format
 msgid "Renombrada a «{n}»."
 msgstr ""
 
-#: app/ui/busqueda.py:626
+#: app/ui/busqueda.py:631
 #, python-brace-format
 msgid "¿Borrar la búsqueda guardada «{n}»? No se puede deshacer."
 msgstr ""
 
-#: app/ui/busqueda.py:627
+#: app/ui/busqueda.py:632
 msgid "Borrar la búsqueda guardada"
 msgstr ""
 
-#: app/ui/busqueda.py:633
+#: app/ui/busqueda.py:638
 #, python-brace-format
 msgid "Búsqueda «{n}» borrada."
 msgstr ""
 
-#: app/ui/comunes.py:89 app/ui/detalle/comun_detalle.py:279 app/ui/git/ventana_git.py:532 app/ui/git/ventana_git.py:568 app/ui/repositorio/dialogos.py:149
+#: app/ui/comunes.py:90 app/ui/detalle/comun_detalle.py:279 app/ui/git/ventana_git.py:541 app/ui/git/ventana_git.py:577 app/ui/repositorio/dialogos.py:149
 msgid "No se pudo completar"
 msgstr ""
 
-#: app/ui/comunes.py:105 app/ui/vistas/base.py:537
+#: app/ui/comunes.py:106 app/ui/vistas/base.py:537
 msgid "Copiado."
 msgstr ""
 
-#: app/ui/comunes.py:121
+#: app/ui/comunes.py:122
 #, python-brace-format
 msgid "{p} de {t}"
 msgstr ""
 
-#: app/ui/comunes.py:219
+#: app/ui/comunes.py:220
 msgid "No hay opciones para elegir."
 msgstr ""
 
-#: app/ui/comunes.py:238
+#: app/ui/comunes.py:239
 #, python-brace-format
 msgid "Para confirmar, escriba «{n}»:"
 msgstr ""
 
-#: app/ui/comunes.py:242
+#: app/ui/comunes.py:243
 msgid "El texto no coincide. No se ha hecho nada."
 msgstr ""
 
@@ -1893,7 +1893,7 @@ msgstr ""
 msgid "Título: {t}"
 msgstr ""
 
-#: app/ui/detalle/acciones.py:413 app/ui/detalle/conversacion.py:332 app/ui/detalle/discusiones.py:83 app/ui/detalle/releases.py:69 app/ui/git/ventana_git.py:887 app/ui/repositorio/paneles.py:394 app/ui/repositorio/vistas.py:1773 app/ui/vistas/principales.py:109 app/ui/vistas/principales.py:850
+#: app/ui/detalle/acciones.py:413 app/ui/detalle/conversacion.py:332 app/ui/detalle/discusiones.py:83 app/ui/detalle/releases.py:69 app/ui/git/ventana_git.py:896 app/ui/repositorio/paneles.py:394 app/ui/repositorio/vistas.py:1773 app/ui/vistas/principales.py:109 app/ui/vistas/principales.py:850
 #, python-brace-format
 msgid "Estado: {e}"
 msgstr ""
@@ -2620,7 +2620,7 @@ msgstr ""
 msgid "Contenido del archivo en texto plano. Tabulador escribe una tabulación; Control+Tabulador pasa al campo siguiente. Control+Intro guarda."
 msgstr ""
 
-#: app/ui/detalle/archivos.py:143 app/ui/git/ventana_git.py:205 app/ui/repositorio/vistas.py:334 app/ui/repositorio/vistas.py:352 app/ui/repositorio/vistas.py:366
+#: app/ui/detalle/archivos.py:143 app/ui/git/ventana_git.py:206 app/ui/repositorio/vistas.py:334 app/ui/repositorio/vistas.py:352 app/ui/repositorio/vistas.py:366
 msgid "&Mensaje del commit:"
 msgstr ""
 
@@ -2677,15 +2677,15 @@ msgstr ""
 msgid "¿Descartar los cambios del archivo?"
 msgstr ""
 
-#: app/ui/detalle/archivos.py:197 app/ui/editor.py:321 app/ui/git/ventana_git.py:937
+#: app/ui/detalle/archivos.py:197 app/ui/editor.py:321 app/ui/git/ventana_git.py:946
 msgid "Descartar cambios"
 msgstr ""
 
-#: app/ui/detalle/archivos.py:209 app/ui/git/ventana_git.py:818
+#: app/ui/detalle/archivos.py:209 app/ui/git/ventana_git.py:827
 msgid "Escriba el mensaje del commit."
 msgstr ""
 
-#: app/ui/detalle/archivos.py:209 app/ui/git/ventana_git.py:818
+#: app/ui/detalle/archivos.py:209 app/ui/git/ventana_git.py:827
 msgid "Falta el mensaje"
 msgstr ""
 
@@ -2720,7 +2720,7 @@ msgstr ""
 msgid "{r} de {n}"
 msgstr ""
 
-#: app/ui/detalle/archivos.py:282 app/ui/detalle/issue.py:156 app/ui/detalle/organizacion.py:486 app/ui/detalle/pull_request.py:296 app/ui/detalle/releases.py:186 app/ui/detalle/usuario.py:180 app/ui/git/ventana_git.py:299
+#: app/ui/detalle/archivos.py:282 app/ui/detalle/issue.py:156 app/ui/detalle/organizacion.py:486 app/ui/detalle/pull_request.py:296 app/ui/detalle/releases.py:186 app/ui/detalle/usuario.py:180 app/ui/git/ventana_git.py:300
 msgid "&Acciones"
 msgstr ""
 
@@ -2844,7 +2844,7 @@ msgstr ""
 msgid "Muestra el Markdown formateado, con encabezados navegables."
 msgstr ""
 
-#: app/ui/detalle/archivos.py:322 app/ui/dialogo_preferencias.py:175 app/ui/git/clonar.py:302 app/ui/git/dialogos.py:111 app/ui/git/dialogos.py:490 app/ui/sesion.py:332 app/ui/visor_ayuda.py:423
+#: app/ui/detalle/archivos.py:322 app/ui/dialogo_preferencias.py:176 app/ui/git/clonar.py:302 app/ui/git/dialogos.py:111 app/ui/git/dialogos.py:490 app/ui/sesion.py:332 app/ui/visor_ayuda.py:423
 msgid "&Cerrar"
 msgstr ""
 
@@ -2856,7 +2856,7 @@ msgstr ""
 msgid "Contenido del archivo (solo lectura). Control+G va a una línea; Control+F busca; F3 repite la búsqueda; Control+L dice la línea actual."
 msgstr ""
 
-#: app/ui/detalle/archivos.py:345 app/ui/git/ventana_git.py:160 app/ui/repositorio/paneles.py:62 app/ui/vistas/base.py:286
+#: app/ui/detalle/archivos.py:345 app/ui/git/ventana_git.py:161 app/ui/repositorio/paneles.py:62 app/ui/vistas/base.py:286
 msgid "Cargando…"
 msgstr ""
 
@@ -2944,15 +2944,15 @@ msgstr ""
 msgid "Líneas"
 msgstr ""
 
-#: app/ui/detalle/archivos.py:480 app/ui/detalle/archivos.py:510 app/ui/detalle/conversacion.py:729 app/ui/detalle/discusiones.py:123 app/ui/detalle/gist.py:362 app/ui/detalle/pull_request.py:321 app/ui/git/ventana_git.py:985 app/ui/repositorio/vistas.py:808 app/ui/repositorio/vistas.py:901 app/ui/repositorio/vistas.py:1137 app/ui/repositorio/vistas.py:1425 app/ui/vistas/principales.py:93 app/ui/vistas/principales.py:474 app/ui/vistas/principales.py:710
+#: app/ui/detalle/archivos.py:480 app/ui/detalle/archivos.py:510 app/ui/detalle/conversacion.py:729 app/ui/detalle/discusiones.py:123 app/ui/detalle/gist.py:362 app/ui/detalle/pull_request.py:321 app/ui/git/ventana_git.py:994 app/ui/repositorio/vistas.py:808 app/ui/repositorio/vistas.py:901 app/ui/repositorio/vistas.py:1137 app/ui/repositorio/vistas.py:1425 app/ui/vistas/principales.py:93 app/ui/vistas/principales.py:474 app/ui/vistas/principales.py:710
 msgid "Autor"
 msgstr ""
 
-#: app/ui/detalle/archivos.py:480 app/ui/detalle/archivos.py:510 app/ui/detalle/conversacion.py:729 app/ui/detalle/discusiones.py:123 app/ui/detalle/gist.py:362 app/ui/detalle/organizacion.py:277 app/ui/detalle/organizacion.py:457 app/ui/detalle/pull_request.py:321 app/ui/detalle/releases.py:180 app/ui/git/ventana_git.py:986 app/ui/git/ventana_git.py:1095 app/ui/git/ventana_git.py:1204 app/ui/git/ventana_git.py:1249 app/ui/repositorio/vistas.py:1043 app/ui/repositorio/vistas.py:1426 app/ui/repositorio/vistas.py:1866 app/ui/repositorio/vistas.py:2197 app/ui/vistas/principales.py:210 app/ui/vistas/principales.py:297 app/ui/vistas/principales.py:728
+#: app/ui/detalle/archivos.py:480 app/ui/detalle/archivos.py:510 app/ui/detalle/conversacion.py:729 app/ui/detalle/discusiones.py:123 app/ui/detalle/gist.py:362 app/ui/detalle/organizacion.py:277 app/ui/detalle/organizacion.py:457 app/ui/detalle/pull_request.py:321 app/ui/detalle/releases.py:180 app/ui/git/ventana_git.py:995 app/ui/git/ventana_git.py:1104 app/ui/git/ventana_git.py:1213 app/ui/git/ventana_git.py:1258 app/ui/repositorio/vistas.py:1043 app/ui/repositorio/vistas.py:1426 app/ui/repositorio/vistas.py:1866 app/ui/repositorio/vistas.py:2197 app/ui/vistas/principales.py:210 app/ui/vistas/principales.py:297 app/ui/vistas/principales.py:728
 msgid "Fecha"
 msgstr ""
 
-#: app/ui/detalle/archivos.py:480 app/ui/detalle/archivos.py:510 app/ui/detalle/conversacion.py:216 app/ui/detalle/pull_request.py:321 app/ui/git/ventana_git.py:826 app/ui/git/ventana_git.py:832 app/ui/git/ventana_git.py:835 app/ui/git/ventana_git.py:983 app/ui/git/ventana_git.py:1203 app/ui/git/ventana_git.py:1334 app/ui/git/ventana_git.py:1352 app/ui/git/ventana_git.py:1388 app/ui/repositorio/vistas.py:1324 app/ui/repositorio/vistas.py:2195 app/ui/vistas/principales.py:724
+#: app/ui/detalle/archivos.py:480 app/ui/detalle/archivos.py:510 app/ui/detalle/conversacion.py:216 app/ui/detalle/pull_request.py:321 app/ui/git/ventana_git.py:835 app/ui/git/ventana_git.py:841 app/ui/git/ventana_git.py:844 app/ui/git/ventana_git.py:992 app/ui/git/ventana_git.py:1212 app/ui/git/ventana_git.py:1343 app/ui/git/ventana_git.py:1361 app/ui/git/ventana_git.py:1397 app/ui/repositorio/vistas.py:1324 app/ui/repositorio/vistas.py:2195 app/ui/vistas/principales.py:724
 msgid "Commit"
 msgstr ""
 
@@ -3069,7 +3069,7 @@ msgstr ""
 msgid "Descripción del pull request"
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:161 app/ui/detalle/organizacion.py:63 app/ui/detalle/organizacion.py:231 app/ui/detalle/usuario.py:126 app/ui/detalle/usuario.py:148 app/ui/detalle/usuario.py:217 app/ui/git/ventana_git.py:1335 app/ui/repositorio/vistas.py:1462 app/ui/repositorio/vistas.py:1523 app/ui/repositorio/vistas.py:1575 app/ui/repositorio/vistas.py:2198 app/ui/vistas/principales.py:47 app/ui/vistas/principales.py:471 app/ui/vistas/principales.py:494 app/ui/vistas/principales.py:518 app/ui/vistas/principales.py:706
+#: app/ui/detalle/conversacion.py:161 app/ui/detalle/organizacion.py:63 app/ui/detalle/organizacion.py:231 app/ui/detalle/usuario.py:126 app/ui/detalle/usuario.py:148 app/ui/detalle/usuario.py:217 app/ui/git/ventana_git.py:1344 app/ui/repositorio/vistas.py:1462 app/ui/repositorio/vistas.py:1523 app/ui/repositorio/vistas.py:1575 app/ui/repositorio/vistas.py:2198 app/ui/vistas/principales.py:47 app/ui/vistas/principales.py:471 app/ui/vistas/principales.py:494 app/ui/vistas/principales.py:518 app/ui/vistas/principales.py:706
 msgid "Descripción"
 msgstr ""
 
@@ -3169,7 +3169,7 @@ msgstr ""
 msgid "cambió el título de «{a}» a «{b}»"
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:209 app/ui/git/ventana_git.py:1247 app/ui/git/ventana_git.py:1389
+#: app/ui/detalle/conversacion.py:209 app/ui/git/ventana_git.py:1256 app/ui/git/ventana_git.py:1398
 msgid "Referencia"
 msgstr ""
 
@@ -3483,7 +3483,7 @@ msgstr ""
 msgid "C&onversación:"
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:729 app/ui/detalle/diferencias.py:77 app/ui/detalle/discusiones.py:123 app/ui/detalle/proyectos.py:180 app/ui/detalle/proyectos.py:267 app/ui/detalle/usuario.py:115 app/ui/git/ventana_git.py:1092 app/ui/repositorio/vistas.py:441 app/ui/repositorio/vistas.py:1135 app/ui/repositorio/vistas.py:1721 app/ui/repositorio/vistas.py:1860 app/ui/repositorio/vistas.py:1980 app/ui/repositorio/vistas.py:2145 app/ui/vistas/principales.py:55 app/ui/vistas/principales.py:294 app/ui/vistas/principales.py:536
+#: app/ui/detalle/conversacion.py:729 app/ui/detalle/diferencias.py:77 app/ui/detalle/discusiones.py:123 app/ui/detalle/proyectos.py:180 app/ui/detalle/proyectos.py:267 app/ui/detalle/usuario.py:115 app/ui/git/ventana_git.py:1101 app/ui/repositorio/vistas.py:441 app/ui/repositorio/vistas.py:1135 app/ui/repositorio/vistas.py:1721 app/ui/repositorio/vistas.py:1860 app/ui/repositorio/vistas.py:1980 app/ui/repositorio/vistas.py:2145 app/ui/vistas/principales.py:55 app/ui/vistas/principales.py:294 app/ui/vistas/principales.py:536
 msgid "Tipo"
 msgstr ""
 
@@ -3778,12 +3778,12 @@ msgstr ""
 msgid "Cargando las diferencias…"
 msgstr ""
 
-#: app/ui/detalle/diferencias.py:334 app/ui/git/ventana_git.py:973 app/ui/git/ventana_git.py:1010 app/ui/repositorio/vistas.py:1348
+#: app/ui/detalle/diferencias.py:334 app/ui/git/ventana_git.py:982 app/ui/git/ventana_git.py:1019 app/ui/repositorio/vistas.py:1348
 #, python-brace-format
 msgid "Commit {s}"
 msgstr ""
 
-#: app/ui/detalle/diferencias.py:335 app/ui/git/ventana_git.py:1011
+#: app/ui/detalle/diferencias.py:335 app/ui/git/ventana_git.py:1020
 #, python-brace-format
 msgid "Autor: {a} <{c}>, {f}"
 msgstr ""
@@ -3935,7 +3935,7 @@ msgstr ""
 msgid "Co&piar el enlace\tCtrl+Shift+C"
 msgstr ""
 
-#: app/ui/detalle/discusiones.py:147 app/ui/detalle/gist.py:118 app/ui/detalle/issue.py:176 app/ui/detalle/organizacion.py:491 app/ui/detalle/proyectos.py:212 app/ui/detalle/usuario.py:178 app/ui/git/ventana_git.py:296
+#: app/ui/detalle/discusiones.py:147 app/ui/detalle/gist.py:118 app/ui/detalle/issue.py:176 app/ui/detalle/organizacion.py:491 app/ui/detalle/proyectos.py:212 app/ui/detalle/usuario.py:178 app/ui/git/ventana_git.py:297
 msgid "Cerrar la &ventana\tCtrl+W"
 msgstr ""
 
@@ -4206,7 +4206,7 @@ msgstr ""
 msgid "Un gist necesita al menos un archivo. Para quitarlo todo, borre el gist."
 msgstr ""
 
-#: app/ui/detalle/gist.py:241 app/ui/detalle/gist.py:243 app/ui/git/ventana_git.py:942
+#: app/ui/detalle/gist.py:241 app/ui/detalle/gist.py:243 app/ui/git/ventana_git.py:951
 msgid "Borrar archivo"
 msgstr ""
 
@@ -4215,7 +4215,7 @@ msgstr ""
 msgid "¿Borrar el archivo {n} del gist?"
 msgstr ""
 
-#: app/ui/detalle/gist.py:246 app/ui/git/ventana_git.py:944
+#: app/ui/detalle/gist.py:246 app/ui/git/ventana_git.py:953
 msgid "Archivo borrado."
 msgstr ""
 
@@ -4251,7 +4251,7 @@ msgstr ""
 msgid "Este gist no tiene revisiones."
 msgstr ""
 
-#: app/ui/detalle/gist.py:287 app/ui/git/ventana_git.py:178 app/ui/git/ventana_git.py:981
+#: app/ui/detalle/gist.py:287 app/ui/git/ventana_git.py:179 app/ui/git/ventana_git.py:990
 msgid "Historial"
 msgstr ""
 
@@ -6299,7 +6299,7 @@ msgstr ""
 msgid "No se puede fusionar"
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:784 app/ui/git/ventana_git.py:1176
+#: app/ui/detalle/pull_request.py:784 app/ui/git/ventana_git.py:1185
 msgid "Fusionando…"
 msgstr ""
 
@@ -7101,7 +7101,7 @@ msgstr ""
 msgid "Novedades"
 msgstr ""
 
-#: app/ui/dialogo_actualizacion.py:164 app/ui/git/ventana_git.py:133 app/ui/repositorio/dialogos.py:955 app/ui/sesion.py:115 app/ui/ventana_principal.py:522 app/ui/vistas/principales.py:379
+#: app/ui/dialogo_actualizacion.py:164 app/ui/git/ventana_git.py:134 app/ui/repositorio/dialogos.py:955 app/ui/sesion.py:115 app/ui/ventana_principal.py:522 app/ui/vistas/principales.py:379
 msgid "&Estado:"
 msgstr ""
 
@@ -7252,216 +7252,216 @@ msgstr ""
 msgid "Se produjeron {n} errores más; están en el registro."
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:102 app/ui/preferencias.py:56 app/ui/repositorio/dialogos.py:400
+#: app/ui/dialogo_preferencias.py:103 app/ui/preferencias.py:56 app/ui/repositorio/dialogos.py:400
 msgid "General"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:103
+#: app/ui/dialogo_preferencias.py:104
 msgid "&Idioma de la interfaz:"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:104
+#: app/ui/dialogo_preferencias.py:105
 msgid "Idioma de menús y mensajes. Se aplica al reiniciar la aplicación."
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:105
+#: app/ui/dialogo_preferencias.py:106
 msgid "Español"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:105
+#: app/ui/dialogo_preferencias.py:106
 msgid "Inglés"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:105
+#: app/ui/dialogo_preferencias.py:106
 msgid "Francés"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:105
+#: app/ui/dialogo_preferencias.py:106
 msgid "Portugués"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:106
+#: app/ui/dialogo_preferencias.py:107
 msgid "Confirmar antes de &salir"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:107 app/ui/preferencias.py:68
+#: app/ui/dialogo_preferencias.py:108 app/ui/preferencias.py:68
 msgid "Pregunta antes de cerrar la aplicación."
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:108 app/ui/preferencias.py:63
+#: app/ui/dialogo_preferencias.py:109 app/ui/preferencias.py:63
 msgid "&Minimizar a la bandeja del sistema"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:109 app/ui/preferencias.py:64
+#: app/ui/dialogo_preferencias.py:110 app/ui/preferencias.py:64
 msgid "Al minimizar, la ventana se oculta y queda un icono junto al reloj."
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:110 app/ui/preferencias.py:69
+#: app/ui/dialogo_preferencias.py:111 app/ui/preferencias.py:69
 msgid "Carpeta de &descargas:"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:111
+#: app/ui/dialogo_preferencias.py:112
 msgid "Dónde se guardan los archivos descargados. Vacío: preguntar cada vez."
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:113
+#: app/ui/dialogo_preferencias.py:114
 msgid "Apariencia"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:114
+#: app/ui/dialogo_preferencias.py:115
 msgid "&Tamaño de la letra:"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:115
+#: app/ui/dialogo_preferencias.py:116
 msgid "Tamaño en puntos del texto de las listas y del lector. Se aplica al momento."
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:116
+#: app/ui/dialogo_preferencias.py:117
 msgid "T&ema:"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:117
+#: app/ui/dialogo_preferencias.py:118
 msgid "Colores de la interfaz."
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:118
+#: app/ui/dialogo_preferencias.py:119
 msgid "Según el sistema"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:118
+#: app/ui/dialogo_preferencias.py:119
 msgid "Claro"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:118
+#: app/ui/dialogo_preferencias.py:119
 msgid "Oscuro"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:120 app/ui/preferencias.py:90
+#: app/ui/dialogo_preferencias.py:121 app/ui/preferencias.py:90
 msgid "Accesibilidad"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:121
+#: app/ui/dialogo_preferencias.py:122
 msgid "Anunciar los cambios con el &lector de pantalla"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:122
+#: app/ui/dialogo_preferencias.py:123
 msgid "Lee en voz alta los avisos breves (guardado, elementos nuevos...)."
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:123
+#: app/ui/dialogo_preferencias.py:124
 msgid "R&etardo de los avisos (milisegundos):"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:124 app/ui/preferencias.py:94
+#: app/ui/dialogo_preferencias.py:125 app/ui/preferencias.py:94
 msgid "Espera antes de hablar para no pisar lo que el lector anuncia al mover el foco."
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:125
+#: app/ui/dialogo_preferencias.py:126
 msgid "&Volumen de los sonidos (0 a 1):"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:126
+#: app/ui/dialogo_preferencias.py:127
 msgid "Volumen de los sonidos de la aplicación."
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:128
+#: app/ui/dialogo_preferencias.py:129
 msgid "Red"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:129
+#: app/ui/dialogo_preferencias.py:130
 msgid "&Intervalo de actualización (segundos):"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:130
+#: app/ui/dialogo_preferencias.py:131
 msgid "Cada cuánto se buscan novedades."
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:131
+#: app/ui/dialogo_preferencias.py:132
 msgid "&Usar un servidor proxy"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:132
+#: app/ui/dialogo_preferencias.py:133
 msgid "Envía las conexiones a través del proxy indicado debajo."
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:133
+#: app/ui/dialogo_preferencias.py:134
 msgid "&Servidor proxy:"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:134
+#: app/ui/dialogo_preferencias.py:135
 msgid "Nombre o dirección del proxy, sin «http://»."
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:135
+#: app/ui/dialogo_preferencias.py:136
 msgid "Puer&to del proxy:"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:136
+#: app/ui/dialogo_preferencias.py:137
 msgid "Puerto del servidor proxy."
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:137
+#: app/ui/dialogo_preferencias.py:138
 msgid "C&ontraseña del proxy:"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:138
+#: app/ui/dialogo_preferencias.py:139
 msgid "Se guarda cifrada, nunca en el archivo de configuración."
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:171
+#: app/ui/dialogo_preferencias.py:172
 msgid "&Ayuda:"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:221
+#: app/ui/dialogo_preferencias.py:222
 msgid "Preferencias"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:240
+#: app/ui/dialogo_preferencias.py:241
 msgid "&Restablecer valores de fábrica"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:243 app/ui/git/ventana_git.py:1255
+#: app/ui/dialogo_preferencias.py:244 app/ui/git/ventana_git.py:1264
 msgid "A&plicar"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:244
+#: app/ui/dialogo_preferencias.py:245
 msgid "Pone todas las opciones con sus valores de fábrica. No se guarda nada hasta pulsar Aplicar o Aceptar."
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:322
+#: app/ui/dialogo_preferencias.py:323
 msgid "Elige la carpeta en una ventana de selección."
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:339
+#: app/ui/dialogo_preferencias.py:340
 msgid "Elige una carpeta"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:417
+#: app/ui/dialogo_preferencias.py:418
 #, python-format
 msgid "No se pudieron guardar las preferencias: %s"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:421
+#: app/ui/dialogo_preferencias.py:422
 msgid "Preferencias guardadas."
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:429
+#: app/ui/dialogo_preferencias.py:430
 msgid "Valor no válido"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:473
+#: app/ui/dialogo_preferencias.py:474
 msgid "¿Poner todas las opciones con sus valores de fábrica? No se guardará nada hasta que pulses Aplicar o Aceptar."
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:474
+#: app/ui/dialogo_preferencias.py:475
 msgid "Restablecer valores de fábrica"
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:482
+#: app/ui/dialogo_preferencias.py:483
 msgid "Valores de fábrica puestos. Pulsa Aceptar para guardarlos."
 msgstr ""
 
-#: app/ui/dialogo_preferencias.py:503
+#: app/ui/dialogo_preferencias.py:504
 msgid "No hay ayuda para este elemento."
 msgstr ""
 
@@ -7585,7 +7585,7 @@ msgstr ""
 msgid "Clonar un repositorio"
 msgstr ""
 
-#: app/ui/git/clonar.py:80 app/ui/git/ventana_git.py:1311
+#: app/ui/git/clonar.py:80 app/ui/git/ventana_git.py:1320
 msgid "&URL o dueño/repositorio:"
 msgstr ""
 
@@ -7749,7 +7749,7 @@ msgstr ""
 msgid "Código descargado en {r}."
 msgstr ""
 
-#: app/ui/git/clonar.py:301 app/ui/git/ventana_git.py:91
+#: app/ui/git/clonar.py:301 app/ui/git/ventana_git.py:92
 msgid "Git no está instalado"
 msgstr ""
 
@@ -8077,7 +8077,7 @@ msgid ""
 "Mientras dure, no haga commits."
 msgstr ""
 
-#: app/ui/git/dialogos.py:468 app/ui/git/ventana_git.py:775 app/ui/git/ventana_git.py:776 app/ui/git/ventana_git.py:779
+#: app/ui/git/dialogos.py:468 app/ui/git/ventana_git.py:784 app/ui/git/ventana_git.py:785 app/ui/git/ventana_git.py:788
 msgid "Bisección guiada"
 msgstr ""
 
@@ -8176,7 +8176,7 @@ msgstr ""
 msgid "en otro commit"
 msgstr ""
 
-#: app/ui/git/operaciones.py:150 app/ui/git/ventana_git.py:1085
+#: app/ui/git/operaciones.py:150 app/ui/git/ventana_git.py:1094
 msgid "al día"
 msgstr ""
 
@@ -8207,7 +8207,7 @@ msgstr ""
 msgid "{f}, {p} por ciento"
 msgstr ""
 
-#: app/ui/git/progreso_red.py:123 app/ui/git/ventana_git.py:151
+#: app/ui/git/progreso_red.py:123 app/ui/git/ventana_git.py:152
 msgid "&Progreso:"
 msgstr ""
 
@@ -8231,523 +8231,523 @@ msgstr ""
 msgid "Cancelando…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:120
+#: app/ui/git/ventana_git.py:121
 #, python-brace-format
 msgid "{n}: Git"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:134
+#: app/ui/git/ventana_git.py:135
 msgid "Cargando el estado…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:136
+#: app/ui/git/ventana_git.py:137
 msgid "Rama, cambios y operación en curso del repositorio. Control+R lo actualiza."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:141 app/ui/repositorio/ventana.py:120 app/ui/ventana_principal.py:108 app/ui/visor_ayuda.py:397
+#: app/ui/git/ventana_git.py:142 app/ui/repositorio/ventana.py:120 app/ui/ventana_principal.py:108 app/ui/visor_ayuda.py:397
 msgid "&Secciones:"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:143
+#: app/ui/git/ventana_git.py:144
 msgid "Secciones del repositorio. F6 pasa al contenido de la sección; Control+Tabulador cambia de sección."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:151
+#: app/ui/git/ventana_git.py:152
 msgid "Cance&lar la operación de red"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:177 app/ui/git/ventana_git.py:473 app/ui/git/ventana_git.py:866
+#: app/ui/git/ventana_git.py:178 app/ui/git/ventana_git.py:482 app/ui/git/ventana_git.py:875
 msgid "Cambios"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:180 app/ui/git/ventana_git.py:1089 app/ui/repositorio/vistas.py:1243
+#: app/ui/git/ventana_git.py:181 app/ui/git/ventana_git.py:1098 app/ui/repositorio/vistas.py:1243
 msgid "Ramas"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:180
+#: app/ui/git/ventana_git.py:181
 msgid "&Ramas:"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:181 app/ui/git/ventana_git.py:1200 app/ui/repositorio/vistas.py:578 app/ui/repositorio/vistas.py:809 app/ui/vistas/principales.py:95 app/ui/vistas/principales.py:712
+#: app/ui/git/ventana_git.py:182 app/ui/git/ventana_git.py:1209 app/ui/repositorio/vistas.py:578 app/ui/repositorio/vistas.py:809 app/ui/vistas/principales.py:95 app/ui/vistas/principales.py:712
 msgid "Etiquetas"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:181
+#: app/ui/git/ventana_git.py:182
 msgid "E&tiquetas:"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:182 app/ui/git/ventana_git.py:1245
+#: app/ui/git/ventana_git.py:183 app/ui/git/ventana_git.py:1254
 msgid "Stash"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:182
+#: app/ui/git/ventana_git.py:183
 msgid "&Cambios guardados (stash):"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:183 app/ui/git/ventana_git.py:1285
+#: app/ui/git/ventana_git.py:184 app/ui/git/ventana_git.py:1294
 msgid "Remotos"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:183
+#: app/ui/git/ventana_git.py:184
 msgid "&Remotos:"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:184 app/ui/git/ventana_git.py:1330
+#: app/ui/git/ventana_git.py:185 app/ui/git/ventana_git.py:1339
 msgid "Submódulos"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:184
+#: app/ui/git/ventana_git.py:185
 msgid "S&ubmódulos:"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:185 app/ui/git/ventana_git.py:1348
+#: app/ui/git/ventana_git.py:186 app/ui/git/ventana_git.py:1357
 msgid "Worktrees"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:185
+#: app/ui/git/ventana_git.py:186
 msgid "&Worktrees:"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:186 app/ui/git/ventana_git.py:1386
+#: app/ui/git/ventana_git.py:187 app/ui/git/ventana_git.py:1395
 msgid "Reflog"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:186
+#: app/ui/git/ventana_git.py:187
 msgid "Re&flog:"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:191 app/ui/git/ventana_git.py:474 app/ui/git/ventana_git.py:1408
+#: app/ui/git/ventana_git.py:192 app/ui/git/ventana_git.py:483 app/ui/git/ventana_git.py:1417
 msgid "Conflictos"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:202
+#: app/ui/git/ventana_git.py:203
 msgid "Lista de &cambios:"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:207
+#: app/ui/git/ventana_git.py:208
 msgid "Mensaje del commit: la primera línea es el resumen; deje una línea en blanco antes de la descripción. Control+Intro confirma."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:212
+#: app/ui/git/ventana_git.py:213
 msgid "E&nmendar el último commit"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:213
+#: app/ui/git/ventana_git.py:214
 msgid "Sustituye el último commit por uno nuevo con lo preparado y este mensaje (--amend)."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:216
+#: app/ui/git/ventana_git.py:217
 msgid "F&irmar el commit"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:218
+#: app/ui/git/ventana_git.py:219
 msgid "Firma el commit con su clave GPG o SSH (-S)."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:220
+#: app/ui/git/ventana_git.py:221
 msgid "C&onfirmar (commit)"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:221
+#: app/ui/git/ventana_git.py:222
 msgid "Crea el commit con los cambios preparados y el mensaje escrito (Control+Intro desde el mensaje)."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:231
+#: app/ui/git/ventana_git.py:232
 msgid "&Historial:"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:242 app/ui/git/ventana_git.py:478 app/ui/git/ventana_git.py:727 app/ui/git/ventana_git.py:735
+#: app/ui/git/ventana_git.py:243 app/ui/git/ventana_git.py:487 app/ui/git/ventana_git.py:736 app/ui/git/ventana_git.py:744
 msgid "No hay ninguna operación en curso."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:244
+#: app/ui/git/ventana_git.py:245
 msgid "Archivos en &conflicto:"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:248
+#: app/ui/git/ventana_git.py:249
 msgid "C&ontinuar la operación"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:249
+#: app/ui/git/ventana_git.py:250
 msgid "Termina la fusión o sigue con la reorganización, cherry-pick o reversión una vez resueltos los conflictos."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:251
+#: app/ui/git/ventana_git.py:252
 msgid "A&bortar la operación…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:252
+#: app/ui/git/ventana_git.py:253
 msgid "Deja el repositorio como estaba antes de empezar la operación."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:254
+#: app/ui/git/ventana_git.py:255
 msgid "Saltar es&te commit"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:255
+#: app/ui/git/ventana_git.py:256
 msgid "En una reorganización, omite el commit que da conflicto y sigue con el siguiente."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:273
+#: app/ui/git/ventana_git.py:274
 msgid "&Traer (fetch)\tCtrl+Shift+T"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:273
+#: app/ui/git/ventana_git.py:274
 msgid "Trae los cambios de todos los remotos sin tocar sus archivos."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:274
+#: app/ui/git/ventana_git.py:275
 msgid "T&irar (pull)\tCtrl+Shift+U"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:274
+#: app/ui/git/ventana_git.py:275
 msgid "Trae y aplica los cambios de la rama remota."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:275
+#: app/ui/git/ventana_git.py:276
 msgid "&Enviar (push)\tCtrl+Shift+P"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:275
+#: app/ui/git/ventana_git.py:276
 msgid "Envía sus commits a la rama remota."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:276
+#: app/ui/git/ventana_git.py:277
 msgid "Enviar &forzando (con lease)…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:277
+#: app/ui/git/ventana_git.py:278
 msgid "Sobrescribe la rama remota si nadie más la ha cambiado (--force-with-lease)."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:278
+#: app/ui/git/ventana_git.py:279
 msgid "&Sincronizar (pull y push)\tCtrl+Shift+Y"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:278
+#: app/ui/git/ventana_git.py:279
 msgid "Tira y después envía."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:280
+#: app/ui/git/ventana_git.py:281
 msgid "Abrir en &GitHub\tCtrl+Shift+G"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:280
+#: app/ui/git/ventana_git.py:281
 msgid "Abre el repositorio de GitHub del remoto origin."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:281
+#: app/ui/git/ventana_git.py:282
 msgid "Crear un &pull request de la rama actual…\tCtrl+Shift+R"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:283
+#: app/ui/git/ventana_git.py:284
 msgid "Abrir la &carpeta\tCtrl+Shift+E"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:284
+#: app/ui/git/ventana_git.py:285
 msgid "Abrir una c&onsola aquí\tCtrl+Shift+K"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:286
+#: app/ui/git/ventana_git.py:287
 msgid "Continuar la operación en c&urso"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:287
+#: app/ui/git/ventana_git.py:288
 msgid "A&bortar la operación en curso…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:288
+#: app/ui/git/ventana_git.py:289
 msgid "Saltar este co&mmit (reorganización)"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:290
+#: app/ui/git/ventana_git.py:291
 msgid "&Limpiar archivos sin seguimiento…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:291
+#: app/ui/git/ventana_git.py:292
 msgid "Mante&nimiento (gc)"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:292
+#: app/ui/git/ventana_git.py:293
 msgid "Bisección guia&da…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:293
+#: app/ui/git/ventana_git.py:294
 msgid "Configuración del &repositorio…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:295
+#: app/ui/git/ventana_git.py:296
 msgid "&Actualizar el estado\tCtrl+R"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:297
+#: app/ui/git/ventana_git.py:298
 msgid "&Git"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:376
+#: app/ui/git/ventana_git.py:385
 msgid "(&Sin acciones en esta sección)"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:398
+#: app/ui/git/ventana_git.py:407
 msgid "Hay una operación de red en curso. ¿Cancelarla y cerrar la ventana?"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:456
+#: app/ui/git/ventana_git.py:465
 #, python-brace-format
 msgid "{o} en curso"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:457
+#: app/ui/git/ventana_git.py:466
 #, python-brace-format
 msgid " con {n} archivos en conflicto."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:459
+#: app/ui/git/ventana_git.py:468
 #, python-brace-format
 msgid "{n} cambios guardados en stash."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:470
+#: app/ui/git/ventana_git.py:479
 #, python-brace-format
 msgid "{n} ({r}): Git"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:470
+#: app/ui/git/ventana_git.py:479
 msgid "HEAD separado"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:473
+#: app/ui/git/ventana_git.py:482
 #, python-brace-format
 msgid "Cambios ({n})"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:474
+#: app/ui/git/ventana_git.py:483
 #, python-brace-format
 msgid "Conflictos ({n})"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:476
+#: app/ui/git/ventana_git.py:485
 #, python-brace-format
 msgid "{o} en curso. {e}"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:528 app/ui/git/ventana_git.py:564
+#: app/ui/git/ventana_git.py:537 app/ui/git/ventana_git.py:573
 msgid "Hay conflictos"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:528 app/ui/git/ventana_git.py:564
+#: app/ui/git/ventana_git.py:537 app/ui/git/ventana_git.py:573
 msgid "Resuélvalos en la sección Conflictos."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:545
+#: app/ui/git/ventana_git.py:554
 msgid "Ya hay una operación de red en curso. Espere o cancélela."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:561
+#: app/ui/git/ventana_git.py:570
 #, python-brace-format
 msgid "No se pudo completar: {m}"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:573
+#: app/ui/git/ventana_git.py:582
 msgid "Trayendo cambios de todos los remotos…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:574
+#: app/ui/git/ventana_git.py:583
 msgid "Cambios traídos."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:578
+#: app/ui/git/ventana_git.py:587
 msgid "Tirando con reorganización…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:578
+#: app/ui/git/ventana_git.py:587
 msgid "Tirando (pull)…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:580
+#: app/ui/git/ventana_git.py:589
 msgid "Rama actualizada con los cambios remotos."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:585
+#: app/ui/git/ventana_git.py:594
 msgid "No está en ninguna rama (HEAD separado). Cree una rama antes de enviar."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:585 app/ui/git/ventana_git.py:588 app/ui/git/ventana_git.py:602
+#: app/ui/git/ventana_git.py:594 app/ui/git/ventana_git.py:597 app/ui/git/ventana_git.py:611
 msgid "Enviar"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:588
+#: app/ui/git/ventana_git.py:597
 msgid "El repositorio no tiene remotos. Añada uno en la sección Remotos."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:590
+#: app/ui/git/ventana_git.py:599
 #, python-brace-format
 msgid "Se sobrescribirá la rama remota con su rama «{r}». Los commits remotos que usted no tenga se perderán (si alguien más ha enviado cambios, git se negará: --force-with-lease). ¿Continuar?"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:593
+#: app/ui/git/ventana_git.py:602
 msgid "Enviar forzando"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:602
+#: app/ui/git/ventana_git.py:611
 msgid "&Remoto al que publicar la rama:"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:606
+#: app/ui/git/ventana_git.py:615
 #, python-brace-format
 msgid "La rama «{r}» no tiene rama remota. ¿Publicarla en «{o}» y seguirla desde ahora (--set-upstream)?"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:608
+#: app/ui/git/ventana_git.py:617
 msgid "Publicar la rama"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:613
+#: app/ui/git/ventana_git.py:622
 #, python-brace-format
 msgid "Enviando la rama {r} a {o}…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:616
+#: app/ui/git/ventana_git.py:625
 #, python-brace-format
 msgid "Rama {r} enviada a {o}."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:624
+#: app/ui/git/ventana_git.py:633
 msgid "La rama actual no tiene rama remota. Use «Enviar» para publicarla primero."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:624
+#: app/ui/git/ventana_git.py:633
 msgid "Sincronizar"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:633
+#: app/ui/git/ventana_git.py:642
 msgid "Rama sincronizada."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:633
+#: app/ui/git/ventana_git.py:642
 #, python-brace-format
 msgid "Sincronizando con {r}…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:652
+#: app/ui/git/ventana_git.py:661
 #, python-brace-format
 msgid "El remoto origin no es de {h}: {u}"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:652
+#: app/ui/git/ventana_git.py:661
 msgid "(no hay origin)"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:653
+#: app/ui/git/ventana_git.py:662
 msgid "Abrir en GitHub"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:670
+#: app/ui/git/ventana_git.py:679
 #, python-brace-format
 msgid "El remoto origin no es de {h}: no se puede crear un pull request."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:671 app/ui/git/ventana_git.py:674
+#: app/ui/git/ventana_git.py:680 app/ui/git/ventana_git.py:683
 msgid "Crear pull request"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:674
+#: app/ui/git/ventana_git.py:683
 msgid "Envíe primero la rama actual a GitHub (menú Git, Enviar)."
-msgstr ""
-
-#: app/ui/git/ventana_git.py:691
-#, python-brace-format
-msgid "Nuevo pull request desde {r}"
-msgstr ""
-
-#: app/ui/git/ventana_git.py:692
-msgid "Crear el &pull request"
-msgstr ""
-
-#: app/ui/git/ventana_git.py:694
-msgid "Rama &base:"
-msgstr ""
-
-#: app/ui/git/ventana_git.py:694 app/ui/repositorio/vistas.py:777
-msgid "Rama en la que se fusionarán los cambios."
-msgstr ""
-
-#: app/ui/git/ventana_git.py:695
-msgid "Crear como bo&rrador"
-msgstr ""
-
-#: app/ui/git/ventana_git.py:695 app/ui/repositorio/vistas.py:779
-msgid "Un borrador no se puede fusionar hasta marcarlo como listo."
 msgstr ""
 
 #: app/ui/git/ventana_git.py:700
 #, python-brace-format
+msgid "Nuevo pull request desde {r}"
+msgstr ""
+
+#: app/ui/git/ventana_git.py:701
+msgid "Crear el &pull request"
+msgstr ""
+
+#: app/ui/git/ventana_git.py:703
+msgid "Rama &base:"
+msgstr ""
+
+#: app/ui/git/ventana_git.py:703 app/ui/repositorio/vistas.py:777
+msgid "Rama en la que se fusionarán los cambios."
+msgstr ""
+
+#: app/ui/git/ventana_git.py:704
+msgid "Crear como bo&rrador"
+msgstr ""
+
+#: app/ui/git/ventana_git.py:704 app/ui/repositorio/vistas.py:779
+msgid "Un borrador no se puede fusionar hasta marcarlo como listo."
+msgstr ""
+
+#: app/ui/git/ventana_git.py:709
+#, python-brace-format
 msgid "Pull request {n} creado."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:701
+#: app/ui/git/ventana_git.py:710
 msgid "Pull request"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:701
+#: app/ui/git/ventana_git.py:710
 #, python-brace-format
 msgid "Pull request {n} creado. ¿Abrirlo?"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:712
+#: app/ui/git/ventana_git.py:721
 #, python-brace-format
 msgid "No se pudo abrir la carpeta: {e}"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:719
+#: app/ui/git/ventana_git.py:728
 #, python-brace-format
 msgid "No se pudo abrir la consola: {e}"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:730
+#: app/ui/git/ventana_git.py:739
 msgid "Continuando…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:731
+#: app/ui/git/ventana_git.py:740
 #, python-brace-format
 msgid "{o} continuada."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:738
+#: app/ui/git/ventana_git.py:747
 #, python-brace-format
 msgid "¿Abortar la {o}? El repositorio vuelve a como estaba antes y se pierden las resoluciones de conflictos hechas."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:740
+#: app/ui/git/ventana_git.py:749
 msgid "Abortar"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:742
+#: app/ui/git/ventana_git.py:751
 #, python-brace-format
 msgid "{o} abortada."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:746
+#: app/ui/git/ventana_git.py:755
 msgid "Solo se puede saltar un commit durante una reorganización."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:748
+#: app/ui/git/ventana_git.py:757
 msgid "¿Saltar el commit que da conflicto? Sus cambios no se aplicarán."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:748
+#: app/ui/git/ventana_git.py:757
 msgid "Saltar commit"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:751
+#: app/ui/git/ventana_git.py:760
 msgid "Commit saltado."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:757
+#: app/ui/git/ventana_git.py:766
 msgid "No hay archivos sin seguimiento que borrar."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:759
+#: app/ui/git/ventana_git.py:768
 #, python-brace-format
 msgid ""
 "Se borrarán para siempre estos {n} archivos y carpetas sin seguimiento (no van a la papelera):\n"
@@ -8757,859 +8757,859 @@ msgid ""
 "¿Continuar?"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:761
+#: app/ui/git/ventana_git.py:770
 msgid "Limpiar"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:763
+#: app/ui/git/ventana_git.py:772
 #, python-brace-format
 msgid "{n} elementos borrados."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:766
+#: app/ui/git/ventana_git.py:775
 msgid "Buscando archivos sin seguimiento…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:769
+#: app/ui/git/ventana_git.py:778
 msgid "Haciendo el mantenimiento (git gc)…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:769
+#: app/ui/git/ventana_git.py:778
 msgid "Mantenimiento terminado."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:773
+#: app/ui/git/ventana_git.py:782
 msgid "Bisección en curso. Pruebe el commit actual y diga si está bien o mal."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:776
+#: app/ui/git/ventana_git.py:785
 msgid "Commit &malo (donde ya falla):"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:779
+#: app/ui/git/ventana_git.py:788
 msgid "Commit &bueno (donde aún funcionaba; SHA, etiqueta o rama):"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:784
+#: app/ui/git/ventana_git.py:793
 msgid "No se pudo empezar la bisección"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:811
+#: app/ui/git/ventana_git.py:820
 msgid "Mensaje del último commit copiado en el campo."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:826
+#: app/ui/git/ventana_git.py:835
 msgid "Hay archivos en conflicto. Resuélvalos antes de hacer commit."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:832
+#: app/ui/git/ventana_git.py:841
 msgid "No hay cambios que confirmar."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:834
+#: app/ui/git/ventana_git.py:843
 #, python-brace-format
 msgid "No hay cambios preparados. ¿Preparar todos los cambios ({n} archivos) y confirmarlos?"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:849
+#: app/ui/git/ventana_git.py:858
 msgid "Creando el commit…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:869
+#: app/ui/git/ventana_git.py:878
 msgid "Preparado"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:874
+#: app/ui/git/ventana_git.py:883
 msgid "&Preparar o quitar de preparados"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:875
+#: app/ui/git/ventana_git.py:884
 msgid "Preparar &todo"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:876
+#: app/ui/git/ventana_git.py:885
 msgid "Q&uitar todo de preparados"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:877 app/ui/git/ventana_git.py:991 app/ui/git/ventana_git.py:1253 app/ui/git/ventana_git.py:1419 app/ui/repositorio/vistas.py:817
+#: app/ui/git/ventana_git.py:886 app/ui/git/ventana_git.py:1000 app/ui/git/ventana_git.py:1262 app/ui/git/ventana_git.py:1428 app/ui/repositorio/vistas.py:817
 msgid "&Ver las diferencias"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:878
+#: app/ui/git/ventana_git.py:887
 msgid "Desca&rtar los cambios…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:880
+#: app/ui/git/ventana_git.py:889
 msgid "&Borrar el archivo sin seguimiento…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:882
+#: app/ui/git/ventana_git.py:891
 msgid "Añadir a .&gitignore…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:884
+#: app/ui/git/ventana_git.py:893
 msgid "No hay cambios: el árbol de trabajo está limpio."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:886
+#: app/ui/git/ventana_git.py:895
 #, python-brace-format
 msgid "Archivo: {r}"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:886
+#: app/ui/git/ventana_git.py:895
 #, python-brace-format
 msgid "Antes: {r}"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:887
+#: app/ui/git/ventana_git.py:896
 #, python-brace-format
 msgid "Preparado: {p}"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:898
+#: app/ui/git/ventana_git.py:907
 msgid "Este archivo está en conflicto: resuélvalo en la sección Conflictos."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:902
+#: app/ui/git/ventana_git.py:911
 #, python-brace-format
 msgid "Preparado: {r}."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:905
+#: app/ui/git/ventana_git.py:914
 #, python-brace-format
 msgid "Quitado de preparados: {r}."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:909
+#: app/ui/git/ventana_git.py:918
 msgid "Todos los cambios preparados."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:912
+#: app/ui/git/ventana_git.py:921
 msgid "Ningún cambio preparado."
-msgstr ""
-
-#: app/ui/git/ventana_git.py:927
-#, python-brace-format
-msgid "Diferencias de {r}"
-msgstr ""
-
-#: app/ui/git/ventana_git.py:927
-#, python-brace-format
-msgid "Archivo {r}. {e}. Si tiene cambios preparados y sin preparar, salen primero los preparados."
-msgstr ""
-
-#: app/ui/git/ventana_git.py:933
-#, python-brace-format
-msgid "{r} solo tiene cambios preparados. Quítelos primero de preparados (Espacio)."
-msgstr ""
-
-#: app/ui/git/ventana_git.py:934
-msgid "Descartar"
 msgstr ""
 
 #: app/ui/git/ventana_git.py:936
 #, python-brace-format
-msgid "¿Descartar los cambios sin preparar de {r}? No se puede deshacer."
+msgid "Diferencias de {r}"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:939
-msgid "Cambios descartados."
+#: app/ui/git/ventana_git.py:936
+#, python-brace-format
+msgid "Archivo {r}. {e}. Si tiene cambios preparados y sin preparar, salen primero los preparados."
 msgstr ""
 
 #: app/ui/git/ventana_git.py:942
 #, python-brace-format
+msgid "{r} solo tiene cambios preparados. Quítelos primero de preparados (Espacio)."
+msgstr ""
+
+#: app/ui/git/ventana_git.py:943
+msgid "Descartar"
+msgstr ""
+
+#: app/ui/git/ventana_git.py:945
+#, python-brace-format
+msgid "¿Descartar los cambios sin preparar de {r}? No se puede deshacer."
+msgstr ""
+
+#: app/ui/git/ventana_git.py:948
+msgid "Cambios descartados."
+msgstr ""
+
+#: app/ui/git/ventana_git.py:951
+#, python-brace-format
 msgid "¿Borrar para siempre {r}? No va a la papelera."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:947
+#: app/ui/git/ventana_git.py:956
 #, python-brace-format
 msgid "Este &archivo: {l}"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:947
+#: app/ui/git/ventana_git.py:956
 #, python-brace-format
 msgid "Todos los de la &extensión: {l}"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:948
+#: app/ui/git/ventana_git.py:957
 #, python-brace-format
 msgid "Toda la &carpeta: {l}"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:950
+#: app/ui/git/ventana_git.py:959
 msgid "¿Qué quiere añadir al archivo .gitignore?"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:950
+#: app/ui/git/ventana_git.py:959
 msgid "Añadir a .gitignore"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:954
+#: app/ui/git/ventana_git.py:963
 msgid " Git sigue el archivo: para dejar de seguirlo, bórrelo del índice."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:956
+#: app/ui/git/ventana_git.py:965
 #, python-brace-format
 msgid "Añadido «{l}» a .gitignore."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:956
+#: app/ui/git/ventana_git.py:965
 #, python-brace-format
 msgid "«{l}» ya estaba en .gitignore."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:973 app/ui/repositorio/vistas.py:1349
+#: app/ui/git/ventana_git.py:982 app/ui/repositorio/vistas.py:1349
 #, python-brace-format
 msgid "Autor: {a} <{c}>"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:974 app/ui/repositorio/vistas.py:1350
+#: app/ui/git/ventana_git.py:983 app/ui/repositorio/vistas.py:1350
 #, python-brace-format
 msgid "Fecha: {f}"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:975
+#: app/ui/git/ventana_git.py:984
 #, python-brace-format
 msgid "Padres: {p}"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:976
+#: app/ui/git/ventana_git.py:985
 #, python-brace-format
 msgid "Referencias: {r}"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:984
+#: app/ui/git/ventana_git.py:993
 msgid "Asunto"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:984
+#: app/ui/git/ventana_git.py:993
 msgid "Fusión: "
 msgstr ""
 
-#: app/ui/git/ventana_git.py:987
+#: app/ui/git/ventana_git.py:996
 msgid "Referencias"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:992
+#: app/ui/git/ventana_git.py:1001
 msgid "A&plicar este commit (cherry-pick)…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:993
+#: app/ui/git/ventana_git.py:1002
 msgid "&Revertir este commit…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:994 app/ui/git/ventana_git.py:1396
+#: app/ui/git/ventana_git.py:1003 app/ui/git/ventana_git.py:1405
 msgid "Res&tablecer la rama aquí…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:995
+#: app/ui/git/ventana_git.py:1004
 msgid "Crear u&na rama aquí…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:996
+#: app/ui/git/ventana_git.py:1005
 msgid "Crear una &etiqueta aquí…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:997 app/ui/git/ventana_git.py:1397 app/ui/repositorio/vistas.py:1434
+#: app/ui/git/ventana_git.py:1006 app/ui/git/ventana_git.py:1406 app/ui/repositorio/vistas.py:1434
 msgid "Copiar el &SHA"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:997 app/ui/git/ventana_git.py:1397 app/ui/repositorio/vistas.py:1434
+#: app/ui/git/ventana_git.py:1006 app/ui/git/ventana_git.py:1406 app/ui/repositorio/vistas.py:1434
 msgid "SHA copiado."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:998
+#: app/ui/git/ventana_git.py:1007
 msgid "Filtrar por a&utor, texto o ruta…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1000
+#: app/ui/git/ventana_git.py:1009
 msgid "Quitar el filtro del &historial"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1003
+#: app/ui/git/ventana_git.py:1012
 msgid "No hay commits que mostrar."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1014
+#: app/ui/git/ventana_git.py:1023
 #, python-brace-format
 msgid "Commit {s}: {a}"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1018
+#: app/ui/git/ventana_git.py:1027
 #, python-brace-format
 msgid "¿Aplicar el commit {s} «{a}» sobre la rama actual (cherry-pick)?"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1019
+#: app/ui/git/ventana_git.py:1028
 msgid "Cherry-pick"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1021
+#: app/ui/git/ventana_git.py:1030
 msgid "Aplicando el commit…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1021
+#: app/ui/git/ventana_git.py:1030
 msgid "Commit aplicado."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1024
+#: app/ui/git/ventana_git.py:1033
 #, python-brace-format
 msgid "¿Crear un commit nuevo que deshace {s} «{a}»?"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1025
+#: app/ui/git/ventana_git.py:1034
 msgid "Revertir"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1027
+#: app/ui/git/ventana_git.py:1036
 msgid "Revirtiendo…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1027
+#: app/ui/git/ventana_git.py:1036
 msgid "Commit revertido."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1032
+#: app/ui/git/ventana_git.py:1041
 #, python-brace-format
 msgid "Rama restablecida a {d}."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1035
+#: app/ui/git/ventana_git.py:1044
 msgid "&Nombre de la rama nueva:"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1035
+#: app/ui/git/ventana_git.py:1044
 #, python-brace-format
 msgid "Nueva rama desde {d}"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1035
+#: app/ui/git/ventana_git.py:1044
 msgid "la actual"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1039
+#: app/ui/git/ventana_git.py:1048
 msgid "Nueva rama"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1039
+#: app/ui/git/ventana_git.py:1048
 #, python-brace-format
 msgid "¿Cambiar a la rama «{n}» después de crearla?"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1041
+#: app/ui/git/ventana_git.py:1050
 #, python-brace-format
 msgid "Rama {n} creada; ahora está en ella."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1041
+#: app/ui/git/ventana_git.py:1050
 #, python-brace-format
 msgid "Rama {n} creada."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1044
+#: app/ui/git/ventana_git.py:1053
 msgid "&Nombre de la etiqueta (por ejemplo v1.0):"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1044 app/ui/git/ventana_git.py:1047 app/ui/repositorio/dialogos.py:875
+#: app/ui/git/ventana_git.py:1053 app/ui/git/ventana_git.py:1056 app/ui/repositorio/dialogos.py:875
 msgid "Nueva etiqueta"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1047
+#: app/ui/git/ventana_git.py:1056
 msgid "&Mensaje (vacío para una etiqueta ligera):"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1051
+#: app/ui/git/ventana_git.py:1060
 #, python-brace-format
 msgid "Etiqueta {n} creada."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1079
+#: app/ui/git/ventana_git.py:1088
 msgid "actual"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1080
+#: app/ui/git/ventana_git.py:1089
 msgid "remota"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1080
+#: app/ui/git/ventana_git.py:1089
 msgid "local"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1091 app/ui/git/ventana_git.py:1351 app/ui/repositorio/vistas.py:806 app/ui/repositorio/vistas.py:1010 app/ui/repositorio/vistas.py:1039 app/ui/repositorio/vistas.py:1386 app/ui/vistas/principales.py:561
+#: app/ui/git/ventana_git.py:1100 app/ui/git/ventana_git.py:1360 app/ui/repositorio/vistas.py:806 app/ui/repositorio/vistas.py:1010 app/ui/repositorio/vistas.py:1039 app/ui/repositorio/vistas.py:1386 app/ui/vistas/principales.py:561
 msgid "Rama"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1093
+#: app/ui/git/ventana_git.py:1102
 msgid "Seguimiento"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1094 app/ui/repositorio/vistas.py:1248
+#: app/ui/git/ventana_git.py:1103 app/ui/repositorio/vistas.py:1248
 msgid "Último commit"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1099
+#: app/ui/git/ventana_git.py:1108
 msgid "&Cambiar a esta rama"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1100
+#: app/ui/git/ventana_git.py:1109
 msgid "&Nueva rama desde esta…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1101 app/ui/repositorio/vistas.py:1255
+#: app/ui/git/ventana_git.py:1110 app/ui/repositorio/vistas.py:1255
 msgid "&Renombrar…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1102 app/ui/repositorio/vistas.py:1256
+#: app/ui/git/ventana_git.py:1111 app/ui/repositorio/vistas.py:1256
 msgid "&Borrar la rama…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1103
+#: app/ui/git/ventana_git.py:1112
 msgid "Borrar la rama del ser&vidor…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1105
+#: app/ui/git/ventana_git.py:1114
 msgid "Fusionar en la rama ac&tual…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1107
+#: app/ui/git/ventana_git.py:1116
 msgid "Reor&ganizar la rama actual sobre esta…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1109
+#: app/ui/git/ventana_git.py:1118
 msgid "Establecer como &seguimiento de la actual"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1112
+#: app/ui/git/ventana_git.py:1121
 msgid "No hay ramas todavía: haga el primer commit."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1117
+#: app/ui/git/ventana_git.py:1126
 #, python-brace-format
 msgid "Ya está en la rama {r}."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1130
+#: app/ui/git/ventana_git.py:1139
 #, python-brace-format
 msgid "Ahora está en la rama {r}."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1133
+#: app/ui/git/ventana_git.py:1142
 #, python-brace-format
 msgid "Renombrar la rama {r}"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1136
+#: app/ui/git/ventana_git.py:1145
 #, python-brace-format
 msgid "Rama renombrada a {n}."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1140
+#: app/ui/git/ventana_git.py:1149
 msgid "No se puede borrar la rama en la que está. Cambie antes a otra."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1140 app/ui/git/ventana_git.py:1142 app/ui/git/ventana_git.py:1149
+#: app/ui/git/ventana_git.py:1149 app/ui/git/ventana_git.py:1151 app/ui/git/ventana_git.py:1158
 msgid "Borrar rama"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1142
+#: app/ui/git/ventana_git.py:1151
 #, python-brace-format
 msgid "¿Borrar la rama local {r}?"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1147
+#: app/ui/git/ventana_git.py:1156
 #, python-brace-format
 msgid "La rama {r} tiene commits que no están en ninguna otra rama. Si la borra, se perderán. ¿Borrarla igualmente?"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1150 app/ui/git/ventana_git.py:1155 app/ui/repositorio/vistas.py:1188
+#: app/ui/git/ventana_git.py:1159 app/ui/git/ventana_git.py:1164 app/ui/repositorio/vistas.py:1188
 msgid "Rama borrada."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1153
+#: app/ui/git/ventana_git.py:1162
 msgid "No se pudo borrar"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1163
+#: app/ui/git/ventana_git.py:1172
 #, python-brace-format
 msgid "¿Borrar la rama {n} del remoto {r}? Las demás personas dejarán de verla."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1164
+#: app/ui/git/ventana_git.py:1173
 msgid "Borrar rama remota"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1166
+#: app/ui/git/ventana_git.py:1175
 #, python-brace-format
 msgid "Borrando la rama {n} de {r}…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1169
+#: app/ui/git/ventana_git.py:1178
 #, python-brace-format
 msgid "Rama {n} borrada de {r}."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1173
+#: app/ui/git/ventana_git.py:1182
 #, python-brace-format
 msgid "¿Fusionar {r} en la rama actual {a}?"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1173
+#: app/ui/git/ventana_git.py:1182
 msgid "(actual)"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1174
+#: app/ui/git/ventana_git.py:1183
 msgid "Fusionar"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1177
+#: app/ui/git/ventana_git.py:1186
 #, python-brace-format
 msgid "{r} fusionada en la rama actual."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1180
+#: app/ui/git/ventana_git.py:1189
 #, python-brace-format
 msgid "¿Reorganizar la rama actual sobre {r}? Sus commits se volverán a aplicar encima de {r} (rebase)."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1182
+#: app/ui/git/ventana_git.py:1191
 msgid "Reorganizar"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1184
+#: app/ui/git/ventana_git.py:1193
 msgid "Reorganizando…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1185
+#: app/ui/git/ventana_git.py:1194
 #, python-brace-format
 msgid "Rama reorganizada sobre {r}."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1189
+#: app/ui/git/ventana_git.py:1198
 #, python-brace-format
 msgid "La rama actual sigue ahora a {r}."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1202 app/ui/repositorio/vistas.py:1134
+#: app/ui/git/ventana_git.py:1211 app/ui/repositorio/vistas.py:1134
 msgid "Etiqueta"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1209 app/ui/git/ventana_git.py:1395 app/ui/repositorio/vistas.py:1328 app/ui/repositorio/vistas.py:1433
+#: app/ui/git/ventana_git.py:1218 app/ui/git/ventana_git.py:1404 app/ui/repositorio/vistas.py:1328 app/ui/repositorio/vistas.py:1433
 msgid "&Ver el commit"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1210
+#: app/ui/git/ventana_git.py:1219
 msgid "&Nueva etiqueta en el commit actual…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1211 app/ui/repositorio/vistas.py:1331
+#: app/ui/git/ventana_git.py:1220 app/ui/repositorio/vistas.py:1331
 msgid "&Borrar la etiqueta…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1212
+#: app/ui/git/ventana_git.py:1221
 msgid "&Enviar al remoto"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1214
+#: app/ui/git/ventana_git.py:1223
 msgid "No hay etiquetas."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1220
+#: app/ui/git/ventana_git.py:1229
 #, python-brace-format
 msgid "Commit de {r}"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1223
+#: app/ui/git/ventana_git.py:1232
 #, python-brace-format
 msgid "¿Borrar la etiqueta local {n}? (En el remoto, si la envió, sigue existiendo.)"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1224
+#: app/ui/git/ventana_git.py:1233
 msgid "Borrar etiqueta"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1225 app/ui/repositorio/vistas.py:1309 app/ui/repositorio/vistas.py:1562
+#: app/ui/git/ventana_git.py:1234 app/ui/repositorio/vistas.py:1309 app/ui/repositorio/vistas.py:1562
 msgid "Etiqueta borrada."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1230
+#: app/ui/git/ventana_git.py:1239
 msgid "El repositorio no tiene remotos."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1230
+#: app/ui/git/ventana_git.py:1239
 msgid "Enviar etiqueta"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1233
+#: app/ui/git/ventana_git.py:1242
 #, python-brace-format
 msgid "Enviando la etiqueta {n} a {r}…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1236
+#: app/ui/git/ventana_git.py:1245
 #, python-brace-format
 msgid "Etiqueta {n} enviada a {r}."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1254
+#: app/ui/git/ventana_git.py:1263
 msgid "&Guardar los cambios en un stash…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1256
+#: app/ui/git/ventana_git.py:1265
 msgid "Aplicar y &borrar"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1257
+#: app/ui/git/ventana_git.py:1266
 msgid "Bo&rrar…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1259
+#: app/ui/git/ventana_git.py:1268
 msgid "No hay cambios guardados en stash."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1265
+#: app/ui/git/ventana_git.py:1274
 #, python-brace-format
 msgid "Stash {r}: {m}"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1268
+#: app/ui/git/ventana_git.py:1277
 msgid "&Mensaje para reconocerlo (opcional):"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1268
+#: app/ui/git/ventana_git.py:1277
 msgid "Guardar en stash"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1272
+#: app/ui/git/ventana_git.py:1281
 msgid "Cambios guardados en el stash (incluidos los archivos sin seguimiento)."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1276
+#: app/ui/git/ventana_git.py:1285
 msgid "Stash aplicado y borrado."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1276
+#: app/ui/git/ventana_git.py:1285
 msgid "Stash aplicado."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1279
+#: app/ui/git/ventana_git.py:1288
 #, python-brace-format
 msgid "¿Borrar {r} «{m}»? Sus cambios se perderán."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1280
+#: app/ui/git/ventana_git.py:1289
 msgid "Borrar stash"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1281
+#: app/ui/git/ventana_git.py:1290
 msgid "Stash borrado."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1287
+#: app/ui/git/ventana_git.py:1296
 msgid "Remoto"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1288
+#: app/ui/git/ventana_git.py:1297
 msgid "URL para traer"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1289
+#: app/ui/git/ventana_git.py:1298
 msgid "URL para enviar"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1293
+#: app/ui/git/ventana_git.py:1302
 msgid "&Traer de este remoto"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1294
+#: app/ui/git/ventana_git.py:1303
 msgid "&Nuevo remoto…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1295
+#: app/ui/git/ventana_git.py:1304
 msgid "Cambiar la &URL…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1296
+#: app/ui/git/ventana_git.py:1305
 msgid "&Borrar el remoto…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1298
+#: app/ui/git/ventana_git.py:1307
 msgid "No hay remotos. Añada uno con Control+N."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1302
+#: app/ui/git/ventana_git.py:1311
 #, python-brace-format
 msgid "Trayendo cambios de {r}…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1304
+#: app/ui/git/ventana_git.py:1313
 #, python-brace-format
 msgid "Cambios traídos de {r}."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1308
+#: app/ui/git/ventana_git.py:1317
 msgid "&Nombre del remoto:"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1308 app/ui/git/ventana_git.py:1311
+#: app/ui/git/ventana_git.py:1317 app/ui/git/ventana_git.py:1320
 msgid "Nuevo remoto"
-msgstr ""
-
-#: app/ui/git/ventana_git.py:1315
-#, python-brace-format
-msgid "Remoto {n} añadido."
-msgstr ""
-
-#: app/ui/git/ventana_git.py:1318
-msgid "&URL nueva:"
-msgstr ""
-
-#: app/ui/git/ventana_git.py:1318
-#, python-brace-format
-msgid "Cambiar la URL de {n}"
-msgstr ""
-
-#: app/ui/git/ventana_git.py:1321
-msgid "URL cambiada."
 msgstr ""
 
 #: app/ui/git/ventana_git.py:1324
 #, python-brace-format
+msgid "Remoto {n} añadido."
+msgstr ""
+
+#: app/ui/git/ventana_git.py:1327
+msgid "&URL nueva:"
+msgstr ""
+
+#: app/ui/git/ventana_git.py:1327
+#, python-brace-format
+msgid "Cambiar la URL de {n}"
+msgstr ""
+
+#: app/ui/git/ventana_git.py:1330
+msgid "URL cambiada."
+msgstr ""
+
+#: app/ui/git/ventana_git.py:1333
+#, python-brace-format
 msgid "¿Quitar el remoto {n} de este repositorio? (En el servidor no se borra nada.)"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1325
+#: app/ui/git/ventana_git.py:1334
 msgid "Borrar remoto"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1326
+#: app/ui/git/ventana_git.py:1335
 msgid "Remoto quitado."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1332 app/ui/repositorio/vistas.py:443
+#: app/ui/git/ventana_git.py:1341 app/ui/repositorio/vistas.py:443
 msgid "Ruta"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1338
+#: app/ui/git/ventana_git.py:1347
 msgid "Act&ualizar los submódulos"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1339
+#: app/ui/git/ventana_git.py:1348
 msgid "Este repositorio no tiene submódulos."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1343
+#: app/ui/git/ventana_git.py:1352
 msgid "Actualizando los submódulos…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1344
+#: app/ui/git/ventana_git.py:1353
 msgid "Submódulos actualizados."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1350 app/ui/vistas/principales.py:629
+#: app/ui/git/ventana_git.py:1359 app/ui/vistas/principales.py:629
 msgid "Carpeta"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1357
+#: app/ui/git/ventana_git.py:1366
 msgid "A&brir en otra ventana de git"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1358
+#: app/ui/git/ventana_git.py:1367
 msgid "&Nuevo worktree…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1360
+#: app/ui/git/ventana_git.py:1369
 msgid "No hay worktrees."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1366
+#: app/ui/git/ventana_git.py:1375
 msgid "No hay ramas locales."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1366 app/ui/git/ventana_git.py:1370 app/ui/git/ventana_git.py:1375
+#: app/ui/git/ventana_git.py:1375 app/ui/git/ventana_git.py:1379 app/ui/git/ventana_git.py:1384
 msgid "Nuevo worktree"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1370
+#: app/ui/git/ventana_git.py:1379
 msgid "&Rama para el worktree:"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1375
+#: app/ui/git/ventana_git.py:1384
 msgid "&Carpeta nueva del worktree:"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1379
+#: app/ui/git/ventana_git.py:1388
 #, python-brace-format
 msgid "Worktree creado en {c}."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1390
+#: app/ui/git/ventana_git.py:1399
 msgid "Qué pasó"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1399
+#: app/ui/git/ventana_git.py:1408
 msgid "El reflog está vacío."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1411
+#: app/ui/git/ventana_git.py:1420
 msgid "Conflicto"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1415
+#: app/ui/git/ventana_git.py:1424
 msgid "&Resolver bloque a bloque…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1416
+#: app/ui/git/ventana_git.py:1425
 msgid "Usar &su versión entera"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1417
+#: app/ui/git/ventana_git.py:1426
 msgid "Usar la o&tra versión entera"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1418
+#: app/ui/git/ventana_git.py:1427
 msgid "Mar&car como resuelto"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1421
+#: app/ui/git/ventana_git.py:1430
 msgid "No hay archivos en conflicto."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1432
+#: app/ui/git/ventana_git.py:1441
 #, python-brace-format
 msgid "{r} resuelto con {n}."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1436
+#: app/ui/git/ventana_git.py:1445
 #, python-brace-format
 msgid "{r} todavía tiene marcadores de conflicto (<<<<<<<). ¿Marcarlo como resuelto igualmente?"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1438
+#: app/ui/git/ventana_git.py:1447
 msgid "Marcar como resuelto"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1440
+#: app/ui/git/ventana_git.py:1449
 #, python-brace-format
 msgid "{r} marcado como resuelto."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1455
+#: app/ui/git/ventana_git.py:1464
 msgid "modificado en las dos versiones"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1456
+#: app/ui/git/ventana_git.py:1465
 msgid "añadido en las dos versiones"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1457
+#: app/ui/git/ventana_git.py:1466
 msgid "borrado en las dos versiones"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1458 app/ui/git/ventana_git.py:1459
+#: app/ui/git/ventana_git.py:1467 app/ui/git/ventana_git.py:1468
 #, python-brace-format
 msgid "añadido solo en {v}"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1460 app/ui/git/ventana_git.py:1461
+#: app/ui/git/ventana_git.py:1469 app/ui/git/ventana_git.py:1470
 #, python-brace-format
 msgid "borrado en {v} y modificado en la otra"
 msgstr ""
@@ -9987,7 +9987,7 @@ msgstr ""
 msgid "Qué sección se muestra al abrir la aplicación."
 msgstr ""
 
-#: app/ui/preferencias.py:59 app/ui/preferencias.py:134 app/ui/vistas/principales.py:290
+#: app/ui/preferencias.py:59 app/ui/preferencias.py:140 app/ui/vistas/principales.py:290
 msgid "Notificaciones"
 msgstr ""
 
@@ -10184,323 +10184,339 @@ msgid "Añade «3 de 10» al anuncio de la casilla."
 msgstr ""
 
 #: app/ui/preferencias.py:111
-msgid "Diferencias: mostrar la columna del t&ipo de línea"
+msgid "Explicaciones: leerlas al lle&gar a botones y casillas"
 msgstr ""
 
 #: app/ui/preferencias.py:112
-msgid "Columna «Añadida», «Eliminada» o «Sin cambios» en el visor de diferencias (el lector la lee al moverse)."
-msgstr ""
-
-#: app/ui/preferencias.py:113
-msgid "Diferencias: mostrar el número de &línea"
+msgid "El lector de pantalla lee la explicación del control (la misma de Control+H) al llegar a un botón o una casilla. Desactívelo si prefiere oírla solo cuando la pida con Control+H."
 msgstr ""
 
 #: app/ui/preferencias.py:114
-msgid "Columna con el número de línea del archivo en el visor de diferencias."
+msgid "Explicaciones: leerlas también en cada fila de las listas de casilla&s"
 msgstr ""
 
 #: app/ui/preferencias.py:115
-msgid "Diferencias: s&onido según el tipo de línea"
-msgstr ""
-
-#: app/ui/preferencias.py:116
-msgid "Un sonido distinto al llegar a una línea añadida, eliminada o a un bloque."
+msgid "Sin esta opción, al moverse por una lista de casillas solo se oye cada fila y su estado. Con ella, el lector repite la explicación de la lista en cada fila. Control+H la dice siempre."
 msgstr ""
 
 #: app/ui/preferencias.py:117
-msgid "Mostrar README, manual y textos largos con formato (&HTML)"
+msgid "Diferencias: mostrar la columna del t&ipo de línea"
 msgstr ""
 
 #: app/ui/preferencias.py:118
-msgid "Con formato se navega por encabezados, listas y tablas en modo exploración. Sin él, se usa texto plano."
+msgid "Columna «Añadida», «Eliminada» o «Sin cambios» en el visor de diferencias (el lector la lee al moverse)."
+msgstr ""
+
+#: app/ui/preferencias.py:119
+msgid "Diferencias: mostrar el número de &línea"
+msgstr ""
+
+#: app/ui/preferencias.py:120
+msgid "Columna con el número de línea del archivo en el visor de diferencias."
 msgstr ""
 
 #: app/ui/preferencias.py:121
-msgid "Activar los &sonidos"
-msgstr ""
-
-#: app/ui/preferencias.py:121
-msgid "Sonidos de la aplicación para los eventos de la lista de debajo."
+msgid "Diferencias: s&onido según el tipo de línea"
 msgstr ""
 
 #: app/ui/preferencias.py:122
-msgid "Si&lenciar temporalmente"
-msgstr ""
-
-#: app/ui/preferencias.py:122
-msgid "Sin sonidos, pero conservando la configuración."
+msgid "Un sonido distinto al llegar a una línea añadida, eliminada o a un bloque."
 msgstr ""
 
 #: app/ui/preferencias.py:123
-msgid "&Volumen (0 a 100):"
-msgstr ""
-
-#: app/ui/preferencias.py:123
-msgid "Volumen de los sonidos. Se aplica al momento."
+msgid "Mostrar README, manual y textos largos con formato (&HTML)"
 msgstr ""
 
 #: app/ui/preferencias.py:124
-msgid "Pa&quete de sonidos:"
+msgid "Con formato se navega por encabezados, listas y tablas en modo exploración. Sin él, se usa texto plano."
 msgstr ""
 
-#: app/ui/preferencias.py:125
-msgid "Carpeta de data/sounds con los sonidos. Los que falten se toman del predeterminado."
+#: app/ui/preferencias.py:127
+msgid "Activar los &sonidos"
+msgstr ""
+
+#: app/ui/preferencias.py:127
+msgid "Sonidos de la aplicación para los eventos de la lista de debajo."
 msgstr ""
 
 #: app/ui/preferencias.py:128
-msgid "Listas"
+msgid "Si&lenciar temporalmente"
+msgstr ""
+
+#: app/ui/preferencias.py:128
+msgid "Sin sonidos, pero conservando la configuración."
 msgstr ""
 
 #: app/ui/preferencias.py:129
-msgid "&Elementos por página al cargar (10 a 100):"
+msgid "&Volumen (0 a 100):"
+msgstr ""
+
+#: app/ui/preferencias.py:129
+msgid "Volumen de los sonidos. Se aplica al momento."
 msgstr ""
 
 #: app/ui/preferencias.py:130
-msgid "Cuántos elementos se piden cada vez. Al llegar al final de la lista se cargan más."
+msgid "Pa&quete de sonidos:"
 msgstr ""
 
 #: app/ui/preferencias.py:131
-msgid "&Fechas relativas («hace 3 días»)"
+msgid "Carpeta de data/sounds con los sonidos. Los que falten se toman del predeterminado."
 msgstr ""
 
-#: app/ui/preferencias.py:132
-msgid "Desactivado muestra la fecha y la hora completas."
+#: app/ui/preferencias.py:134
+msgid "Listas"
 msgstr ""
 
 #: app/ui/preferencias.py:135
-msgid "C&omprobar notificaciones nuevas en segundo plano"
+msgid "&Elementos por página al cargar (10 a 100):"
 msgstr ""
 
 #: app/ui/preferencias.py:136
-msgid "Mira cada cierto tiempo si hay notificaciones nuevas y avisa."
+msgid "Cuántos elementos se piden cada vez. Al llegar al final de la lista se cargan más."
 msgstr ""
 
 #: app/ui/preferencias.py:137
-msgid "&Intervalo en segundos (mínimo 30):"
+msgid "&Fechas relativas («hace 3 días»)"
 msgstr ""
 
 #: app/ui/preferencias.py:138
-msgid "GitHub puede pedir un intervalo mayor; se respeta siempre el suyo."
-msgstr ""
-
-#: app/ui/preferencias.py:139
-msgid "&Solo las de conversaciones en las que participo"
-msgstr ""
-
-#: app/ui/preferencias.py:140
-msgid "Ignora las notificaciones de repositorios que solo vigila."
+msgid "Desactivado muestra la fecha y la hora completas."
 msgstr ""
 
 #: app/ui/preferencias.py:141
-msgid "Anunciar por &voz las notificaciones nuevas"
-msgstr ""
-
-#: app/ui/preferencias.py:141
-msgid "Lee el título de las nuevas."
+msgid "C&omprobar notificaciones nuevas en segundo plano"
 msgstr ""
 
 #: app/ui/preferencias.py:142
-msgid "So&nido al llegar notificaciones nuevas"
-msgstr ""
-
-#: app/ui/preferencias.py:142
-msgid "Un sonido distinto si le mencionan o le piden revisión."
+msgid "Mira cada cierto tiempo si hay notificaciones nuevas y avisa."
 msgstr ""
 
 #: app/ui/preferencias.py:143
-msgid "Mostrar también una notificación de &Windows"
+msgid "&Intervalo en segundos (mínimo 30):"
 msgstr ""
 
 #: app/ui/preferencias.py:144
-msgid "Aviso emergente del sistema, útil con la aplicación en la bandeja."
+msgid "GitHub puede pedir un intervalo mayor; se respeta siempre el suyo."
 msgstr ""
 
 #: app/ui/preferencias.py:145
-msgid "&Marcar como leída al abrir una notificación"
+msgid "&Solo las de conversaciones en las que participo"
 msgstr ""
 
 #: app/ui/preferencias.py:146
-msgid "Al pulsar Intro sobre una notificación, se marca como leída en GitHub."
+msgid "Ignora las notificaciones de repositorios que solo vigila."
+msgstr ""
+
+#: app/ui/preferencias.py:147
+msgid "Anunciar por &voz las notificaciones nuevas"
+msgstr ""
+
+#: app/ui/preferencias.py:147
+msgid "Lee el título de las nuevas."
 msgstr ""
 
 #: app/ui/preferencias.py:148
-msgid "Git"
+msgid "So&nido al llegar notificaciones nuevas"
+msgstr ""
+
+#: app/ui/preferencias.py:148
+msgid "Un sonido distinto si le mencionan o le piden revisión."
 msgstr ""
 
 #: app/ui/preferencias.py:149
-msgid "Ruta de &git.exe (vacío: detectar):"
+msgid "Mostrar también una notificación de &Windows"
 msgstr ""
 
 #: app/ui/preferencias.py:150
-msgid "Normalmente se encuentra solo. Indíquela si instaló Git en un sitio poco habitual."
+msgid "Aviso emergente del sistema, útil con la aplicación en la bandeja."
 msgstr ""
 
 #: app/ui/preferencias.py:151
-msgid "Usar el &token de la cuenta para clonar, traer y enviar por HTTPS"
+msgid "&Marcar como leída al abrir una notificación"
 msgstr ""
 
 #: app/ui/preferencias.py:152
-msgid "El token se pasa a git solo durante la operación, sin guardarlo en disco. Desactívelo para usar sus propias credenciales de Git."
-msgstr ""
-
-#: app/ui/preferencias.py:153
-msgid "Carpeta para c&lonar repositorios:"
+msgid "Al pulsar Intro sobre una notificación, se marca como leída en GitHub."
 msgstr ""
 
 #: app/ui/preferencias.py:154
-msgid "Carpeta donde se proponen los clones nuevos."
+msgid "Git"
 msgstr ""
 
 #: app/ui/preferencias.py:155
-msgid "Al traer cambios (pull), r&eorganizar en lugar de fusionar"
+msgid "Ruta de &git.exe (vacío: detectar):"
 msgstr ""
 
 #: app/ui/preferencias.py:156
-msgid "Equivale a git pull --rebase."
+msgid "Normalmente se encuentra solo. Indíquela si instaló Git en un sitio poco habitual."
 msgstr ""
 
 #: app/ui/preferencias.py:157
-msgid "&Firmar los commits"
+msgid "Usar el &token de la cuenta para clonar, traer y enviar por HTTPS"
 msgstr ""
 
-#: app/ui/preferencias.py:157
-msgid "Equivale a git commit -S. Requiere tener configurada una clave GPG o SSH de firma."
+#: app/ui/preferencias.py:158
+msgid "El token se pasa a git solo durante la operación, sin guardarlo en disco. Desactívelo para usar sus propias credenciales de Git."
 msgstr ""
 
 #: app/ui/preferencias.py:159
-msgid "Editor"
+msgid "Carpeta para c&lonar repositorios:"
 msgstr ""
 
 #: app/ui/preferencias.py:160
-msgid "Confirmar antes de &descartar un texto escrito"
+msgid "Carpeta donde se proponen los clones nuevos."
 msgstr ""
 
 #: app/ui/preferencias.py:161
-msgid "Al cerrar el editor con texto sin enviar, pregunta antes de perderlo."
+msgid "Al traer cambios (pull), r&eorganizar en lugar de fusionar"
 msgstr ""
 
 #: app/ui/preferencias.py:162
-msgid "&Firma que se añade al final de los comentarios:"
+msgid "Equivale a git pull --rebase."
 msgstr ""
 
 #: app/ui/preferencias.py:163
-msgid "Opcional. Se añade al final de cada comentario nuevo."
+msgid "&Firmar los commits"
+msgstr ""
+
+#: app/ui/preferencias.py:163
+msgid "Equivale a git commit -S. Requiere tener configurada una clave GPG o SSH de firma."
 msgstr ""
 
 #: app/ui/preferencias.py:165
-msgid "Red y registro"
+msgid "Editor"
 msgstr ""
 
 #: app/ui/preferencias.py:166
-msgid "Pro&xy («sistema», «ninguno» o una dirección):"
+msgid "Confirmar antes de &descartar un texto escrito"
 msgstr ""
 
 #: app/ui/preferencias.py:167
-msgid "«sistema» usa la configuración de Windows; «ninguno» conecta directamente; o escriba http://servidor:puerto."
+msgid "Al cerrar el editor con texto sin enviar, pregunta antes de perderlo."
 msgstr ""
 
 #: app/ui/preferencias.py:168
-msgid "&Tiempo máximo de espera (segundos):"
-msgstr ""
-
-#: app/ui/preferencias.py:168
-msgid "Tiempo de espera de las peticiones a GitHub."
+msgid "&Firma que se añade al final de los comentarios:"
 msgstr ""
 
 #: app/ui/preferencias.py:169
+msgid "Opcional. Se añade al final de cada comentario nuevo."
+msgstr ""
+
+#: app/ui/preferencias.py:171
+msgid "Red y registro"
+msgstr ""
+
+#: app/ui/preferencias.py:172
+msgid "Pro&xy («sistema», «ninguno» o una dirección):"
+msgstr ""
+
+#: app/ui/preferencias.py:173
+msgid "«sistema» usa la configuración de Windows; «ninguno» conecta directamente; o escriba http://servidor:puerto."
+msgstr ""
+
+#: app/ui/preferencias.py:174
+msgid "&Tiempo máximo de espera (segundos):"
+msgstr ""
+
+#: app/ui/preferencias.py:174
+msgid "Tiempo de espera de las peticiones a GitHub."
+msgstr ""
+
+#: app/ui/preferencias.py:175
 msgid "&Nivel del registro de errores:"
 msgstr ""
 
-#: app/ui/preferencias.py:170
+#: app/ui/preferencias.py:176
 msgid "DEBUG guarda mucho detalle para diagnosticar problemas."
 msgstr ""
 
-#: app/ui/preferencias.py:171
+#: app/ui/preferencias.py:177
 msgid "Normal"
 msgstr ""
 
-#: app/ui/preferencias.py:171
+#: app/ui/preferencias.py:177
 msgid "Detallado (depuración)"
 msgstr ""
 
-#: app/ui/preferencias.py:171
+#: app/ui/preferencias.py:177
 msgid "Solo avisos"
 msgstr ""
 
-#: app/ui/preferencias.py:171
+#: app/ui/preferencias.py:177
 msgid "Solo errores"
 msgstr ""
 
-#: app/ui/preferencias.py:195
+#: app/ui/preferencias.py:201
 msgid "&Eventos con sonido (marcados = suenan):"
 msgstr ""
 
-#: app/ui/preferencias.py:196
+#: app/ui/preferencias.py:202
 msgid "Eventos con sonido"
 msgstr ""
 
-#: app/ui/preferencias.py:203
+#: app/ui/preferencias.py:209
 msgid "Pro&bar el sonido elegido"
 msgstr ""
 
-#: app/ui/preferencias.py:204
+#: app/ui/preferencias.py:210
 msgid "Reproduce el sonido del evento elegido en la lista, aunque esté desmarcado."
 msgstr ""
 
-#: app/ui/preferencias.py:222
+#: app/ui/preferencias.py:228
 msgid "Elija una lista y marque las columnas que quiere ver. El orden de arriba abajo es el orden de las columnas (el lector lee la fila en ese orden)."
 msgstr ""
 
-#: app/ui/preferencias.py:227
+#: app/ui/preferencias.py:233
 msgid "&Lista:"
 msgstr ""
 
-#: app/ui/preferencias.py:229
+#: app/ui/preferencias.py:235
 msgid "Lista de la aplicación cuyas columnas quiere configurar."
 msgstr ""
 
-#: app/ui/preferencias.py:232
+#: app/ui/preferencias.py:238
 msgid "Columnas &visibles y su orden:"
 msgstr ""
 
-#: app/ui/preferencias.py:233
+#: app/ui/preferencias.py:239
 msgid "Columnas visibles y su orden"
 msgstr ""
 
-#: app/ui/preferencias.py:238
+#: app/ui/preferencias.py:244
 msgid "S&ubir"
 msgstr ""
 
-#: app/ui/preferencias.py:238
+#: app/ui/preferencias.py:244
 msgid "Sube la columna elegida un puesto."
 msgstr ""
 
-#: app/ui/preferencias.py:239
+#: app/ui/preferencias.py:245
 msgid "Ba&jar"
 msgstr ""
 
-#: app/ui/preferencias.py:239
+#: app/ui/preferencias.py:245
 msgid "Baja la columna elegida un puesto."
 msgstr ""
 
-#: app/ui/preferencias.py:240
+#: app/ui/preferencias.py:246
 msgid "&Original de esta lista"
 msgstr ""
 
-#: app/ui/preferencias.py:240
+#: app/ui/preferencias.py:246
 msgid "Vuelve a las columnas de fábrica de esta lista."
 msgstr ""
 
-#: app/ui/preferencias.py:282
+#: app/ui/preferencias.py:288
 msgid "No se puede mover más."
 msgstr ""
 
-#: app/ui/preferencias.py:289
+#: app/ui/preferencias.py:295
 #, python-brace-format
 msgid "{c}, posición {p}"
 msgstr ""
 
-#: app/ui/preferencias.py:294
+#: app/ui/preferencias.py:300
 msgid "Columnas de fábrica."
 msgstr ""
 
@@ -14992,25 +15008,25 @@ msgstr ""
 msgid "Error al iniciar"
 msgstr ""
 
-#: main.py:181
+#: main.py:184
 #, python-brace-format
 msgid "{nombre} ya está en ejecución."
 msgstr ""
 
-#: main.py:189
+#: main.py:192
 #, python-brace-format
 msgid "Iniciando {nombre}"
 msgstr ""
 
-#: main.py:258
+#: main.py:261
 #, python-brace-format
 msgid "Los detalles están en {ruta}."
 msgstr ""
 
-#: main.py:260
+#: main.py:263
 msgid "Compruebe que la carpeta «data» existe y no es de solo lectura."
 msgstr ""
 
-#: main.py:262
+#: main.py:265
 msgid "No se pudo iniciar la aplicación."
 msgstr ""

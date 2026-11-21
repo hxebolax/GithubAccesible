@@ -107,6 +107,10 @@ VALORES_POR_DEFECTO: dict[str, dict[str, Any]] = {
 		"casillas_decir_estado": True,
 		"casillas_estado_primero": False,
 		"casillas_decir_posicion": False,
+		# Explicación de cada control (la de Control+H) que el lector lee como «descripción».
+		# En las listas de casillas wx la repite en CADA fila: por eso va aparte y apagada.
+		"explicacion_controles": True,
+		"explicacion_filas": False,
 		# Visor de diferencias.
 		"diff_decir_tipo": True,
 		"diff_decir_numero": True,

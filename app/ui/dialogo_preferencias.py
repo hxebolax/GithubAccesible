@@ -39,6 +39,7 @@ import wx
 import wx.lib.scrolledpanel as scrolled
 
 from app.core.configuracion import Configuracion, ErrorValidacion
+from app.ui.accesibilidad.ayuda import texto_ayuda
 
 log = logging.getLogger(__name__)
 
@@ -496,7 +497,7 @@ class DialogoPreferencias(wx.Dialog):
 				opcion = self._controles[clave][0]
 				nombre = _(opcion.etiqueta).replace("&", "").rstrip(":")
 				return f"{nombre}. {_(opcion.ayuda)}" if opcion.ayuda else nombre
-			ayuda = actual.GetHelpText()
+			ayuda = texto_ayuda(actual)
 			if ayuda:
 				return ayuda
 			actual = actual.GetParent()

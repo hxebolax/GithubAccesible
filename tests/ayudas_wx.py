@@ -214,7 +214,8 @@ def propiedades_msaa(ventana, hijo: int = 0) -> dict:
 		byref(puntero),
 	)
 	datos: dict = {}
-	for clave, propiedad in (("nombre", "accName"), ("rol", "accRole"), ("estado", "accState"), ("valor", "accValue")):
+	for clave, propiedad in (("nombre", "accName"), ("rol", "accRole"), ("estado", "accState"), ("valor", "accValue"),
+		("descripcion", "accDescription")):
 		try:
 			datos[clave] = getattr(puntero, propiedad)(hijo)
 		except Exception:  # noqa: BLE001 - el control no implementa esa propiedad

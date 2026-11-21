@@ -36,6 +36,7 @@ from app.services import formato as f
 from app.services import git_local
 from app.services.github.cliente import Pagina
 from app.ui.accesibilidad.dialogos import elegir_opcion
+from app.ui.accesibilidad.foco import conservar_foco
 from app.ui.comunes import (
 	confirmar,
 	confirmar_peligro,
@@ -319,7 +320,9 @@ class VentanaGit(wx.Frame):
 			return
 		if self.secciones.GetSelection() != indice:
 			self.secciones.SetSelection(indice)
-		self.libro.SetSelection(indice)
+		# Moverse por las secciones no cambia el foco: se entra con Tabulador, Intro o F6.
+		with conservar_foco(self):
+			self.libro.ChangeSelection(indice)
 		panel = self.paneles.get(self.ids_secciones[indice])
 		if panel is not None:
 			panel.cargar_si_hace_falta()
@@ -333,7 +336,8 @@ class VentanaGit(wx.Frame):
 	def cambiar_seccion(self, paso: int) -> None:
 		total = len(self.ids_secciones)
 		indice = (self.libro.GetSelection() + paso) % total
-		self.mostrar_seccion(indice, enfocar=True)
+		# Control+Tabulador desde la lista de secciones se queda en ella, como en las demás ventanas.
+		self.mostrar_seccion(indice, enfocar=wx.Window.FindFocus() is not self.secciones)
 		self.ctx.anunciar(self.secciones.GetString(indice))
 
 	def enfocar_contenido(self) -> None:
@@ -354,6 +358,11 @@ class VentanaGit(wx.Frame):
 			return
 		if tecla == wx.WXK_TAB and evento.ControlDown() and not evento.AltDown():
 			self.cambiar_seccion(-1 if evento.ShiftDown() else 1)
+			return
+		if tecla in (wx.WXK_RETURN, wx.WXK_NUMPAD_ENTER) and modificadores == wx.MOD_NONE \
+			and wx.Window.FindFocus() is self.secciones:
+			# Como en la ventana principal: Intro en las secciones entra en el contenido.
+			self.enfocar_contenido()
 			return
 		if tecla in (wx.WXK_RETURN, wx.WXK_NUMPAD_ENTER) and modificadores == wx.MOD_CONTROL \
 			and wx.Window.FindFocus() is self.campo_mensaje:

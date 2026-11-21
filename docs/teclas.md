@@ -1,6 +1,6 @@
 # Teclas de GitHub Accesible
 
-Todas las ventanas comparten unas teclas básicas: Control+H explica el control que tiene el foco, F1 abre el manual y Mayúsculas+F1 esta lista. Las listas tienen además sus teclas comunes (más abajo). Los menús muestran las teclas junto a cada orden.
+En toda la aplicación, elegir algo (una sección, una opción de un desplegable) no mueve el foco: usted decide cuándo ir al contenido. Todas las ventanas comparten unas teclas básicas: Control+H explica el control que tiene el foco, F1 abre el manual y Mayúsculas+F1 esta lista. Las listas tienen además sus teclas comunes (más abajo). Los menús muestran las teclas junto a cada orden.
 
 ## Ventana principal
 
@@ -122,7 +122,8 @@ Todas las ventanas comparten unas teclas básicas: Control+H explica el control 
 
 ## Repositorio local (git)
 
-- F6 alternar entre secciones y contenido; Control+Tabulador cambiar de sección.
+- F6 alternar entre secciones y contenido; Control+Tabulador cambiar de sección (desde la lista de secciones, el foco se queda en ella).
+- Intro o Tabulador en la lista de secciones: entrar en el contenido. Moverse por las secciones no cambia el foco.
 - Control+R actualizar el estado, Control+W cerrar.
 - Control+Intro en el mensaje: confirmar (commit).
 - Menú Git: Control+Mayúsculas+T traer, Control+Mayúsculas+U tirar, Control+Mayúsculas+P enviar, Control+Mayúsculas+Y sincronizar, Control+Mayúsculas+G abrir en GitHub, Control+Mayúsculas+R crear pull request, Control+Mayúsculas+E abrir la carpeta, Control+Mayúsculas+K abrir una consola.

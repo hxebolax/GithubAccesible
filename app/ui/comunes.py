@@ -30,6 +30,7 @@ from app.ui.accesibilidad.dialogos import (
 	pedir_texto,
 	preparar_dialogo,
 )
+from app.ui.accesibilidad.ayuda import texto_ayuda
 from app.ui.accesibilidad.teclado import copiar_texto
 
 log = logging.getLogger(__name__)
@@ -170,7 +171,7 @@ class DialogoElegirVarios(wx.Dialog):
 			if 0 <= indice < self.lista.GetCount():
 				wx.CheckListBox.Check(self.lista, indice, True)
 		if ayuda:
-			self.lista.SetHelpText(ayuda + " " + self.lista.GetHelpText())
+			self.lista.SetHelpText(ayuda + " " + texto_ayuda(self.lista))
 		raiz.Add(self.lista, 1, wx.EXPAND | wx.ALL, 8)
 		raiz.Add(crear_botonera(self, wx.OK | wx.CANCEL), 0, wx.EXPAND | wx.ALL, 8)
 		self.SetSizer(raiz)

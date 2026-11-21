@@ -2,6 +2,19 @@
 
 Cada versión tiene su apartado, de la más reciente a la más antigua. Dentro de cada versión, los cambios se agrupan en Novedades, Mejoras y Correcciones, contados con palabras de quien usa la aplicación.
 
+## Versión 1.0.2 - 2026-11-21
+
+### Mejoras
+
+- Nuevas opciones en Preferencias, Accesibilidad, para elegir si el lector de pantalla lee la explicación de cada control al llegar a él: una para botones y casillas, y otra para cada fila de las listas de casillas. La de las filas viene desactivada: al moverse por una lista de casillas solo se oye cada fila y su estado. Control+H sigue diciendo la explicación siempre.
+- En la ventana de un repositorio local, Intro en la lista de secciones entra en el contenido, como en la ventana principal.
+
+### Correcciones
+
+- En la búsqueda, cambiar lo que se busca (repositorios, issues, código…) o cargar una búsqueda del historial o de las guardadas ya no lleva el foco a la lista «Buscar el texto en»: se queda en el desplegable.
+- En la ventana de un repositorio local, moverse por las secciones ya no mete el foco en la lista de la sección.
+- En Preferencias, «Columnas de las listas», Subir y Bajar ya no llevan el foco a la lista: se queda en el botón para seguir moviendo.
+
 ## Versión 1.0.1 - 2026-11-21
 
 ### Novedades

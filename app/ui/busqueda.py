@@ -29,6 +29,7 @@ import wx
 
 from app.services import busqueda as b
 from app.ui.accesibilidad.dialogos import confirmar, mostrar_error, pedir_texto, preparar_dialogo
+from app.ui.accesibilidad.foco import devolver_foco
 from app.ui.comunes import ListaCasillas
 
 log = logging.getLogger(__name__)
@@ -283,8 +284,11 @@ class DialogoBusqueda(wx.Dialog):
 		self._actualizar_resultado()
 
 	def _construir_filtros(self, tipo: str) -> None:
+		# Al cambiar «Buscar» (o cargar una búsqueda del historial) se rehacen las pestañas;
+		# wx daría el foco a la primera página y la persona perdería su sitio.
 		self._construyendo = True
 		self.Freeze()
+		foco = wx.Window.FindFocus()
 		try:
 			while self.libro.GetPageCount() > 1:
 				self.libro.DeletePage(0)
@@ -299,6 +303,7 @@ class DialogoBusqueda(wx.Dialog):
 		finally:
 			self.Thaw()
 			self._construyendo = False
+			devolver_foco(self, foco)
 
 	def _crear_pagina(self, tipo: str, clave_pagina: str, filtros: list[b.Filtro]) -> wx.Window:
 		pagina = wx.ScrolledWindow(self.libro, style=wx.VSCROLL | wx.TAB_TRAVERSAL)

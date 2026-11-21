@@ -11,7 +11,14 @@
 - ``asegurar_ayudas``: rellena la ayuda de los controles que no la tengan,
   sin pisar las escritas a mano.
 
-Requisito: ``wx.HelpProvider.Set(wx.SimpleHelpProvider())`` al arrancar; sin
+- ``ProveedorAyuda``: guarda las ayudas y decide cuáles ve el lector de pantalla.
+  wxPython 4.3 entrega la ayuda de ``SetHelpText`` al lector como «descripción»
+  del control (botones, casillas) y, en las listas de casillas, de CADA fila,
+  que el lector repite al moverse. Con ``accesibilidad.explicacion_controles`` y
+  ``accesibilidad.explicacion_filas`` la persona elige si quiere oírlas; Control+H
+  usa ``texto_ayuda`` y la dice siempre.
+
+Requisito: instalar un proveedor al arrancar (``instalar_proveedor_ayuda``); sin
 él, ``SetHelpText`` no guarda nada.
 
 PLANTILLA del agente «accesibilidad-wx».
@@ -125,15 +132,69 @@ def ayuda_generica(control: wx.Window) -> str:
 	return ""
 
 
+class ProveedorAyuda(wx.SimpleHelpProvider):
+	"""Guarda las ayudas de ``SetHelpText`` y filtra las que llegan al lector de pantalla.
+
+	``GetHelp`` es lo que consulta wx para la «descripción» accesible (y también
+	``GetHelpText``): devuelve la ayuda solo si la preferencia lo permite. El texto
+	completo, para Control+H, se obtiene siempre con ``texto_ayuda``.
+
+	:param config: objeto con ``obtener(clave, defecto)``; sin él, no se filtra nada.
+	"""
+
+	def __init__(self, config: object | None = None) -> None:
+		super().__init__()
+		self.config = config
+
+	def _permitida(self, ventana: wx.Window) -> bool:
+		if self.config is None:
+			return True
+		if isinstance(ventana, wx.CheckListBox):
+			return bool(self.config.obtener("accesibilidad.explicacion_filas", False))
+		return bool(self.config.obtener("accesibilidad.explicacion_controles", True))
+
+	def GetHelp(self, ventana: wx.Window) -> str:  # noqa: N802 - API de wx
+		if ventana is None or self._permitida(ventana):
+			return wx.SimpleHelpProvider.GetHelp(self, ventana)
+		return ""
+
+	def texto_completo(self, ventana: wx.Window) -> str:
+		return wx.SimpleHelpProvider.GetHelp(self, ventana)
+
+
+_proveedor: ProveedorAyuda | None = None
+
+
+def instalar_proveedor_ayuda(config: object | None = None) -> ProveedorAyuda:
+	"""Instala (una vez) el proveedor de ayudas; con ``config``, aplica sus preferencias."""
+	global _proveedor
+	if _proveedor is None:
+		_proveedor = ProveedorAyuda(config)
+		wx.HelpProvider.Set(_proveedor)
+	elif config is not None:
+		_proveedor.config = config
+	return _proveedor
+
+
+def texto_ayuda(control: wx.Window | None) -> str:
+	"""La ayuda escrita con ``SetHelpText``, aunque no se entregue al lector (para Control+H)."""
+	if not control:
+		return ""
+	proveedor = wx.HelpProvider.Get()
+	if isinstance(proveedor, ProveedorAyuda):
+		return proveedor.texto_completo(control) or ""
+	return control.GetHelpText() or ""
+
+
 def ayuda_efectiva(control: wx.Window) -> str:
 	"""La ayuda más específica disponible para ``control``."""
 	ayuda = (getattr(control, "ayuda_texto", "") or "").strip()
 	if not ayuda:
-		ayuda = (control.GetHelpText() or "").strip()
+		ayuda = texto_ayuda(control).strip()
 	if not ayuda:
 		padre = control.GetParent()
 		if padre is not None and isinstance(padre, (wx.DirPickerCtrl, wx.FilePickerCtrl, wx.SpinCtrl)):
-			ayuda = (padre.GetHelpText() or "").strip()
+			ayuda = texto_ayuda(padre).strip()
 	if not ayuda:
 		consejo = control.GetToolTip()
 		ayuda = (consejo.GetTip() if consejo else "").strip()
@@ -195,7 +256,7 @@ def _descendientes(ventana: wx.Window):
 def asegurar_ayudas(ventana: wx.Window) -> None:
 	"""Pone ayuda genérica a los controles interactivos que no tengan ninguna."""
 	for control in _descendientes(ventana):
-		if isinstance(control, _INTERACTIVOS) and not control.GetHelpText():
+		if isinstance(control, _INTERACTIVOS) and not texto_ayuda(control):
 			generica = ayuda_generica(control)
 			if generica:
 				control.SetHelpText(generica)

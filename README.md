@@ -66,7 +66,8 @@ Cambios con preparar y quitar, commit (también enmendar y firmar), historial co
 - **Listas con lectura por columnas**: Izquierda y Derecha recorren las columnas; Control más un número lee una columna directamente. En Preferencias se elige si se dice el número de fila, el nombre de la columna y el contenido.
 - **Columnas de cada lista configurables**: cuáles se ven y en qué orden (y así, qué y en qué orden lee el lector).
 - **Listas de casillas** que anuncian su estado; se puede elegir decir el estado antes o después del texto y la posición.
-- Ayuda de cualquier control con Control+H y manual completo con F1.
+- **El foco lo mueve usted**: moverse por las secciones o elegir en un desplegable cambia lo que se ve, pero el foco no salta a ninguna parte hasta que usted lo pide (Tabulador, Intro o F6).
+- Ayuda de cualquier control con Control+H y manual completo con F1. En Preferencias se elige si el lector lee además esa explicación al llegar a botones y casillas, y en cada fila de las listas de casillas.
 - Sonidos para cada evento, con volumen, paquetes y eventos que se pueden desactivar uno a uno.
 - Historial de los avisos de voz para volver a escuchar lo que se dijo.
 - README, manual y textos largos con formato HTML navegable por encabezados (o en texto plano si lo prefiere).

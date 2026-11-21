@@ -25,6 +25,12 @@ Para GitHub Enterprise Server escriba la dirección de su servidor en el campo �
 
 El inicio con el navegador funciona sin configurar nada. Si el token que da GitHub caduca, la aplicación lo renueva sola. En GitHub Enterprise Server hay que registrar una aplicación OAuth en el propio servidor y escribir su identificador (Client ID) en Preferencias, Cuentas; los pasos están en [Activar el inicio de sesión con el navegador](https://github.com/hxebolax/GithubAccesible/blob/main/docs/oauth.md).
 
+## El foco lo mueve usted
+
+En toda la aplicación, elegir algo no le cambia de sitio. Al moverse por una lista de secciones, al elegir en un desplegable (por ejemplo, «Buscar» en la búsqueda) o al cambiar unos botones de opción, lo que se ve a la derecha o debajo cambia al momento, pero el foco se queda en el control donde está. Usted decide cuándo ir al contenido: con Tabulador, con Intro en las listas de secciones o con F6.
+
+El foco solo cambia cuando usted lo pide: al abrir algo (Intro, una tecla de una sección como Alt+1), al pulsar Aceptar con un dato que falta (va a ese campo para corregirlo) o al abrir una ventana nueva.
+
 ## La ventana principal
 
 A la izquierda está la lista de **secciones**; a la derecha, la lista con el contenido de la sección elegida.
@@ -64,6 +70,8 @@ En Preferencias, Accesibilidad, se elige qué se dice al recorrer las columnas (
 ## Buscar en GitHub
 
 Control+E abre la búsqueda. Elija qué buscar (repositorios, código, issues y pull requests, usuarios, commits, temas o etiquetas) y escriba el texto. Admite toda la sintaxis de GitHub; el botón «Ejemplos de calificadores» la explica.
+
+Al cambiar lo que se busca, o al elegir una búsqueda del historial o de las guardadas, las pestañas de filtros cambian, pero el foco se queda en el desplegable: recórralas con Tabulador cuando quiera.
 
 Para repositorios hay además una **búsqueda guiada**: una categoría (populares con un mínimo de estrellas, más bifurcados, actualizados desde una fecha, sin actualizar desde una fecha, que piden ayuda, listas Awesome, o un tema como accesibilidad, lector de pantalla, inteligencia artificial, Arduino o Synology), el lenguaje y la licencia. El «Historial de búsquedas» guarda las últimas para repetirlas.
 
@@ -129,7 +137,7 @@ La ventana de una ejecución muestra la información, la lista de **trabajos**, 
 
 ## Git local
 
-Desde «Repositorios locales» o con Control+Mayúsculas+G se abre la ventana de un repositorio de este equipo. Su zona de estado dice la rama, si va por delante o por detrás del remoto y cuántos cambios hay. Secciones:
+Desde «Repositorios locales» o con Control+Mayúsculas+G se abre la ventana de un repositorio de este equipo. Su zona de estado dice la rama, si va por delante o por detrás del remoto y cuántos cambios hay. Como en las demás ventanas, moverse por la lista de secciones muestra cada una sin mover el foco; Intro, Tabulador o F6 entran en su contenido. Secciones:
 
 - **Cambios**: archivos modificados; Espacio o Intro los prepara o los quita, Control+D muestra sus diferencias. Debajo está el mensaje del commit, con casillas para enmendar el último y firmar; Control+Intro confirma.
 - **Historial**, **Ramas**, **Etiquetas**, **Stash**, **Remotos**, **Submódulos**, **Worktrees** y **Reflog**.
@@ -150,7 +158,8 @@ Herramientas, Preferencias (Control+P). Los cambios se aplican al momento en las
 - **General**: sección al abrir, voz al arrancar, bandeja del sistema, confirmar al salir, carpeta de descargas.
 - **Actualizaciones**: buscar al arrancar y el origen (servidor del autor y GitHub, solo uno de ellos o una dirección personalizada).
 - **Cuentas**: identificador de la aplicación OAuth y permisos que se piden.
-- **Accesibilidad**: avisos por voz y braille, retardo, lectura por columnas, anuncio de las listas de casillas (estado, si va antes del texto, posición), columnas del visor de diferencias y sus sonidos, y formato HTML.
+- **Accesibilidad**: avisos por voz y braille, retardo, lectura por columnas, anuncio de las listas de casillas (estado, si va antes del texto, posición), explicaciones que lee el lector, columnas del visor de diferencias y sus sonidos, y formato HTML.
+  - **Explicaciones**: cada control tiene una explicación, la misma que dice Control+H. El lector de pantalla también puede leerla sola al llegar al control. «Explicaciones: leerlas al llegar a botones y casillas» (activada de fábrica) la lee en botones y casillas sueltas. «Explicaciones: leerlas también en cada fila de las listas de casillas» (desactivada de fábrica) la repite en cada fila de una lista de casillas, como «Buscar el texto en» de la búsqueda. Si la desactiva, al moverse por la lista solo oye cada fila y si está marcada. Control+H sigue diciendo la explicación siempre.
 - **Sonidos**: activar, silenciar, volumen, paquete y una lista con cada evento para activar o desactivar su sonido, con un botón para probarlo.
 - **Listas**: elementos por página y fechas relativas o completas.
 - **Notificaciones**, **Git**, **Editor**, **Red y registro**.
@@ -166,6 +175,7 @@ La aplicación busca versiones nuevas al arrancar y una vez al día, y también 
 - **«La sesión no es válida o ha caducado»**: el token se revocó o caducó. Vuelva a iniciar sesión.
 - **«La organización exige autorizar el token con su inicio de sesión único (SSO)»**: abra el enlace del mensaje y autorice el token para esa organización.
 - **Se ha agotado el límite de peticiones**: el mensaje dice a qué hora se renueva. Herramientas, «Límite de uso de la API» muestra el detalle.
+- **El lector repite una explicación larga en cada elemento**: desactive las explicaciones en Preferencias, Accesibilidad. Siempre podrá oírlas con Control+H.
 - **Git no está instalado**: instale Git for Windows o indique la ruta de `git.exe` en Preferencias, Git.
 - **Algo falla**: Herramientas, «Generar un paquete de diagnóstico» crea un ZIP con los registros, sin tokens ni su nombre de usuario de Windows, para pedir ayuda.
 

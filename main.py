@@ -166,7 +166,10 @@ def _principal(argumentos: list[str]) -> int:
 	registro.registrar_version_wx()
 	aplicacion = wx.App(False)
 	aplicacion.SetAppName(ID_APLICACION)
-	wx.HelpProvider.Set(wx.SimpleHelpProvider())
+	# Proveedor propio: Control+H dice siempre la ayuda; el lector solo la oye si se configura así.
+	from app.ui.accesibilidad.ayuda import instalar_proveedor_ayuda
+
+	instalar_proveedor_ayuda(config)
 	_VIVOS["idioma"] = _fijar_idioma()
 
 	from app.core.instancia_unica import InstanciaUnica
