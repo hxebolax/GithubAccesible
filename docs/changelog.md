@@ -2,6 +2,13 @@
 
 Cada versión tiene su apartado, de la más reciente a la más antigua. Dentro de cada versión, los cambios se agrupan en Novedades, Mejoras y Correcciones, contados con palabras de quien usa la aplicación.
 
+## Versión 1.0.6 - 2026-11-22
+
+### Mejoras
+
+- La ventana «Actualización disponible» ya muestra las novedades: las de todas las versiones posteriores a la instalada, por si se ha saltado alguna. Antes decía siempre que el servidor no había publicado novedades. Si alguna vez no las hay, ya no sale un cuadro vacío: se dice que se verán al abrirse la versión nueva.
+- Las novedades que se abren solas tras actualizar incluyen siempre, además de la versión nueva, las de las tres anteriores: con esta versión, desde la 1.0.3. También las lleva la página de la versión en GitHub.
+
 ## Versión 1.0.5 - 2026-11-22
 
 ### Novedades

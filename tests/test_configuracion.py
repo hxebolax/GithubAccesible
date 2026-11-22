@@ -261,8 +261,13 @@ def test_guardado_diferido(datos):
 	config.establecer_diferido("accesibilidad.volumen", 0.4, retraso=0.05)
 	limite = time.monotonic() + 3
 	while time.monotonic() < limite:
-		if _leer(_ruta(datos))["accesibilidad"]["volumen"] == 0.4:
-			break
+		try:
+			if _leer(_ruta(datos))["accesibilidad"]["volumen"] == 0.4:
+				break
+		except PermissionError:
+			# En Windows, leer justo cuando el guardado del otro hilo hace os.replace da «permiso
+			# denegado» un instante: es la prueba la que lee a la vez, se vuelve a intentar.
+			pass
 		time.sleep(0.02)
 	assert _leer(_ruta(datos))["accesibilidad"]["volumen"] == 0.4
 	config.establecer_diferido("accesibilidad.volumen", 0.3, retraso=60)

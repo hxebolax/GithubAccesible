@@ -8,7 +8,11 @@ Toma ``build/<NOMBRE_APP>`` (generado por ``setup_cx.py``) y crea, dentro de
   se esparzan archivos sueltos.
 - ``version.json`` con la versión, el SHA-256, el tamaño y la fecha: es lo que
   necesita un actualizador para saber si hay versión nueva y VERIFICAR la
-  descarga antes de instalarla.
+  descarga antes de instalarla. Lleva también las novedades (de
+  ``docs/changelog.md``): ``historial`` con las últimas versiones, para que la
+  ventana de actualización enseñe todo lo nuevo desde la versión instalada, y
+  ``novedades`` en texto con las cuatro últimas, para las versiones antiguas que
+  solo leen ese campo. Todo va dentro de la firma.
 
 Antes de comprimir vuelve a pasar ``verificar_build.py``: nunca se empaqueta
 una compilación con datos personales.
@@ -39,6 +43,29 @@ CLAVE_FIRMA = RAIZ / "tools" / "claves" / "firma_ed25519.key"
 # ─────────────────────────────────────────────────────────────────────────────
 
 ORIGEN = RAIZ / "build" / NOMBRE_APP
+
+
+#: Versiones del registro de cambios que viajan en el manifiesto y las que van en el texto para versiones antiguas.
+VERSIONES_HISTORIAL = 15
+VERSIONES_TEXTO = 4
+
+
+def novedades_del_changelog(version: str) -> tuple[str, list[dict]]:
+	"""(texto de novedades para versiones antiguas, historial) desde ``docs/changelog.md``.
+
+	Solo versiones hasta ``version`` incluida (nunca las de una versión futura aún sin publicar).
+	"""
+	sys.path.insert(0, str(RAIZ))
+	from app.core import documentacion as doc
+	from app.services.actualizador import texto_plano
+
+	ruta = RAIZ / "docs" / "changelog.md"
+	if not ruta.is_file():
+		return "", []
+	versiones = doc.novedades_entre(doc.leer_changelog(ruta.read_text(encoding="utf-8")), None, version)
+	historial = [{"version": v.numero, "titulo": v.encabezado, "texto": v.texto} for v in versiones[:VERSIONES_HISTORIAL]]
+	texto = "\n\n".join(f"{v.encabezado}\n\n{texto_plano(v.texto)}" for v in versiones[:VERSIONES_TEXTO])
+	return texto, historial
 
 
 def leer_version() -> str:
@@ -116,12 +143,17 @@ def main() -> int:
 	tamano = zip_destino.stat().st_size
 	print(f"Listo: {archivos} archivos, {tamano / (1024 * 1024):.1f} MB.")
 
+	novedades, historial = novedades_del_changelog(version)
+	if not historial:
+		print("Aviso: docs/changelog.md no tiene la entrada de esta versión; el manifiesto irá sin novedades.")
 	manifiesto = {
 		"version": version,
 		"file": zip_destino.name,
 		"sha256": sha256_de(zip_destino),
 		"size": tamano,
 		"date": date.today().isoformat(),
+		"novedades": novedades,
+		"historial": historial,
 	}
 	ruta_json = RAIZ / "build" / "version.json"
 	ruta_json.write_text(json.dumps(manifiesto, indent=4, ensure_ascii=False), encoding="utf-8")

@@ -48,12 +48,20 @@ def ejecutar(orden: list[str], **opciones) -> None:
 		raise SystemExit(f"Falló: {' '.join(orden)} (código {resultado.returncode})")
 
 
+#: La release de GitHub lleva las novedades de la versión y de las tres anteriores (como la aplicación tras actualizar).
+VERSIONES_EN_NOTAS = 4
+
+
 def notas(version_actual: str) -> str:
-	"""Notas de la versión desde docs/changelog.md (sección «## Versión X»)."""
+	"""Notas de la release desde docs/changelog.md: la versión y las anteriores, cada una con su encabezado."""
+	sys.path.insert(0, str(RAIZ))
+	from app.core import documentacion as doc
+
 	texto = (RAIZ / "docs" / "changelog.md").read_text(encoding="utf-8")
-	patron = re.compile(rf"^## Versión {re.escape(version_actual)}\b.*?$(.*?)(?=^## |\Z)", re.S | re.M)
-	coincidencia = patron.search(texto)
-	return coincidencia.group(1).strip() if coincidencia else f"Versión {version_actual}."
+	versiones = doc.novedades_entre(doc.leer_changelog(texto), None, version_actual)[:VERSIONES_EN_NOTAS]
+	if not versiones or doc.clave_version(versiones[0].numero) != doc.clave_version(version_actual):
+		return f"Versión {version_actual}."
+	return "\n\n".join(f"## {v.encabezado}\n\n{v.texto}".rstrip() for v in versiones)
 
 
 def comprobar_firma(ruta_json: Path) -> None:

@@ -271,6 +271,60 @@ class InfoActualizacion:
 	tamano: int
 	fecha: str = ""
 	novedades: str = ""
+	#: Novedades de las últimas versiones: ``(versión, título, texto)``, de la más nueva a la más antigua.
+	#: Con ellas la ventana enseña TODO lo nuevo desde la versión instalada (no solo la última).
+	historial: tuple[tuple[str, str, str], ...] = ()
+
+
+#: Versiones que se publican en el historial del manifiesto (y tope al leerlo).
+MAX_HISTORIAL = 15
+MAX_TEXTO_VERSION = 20000
+
+
+def leer_historial(valor: object) -> tuple[tuple[str, str, str], ...]:
+	"""Historial de novedades del manifiesto, validado (lo que no encaja se descarta sin fallar)."""
+	if not isinstance(valor, list):
+		return ()
+	resultado = []
+	for entrada in valor[:MAX_HISTORIAL]:
+		if not isinstance(entrada, dict):
+			continue
+		version, titulo, texto = entrada.get("version"), entrada.get("titulo"), entrada.get("texto")
+		if not isinstance(version, str) or not isinstance(texto, str) or not texto.strip():
+			continue
+		try:
+			clave_version(version)
+		except VersionInvalida:
+			continue
+		resultado.append((version, str(titulo or f"Versión {version}"), texto.strip()[:MAX_TEXTO_VERSION]))
+	return tuple(sorted(resultado, key=lambda e: clave_version(e[0]), reverse=True))
+
+
+def texto_plano(markdown: str) -> str:
+	"""Markdown del registro de cambios → texto para un cuadro de solo lectura (sin almohadillas ni asteriscos)."""
+	lineas = []
+	for linea in (markdown or "").splitlines():
+		limpia = re.sub(r"^#{1,6}\s+", "", linea)
+		limpia = limpia.replace("**", "").replace("`", "")
+		lineas.append(limpia)
+	return re.sub(r"\n{3,}", "\n\n", "\n".join(lineas)).strip()
+
+
+def novedades_para(info: InfoActualizacion, version_actual: str) -> str:
+	"""Todas las novedades posteriores a ``version_actual`` (de la más nueva a la más antigua), en texto.
+
+	Con un manifiesto antiguo sin historial se usa su campo ``novedades``. Si no
+	hay nada que contar devuelve «»: la ventana entonces no muestra el cuadro.
+	"""
+	try:
+		instalada = clave_version(version_actual)
+	except VersionInvalida:
+		instalada = None
+	partes = [f"{titulo}\n\n{texto_plano(texto)}" for version, titulo, texto in info.historial
+		if instalada is None or clave_version(version) > instalada]
+	if partes:
+		return "\n\n".join(partes)
+	return texto_plano(info.novedades)
 
 
 def puede_instalar(config: Configuracion) -> bool:
@@ -554,6 +608,7 @@ def _info_desde_manifiesto(config: Configuracion, manifiesto: dict, url_manifies
 		tamano=tamano,
 		fecha=str(manifiesto.get("date") or ""),
 		novedades=str(manifiesto.get("novedades") or "").strip(),
+		historial=leer_historial(manifiesto.get("historial")),
 	)
 
 

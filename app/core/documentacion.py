@@ -188,6 +188,11 @@ def marcar_vista(version: str, ruta: Path | None = None) -> None:
 		log.warning("No se pudo guardar la última versión vista en %s", ruta, exc_info=True)
 
 
+#: Tras actualizar se enseñan al menos estas versiones (la nueva y las tres anteriores), aunque ya se
+#: vieran: así quien actualiza cada vez también tiene a mano lo que trajeron las versiones recientes.
+MINIMO_VERSIONES_NOVEDADES = 4
+
+
 def novedades_pendientes(
 	version_actual: str, texto_changelog: str | None = None, ruta: Path | None = None
 ) -> tuple[str, list[Version]] | None:
@@ -211,9 +216,14 @@ def novedades_pendientes(
 		return None
 	if texto_changelog is None:
 		texto_changelog = leer_documento(CHANGELOG) or ""
-	versiones = novedades_entre(leer_changelog(texto_changelog), ultima, version_actual)
+	todas = leer_changelog(texto_changelog)
+	versiones = novedades_entre(todas, ultima, version_actual)
 	if not versiones:
 		log.info("Versión %s sin entrada en el registro de cambios", version_actual)
 		marcar_vista(version_actual, ruta)
 		return None
+	if len(versiones) < MINIMO_VERSIONES_NOVEDADES:
+		# Se completan con las anteriores más recientes (de la más nueva a la más antigua).
+		anteriores = novedades_entre(todas, None, versiones[-1].numero)[1:]
+		versiones += anteriores[:MINIMO_VERSIONES_NOVEDADES - len(versiones)]
 	return ultima, versiones

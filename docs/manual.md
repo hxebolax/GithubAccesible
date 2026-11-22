@@ -250,7 +250,7 @@ Herramientas, Preferencias (Control+P). Los cambios se aplican al momento en las
 
 ## Actualizaciones
 
-La aplicación busca versiones nuevas al arrancar y una vez al día, y también desde Ayuda, «Buscar actualizaciones». Al encontrar una, muestra sus novedades y ofrece «Actualizar ahora», «Omitir esta versión» o «Más tarde». Cada versión va firmada: si el paquete no tiene la firma del autor, se rechaza. Antes de sustituir nada se hace una copia de seguridad, sus datos de `data` no se tocan y, si la versión nueva no arranca bien, se vuelve sola a la anterior.
+La aplicación busca versiones nuevas al arrancar y una vez al día, y también desde Ayuda, «Buscar actualizaciones». Al encontrar una, muestra sus novedades (las de todas las versiones posteriores a la que tiene, por si se saltó alguna) y ofrece «Actualizar ahora», «Omitir esta versión» o «Más tarde». Si el servidor no las da, lo dice y se verán al abrirse la versión nueva. Tras actualizar, la aplicación abre una sola vez las novedades: las de la versión nueva y, como mínimo, las de las tres anteriores. Cada versión va firmada: si el paquete no tiene la firma del autor, se rechaza. Antes de sustituir nada se hace una copia de seguridad, sus datos de `data` no se tocan y, si la versión nueva no arranca bien, se vuelve sola a la anterior.
 
 ## Problemas frecuentes
 

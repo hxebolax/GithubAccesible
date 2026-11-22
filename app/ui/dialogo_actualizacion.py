@@ -151,16 +151,20 @@ class DialogoActualizacion(wx.Dialog):
 		)
 		principal.Add(self.resumen, 0, wx.ALL | wx.EXPAND, 10)
 
-		# La etiqueta va justo antes del cuadro: así el lector la usa como nombre.
-		principal.Add(wx.StaticText(self, label=_("&Novedades:")), 0, wx.LEFT | wx.RIGHT, 10)
-		self.novedades = wx.TextCtrl(
-			self,
-			value=info.novedades or _("El servidor no ha publicado novedades para esta versión."),
-			style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH2,
-			size=(520, 220),
-		)
-		self.novedades.SetName(_("Novedades"))
-		principal.Add(self.novedades, 1, wx.ALL | wx.EXPAND, 10)
+		# Todo lo nuevo desde la versión instalada (si se salta versiones, también las intermedias).
+		texto_novedades = actualizador.novedades_para(info, config.version_actual)
+		self.novedades: wx.TextCtrl | None = None
+		if texto_novedades:
+			# La etiqueta va justo antes del cuadro: así el lector la usa como nombre.
+			principal.Add(wx.StaticText(self, label=_("&Novedades:")), 0, wx.LEFT | wx.RIGHT, 10)
+			self.novedades = wx.TextCtrl(self, value=texto_novedades, style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH2,
+				size=(520, 220))
+			self.novedades.SetName(_("Novedades"))
+			principal.Add(self.novedades, 1, wx.ALL | wx.EXPAND, 10)
+		else:
+			# Sin novedades en el servidor no se enseña un cuadro vacío ni un «no hay»: se dice dónde verlas.
+			self.resumen.SetLabel(self.resumen.GetLabel() + "\n" + _(
+				"Las novedades se mostrarán al abrirse la versión nueva, cuando termine la actualización."))
 
 		self.etiqueta_estado = wx.StaticText(self, label=_("&Estado:"))
 		self.estado = wx.TextCtrl(self, style=wx.TE_READONLY)
@@ -206,7 +210,7 @@ class DialogoActualizacion(wx.Dialog):
 		# Si ya se pulsó «Actualizar ahora», el foco está en «Cancelar» y no se le quita.
 		if not self or self._trabajando():
 			return
-		enfocar(self.boton_actualizar if self.boton_actualizar.IsEnabled() else self.novedades)
+		enfocar(self.boton_actualizar if self.boton_actualizar.IsEnabled() else (self.novedades or self.boton_mas_tarde))
 
 	def _terminar(self, resultado: str, codigo: int) -> None:
 		self.resultado = resultado

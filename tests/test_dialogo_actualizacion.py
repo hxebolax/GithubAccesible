@@ -84,11 +84,30 @@ def test_etiquetas_novedades_y_teclas(aplicacion, config):
 		dialogo.Destroy()
 
 
-def test_sin_novedades_lo_dice(aplicacion, config):
+def test_sin_novedades_no_hay_cuadro_y_se_dice_donde_verlas(aplicacion, config):
 	info = actualizador.InfoActualizacion(**{**INFO.__dict__, "novedades": ""})
 	dialogo = dialogo_mod.DialogoActualizacion(None, config, info)
 	try:
-		assert "no ha publicado novedades" in dialogo.novedades.GetValue()
+		assert dialogo.novedades is None
+		assert not any(isinstance(h, wx.StaticText) and h.GetLabel() == "&Novedades:" for h in dialogo.GetChildren())
+		assert "se mostrarán al abrirse la versión nueva" in dialogo.resumen.GetLabel()
+	finally:
+		dialogo.Destroy()
+
+
+def test_novedades_de_todas_las_versiones_posteriores_a_la_instalada(aplicacion, config):
+	historial = actualizador.leer_historial([
+		{"version": "1.1.0", "titulo": "Versión 1.1.0 - 2026-09-25", "texto": "### Novedades\n\n- **Nueva** B"},
+		{"version": "1.0.5", "titulo": "Versión 1.0.5", "texto": "- Arreglo A"},
+		{"version": "1.0.0", "titulo": "Versión 1.0.0", "texto": "- La instalada"},
+	])
+	info = actualizador.InfoActualizacion(**{**INFO.__dict__, "novedades": "", "historial": historial})
+	dialogo = dialogo_mod.DialogoActualizacion(None, config, info)
+	try:
+		texto = dialogo.novedades.GetValue()
+		assert texto.startswith("Versión 1.1.0 - 2026-09-25")
+		assert "Novedades" in texto and "###" not in texto and "**" not in texto
+		assert "Versión 1.0.5" in texto and "La instalada" not in texto
 	finally:
 		dialogo.Destroy()
 

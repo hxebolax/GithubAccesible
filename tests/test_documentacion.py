@@ -69,10 +69,11 @@ def test_novedades_una_sola_vez_por_version(datos):
 	assert doc.leer_ultima_vista() == "1.0.0"
 	# Misma versión: nada.
 	assert doc.novedades_pendientes("1.0.0", CHANGELOG) is None
-	# Actualización: las versiones intermedias, de la más nueva a la más antigua.
+	# Actualización: las versiones intermedias, de la más nueva a la más antigua, y como mínimo cuatro
+	# (la 1.0.0 ya se vio, pero se añade para completar; no hay más versiones anteriores).
 	desde, versiones = doc.novedades_pendientes("1.2.0", CHANGELOG)
 	assert desde == "1.0.0"
-	assert [v.numero for v in versiones] == ["1.2.0", "1.1.0"]
+	assert [v.numero for v in versiones] == ["1.2.0", "1.1.0", "1.0.0"]
 	doc.marcar_vista("1.2.0")
 	assert doc.novedades_pendientes("1.2.0", CHANGELOG) is None
 	assert (datos / "config" / "novedades.json").is_file()
@@ -117,3 +118,9 @@ def test_notas_version(tmp_path, capsys):
 	assert salida.read_text(encoding="utf-8") == "# 1.2.0 (2026-11-01)\n\n### Correcciones\n\n- Dos.\n"
 	assert notas_version.main(["--raiz", str(tmp_path), "--version", "3.0.0"]) == 1
 	assert "no tiene entrada" in capsys.readouterr().out
+
+
+def test_al_actualizar_una_sola_version_tambien_salen_las_tres_anteriores(datos):
+	doc.marcar_vista("1.2.0")
+	_desde, versiones = doc.novedades_pendientes("1.10.0", CHANGELOG)
+	assert [v.numero for v in versiones] == ["1.10.0", "1.2.0", "1.1.0", "1.0.0"]

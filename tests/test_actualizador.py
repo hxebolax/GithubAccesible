@@ -370,3 +370,21 @@ def test_traduccion_con_gettext_instalado(monkeypatch):
 
 	monkeypatch.setattr(builtins, "_", lambda texto: texto.upper(), raising=False)
 	assert actualizador._("hola") == "HOLA"
+
+
+def test_historial_de_novedades_validado():
+	historial = actualizador.leer_historial([
+		{"version": "1.0.3", "titulo": "Versión 1.0.3", "texto": "- C"},
+		{"version": "no-es", "texto": "x"},
+		{"version": "1.0.5", "texto": "- E"},
+		"basura",
+		{"version": "1.0.4", "texto": "   "},
+	])
+	assert [v for v, _t, _x in historial] == ["1.0.5", "1.0.3"]
+	assert historial[0][1] == "Versión 1.0.5"
+	assert actualizador.leer_historial("no es una lista") == ()
+	info = actualizador.InfoActualizacion("1.0.5", "a.zip", "https://x/a.zip", "0" * 64, 1, novedades="- viejo",
+		historial=historial)
+	assert actualizador.novedades_para(info, "1.0.3") == "Versión 1.0.5\n\n- E"
+	assert actualizador.novedades_para(info, "1.0.5") == "- viejo", "sin nada posterior: el texto general"
+	assert actualizador.texto_plano("## Título\n\n**negrita** y `código`\n\n\n\n- a") == "Título\n\nnegrita y código\n\n- a"
