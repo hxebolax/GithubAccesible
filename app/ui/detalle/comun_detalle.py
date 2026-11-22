@@ -281,7 +281,7 @@ class VentanaDetalle(wx.Frame):
 		return en_segundo_plano(self, self.ctx, funcion, exito=exito, al_terminar=terminado, al_fallar=fallado,
 			inicio=inicio, sonido=sonido)
 
-	def descargar(self, url: str, destino: Path, aceptar: str = "application/octet-stream", descripcion: str = "",
+	def descargar(self, url: str, destino: Path, aceptar: str | None = None, descripcion: str = "",
 		al_terminar: Callable[[Path], None] | None = None) -> Any:
 		"""Descarga a disco con progreso en la barra de estado y anuncios SOLO en los hitos."""
 		from app.core.tareas import HitosProgreso

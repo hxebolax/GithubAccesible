@@ -33,7 +33,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
 from typing import Any
-from urllib.parse import urljoin, urlparse
+from urllib.parse import urljoin, urlparse, urlsplit
 
 import requests
 
@@ -49,6 +49,16 @@ POR_PAGINA_MAXIMO = 100
 # Tope de seguridad al recorrer páginas sin límite explícito (100 x 100 = 10 000 elementos).
 PAGINAS_MAXIMAS_POR_DEFECTO = 100
 TAMANO_CACHE_ETAG = 500
+# Los archivos de una release solo se bajan con «octet-stream» (con JSON GitHub
+# devuelve la ficha del archivo). En cambio, «zipball», «tarball», registros y
+# artefactos de Actions EXIGEN JSON: con «octet-stream» contestan 415.
+ACEPTAR_BINARIO = "application/octet-stream"
+
+
+def aceptar_para_descarga(url: str) -> str:
+	"""Cabecera ``Accept`` adecuada para descargar ``url`` de la API de GitHub."""
+	ruta = urlsplit(url or "").path
+	return ACEPTAR_BINARIO if "/releases/assets/" in ruta else ACEPTAR_JSON
 
 
 def _(texto: str) -> str:
@@ -692,7 +702,7 @@ class ClienteGitHub:
 		self,
 		url: str,
 		destino: Path,
-		aceptar: str = "application/octet-stream",
+		aceptar: str | None = None,
 		progreso: Callable[[int, int | None], None] | None = None,
 		cancelado: Callable[[], bool] | None = None,
 	) -> Path:
@@ -700,7 +710,12 @@ class ClienteGitHub:
 
 		Escribe primero en ``<destino>.parcial`` y lo renombra al terminar: un
 		corte no deja un archivo a medias con el nombre bueno.
+
+		:param aceptar: cabecera ``Accept``; si no se indica, la elige
+			``aceptar_para_descarga`` según la URL (un «octet-stream» fijo hacía
+			fallar la descarga en zip con el error 415).
 		"""
+		aceptar = aceptar or aceptar_para_descarga(url)
 		destino = Path(destino)
 		destino.parent.mkdir(parents=True, exist_ok=True)
 		temporal = destino.with_name(destino.name + ".parcial")

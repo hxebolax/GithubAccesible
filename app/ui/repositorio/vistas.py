@@ -386,16 +386,10 @@ def vista_codigo(nombre: str, host: str = "github.com") -> VistaRepo:
 			exito=lambda r: _("Guardado en {r}.").format(r=r), sonido="descarga")
 
 	def descargar_zip(panel: Any, _e: Any) -> None:
-		rama = ref(panel) or _rama_defecto(panel)
-		corto = nombre.rpartition("/")[2]
-		destino = _guardar_como(panel, _("Guardar el repositorio en zip"), f"{corto}-{rama or 'principal'}.zip".replace("/", "-"),
-			"*.zip")
-		if destino is None:
-			return
-		api = panel.ctx.api()
-		# El cliente sigue la redirección a codeload y escribe en trozos (no carga el zip en memoria).
-		en_segundo_plano(panel, panel.ctx, lambda: api.c.descargar(api.archivo_zip(nombre, rama), destino),
-			inicio=_("Descargando el repositorio en zip…"), exito=lambda r: _("Guardado en {r}.").format(r=r), sonido="descarga")
+		from app.ui.descarga_codigo import descargar_codigo
+
+		# Con progreso hablado en hitos; el cliente sigue la redirección a codeload y escribe en trozos.
+		descargar_codigo(panel, panel.ctx, nombre, ref(panel) or _rama_defecto(panel))
 
 	def buscar_archivo(panel: Any, _e: Any) -> None:
 		texto = pedir_texto(panel, _("&Parte del nombre o de la ruta:"), _("Buscar un archivo"))
@@ -1312,12 +1306,9 @@ def vista_etiquetas(nombre: str, host: str = "github.com") -> VistaRepo:
 			al_terminar=lambda _r: panel.quitar(etiqueta))
 
 	def zip_etiqueta(panel: Any, etiqueta: dict) -> None:
-		destino = _guardar_como(panel, _("Guardar en zip"), f"{nombre.rpartition('/')[2]}-{etiqueta.get('name', '')}.zip", "*.zip")
-		if destino is None:
-			return
-		api = panel.ctx.api()
-		en_segundo_plano(panel, panel.ctx, lambda: api.c.descargar(api.archivo_zip(nombre, etiqueta.get("name", "")), destino),
-			inicio=_("Descargando…"), exito=lambda r: _("Guardado en {r}.").format(r=r), sonido="descarga")
+		from app.ui.descarga_codigo import descargar_codigo
+
+		descargar_codigo(panel, panel.ctx, nombre, etiqueta.get("name", ""))
 
 	return VistaRepo(
 		"repo_etiquetas", _("Etiquetas git (tags)"),
@@ -2208,6 +2199,13 @@ def vista_despliegues(nombre: str, host: str = "github.com") -> VistaRepo:
 	)
 
 
+def vista_wiki(nombre: str, host: str = "github.com") -> VistaRepo:
+	"""La wiki vive en su propio módulo (usa git, no la API); se importa al abrir la sección."""
+	from app.ui.repositorio.wiki import crear_vista_wiki
+
+	return crear_vista_wiki(nombre, host)
+
+
 #: Fábrica de cada sección de lista: ``(nombre, host) -> VistaRepo``.
 VISTAS: dict[str, Callable[..., VistaRepo]] = {
 	"codigo": vista_codigo,
@@ -2220,6 +2218,7 @@ VISTAS: dict[str, Callable[..., VistaRepo]] = {
 	"etiquetas": vista_etiquetas,
 	"commits": vista_commits,
 	"proyectos": vista_proyectos,
+	"wiki": vista_wiki,
 	"hitos": vista_hitos,
 	"labels": vista_labels,
 	"colaboradores": vista_colaboradores,

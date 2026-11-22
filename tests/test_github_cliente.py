@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import io
 import json
 import time
 
@@ -17,6 +18,7 @@ from app.services.github.cliente import (
 	NoAutorizado,
 	NoEncontrado,
 	SinPermiso,
+	aceptar_para_descarga,
 	analizar_link,
 	normalizar_host,
 	numero_ultima_pagina,
@@ -222,3 +224,22 @@ def test_aviso_de_sso():
 		{"X-GitHub-SSO": "required; url=https://github.com/orgs/x/sso?authorization_request=1"}))
 	with pytest.raises(SinPermiso, match="SSO"):
 		cliente.get("/orgs/x/repos")
+
+
+def test_descarga_en_zip_pide_json_y_la_de_releases_octet_stream(tmp_path):
+	"""Regresión: «zipball» con «Accept: application/octet-stream» da 415 en GitHub."""
+	zip_ = "https://api.github.com/repos/ana/proyecto/zipball/main"
+	asset = "https://api.github.com/repos/ana/proyecto/releases/assets/7"
+	assert aceptar_para_descarga(zip_) == "application/vnd.github+json"
+	assert aceptar_para_descarga("https://api.github.com/repos/ana/p/actions/artifacts/3/zip") == "application/vnd.github+json"
+	assert aceptar_para_descarga(asset) == "application/octet-stream"
+	respuestas = [respuesta(200, b"PK datos"), respuesta(200, b"binario")]
+	for r in respuestas:
+		r.raw = io.BytesIO(r._content)
+	cliente, sesion = cliente_con(*respuestas)
+	destino = cliente.descargar(zip_, tmp_path / "proyecto.zip")
+	assert destino.read_bytes() == b"PK datos"
+	assert sesion.peticiones[0][2]["headers"]["Accept"] == "application/vnd.github+json"
+	cliente.descargar(asset, tmp_path / "programa.exe")
+	assert sesion.peticiones[1][2]["headers"]["Accept"] == "application/octet-stream"
+	assert not list(tmp_path.glob("*.parcial"))

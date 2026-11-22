@@ -10,7 +10,7 @@ En toda la aplicación, elegir algo (una sección, una opción de un desplegable
 - F5: actualizar la sección.
 - Control+O: abrir un repositorio por nombre o enlace.
 - Control+E: buscar en GitHub.
-- Control+U: ver el perfil de un usuario u organización.
+- Control+U: ver el perfil de un usuario u organización (propone el de la fila elegida).
 - Control+Mayúsculas+N: nuevo repositorio.
 - Control+Mayúsculas+K: clonar un repositorio.
 - Control+Mayúsculas+G: abrir una carpeta de git local.
@@ -40,6 +40,7 @@ En toda la aplicación, elegir algo (una sección, una opción de un desplegable
 - Mis issues y Mis pull requests: F4 cambiar el filtro, Control+Mayúsculas+R ir al repositorio.
 - Gists: Control+N nuevo, Suprimir borrar, F4 cambiar entre míos, con estrella y públicos.
 - Repositorios locales: Control+N añadir una carpeta, Control+K clonar, Control+Mayúsculas+E abrir la carpeta, Suprimir quitar de la lista.
+- Resultados de la búsqueda: Control+Mayúsculas+P ver el propietario, Control+Mayúsculas+R ir al repositorio, Control+K clonar, Control+S estrella, F4 nueva búsqueda, Control+Mayúsculas+B abrir la búsqueda en la web.
 
 ## Ventana de un repositorio
 
@@ -47,12 +48,14 @@ En toda la aplicación, elegir algo (una sección, una opción de un desplegable
 - Control+Tabulador y Control+Mayúsculas+Tabulador: sección siguiente y anterior.
 - Alt+1 a Alt+9: las nueve primeras secciones.
 - F5: actualizar. Control+W: cerrar la ventana (Escape no la cierra).
+- Control+Mayúsculas+P: ver el perfil del propietario del repositorio.
 - En las secciones: Intro abrir, Control+N crear, F2 cambiar o renombrar, Suprimir borrar, F4 cambiar el filtro de GitHub.
 - Código: Retroceso sube de carpeta, F4 cambia de rama, Control+P busca un archivo en todo el árbol, Control+U sube un archivo, Control+S descarga el archivo.
 - Issues y pull requests: Control+R comentar, Control+L etiquetas, Control+Mayúsculas+A asignados, Control+Mayúsculas+X cerrar o reabrir.
 - Pull requests y ramas: Control+D ver las diferencias o comparar.
 - Actions: Control+R volver a ejecutar, Control+N lanzar un flujo.
 - Commits: Control+Mayúsculas+S copiar el identificador (SHA).
+- Wiki: Intro leer la página, F2 editarla, Control+N página nueva, Suprimir borrarla, Control+P buscar en todas las páginas.
 
 ## Issue
 
@@ -97,7 +100,7 @@ En toda la aplicación, elegir algo (una sección, una opción de un desplegable
 ## Release
 
 - F7 notas con formato, Control+U subir recursos, Control+E editar.
-- En Recursos: Intro descargar, Mayúsculas+Intro elegir la carpeta, F2 renombrar, Suprimir borrar.
+- En Recursos: Intro descargar (y comprobar la suma SHA-256), Mayúsculas+Intro elegir la carpeta, F2 renombrar, Suprimir borrar.
 - F5, Control+B, Control+Mayúsculas+C y Control+W.
 
 ## Gist

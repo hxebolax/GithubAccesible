@@ -163,18 +163,28 @@ def _vigilar(panel: Any, repo: dict) -> None:
 	dialogo_vigilancia(panel, panel.ctx, repo.get("full_name", ""))
 
 
+def _descargar_zip(panel: Any, repo: dict) -> None:
+	from app.ui.descarga_codigo import descargar_codigo
+
+	descargar_codigo(panel, panel.ctx, repo.get("full_name", ""), repo.get("default_branch", "") or "")
+
+
 def acciones_repositorio() -> list[Accion]:
 	return [
-		Accion(_("&Abrir"), _abrir_repo, "Intro"),
+		Accion(_("A&brir"), _abrir_repo, "Intro"),
 		Accion(_("C&lonar…"), _clonar, "Ctrl+K"),
 		Accion(_("Poner o quitar la e&strella"), _estrella, "Ctrl+S"),
-		Accion(_("&Vigilar…"), _vigilar),
-		Accion(_("&Bifurcar (fork)"), _bifurcar),
+		Accion(_("Vi&gilar…"), _vigilar),
+		Accion(_("Bifurcar (for&k)"), _bifurcar),
+		Accion(_("Descargar el código en &zip…"), _descargar_zip,
+			ayuda=_("Guarda el código de la rama principal en un archivo zip, sin necesidad de git.")),
 		Accion(_("Ver &issues"), lambda p, r: abrir.repositorio(p.ctx, r["full_name"], "issues"), separador_antes=True),
 		Accion(_("Ver &pull requests"), lambda p, r: abrir.repositorio(p.ctx, r["full_name"], "prs")),
 		Accion(_("Ver Ac&tions"), lambda p, r: abrir.repositorio(p.ctx, r["full_name"], "acciones")),
 		Accion(_("Ver &releases"), lambda p, r: abrir.repositorio(p.ctx, r["full_name"], "releases")),
-		Accion(_("Ver el &propietario"), lambda p, r: abrir.usuario(p.ctx, p, (r.get("owner") or {}).get("login", ""))),
+		Accion(_("Ver la &wiki"), lambda p, r: abrir.repositorio(p.ctx, r["full_name"], "wiki"), disponible=lambda p, r: r.get("has_wiki", True)),
+		Accion(_("&Ver el propietario"), lambda p, r: abrir.usuario(p.ctx, p, (r.get("owner") or {}).get("login", "")), "Ctrl+Shift+P",
+			ayuda=_("Abre el perfil de la persona u organización dueña del repositorio: sus repositorios y el botón Seguir.")),
 	]
 
 
@@ -303,7 +313,7 @@ def vista_notificaciones() -> DefinicionVista:
 			Accion(_("&Silenciar esta conversación"), silenciar, "Ctrl+Shift+S"),
 			Accion(_("Marcar como leídas las de este &repositorio"), marcar_repo),
 			Accion(_("Marcar &todas como leídas"), marcar_todas, requiere_elemento=False, separador_antes=True),
-			Accion(_("Cambiar el &filtro…"), cambiar_filtro, "F4", requiere_elemento=False),
+			Accion(_("Cambiar el f&iltro…"), cambiar_filtro, "F4", requiere_elemento=False),
 			Accion(_("Ir al re&positorio"), lambda p, n: abrir.repositorio(p.ctx, (n.get("repository") or {}).get("full_name", "")), "Ctrl+Shift+R"),
 		],
 		texto_vacio=_("No tiene notificaciones pendientes."),
@@ -342,10 +352,11 @@ def vista_mis_repositorios() -> DefinicionVista:
 			exito=_("Repositorio {n} borrado.").format(n=nombre), al_terminar=lambda _r: panel.quitar(repo))
 
 	acciones = acciones_repositorio() + [
-		Accion(_("&Nuevo repositorio…"), nuevo, "Ctrl+N", requiere_elemento=False, separador_antes=True),
-		Accion(_("&Configuración del repositorio…"), lambda p, r: abrir.repositorio(p.ctx, r["full_name"], "configuracion")),
-		Accion(_("&Borrar el repositorio…"), borrar, "Supr", disponible=lambda p, r: (r.get("permissions") or {}).get("admin", False)),
-		Accion(_("Cambiar el &filtro…"), cambiar_filtro, "F4", requiere_elemento=False),
+		Accion(_("N&uevo repositorio…"), nuevo, "Ctrl+N", requiere_elemento=False, separador_antes=True),
+		Accion(_("A&justes y configuración del repositorio…"), lambda p, r: abrir.repositorio(p.ctx, r["full_name"], "configuracion")),
+		# Sin letra de acceso a propósito: borrar un repositorio no debe estar a una tecla de distancia.
+		Accion(_("Borrar el repositorio…"), borrar, "Supr", disponible=lambda p, r: (r.get("permissions") or {}).get("admin", False)),
+		Accion(_("&Cambiar el filtro…"), cambiar_filtro, "F4", requiere_elemento=False),
 	]
 	return DefinicionVista("repositorios", _("Mis repositorios"), columnas_repositorio(), cargar, _abrir_repo, acciones,
 		_("No tiene repositorios. Cree uno con Control+N."), url_html, detalle_repositorio)
@@ -398,8 +409,8 @@ def vista_mis_issues() -> DefinicionVista:
 	return DefinicionVista(
 		"mis_issues", _("Mis issues"), columnas_issue(), cargar, lambda p, i: abrir.issue_o_pr(p.ctx, p, i),
 		[
-			Accion(_("&Abrir"), lambda p, i: abrir.issue_o_pr(p.ctx, p, i), "Intro"),
-			Accion(_("Cambiar el &filtro…"), cambiar, "F4", requiere_elemento=False),
+			Accion(_("A&brir"), lambda p, i: abrir.issue_o_pr(p.ctx, p, i), "Intro"),
+			Accion(_("Cambiar el f&iltro…"), cambiar, "F4", requiere_elemento=False),
 			Accion(_("Ir al re&positorio"), lambda p, i: abrir.repositorio(p.ctx, abrir.nombre_repo_de(i)), "Ctrl+Shift+R"),
 		],
 		_("No hay issues con este filtro."), url_html, detalle_issue,
@@ -429,8 +440,8 @@ def vista_mis_prs() -> DefinicionVista:
 	return DefinicionVista(
 		"mis_prs", _("Mis pull requests"), columnas_issue(), cargar, lambda p, i: abrir.issue_o_pr(p.ctx, p, i),
 		[
-			Accion(_("&Abrir"), lambda p, i: abrir.issue_o_pr(p.ctx, p, i), "Intro"),
-			Accion(_("Cambiar el &filtro…"), cambiar, "F4", requiere_elemento=False),
+			Accion(_("A&brir"), lambda p, i: abrir.issue_o_pr(p.ctx, p, i), "Intro"),
+			Accion(_("Cambiar el f&iltro…"), cambiar, "F4", requiere_elemento=False),
 			Accion(_("Ir al re&positorio"), lambda p, i: abrir.repositorio(p.ctx, abrir.nombre_repo_de(i)), "Ctrl+Shift+R"),
 		],
 		_("No hay pull requests con este filtro."), url_html, detalle_issue,
@@ -477,10 +488,10 @@ def vista_gists() -> DefinicionVista:
 		],
 		cargar, lambda p, g: abrir.gist(p.ctx, p, g["id"]),
 		[
-			Accion(_("&Abrir"), lambda p, g: abrir.gist(p.ctx, p, g["id"]), "Intro"),
-			Accion(_("&Nuevo gist…"), nuevo, "Ctrl+N", requiere_elemento=False),
-			Accion(_("&Borrar…"), borrar, "Supr", disponible=lambda p, g: (g.get("owner") or {}).get("login") == p.ctx.usuario),
-			Accion(_("Cambiar el &filtro…"), cambiar, "F4", requiere_elemento=False),
+			Accion(_("A&brir"), lambda p, g: abrir.gist(p.ctx, p, g["id"]), "Intro"),
+			Accion(_("N&uevo gist…"), nuevo, "Ctrl+N", requiere_elemento=False),
+			Accion(_("Borra&r…"), borrar, "Supr", disponible=lambda p, g: (g.get("owner") or {}).get("login") == p.ctx.usuario),
+			Accion(_("Cambiar el f&iltro…"), cambiar, "F4", requiere_elemento=False),
 		],
 		_("No hay gists."), url_html,
 	)
@@ -495,7 +506,7 @@ def vista_organizaciones() -> DefinicionVista:
 		],
 		lambda api, pagina, panel: api.mis_organizaciones() if panel.ctx.usuario else [],
 		lambda p, o: _abrir_organizacion(p, o),
-		[Accion(_("&Abrir"), lambda p, o: _abrir_organizacion(p, o), "Intro")],
+		[Accion(_("A&brir"), lambda p, o: _abrir_organizacion(p, o), "Intro")],
 		_("No pertenece a ninguna organización."),
 		url=lambda o: f"https://github.com/{o.get('login', '')}",
 	)
@@ -520,7 +531,7 @@ def vista_proyectos() -> DefinicionVista:
 		],
 		lambda api, pagina, panel: api.proyectos(panel.ctx.usuario) if panel.ctx.usuario else [],
 		lambda p, pr: abrir.proyecto(p.ctx, p, pr),
-		[Accion(_("&Abrir"), lambda p, pr: abrir.proyecto(p.ctx, p, pr), "Intro")],
+		[Accion(_("A&brir"), lambda p, pr: abrir.proyecto(p.ctx, p, pr), "Intro")],
 		_("No tiene proyectos."), url=lambda p: p.get("url", ""), paginada=False,
 	)
 
@@ -565,9 +576,9 @@ def vista_codespaces() -> DefinicionVista:
 		lambda api, pagina, panel: api.codespaces() if panel.ctx.usuario else [],
 		lambda p, c: webbrowser.open(c.get("web_url", "")),
 		[
-			Accion(_("Abrir en el &navegador"), lambda p, c: webbrowser.open(c.get("web_url", "")), "Intro"),
+			Accion(_("Abrir el codespace en el na&vegador"), lambda p, c: webbrowser.open(c.get("web_url", "")), "Intro"),
 			Accion(_("&Iniciar"), accion("iniciar_codespace", _("Codespace iniciándose."))),
-			Accion(_("&Detener"), accion("detener_codespace", _("Codespace detenido."))),
+			Accion(_("De&tener"), accion("detener_codespace", _("Codespace detenido."))),
 			Accion(_("&Borrar…"), borrar, "Supr"),
 		],
 		_("No tiene codespaces."), url=lambda c: c.get("web_url", ""), paginada=False,
@@ -630,11 +641,11 @@ def vista_locales() -> DefinicionVista:
 		],
 		cargar, lambda p, r: abrir.repositorio_local(p.ctx, r["carpeta"]),
 		[
-			Accion(_("&Abrir"), lambda p, r: abrir.repositorio_local(p.ctx, r["carpeta"]), "Intro"),
-			Accion(_("&Añadir una carpeta…"), anadir, "Ctrl+N", requiere_elemento=False),
+			Accion(_("A&brir"), lambda p, r: abrir.repositorio_local(p.ctx, r["carpeta"]), "Intro"),
+			Accion(_("Añadir una &carpeta…"), anadir, "Ctrl+N", requiere_elemento=False),
 			Accion(_("C&lonar un repositorio…"), clonar, "Ctrl+K", requiere_elemento=False),
 			Accion(_("Abrir la carpeta en el &Explorador"), lambda p, r: os.startfile(r["carpeta"]) if r["existe"] else None, "Ctrl+Shift+E"),  # noqa: S606
-			Accion(_("&Quitar de la lista"), quitar, "Supr"),
+			Accion(_("Quitar de la lis&ta"), quitar, "Supr"),
 		],
 		_("No hay repositorios locales. Añada una carpeta con Control+N o clone uno con Control+K."), paginada=False,
 		sonido_carga=False, requiere_sesion=False,
@@ -647,6 +658,130 @@ def anadir_repo_local(ctx: Any, carpeta: str) -> None:
 	if carpeta not in lista:
 		lista.insert(0, carpeta)
 		ctx.config.establecer("git.repos_locales", lista)
+
+
+# ════════════════════════════════════════════════════════════════════════════
+# Resultados de búsqueda: de quién es cada cosa (funciones puras, con pruebas)
+# ════════════════════════════════════════════════════════════════════════════
+
+
+def repo_del_resultado(elemento: dict, datos: dict | None = None) -> str:
+	"""«dueño/repo» de un resultado de búsqueda de cualquier tipo, o «» si no tiene."""
+	tipo = elemento.get("_tipo")
+	if tipo == "tendencia_dev" or elemento.get("type") in ("User", "Organization", "Bot") and "login" in elemento:
+		return ""
+	if elemento.get("full_name") and "/" in str(elemento["full_name"]):
+		return str(elemento["full_name"])
+	if "color" in elemento and "default" in elemento:  # una etiqueta (label): es del repositorio buscado
+		return str((datos or {}).get("repositorio", ""))
+	return abrir.nombre_repo_de(elemento)
+
+
+def propietario_del_resultado(elemento: dict, datos: dict | None = None) -> str:
+	"""Cuenta (persona u organización) dueña del repositorio del resultado."""
+	dueno = (elemento.get("owner") or {}).get("login") if isinstance(elemento.get("owner"), dict) else ""
+	if dueno:
+		return str(dueno)
+	repo = repo_del_resultado(elemento, datos)
+	return repo.split("/", 1)[0] if "/" in repo else ""
+
+
+def autor_del_resultado(elemento: dict) -> str:
+	"""Quién escribió la issue, el PR, la discusión o el commit (solo si tiene cuenta en GitHub)."""
+	if elemento.get("_tipo") == "discusion":
+		return str((elemento.get("author") or {}).get("login", ""))
+	if "commit" in elemento:
+		return f.login(elemento.get("author"))
+	if "number" in elemento:
+		return f.login(elemento.get("user"))
+	return ""
+
+
+def cuenta_del_resultado(elemento: dict) -> str:
+	"""El propio usuario u organización cuando el resultado ES una cuenta."""
+	if elemento.get("_tipo") == "tendencia_dev":
+		return str(elemento.get("login", ""))
+	if "login" in elemento and "full_name" not in elemento and "number" not in elemento:
+		return str(elemento.get("login", ""))
+	return ""
+
+
+def persona_del_elemento(elemento: Any, datos: dict | None = None) -> str:
+	"""Cuenta más relacionada con una fila de cualquier lista (para proponerla en «Ver un perfil»).
+
+	Por orden: quien hizo la actividad, la propia cuenta si la fila es una
+	persona, quien escribió la issue o el commit, y si no, el dueño del repositorio.
+	"""
+	if not isinstance(elemento, dict):
+		return ""
+	actor = elemento.get("actor")
+	if isinstance(actor, dict) and actor.get("login"):
+		return str(actor["login"])
+	return (cuenta_del_resultado(elemento) or autor_del_resultado(elemento) or propietario_del_resultado(elemento, datos)
+		or str(((elemento.get("repository") or {}).get("owner") or {}).get("login") or ""))
+
+
+def es_repositorio_resultado(elemento: dict) -> bool:
+	"""El resultado es un repositorio (búsqueda de repositorios o tendencias de repositorios)."""
+	if elemento.get("_tipo") == "tendencia_repo":
+		return True
+	return bool(elemento.get("full_name")) and "number" not in elemento and "path" not in elemento and "commit" not in elemento
+
+
+def _seguir_cuenta(panel: Any, login: str) -> None:
+	"""Sigue a la cuenta o deja de seguirla (pregunta antes a GitHub cómo está)."""
+	if not login:
+		return
+	api = panel.ctx.api()
+
+	def trabajo() -> bool:
+		if api.sigo_a(login):
+			api.dejar_de_seguir(login)
+			return False
+		api.seguir(login)
+		return True
+
+	en_segundo_plano(panel, panel.ctx, trabajo,
+		exito=lambda sigue: (_("Ahora sigue a {l}.") if sigue else _("Ha dejado de seguir a {l}.")).format(l=login))
+
+
+def acciones_resultado() -> list[Accion]:
+	"""Acciones de un resultado de búsqueda según lo que sea (repositorio, issue, cuenta, código...).
+
+	Letras: las comunes de la lista ya usan A, M, F, Q, O, E, N y D, y la vista
+	de búsqueda B, V, W, G y T; por eso aquí van P, U, R, J, L, S, I, C y Z.
+	"""
+	def propietario(p: Any, e: dict) -> str:
+		return propietario_del_resultado(e, p.datos)
+
+	def repositorio(p: Any, e: dict) -> str:
+		return repo_del_resultado(e, p.datos)
+
+	def como_repo(p: Any, e: dict) -> dict:
+		# Las tendencias leídas de la web no traen «clone_url»: se compone con el host de la cuenta.
+		host = getattr(p.ctx, "host", "") or "github.com"
+		return {**e, "clone_url": e.get("clone_url") or f"https://{host}/{e.get('full_name', '')}.git"}
+
+	return [
+		Accion(_("Ver el &propietario (perfil, repositorios, seguir)"), lambda p, e: abrir.usuario(p.ctx, p, propietario(p, e)),
+			"Ctrl+Shift+P", disponible=lambda p, e: bool(propietario(p, e)), separador_antes=True,
+			ayuda=_("Abre el perfil de la persona u organización dueña del repositorio: sus datos, repositorios y el botón Seguir.")),
+		Accion(_("Ver al a&utor"), lambda p, e: abrir.usuario(p.ctx, p, autor_del_resultado(e)),
+			disponible=lambda p, e: bool(autor_del_resultado(e)) and autor_del_resultado(e) != propietario(p, e),
+			ayuda=_("Abre el perfil de quien escribió la issue, el pull request, la discusión o el commit.")),
+		Accion(_("Ir al &repositorio"), lambda p, e: abrir.repositorio(p.ctx, repositorio(p, e)), "Ctrl+Shift+R",
+			disponible=lambda p, e: bool(repositorio(p, e)) and not es_repositorio_resultado(e),
+			ayuda=_("Abre la ventana del repositorio al que pertenece el resultado.")),
+		Accion(_("Seguir o de&jar de seguir"), lambda p, e: _seguir_cuenta(p, cuenta_del_resultado(e)),
+			disponible=lambda p, e: bool(cuenta_del_resultado(e)), ayuda=_("Sigue a esta cuenta, o deja de seguirla.")),
+		Accion(_("C&lonar…"), lambda p, e: _clonar(p, como_repo(p, e)), "Ctrl+K", disponible=lambda p, e: es_repositorio_resultado(e)),
+		Accion(_("Poner o quitar la e&strella"), lambda p, e: _estrella(p, e), "Ctrl+S",
+			disponible=lambda p, e: es_repositorio_resultado(e)),
+		Accion(_("V&igilar…"), lambda p, e: _vigilar(p, e), disponible=lambda p, e: es_repositorio_resultado(e)),
+		Accion(_("Bifur&car (fork)"), lambda p, e: _bifurcar(p, e), disponible=lambda p, e: es_repositorio_resultado(e)),
+		Accion(_("Descargar el código en &zip…"), lambda p, e: _descargar_zip(p, e), disponible=lambda p, e: es_repositorio_resultado(e),
+			ayuda=_("Guarda el código de la rama principal en un archivo zip, sin necesidad de git.")),
+	]
 
 
 def vista_busqueda() -> DefinicionVista:
@@ -938,8 +1073,9 @@ def vista_busqueda() -> DefinicionVista:
 		"busqueda", _("Resultados de la búsqueda"), columnas,
 		cargar, activar,
 		[
-			Accion(_("&Abrir"), activar, "Intro"),
-			Accion(_("&Nueva búsqueda…"), lambda p, e: _nueva_busqueda(p), "F4", requiere_elemento=False),
+			Accion(_("A&brir"), activar, "Intro"),
+			*acciones_resultado(),
+			Accion(_("Nue&va búsqueda…"), lambda p, e: _nueva_busqueda(p), "F4", requiere_elemento=False, separador_antes=True),
 			Accion(_("Abrir la búsqueda en la &web"), abrir_web, "Ctrl+Shift+B", requiere_elemento=False,
 				disponible=lambda p, e: bool(p.datos.get("consulta")), ayuda=_("Abre la misma búsqueda en github.com.")),
 			Accion(_("&Guardar esta búsqueda…"), guardar, requiere_elemento=False, disponible=lambda p, e: bool(p.datos.get("consulta")),

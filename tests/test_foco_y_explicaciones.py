@@ -119,3 +119,15 @@ def test_secciones_de_git_no_mueven_el_foco(app_wx, tmp_path):
 			assert foco is ventana.secciones, f"sección {indice}: foco en {type(foco).__name__} {foco.GetName() if foco else None}"
 	finally:
 		ventana.Destroy()
+
+
+def test_enfocar_solo_si_se_ve(app_wx, marco):
+	"""Enfocar en una ventana oculta no hace nada (con NVDA, en RichEdit, provocaba el aviso COM 0x8001010D)."""
+	import wx
+
+	from app.ui.accesibilidad.foco import enfocar
+
+	campo = wx.TextCtrl(marco, style=wx.TE_MULTILINE | wx.TE_RICH2)
+	assert not marco.IsShown()
+	assert enfocar(campo) is False and wx.Window.FindFocus() is not campo
+	assert enfocar(None) is False

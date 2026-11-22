@@ -61,6 +61,7 @@ SECCIONES: list[Seccion] = [
 	Seccion("etiquetas", "Etiquetas git (tags)", "&9 Etiquetas git (tags)"),
 	Seccion("commits", "Commits", "&Commits"),
 	Seccion("proyectos", "Proyectos", "&Proyectos"),
+	Seccion("wiki", "Wiki", "Wi&ki"),
 	Seccion("hitos", "Hitos", "&Hitos"),
 	Seccion("labels", "Etiquetas de issues (labels)", "Eti&quetas de issues (labels)"),
 	Seccion("colaboradores", "Colaboradores", "C&olaboradores"),
@@ -142,10 +143,18 @@ class VentanaRepositorio(wx.Frame):
 		self._elemento(menu, _("Abrir en el &navegador"), self.abrir_navegador, _("Abre la página del repositorio en GitHub."))
 		self._elemento(menu, _("Copiar la &URL de clonado"), self.copiar_url_clonado, _("Copia la dirección https para git clone."))
 		self._elemento(menu, _("C&lonar…"), self.clonar, _("Descarga el repositorio a una carpeta del equipo con git."))
+		self._elemento(menu, _("Descargar el código en &zip…"), self.descargar_zip,
+			_("Guarda el código de la rama principal en un archivo zip, sin necesidad de git."))
 		menu.AppendSeparator()
 		self._elemento(menu, _("Poner o quitar la &estrella"), self.estrella, _("Marca el repositorio como favorito, o lo desmarca."))
 		self._elemento(menu, _("&Vigilar…"), self.vigilar, _("Elige qué avisos recibir de este repositorio."))
 		self._elemento(menu, _("&Bifurcar (fork)"), self.bifurcar, _("Crea una copia del repositorio en su cuenta."))
+		self.item_original = self._elemento(menu, _("Abrir el repositorio &original"), self.abrir_original,
+			_("Solo en una bifurcación: abre el repositorio del que se copió."))
+		self.item_sincronizar = self._elemento(menu, _("&Sincronizar con el original…"), self.sincronizar_bifurcacion,
+			_("Solo en una bifurcación: trae a una rama suya los cambios nuevos del repositorio original."))
+		self._elemento(menu, _("Ver el &propietario\tCtrl+Shift+P"), self.ver_propietario,
+			_("Abre el perfil de la persona u organización dueña del repositorio: sus repositorios y el botón Seguir."))
 		self._elemento(menu, _("Con&figuración…"), self.configuracion, _("Nombre, visibilidad, fusiones, archivar, borrar…"))
 		menu.AppendSeparator()
 		self._elemento(menu, _("&Cerrar\tCtrl+W"), self.Close, _("Cierra la ventana del repositorio."))
@@ -166,6 +175,7 @@ class VentanaRepositorio(wx.Frame):
 		barra.Append(menu_ir, _("&Ir"))
 		self.SetMenuBar(barra)
 		self.reconstruir_menu_acciones()
+		self._habilitar_bifurcacion()
 
 	# ── Secciones ─────────────────────────────────────────────────────────────
 
@@ -344,6 +354,7 @@ class VentanaRepositorio(wx.Frame):
 
 	def aplicar_info(self, repo: dict) -> None:
 		self.info = repo
+		self._habilitar_bifurcacion()
 		self.SetTitle(titulo_ventana(repo.get("full_name") or self.nombre))
 		self.SetStatusText(self.texto_estado())
 		for panel in self.paginas.values():
@@ -410,6 +421,65 @@ class VentanaRepositorio(wx.Frame):
 		en_segundo_plano(self, self.ctx, trabajo, sonido="estrella",
 			exito=lambda puesta: (_("Estrella puesta a {n}.") if puesta else _("Estrella quitada a {n}.")).format(n=nombre),
 			al_terminar=lambda _r: self.cargar_info() if self else None)
+
+	def original(self) -> str:
+		"""«dueño/repo» del repositorio original si este es una bifurcación (si no, «»)."""
+		if not self.info.get("fork"):
+			return ""
+		return str((self.info.get("parent") or {}).get("full_name") or "")
+
+	def _habilitar_bifurcacion(self) -> None:
+		# Desactivadas (no ocultas) cuando no procede: el lector dice «no disponible» y se entiende por qué.
+		hay = bool(self.original())
+		for item in (getattr(self, "item_original", None), getattr(self, "item_sincronizar", None)):
+			if item is not None:
+				item.Enable(hay)
+
+	def abrir_original(self) -> None:
+		if not self.original():
+			self.ctx.avisar(_("Este repositorio no es una bifurcación."))
+			return
+		abrir_ventana_repositorio(self.ctx, self.original())
+
+	def sincronizar_bifurcacion(self) -> None:
+		"""«Sync fork» de la web: GitHub fusiona en la rama elegida lo nuevo de la misma rama del original."""
+		if not self.original():
+			self.ctx.avisar(_("Este repositorio no es una bifurcación."))
+			return
+		from app.ui.comunes import pedir_texto
+
+		rama = pedir_texto(self, _("&Rama que quiere poner al día:"), _("Sincronizar con el original"),
+			self.info.get("default_branch") or "main")
+		if not rama or not rama.strip():
+			return
+		rama = rama.strip()
+		api = self.ctx.api()
+
+		def explicar(resultado: Any) -> str:
+			datos = resultado if isinstance(resultado, dict) else {}
+			tipo = datos.get("merge_type", "")
+			if tipo == "none":
+				return _("La rama {r} ya estaba al día con {o}.").format(r=rama, o=self.original())
+			if tipo == "fast-forward":
+				return _("Rama {r} puesta al día con {o} (avance rápido).").format(r=rama, o=self.original())
+			return datos.get("message") or _("Rama {r} sincronizada con {o}.").format(r=rama, o=self.original())
+
+		en_segundo_plano(self, self.ctx, lambda: api.sincronizar_bifurcacion(self.nombre, rama), exito=explicar,
+			inicio=_("Sincronizando con el original…"), al_terminar=lambda _r: self.actualizar() if self else None)
+
+	def descargar_zip(self) -> None:
+		from app.ui.descarga_codigo import descargar_codigo
+
+		descargar_codigo(self, self.ctx, self.nombre, self.info.get("default_branch", "") or "")
+
+	def propietario(self) -> str:
+		"""Dueño del repositorio: el de GitHub si ya llegó la información, si no el del nombre."""
+		return (self.info.get("owner") or {}).get("login") or self.nombre.partition("/")[0]
+
+	def ver_propietario(self) -> None:
+		from app.ui import abrir
+
+		abrir.usuario(self.ctx, self, self.propietario())
 
 	def vigilar(self) -> None:
 		from app.ui.repositorio.dialogos import dialogo_vigilancia

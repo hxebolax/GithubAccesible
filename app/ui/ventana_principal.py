@@ -458,7 +458,18 @@ class VentanaPrincipal(wx.Frame):
 		panel.cargar()
 
 	def ver_usuario(self) -> None:
-		texto = pedir_texto(self, _("&Nombre de usuario u organización:"), _("Ver un perfil"))
+		# Se propone la persona de la fila elegida (dueño del repositorio, autor, quien hizo la actividad):
+		# así no hay que escribir el nombre; se cambia escribiendo encima.
+		from app.ui.vistas.principales import persona_del_elemento
+
+		panel = self.panel_actual()
+		propuesta = ""
+		if panel is not None:
+			try:
+				propuesta = persona_del_elemento(panel.elemento, panel.datos)
+			except Exception:  # noqa: BLE001 - sin propuesta, el campo sale vacío
+				log.debug("No se pudo proponer un perfil", exc_info=True)
+		texto = pedir_texto(self, _("&Nombre de usuario u organización:"), _("Ver un perfil"), propuesta)
 		if texto and texto.strip():
 			abrir.usuario(self.ctx, self, texto.strip().lstrip("@"))
 

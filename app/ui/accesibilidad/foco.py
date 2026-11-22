@@ -38,6 +38,22 @@ def devolver_foco(ventana: wx.Window, foco: wx.Window | None) -> None:
 		foco.SetFocus()
 
 
+def enfocar(control: wx.Window | None) -> bool:
+	"""Da el foco a ``control`` solo si se ve en pantalla. Devuelve si lo hizo.
+
+	Enfocar un control de una ventana oculta no le sirve a nadie y, con NVDA en
+	marcha, en un campo RichEdit (``TE_RICH``/``TE_RICH2``) hace que el ayudante
+	que NVDA inyecta en el proceso llame a COM mientras Windows despacha el
+	mensaje síncrono del cambio de foco. COM lo rechaza con 0x8001010D
+	(RPC_E_CANTCALLOUT_ININPUTSYNCCALL); se recupera solo, pero ``faulthandler``
+	lo imprime como «Windows fatal exception». Con la ventana visible no ocurre.
+	"""
+	if not control or not control.IsShownOnScreen():
+		return False
+	control.SetFocus()
+	return True
+
+
 @contextmanager
 def conservar_foco(ventana: wx.Window) -> Iterator[None]:
 	"""Ejecuta el bloque y deja el foco donde estaba antes de él.

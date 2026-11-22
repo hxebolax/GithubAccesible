@@ -2,6 +2,25 @@
 
 Cada versión tiene su apartado, de la más reciente a la más antigua. Dentro de cada versión, los cambios se agrupan en Novedades, Mejoras y Correcciones, contados con palabras de quien usa la aplicación.
 
+## Versión 1.0.4 - 2026-11-22
+
+### Novedades
+
+- Nueva sección **Wiki** en la ventana de un repositorio. Lista las páginas (la portada primero), las abre con formato en el visor (los enlaces a otras páginas de la wiki se abren también ahí) y permite editarlas con F2, crear páginas con Control+N, cambiarles el título, borrarlas, ver el historial de cada una con sus versiones antiguas y diferencias, y buscar un texto en todas con Control+P. Si la wiki está desactivada o vacía, se dice y se ofrece activarla o crear la primera página en el navegador. GitHub no ofrece las wikis en su API: hace falta Git for Windows.
+- En los resultados de una búsqueda, las acciones (Aplicaciones) permiten **ver el propietario** de cada resultado (Control+Mayúsculas+P) para abrir su perfil, ver sus repositorios o seguirle; ver al autor de una issue, pull request, discusión o commit; ir a su repositorio (Control+Mayúsculas+R); y, en los repositorios, clonar, poner la estrella, vigilar y bifurcar. En las personas encontradas se puede seguir o dejar de seguir sin abrir el perfil.
+- En la ventana de un repositorio, el menú Repositorio tiene «Ver el propietario» (Control+Mayúsculas+P).
+- «Descargar el código en zip» está ahora también en el menú Repositorio, en las listas de repositorios (míos, con estrella, vigilados y los de un perfil) y en los resultados de búsqueda, y dice cuánto lleva descargado.
+- En una bifurcación (fork), el menú Repositorio permite abrir el repositorio original y sincronizar una rama con él, como el botón «Sync fork» de la web.
+- Control+U (ver un perfil) propone la persona de la fila elegida: quien hizo la actividad, el autor de la issue o el commit, o el dueño del repositorio.
+- El perfil de una persona tiene dos pestañas nuevas, Con estrella y Actividad, y el botón «Leer el README del perfil» (Alt+M) con la presentación que muestra la web.
+- Al descargar un recurso de una release se comprueba la suma SHA-256 que publica GitHub y se dice si es correcta; también se puede copiar.
+- En las listas de repositorios, «Ver la wiki» abre directamente esa sección.
+
+### Correcciones
+
+- «Descargar el repositorio en zip» daba el error 415 de GitHub («Unsupported 'Accept' header»). Ya descarga bien, igual que el zip de una etiqueta y el código que se baja al clonar sin git.
+- En los menús de acciones de la ventana principal (repositorios, issues, pull requests, gists, organizaciones, proyectos, repositorios locales, codespaces y resultados de búsqueda) ya no hay dos órdenes con la misma letra de acceso. «Borrar el repositorio» se queda sin letra a propósito, para no borrarlo por accidente.
+
 ## Versión 1.0.3 - 2026-11-22
 
 ### Novedades

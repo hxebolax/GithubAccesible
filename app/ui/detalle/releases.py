@@ -82,6 +82,23 @@ def clave_release(nombre: str, release: dict) -> str:
 	return f"release:{nombre}:{release.get('id') or release.get('tag_name') or release.get('name') or ''}"
 
 
+def sha256_de(recurso: dict) -> str:
+	"""Suma SHA-256 que publica GitHub para un recurso (campo ``digest``: «sha256:…»), o «»."""
+	digest = str((recurso or {}).get("digest") or "")
+	algoritmo, _dos_puntos, valor = digest.partition(":")
+	return valor.lower() if algoritmo.lower() == "sha256" and len(valor) == 64 else ""
+
+
+def sha256_archivo(ruta: Path) -> str:
+	import hashlib
+
+	suma = hashlib.sha256()
+	with open(ruta, "rb") as archivo:
+		for trozo in iter(lambda: archivo.read(1024 * 1024), b""):
+			suma.update(trozo)
+	return suma.hexdigest()
+
+
 def fila_recurso(recurso: dict, relativas: bool = True) -> list[str]:
 	return [
 		recurso.get("name", ""),
@@ -205,6 +222,7 @@ class VentanaRelease(VentanaDetalle):
 			(_("Descargar en &otra carpeta… (Mayús+Intro)"), lambda: self.descargar_recurso(True)),
 			(_("Re&nombrar el recurso… (F2)"), self.renombrar_recurso),
 			(_("&Borrar el recurso… (Supr)"), self.borrar_recurso),
+			(_("Copiar la suma S&HA-256"), self.copiar_suma),
 		]
 
 	# ── Datos ─────────────────────────────────────────────────────────────────
@@ -270,7 +288,29 @@ class VentanaRelease(VentanaDetalle):
 			return
 		url = self.ctx.api().url_descarga_recurso(self.nombre, recurso["id"])
 		destino = Path(carpeta) / nombre_seguro(recurso.get("name"), "recurso")
-		self.descargar(url, destino, aceptar="application/octet-stream", descripcion=recurso.get("name", ""))
+		esperada = sha256_de(recurso)
+		self.descargar(url, destino, aceptar="application/octet-stream", descripcion=recurso.get("name", ""),
+			al_terminar=(lambda ruta: self.comprobar_suma(ruta, esperada)) if esperada else None)
+
+	def comprobar_suma(self, ruta: Path, esperada: str) -> None:
+		"""Compara la descarga con la suma de GitHub (leer 64 caracteres con el lector no es práctico)."""
+		def listo(calculada: str) -> None:
+			if calculada == esperada:
+				self.ctx.avisar(_("Suma SHA-256 de {n} comprobada: es correcta.").format(n=ruta.name), interrumpir=False)
+			else:
+				self.ctx.sonar("error")
+				mostrar_error(self, _("La suma SHA-256 de {n} no coincide con la que publica GitHub. El archivo puede estar "
+					"dañado o haber sido cambiado: no lo use y descárguelo de nuevo.").format(n=ruta.name), _("Suma incorrecta"))
+
+		self.en_fondo(lambda: sha256_archivo(ruta), al_terminar=listo, sonido="")
+
+	def copiar_suma(self) -> None:
+		recurso = self.recurso
+		suma = sha256_de(recurso or {})
+		if not suma:
+			self.ctx.avisar(_("GitHub no da la suma SHA-256 de este recurso."))
+			return
+		copiar(self.ctx, suma, _("Suma SHA-256 copiada."))
 
 	def descargar_todos(self) -> None:
 		if not self.recursos:

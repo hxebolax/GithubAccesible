@@ -8,7 +8,7 @@ Aplicación de escritorio Python 3.15 + wxPython 4.3 para Windows, accesible con
 - Tabulaciones, `ruff` (`.venv\Scripts\ruff.exe check .`), docstrings y comentarios en español que expliquen el porqué.
 - Todo lo que genera la aplicación va en `data/` (portable). Los tokens, cifrados en `data/config/secretos.dat`.
 - Accesibilidad: `StaticText` justo antes de cada control, letras de acceso únicas por pantalla (pruébalo con `app.ui.accesibilidad.revision_teclado.afirmar_teclado_correcto`), botones en español, nada de trabajo en el hilo de la interfaz.
-- El foco solo lo mueve la persona: elegir en una lista de secciones, un desplegable o unos botones de opción no cambia el foco. Si cambias de página un `Notebook`/`Simplebook` o rehaces controles en esa respuesta, envuélvelo en `app.ui.accesibilidad.foco.conservar_foco` (wx da el foco a la página nueva).
+- El foco solo lo mueve la persona: elegir en una lista de secciones, un desplegable o unos botones de opción no cambia el foco. Si cambias de página un `Notebook`/`Simplebook` o rehaces controles en esa respuesta, envuélvelo en `app.ui.accesibilidad.foco.conservar_foco` (wx da el foco a la página nueva). Para dar el foco por programa usa `app.ui.accesibilidad.foco.enfocar` (no hace nada si la ventana no se ve; con NVDA, enfocar un RichEdit oculto provoca el aviso COM 0x8001010D).
 - Las explicaciones (`SetHelpText`) se leen con Control+H mediante `texto_ayuda()`; el lector solo las oye si lo permiten `accesibilidad.explicacion_controles` y `accesibilidad.explicacion_filas` (lo decide `ProveedorAyuda`). No leas la ayuda con `GetHelpText()`.
 
 ## Piezas que hay que reutilizar

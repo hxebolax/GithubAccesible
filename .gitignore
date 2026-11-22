@@ -36,3 +36,6 @@ adjuntos/repos/
 
 # Borradores personales (anuncios), no se publican.
 adjuntos/anuncio_*.txt
+
+# Investigación que nombra otros proyectos: solo local, no se publica.
+adjuntos/investigacion/clientes-accesibles.md

@@ -300,14 +300,54 @@ def voz_simulada(monkeypatch: pytest.MonkeyPatch) -> VozSimulada:
 # wx
 # ════════════════════════════════════════════════════════════════════════════
 
+def _primer_foco_richedit_en_silencio(wx, config) -> None:
+	"""Da una vez el foco a un RichEdit oculto con ``faulthandler`` apagado.
+
+	Por qué: con NVDA en marcha, la PRIMERA vez en cada proceso que un campo
+	RichEdit (``TE_RICH``/``TE_RICH2``) de una ventana oculta recibe el foco, el
+	ayudante que NVDA inyecta (nvdaHelperRemote.dll) hace una llamada COM
+	mientras Windows despacha el mensaje síncrono del cambio de foco. COM la
+	rechaza con 0x8001010D (RPC_E_CANTCALLOUT_ININPUTSYNCCALL) y la propia
+	llamada lo resuelve: es una excepción ya atendida. Pero el ``faulthandler``
+	de Python en Windows imprime TODAS las excepciones con el bit de error,
+	también las atendidas, como «Windows fatal exception». No pasa con las
+	ventanas visibles (la aplicación real) ni sin lector de pantalla, y no se
+	repite en el mismo proceso: se provoca aquí una vez, sin que se imprima, y
+	``faulthandler`` vuelve a quedar como lo dejó pytest para los fallos de verdad.
+	"""
+	import faulthandler
+
+	if sys.platform != "win32" or not faulthandler.is_enabled():
+		return
+	try:
+		from _pytest.faulthandler import fault_handler_stderr_fd_key
+
+		descriptor = config.stash.get(fault_handler_stderr_fd_key, None)
+	except ImportError:
+		descriptor = None
+	faulthandler.disable()
+	try:
+		marco = wx.Frame(None)
+		campo = wx.TextCtrl(marco, style=wx.TE_MULTILINE | wx.TE_RICH2)
+		campo.SetFocus()
+		for _ in range(3):
+			wx.GetApp().Yield(True)
+		marco.Destroy()
+		for _ in range(3):
+			wx.GetApp().Yield(True)
+	finally:
+		faulthandler.enable(file=descriptor if descriptor is not None else sys.__stderr__)
+
+
 @pytest.fixture(scope="session")
-def app_wx():
+def app_wx(pytestconfig):
 	"""Una única ``wx.App`` para toda la sesión (crear varias da problemas)."""
 	wx = pytest.importorskip("wx")
 	app = wx.App.Get() or wx.App(False)
 	# Como en main.py: ayuda contextual (Ctrl+H) y botones de wx en español.
 	wx.HelpProvider.Set(wx.SimpleHelpProvider())
 	idioma = wx.Locale(wx.LANGUAGE_SPANISH)
+	_primer_foco_richedit_en_silencio(wx, pytestconfig)
 	yield app
 	del idioma
 	for ventana in list(wx.GetTopLevelWindows()):

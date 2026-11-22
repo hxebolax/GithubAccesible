@@ -29,6 +29,7 @@ from datetime import datetime, timezone
 import wx
 
 from app.services import actualizador
+from app.ui.accesibilidad.foco import enfocar
 
 log = logging.getLogger(__name__)
 
@@ -202,9 +203,10 @@ class DialogoActualizacion(wx.Dialog):
 
 	def _enfocar_inicial(self) -> None:
 		"""Foco en «Actualizar ahora»: el lector lee antes el resumen del diálogo."""
-		if not self:
+		# Si ya se pulsó «Actualizar ahora», el foco está en «Cancelar» y no se le quita.
+		if not self or self._trabajando():
 			return
-		(self.boton_actualizar if self.boton_actualizar.IsEnabled() else self.novedades).SetFocus()
+		enfocar(self.boton_actualizar if self.boton_actualizar.IsEnabled() else self.novedades)
 
 	def _terminar(self, resultado: str, codigo: int) -> None:
 		self.resultado = resultado
@@ -247,7 +249,7 @@ class DialogoActualizacion(wx.Dialog):
 		self._mostrar_progreso(True)
 		self.barra.SetValue(0)
 		self._poner_estado(_("Iniciando la descarga..."), voz=True)
-		self.boton_mas_tarde.SetFocus()  # el único botón útil mientras se descarga
+		enfocar(self.boton_mas_tarde)  # el único botón útil mientras se descarga
 		self._hilo = threading.Thread(target=self._trabajo, name="actualizador", daemon=True)
 		self._hilo.start()
 
@@ -327,7 +329,7 @@ class DialogoActualizacion(wx.Dialog):
 		self._poner_estado(mensaje, voz=True)
 		self.barra.SetValue(0)
 		# El foco va al estado para que el lector lea el error y se pueda releer.
-		self.estado.SetFocus()
+		enfocar(self.estado)
 		if not cancelado:
 			self.boton_actualizar.SetDefault()
 

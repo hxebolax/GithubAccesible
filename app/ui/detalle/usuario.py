@@ -1,12 +1,13 @@
 """Ventana del perfil de una persona: datos, fijados, contribuciones, repositorios, seguidores...
 
 Pestañas (Ctrl+Tab): Resumen (datos, elementos fijados y contribuciones),
-Repositorios, Seguidores, Seguidos, Gists y Organizaciones. Las listas son
+Repositorios, Con estrella, Actividad, Seguidores, Seguidos, Gists y
+Organizaciones. Las listas son
 las mismas de toda la aplicación (Intro abre, F5 actualiza, Ctrl+F filtra,
 Aplicaciones muestra las acciones).
 
 Botones: Seguir o dejar de seguir (Alt+S), Bloquear o desbloquear (Alt+B),
-Abrir en el navegador (Alt+N). En el perfil propio, en su lugar: Editar mi
+Leer el README del perfil (Alt+M), Abrir en el navegador (Alt+N). En el perfil propio, en su lugar: Editar mi
 perfil (Alt+E) y Correos (Alt+C). Menú «Acciones» (Alt+A) con lo mismo, F5
 para actualizar y Ctrl+W para cerrar.
 
@@ -104,6 +105,26 @@ def _vista_repositorios() -> DefinicionVista:
 		url_html, detalle_repositorio)
 
 
+def _vista_estrellas() -> DefinicionVista:
+	from app.ui.vistas.principales import acciones_repositorio, columnas_repositorio, detalle_repositorio
+
+	return DefinicionVista("perfil_estrellas", _("Con estrella"), columnas_repositorio(),
+		lambda api, pagina, panel: api.con_estrella(panel.datos["login"], pagina),
+		lambda p, r: abrir.repositorio(p.ctx, r.get("full_name", "")), acciones_repositorio(),
+		_("No ha dado estrella a ningún repositorio público."), url_html, detalle_repositorio)
+
+
+def _vista_actividad() -> DefinicionVista:
+	"""Actividad pública de la persona: las mismas filas y acciones que «Inicio»."""
+	from dataclasses import replace
+
+	from app.ui.vistas.principales import vista_inicio
+
+	return replace(vista_inicio(), id="perfil_actividad", titulo=_("Actividad"),
+		cargar=lambda api, pagina, panel: api.eventos_de(panel.datos["login"], pagina),
+		texto_vacio=_("No hay actividad pública reciente."))
+
+
 def _vista_personas(seguidores: bool) -> DefinicionVista:
 	def cargar(api, pagina, panel):
 		login = panel.datos["login"]
@@ -172,7 +193,8 @@ class VentanaUsuario(VentanaDetalle):
 		else:
 			elementos += [("perfil", _("&Editar mi perfil…"), self.editar_perfil), ("correos", _("&Correos…"), self.correos)]
 		elementos += [
-			("navegador", _("Abrir en el &navegador\tCtrl+Shift+B"), self.abrir_navegador),
+			("readme", _("Leer el READ&ME del perfil"), self.leer_readme),
+			("navegador",_("Abrir en el &navegador\tCtrl+Shift+B"), self.abrir_navegador),
 			None,
 			("actualizar", _("Act&ualizar\tF5"), self.actualizar),
 			("cerrar", _("Cerrar la &ventana\tCtrl+W"), self.Close),
@@ -186,6 +208,8 @@ class VentanaUsuario(VentanaDetalle):
 		self.paneles: dict[int, PanelLista] = {}
 		for definicion, etiqueta, titulo in (
 			(_vista_repositorios(), _("&Repositorios:"), _("Repositorios")),
+			(_vista_estrellas(), _("Con es&trella:"), _("Con estrella")),
+			(_vista_actividad(), _("Acti&vidad:"), _("Actividad")),
 			(_vista_personas(True), _("Se&guidores:"), _("Seguidores")),
 			(_vista_personas(False), _("Segui&dos:"), _("Seguidos")),
 			(_vista_gists(), _("G&ists:"), _("Gists")),
@@ -205,6 +229,8 @@ class VentanaUsuario(VentanaDetalle):
 		else:
 			crear_boton(panel, _("&Editar mi perfil…"), self.editar_perfil, _("Cambia nombre, biografía, web, empresa y ubicación."), botones)
 			crear_boton(panel, _("&Correos…"), self.correos, _("Correos de la cuenta: añadir, quitar y visibilidad."), botones)
+		crear_boton(panel, _("Leer el READ&ME del perfil"), self.leer_readme,
+			_("Abre con formato la presentación que la persona tiene en su perfil (el README del repositorio con su nombre)."), botones)
 		crear_boton(panel, _("Abrir en el &navegador"), self.abrir_navegador, _("Abre el perfil en la web de GitHub."), botones)
 		raiz.Add(botones, 0, wx.ALL, 2)
 		panel.SetSizer(raiz)
@@ -280,6 +306,28 @@ class VentanaUsuario(VentanaDetalle):
 		])
 		self._actualizar_botones()
 		self.ctx.sonar("listo")
+
+	def leer_readme(self) -> None:
+		"""El README del perfil es el del repositorio «login/login»: lo primero que se ve en la web."""
+		from app.ui import visor_ayuda
+
+		api = self.ctx.api()
+		login = self.usuario.get("login") or self.login
+
+		def mostrar(texto: str) -> None:
+			if not texto or not texto.strip():
+				self.ctx.avisar(_("El README del perfil está vacío."))
+				return
+			visor_ayuda.mostrar_documento(self, _("Presentación de {l}").format(l=login), texto)
+
+		def fallo(error: BaseException) -> None:
+			if getattr(error, "codigo_http", None) == 404:
+				self.ctx.avisar(_("{l} no tiene README en su perfil.").format(l=login))
+			else:
+				self.ctx.sonar("error")
+				self.ctx.avisar(_("No se pudo leer el README del perfil: {m}").format(m=mensaje_error(error)))
+
+		en_segundo_plano(self, self.ctx, lambda: api.readme(f"{login}/{login}"), al_terminar=mostrar, al_fallar=fallo, sonido="")
 
 	def _actualizar_botones(self) -> None:
 		if self.propio:

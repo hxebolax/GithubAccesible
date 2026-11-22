@@ -327,12 +327,14 @@ class VisorAyuda(wx.Dialog):
 
 	def __init__(self, padre: wx.Window | None, titulo: str, markdown: str, forzar_texto: bool = False,
 			acciones: dict[str, Callable[[str], None]] | None = None, teclas: dict[str, str] | None = None,
-			ayuda: str = "", autor: str = ""):
+			ayuda: str = "", autor: str = "", al_enlace: Callable[[str], bool] | None = None):
 		"""
 		:param acciones: órdenes propias → función que recibe el texto seleccionado (o ``""``).
 		:param teclas: combinación → orden de ``acciones`` (se suman a ``TECLAS_VISOR``).
 		:param ayuda: lo que dice Ctrl+H en el contenido.
 		:param autor: quién escribió el documento, si es un mensaje (encabezado 1 de la página).
+		:param al_enlace: recibe cada enlace externo antes de abrirlo; si devuelve ``True``
+			ya lo ha atendido (por ejemplo, otra página de la wiki que se abre en la aplicación).
 		"""
 		super().__init__(
 			padre, title=titulo, size=(820, 620), style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX
@@ -340,6 +342,7 @@ class VisorAyuda(wx.Dialog):
 		self.titulo = titulo
 		self.markdown = markdown
 		self.autor = autor
+		self.al_enlace = al_enlace
 		self.acciones = dict(acciones or {})
 		self.teclas = {**TECLAS_VISOR, **{k: v for k, v in (teclas or {}).items() if v in self.acciones}}
 		self.ayuda = ayuda or _(
@@ -592,6 +595,12 @@ class VisorAyuda(wx.Dialog):
 			return
 		if direccion.startswith(("http://", "https://", "mailto:")):
 			evento.Veto()
+			if self.al_enlace is not None:
+				try:
+					if self.al_enlace(direccion):
+						return
+				except Exception:  # noqa: BLE001 - si falla el gancho, el enlace se abre en el navegador
+					log.exception("Fallo al atender el enlace %s", direccion)
 			wx.LaunchDefaultBrowser(direccion)
 		else:
 			evento.Skip()
@@ -626,7 +635,7 @@ def _combinacion(codigo: int, modificadores: int) -> str:
 def mostrar_documento(
 	padre: wx.Window | None, titulo: str, markdown: str, forzar_texto: bool = False, mostrar: bool = True,
 	acciones: dict[str, Callable[[str], None]] | None = None, teclas: dict[str, str] | None = None, ayuda: str = "",
-	autor: str = "",
+	autor: str = "", al_enlace: Callable[[str], bool] | None = None,
 ) -> VisorAyuda:
 	"""Abre (o trae al frente) un visor con ese título."""
 	existente = _abiertos.get(titulo)
@@ -635,7 +644,7 @@ def mostrar_documento(
 		existente.enfocar_contenido()
 		return existente
 	visor = VisorAyuda(padre, titulo, markdown, forzar_texto=forzar_texto, acciones=acciones, teclas=teclas, ayuda=ayuda,
-		autor=autor)
+		autor=autor, al_enlace=al_enlace)
 	_abiertos[titulo] = visor
 	if mostrar:
 		visor.Show()

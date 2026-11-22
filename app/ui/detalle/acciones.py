@@ -39,6 +39,7 @@ from app.services import formato as f
 from app.services.github.api import ruta_repo
 from app.services.github.api_extra import limpiar_registro
 from app.ui.accesibilidad.dialogos import crear_botonera, elegir_opcion, preparar_dialogo
+from app.ui.accesibilidad.foco import enfocar
 from app.ui.comunes import (
 	confirmar_peligro,
 	copiar,
@@ -882,7 +883,7 @@ class VentanaEjecucion(VentanaDetalle):
 			return
 		posicion = self.posicion_de(linea, columna)
 		if mover_foco:
-			self.registro.SetFocus()
+			enfocar(self.registro)
 		if largo:
 			self.registro.SetSelection(posicion, posicion + largo)
 		else:
@@ -901,7 +902,7 @@ class VentanaEjecucion(VentanaDetalle):
 		self._enfocar_registro()
 
 	def _enfocar_registro(self) -> None:
-		self.registro.SetFocus()
+		enfocar(self.registro)
 		self.ctx.avisar(self.GetStatusBar().GetStatusText() if self.GetStatusBar() else "", interrumpir=False)
 
 	def ir_al_paso(self, anunciar: bool = True, mover_foco: bool = True) -> None:

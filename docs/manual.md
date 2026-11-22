@@ -44,11 +44,13 @@ Secciones:
 
 - **Inicio**: lo que hacen las personas y los repositorios que sigue.
 - **Notificaciones**: Intro abre lo que la motivó (issue, pull request, Actions, release…) y la marca como leída. Control+L la marca como leída, Suprimir la marca como hecha, Control+Mayúsculas+S silencia la conversación y F4 cambia entre ver solo las no leídas o todas.
-- **Mis repositorios**, **Repositorios con estrella** y **Repositorios vigilados**: Intro abre el repositorio, Control+K lo clona, Control+S pone o quita la estrella, Control+N crea un repositorio y F4 cambia el filtro.
+- **Mis repositorios**, **Repositorios con estrella** y **Repositorios vigilados**: Intro abre el repositorio, Control+K lo clona, Control+S pone o quita la estrella, Control+N crea un repositorio y F4 cambia el filtro. En sus acciones también están «Descargar el código en zip», «Ver la wiki» y «Ver el propietario» (Control+Mayúsculas+P).
 - **Mis issues** y **Mis pull requests**: F4 elige qué ver (asignadas, creadas, menciones, revisión pedida…) y su estado.
 - **Gists**, **Organizaciones**, **Proyectos**, **Codespaces**, **Seguidores** y **Personas que sigo**.
 - **Repositorios locales**: carpetas de git de este equipo. Control+N añade una carpeta y Control+K clona un repositorio.
 - **Resultados de la búsqueda**: los de la última búsqueda (Control+E).
+
+Control+U (ver un perfil) propone ya escrita la persona de la fila elegida: quien hizo la actividad, la persona de la lista, quien escribió la issue o el commit, o el dueño del repositorio. Pulse Intro para abrirlo o escriba otro nombre encima.
 
 ### Notificaciones en segundo plano
 
@@ -74,6 +76,14 @@ Control+E abre la búsqueda. Elija qué buscar (repositorios, código, issues y 
 Al cambiar lo que se busca, o al elegir una búsqueda del historial o de las guardadas, las pestañas de filtros cambian, pero el foco se queda en el desplegable: recórralas con Tabulador cuando quiera.
 
 Para repositorios hay además una **búsqueda guiada**: una categoría (populares con un mínimo de estrellas, más bifurcados, actualizados desde una fecha, sin actualizar desde una fecha, que piden ayuda, listas Awesome, o un tema como accesibilidad, lector de pantalla, inteligencia artificial, Arduino o Synology), el lenguaje y la licencia. El «Historial de búsquedas» guarda las últimas para repetirlas.
+
+En la lista de resultados, Aplicaciones (o Mayúsculas+F10) muestra lo que se puede hacer con cada uno según lo que sea:
+
+- **Ver el propietario** (Control+Mayúsculas+P): abre el perfil de la persona u organización dueña del repositorio, con sus datos, sus repositorios, a quién sigue y el botón Seguir. Está en los repositorios y también en las issues, pull requests, código, commits y discusiones encontrados.
+- **Ver al autor**: el perfil de quien escribió la issue, el pull request, la discusión o el commit.
+- **Ir al repositorio** (Control+Mayúsculas+R): abre el repositorio al que pertenece una issue, un archivo de código, un commit o una discusión.
+- En los repositorios, además: clonar (Control+K), poner o quitar la estrella (Control+S), vigilar y bifurcar.
+- En las personas y organizaciones: **Seguir o dejar de seguir**, sin abrir el perfil.
 
 ## Escribir textos: el editor
 
@@ -105,9 +115,27 @@ Las diferencias de un commit, un pull request o un archivo local se muestran com
 
 Se abre con Intro sobre cualquier repositorio, con Control+O escribiendo «dueño/nombre» o un enlace, o desde una notificación. Igual que la principal, tiene a la izquierda las secciones y a la derecha su contenido (F6 alterna, Control+Tabulador cambia de sección, Control+W cierra; Escape no la cierra para no perder el sitio).
 
-Secciones: Resumen (información y botón para leer el README con formato), Código (explorador de carpetas y archivos, con Retroceso para subir, F4 para cambiar de rama y Control+P para buscar un archivo), Issues, Pull requests, Discusiones, Actions, Releases, Ramas, Etiquetas, Commits, Proyectos, Hitos, Etiquetas de issues, Colaboradores, Bifurcaciones, Observadores, Seguridad, Entornos, Secretos y variables de Actions, Webhooks, Claves de despliegue, Reglas y protección, Estadísticas, Despliegues, Pages y Configuración.
+Secciones: Resumen (información y botón para leer el README con formato), Código (explorador de carpetas y archivos, con Retroceso para subir, F4 para cambiar de rama y Control+P para buscar un archivo), Issues, Pull requests, Discusiones, Actions, Releases, Ramas, Etiquetas, Commits, Proyectos, Wiki, Hitos, Etiquetas de issues, Colaboradores, Bifurcaciones, Observadores, Seguridad, Entornos, Secretos y variables de Actions, Webhooks, Claves de despliegue, Reglas y protección, Estadísticas, Despliegues, Pages y Configuración.
 
 En todas las listas de secciones: Intro abre, Control+N crea, F2 cambia o renombra, Suprimir borra (siempre pregunta antes) y F4 cambia el filtro (por ejemplo, issues abiertas, cerradas o todas, por etiqueta o asignado). Para borrar el repositorio entero hay que escribir su nombre, como en la web.
+
+En el menú Repositorio, **Ver el propietario** (Control+Mayúsculas+P) abre el perfil de quien es dueño del repositorio, para ver sus otros repositorios o seguirle. **Descargar el código en zip** guarda la rama principal en un zip, diciendo cuánto lleva cada 10 MB. Si el repositorio es una bifurcación (fork), **Abrir el repositorio original** va al proyecto del que se copió y **Sincronizar con el original** trae a una rama suya lo nuevo del original, como el botón «Sync fork» de la web; en los demás repositorios esas dos órdenes aparecen como no disponibles.
+
+En la sección Código, «Descargar el repositorio en zip» guarda el código de la rama elegida en un archivo zip sin necesidad de git.
+
+### La wiki
+
+La sección **Wiki** muestra las páginas de la wiki del repositorio: primero la portada (Home), luego las demás por orden alfabético y al final la barra lateral y el pie, si los tiene. GitHub no ofrece la wiki en su API: la aplicación la descarga con git (hace falta Git for Windows) en `data/cache/wikis` y la pone al día cada vez que entra en la sección o pulsa F5.
+
+- Intro abre la página con formato en el visor. Los enlaces a otras páginas de la misma wiki se abren también en el visor; los demás, en el navegador.
+- F2 edita la página en el editor (con vista previa y borradores) y Control+N crea una nueva, en Markdown o en otro de los formatos que admite GitHub. Cada cambio se guarda en GitHub en ese momento, con el mensaje que usted escriba o uno automático. Si no tiene permiso para editar la wiki, se avisa y no se cambia nada.
+- «Cambiar el título» renombra la página y Suprimir la borra (pregunta antes; sigue en el historial).
+- «Historial de la página» lista sus cambios: puede leer la página tal como quedó en cualquiera de ellos o ver sus diferencias en el visor de diferencias.
+- Control+P busca un texto en todas las páginas y abre la elegida.
+- Control+B abre la página en el navegador y Control+Mayúsculas+C copia su enlace.
+- «Clonar la wiki en una carpeta» la descarga con git para trabajar con ella como con cualquier repositorio.
+
+Si la wiki está desactivada, la etiqueta de la lista lo dice y las acciones ofrecen activarla (si el repositorio es suyo). Si está activada pero vacía, GitHub no la crea hasta guardar la primera página desde la web: use «Crear la primera página en el navegador» y luego F5.
 
 ## Issues y pull requests
 
@@ -135,9 +163,10 @@ La ventana de una ejecución muestra la información, la lista de **trabajos**, 
 
 ## Releases, gists, discusiones y proyectos
 
-- **Releases**: crear (con notas generadas automáticamente), editar, borrar, subir recursos y descargarlos con progreso.
+- **Releases**: crear (con notas generadas automáticamente), editar, borrar, subir recursos y descargarlos con progreso. Al descargar un recurso, si GitHub publica su suma SHA-256, la aplicación la comprueba sola y dice si es correcta; si no coincide, avisa de que el archivo puede estar dañado. «Copiar la suma SHA-256» la copia para compartirla.
 - **Gists**: ver cada archivo, editarlo, añadir, renombrar o borrar archivos, comentarios, historial, estrella y bifurcar.
 - **Discusiones**: comentarios con sus respuestas, marcar la respuesta, votar, cerrar y reabrir.
+- **Perfiles**: Control+U, «Ver el propietario» o «Ver al autor» abren el perfil de una persona. Tiene pestañas de Resumen (datos, fijados y contribuciones), Repositorios, Con estrella, Actividad (lo que ha hecho últimamente, como en Inicio), Seguidores, Seguidos, Gists y Organizaciones. El botón **Leer el README del perfil** (Alt+M) abre con formato la presentación que muestra la web. Si es una organización se abre su ventana propia.
 - **Proyectos**: los elementos como lista, con una columna por cada campo. «Mover a» (Control+M) cambia el estado sin arrastrar nada; F2 cambia cualquier campo; se pueden añadir borradores e issues, archivar, filtrar y agrupar.
 
 ## Git local
