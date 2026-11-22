@@ -698,7 +698,7 @@ class VentanaGit(wx.Frame):
 
 		resultado = editar(
 			self, self.ctx, _("Nuevo pull request desde {r}").format(r=rama), enviar, con_titulo=True,
-			etiqueta_enviar=_("Crear el &pull request"),
+			etiqueta_enviar=_("Crear el &pull request"), con_adjuntos=True,
 			extras=[
 				CampoExtra("base", _("Rama &base:"), "opcion", defecto, [(b, b) for b in bases], _("Rama en la que se fusionarán los cambios.")),
 				CampoExtra("borrador", _("Crear como bo&rrador"), "bool", False, ayuda=_("Un borrador no se puede fusionar hasta marcarlo como listo.")),

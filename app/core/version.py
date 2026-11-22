@@ -9,7 +9,7 @@ Para publicar una versión nueva solo se cambia ``APP_VERSION`` aquí.
 NOMBRE_APLICACION = "GitHub Accesible"
 # Identificador sin espacios: ejecutable, instancia única, carpeta de compilación.
 ID_APLICACION = "GithubAccesible"
-APP_VERSION = "1.0.2"
+APP_VERSION = "1.0.3"
 
 # Autoría y enlaces (Acerca de, README, User-Agent).
 AUTOR = "Héctor J. Benítez Corredera"

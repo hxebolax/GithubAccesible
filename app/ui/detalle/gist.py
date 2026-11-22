@@ -405,7 +405,8 @@ class DialogoComentariosGist(wx.Dialog):
 	def comentar(self) -> None:
 		api = self.ctx.api()
 		nuevo = editar(self, self.ctx, _("Comentar el gist"), lambda valores: api.comentar_gist(self.id_gist, valores["cuerpo"]),
-			etiqueta_cuerpo=_("Te&xto del comentario (Markdown):"), etiqueta_enviar=_("C&omentar"))
+			etiqueta_cuerpo=_("Te&xto del comentario (Markdown):"), etiqueta_enviar=_("C&omentar"),
+			con_adjuntos=True)
 		if nuevo:
 			self.comentarios.append(nuevo)
 			self._pintar()

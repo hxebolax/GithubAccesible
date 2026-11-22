@@ -83,6 +83,11 @@ Las issues, comentarios, descripciones de pull requests, revisiones y notas de r
 - Control+Intro envía. Si el envío falla, el editor no se cierra y el texto sigue ahí.
 - Si cierra el editor sin enviar, le pregunta si quiere guardar lo escrito como **borrador**; al volver a escribir en el mismo sitio se lo ofrece.
 - Tabulador escribe una tabulación en el texto; para pasar al siguiente control use Control+Tabulador.
+- **Adjuntar archivo** (Alt+J), en issues, pull requests, discusiones y comentarios, añade archivos de texto, como un registro `.log` para enseñárselo a quien desarrolla. Se pueden elegir varios a la vez. Para cada uno pregunta cómo adjuntarlo:
+  - **Dentro del texto, plegado**: el contenido va en un bloque de código que en GitHub se ve como el nombre del archivo y se despliega al pulsarlo. Se puede revisar y cambiar en el editor antes de enviar.
+  - **Como gist secreto, con su enlace**: el archivo se sube a un gist que no sale en los listados y el texto lleva solo su enlace. Es la única opción si el archivo no cabe en el texto (GitHub admite 65 536 caracteres). Necesita el permiso «gist», que ya pide el inicio de sesión con el navegador.
+
+  Antes de adjuntar un registro, revise que no lleve contraseñas, tokens ni datos personales: lo leerá cualquiera que vea la issue, y un gist secreto lo abre cualquiera que tenga el enlace. GitHub no deja subir imágenes ni otros archivos binarios desde aplicaciones, solo desde su web: envíe el texto y ábralo después en el navegador (Control+B) para arrastrar el archivo.
 
 ## El visor de diferencias
 
@@ -176,6 +181,7 @@ La aplicación busca versiones nuevas al arrancar y una vez al día, y también 
 - **«La organización exige autorizar el token con su inicio de sesión único (SSO)»**: abra el enlace del mensaje y autorice el token para esa organización.
 - **Se ha agotado el límite de peticiones**: el mensaje dice a qué hora se renueva. Herramientas, «Límite de uso de la API» muestra el detalle.
 - **El lector repite una explicación larga en cada elemento**: desactive las explicaciones en Preferencias, Accesibilidad. Siempre podrá oírlas con Control+H.
+- **No puedo adjuntar una imagen o un ZIP**: GitHub solo permite subirlos desde su web. Envíe el texto, ábralo en el navegador con Control+B y arrastre el archivo allí. Los archivos de texto sí se adjuntan desde el editor (Alt+J).
 - **Git no está instalado**: instale Git for Windows o indique la ruta de `git.exe` en Preferencias, Git.
 - **Algo falla**: Herramientas, «Generar un paquete de diagnóstico» crea un ZIP con los registros, sin tokens ni su nombre de usuario de Windows, para pedir ayuda.
 

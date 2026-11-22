@@ -590,7 +590,7 @@ class VentanaPullRequest(VentanaDetalle):
 
 		contexto = _("{r}, línea {n} ({t}): {x}").format(r=linea.archivo, n=numero_linea, t=linea.nombre_tipo(), x=linea.texto)
 		resultado = editor.editar(self, self.ctx, _("Comentar la línea {n} de {r}").format(n=numero_linea, r=linea.archivo), enviar,
-			texto_contexto=contexto, etiqueta_enviar=_("&Enviar"),
+			texto_contexto=contexto, etiqueta_enviar=_("&Enviar"), con_adjuntos=True,
 			extras=[editor.CampoExtra("pendiente", _("Añadir a la revisión &pendiente (se publica al enviar la revisión)"), "bool",
 				bool(self.pendientes), ayuda=_("Si se marca, el comentario se guarda y se publica junto con la revisión."))])
 		if resultado is None:
@@ -696,7 +696,8 @@ class VentanaPullRequest(VentanaDetalle):
 			return api.responder_comentario_revision(self.nombre, self.numero, int(id_comentario), cuerpo)
 
 		if editor.editar(self, self.ctx, _("Responder en el hilo de {r}").format(r=hilo.get("path", "")), enviar,
-			texto_contexto=self.texto_hilo.GetValue(), etiqueta_enviar=_("&Enviar respuesta")) is not None:
+			texto_contexto=self.texto_hilo.GetValue(), etiqueta_enviar=_("&Enviar respuesta"),
+			con_adjuntos=True) is not None:
 			self._cargar_pagina(PAGINA_HILOS, forzar=True)
 
 	def ir_a_linea_hilo(self) -> None:
@@ -854,7 +855,8 @@ class VentanaPullRequest(VentanaDetalle):
 			return api.editar_pr(self.nombre, self.numero, title=valores["titulo"], body=valores.get("cuerpo") or "")
 
 		if editor.editar(self, self.ctx, _("Editar el pull request #{n}").format(n=self.numero), enviar, con_titulo=True,
-			titulo=self.pr.get("title", ""), cuerpo=self.pr.get("body") or "", etiqueta_enviar=_("&Guardar")) is not None:
+			titulo=self.pr.get("title", ""), cuerpo=self.pr.get("body") or "", etiqueta_enviar=_("&Guardar"),
+			con_adjuntos=True) is not None:
 			self.cargar()
 
 	def etiquetas(self) -> None:

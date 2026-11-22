@@ -3,9 +3,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: githubaccesible 1.0.2\n"
+"Project-Id-Version: githubaccesible 1.0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-21 19:31+0100\n"
+"POT-Creation-Date: 2026-11-22 09:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -328,6 +328,27 @@ msgstr ""
 #: app/services/actualizador.py:1337
 #, python-format
 msgid "La actualización a la versión %s tuvo un problema. Consulte data/logs/actualizacion.log."
+msgstr ""
+
+#: app/services/adjuntos.py:64
+msgid "El archivo ocupa más de 10 MB; GitHub no admite adjuntar tanto texto."
+msgstr ""
+
+#: app/services/adjuntos.py:68
+msgid "El archivo está vacío."
+msgstr ""
+
+#: app/services/adjuntos.py:71
+msgid "No es un archivo de texto. GitHub solo deja subir imágenes y otros archivos binarios desde su web: envíe el texto y, después, ábralo en el navegador con Control+B para arrastrar el archivo."
+msgstr ""
+
+#: app/services/adjuntos.py:124
+#, python-brace-format
+msgid "Archivo adjunto: [{n}]({u})"
+msgstr ""
+
+#: app/services/adjuntos.py:131
+msgid "GitHub no devolvió la dirección del gist."
 msgstr ""
 
 #: app/services/busqueda.py:618
@@ -669,7 +690,7 @@ msgstr ""
 msgid "Fusionado"
 msgstr ""
 
-#: app/services/formato.py:172 app/ui/detalle/conversacion.py:238 app/ui/repositorio/vistas.py:1068
+#: app/services/formato.py:172 app/ui/detalle/conversacion.py:238 app/ui/repositorio/vistas.py:1070
 msgid "Borrador"
 msgstr ""
 
@@ -677,7 +698,7 @@ msgstr ""
 msgid "(no planificada)"
 msgstr ""
 
-#: app/services/formato.py:191 app/ui/detalle/conversacion.py:354 app/ui/detalle/conversacion.py:973
+#: app/services/formato.py:191 app/ui/detalle/conversacion.py:354 app/ui/detalle/conversacion.py:975
 msgid "(desconocido)"
 msgstr ""
 
@@ -717,7 +738,7 @@ msgstr ""
 msgid "ojos"
 msgstr ""
 
-#: app/services/formato.py:222 app/ui/repositorio/vistas.py:1246 app/ui/sesion.py:344
+#: app/services/formato.py:222 app/ui/repositorio/vistas.py:1248 app/ui/sesion.py:344
 msgid "Sí"
 msgstr ""
 
@@ -1396,7 +1417,7 @@ msgstr ""
 msgid "Cerrar"
 msgstr ""
 
-#: app/ui/accesibilidad/dialogos.py:189 app/ui/accesibilidad/dialogos.py:197 app/ui/detalle/acciones.py:576 app/ui/detalle/archivos.py:510 app/ui/detalle/pull_request.py:321 app/ui/git/ventana_git.py:1214 app/ui/git/ventana_git.py:1257 app/ui/repositorio/vistas.py:1424
+#: app/ui/accesibilidad/dialogos.py:189 app/ui/accesibilidad/dialogos.py:197 app/ui/detalle/acciones.py:576 app/ui/detalle/archivos.py:510 app/ui/detalle/pull_request.py:321 app/ui/git/ventana_git.py:1214 app/ui/git/ventana_git.py:1257 app/ui/repositorio/vistas.py:1426
 msgid "Mensaje"
 msgstr ""
 
@@ -1416,7 +1437,7 @@ msgstr ""
 msgid "&No"
 msgstr ""
 
-#: app/ui/accesibilidad/dialogos.py:342 app/ui/accesibilidad/dialogos.py:346 app/ui/busqueda.py:224 app/ui/dialogo_actualizacion.py:246 app/ui/dialogo_preferencias.py:243
+#: app/ui/accesibilidad/dialogos.py:342 app/ui/accesibilidad/dialogos.py:346 app/ui/busqueda.py:224 app/ui/dialogo_actualizacion.py:246 app/ui/dialogo_preferencias.py:243 app/ui/editor.py:309
 msgid "&Cancelar"
 msgstr ""
 
@@ -1453,11 +1474,11 @@ msgstr ""
 msgid "Abre un cuadro para elegir el archivo."
 msgstr ""
 
-#: app/ui/accesibilidad/progreso.py:39 app/ui/repositorio/vistas.py:1519
+#: app/ui/accesibilidad/progreso.py:39 app/ui/repositorio/vistas.py:1521
 msgid "Progreso"
 msgstr ""
 
-#: app/ui/accesibilidad/progreso.py:45 app/ui/detalle/acciones.py:550 app/ui/detalle/acciones.py:553 app/ui/detalle/acciones.py:579 app/ui/detalle/issue.py:339 app/ui/detalle/organizacion.py:295 app/ui/detalle/pull_request.py:333 app/ui/detalle/pull_request.py:347 app/ui/detalle/pull_request.py:361 app/ui/dialogo_actualizacion.py:166 app/ui/git/ventana_git.py:879 app/ui/git/ventana_git.py:1342 app/ui/repositorio/vistas.py:503 app/ui/repositorio/vistas.py:805 app/ui/repositorio/vistas.py:900 app/ui/repositorio/vistas.py:1038 app/ui/repositorio/vistas.py:1461 app/ui/repositorio/vistas.py:1518 app/ui/repositorio/vistas.py:1863 app/ui/vistas/principales.py:92 app/ui/vistas/principales.py:293 app/ui/vistas/principales.py:379 app/ui/vistas/principales.py:517 app/ui/vistas/principales.py:560 app/ui/vistas/principales.py:628 app/ui/vistas/principales.py:709
+#: app/ui/accesibilidad/progreso.py:45 app/ui/detalle/acciones.py:550 app/ui/detalle/acciones.py:553 app/ui/detalle/acciones.py:579 app/ui/detalle/issue.py:340 app/ui/detalle/organizacion.py:295 app/ui/detalle/pull_request.py:333 app/ui/detalle/pull_request.py:347 app/ui/detalle/pull_request.py:361 app/ui/dialogo_actualizacion.py:166 app/ui/git/ventana_git.py:879 app/ui/git/ventana_git.py:1342 app/ui/repositorio/vistas.py:503 app/ui/repositorio/vistas.py:806 app/ui/repositorio/vistas.py:902 app/ui/repositorio/vistas.py:1040 app/ui/repositorio/vistas.py:1463 app/ui/repositorio/vistas.py:1520 app/ui/repositorio/vistas.py:1865 app/ui/vistas/principales.py:92 app/ui/vistas/principales.py:293 app/ui/vistas/principales.py:379 app/ui/vistas/principales.py:517 app/ui/vistas/principales.py:560 app/ui/vistas/principales.py:628 app/ui/vistas/principales.py:709
 msgid "Estado"
 msgstr ""
 
@@ -1699,7 +1720,7 @@ msgstr ""
 msgid "Historial y guardadas"
 msgstr ""
 
-#: app/ui/busqueda.py:266 app/ui/editor.py:105 app/ui/repositorio/dialogos.py:174 app/ui/repositorio/dialogos.py:190
+#: app/ui/busqueda.py:266 app/ui/editor.py:114 app/ui/repositorio/dialogos.py:174 app/ui/repositorio/dialogos.py:190
 msgid "(ninguna)"
 msgstr ""
 
@@ -1893,7 +1914,7 @@ msgstr ""
 msgid "Título: {t}"
 msgstr ""
 
-#: app/ui/detalle/acciones.py:413 app/ui/detalle/conversacion.py:332 app/ui/detalle/discusiones.py:83 app/ui/detalle/releases.py:69 app/ui/git/ventana_git.py:896 app/ui/repositorio/paneles.py:394 app/ui/repositorio/vistas.py:1773 app/ui/vistas/principales.py:109 app/ui/vistas/principales.py:850
+#: app/ui/detalle/acciones.py:413 app/ui/detalle/conversacion.py:332 app/ui/detalle/discusiones.py:83 app/ui/detalle/releases.py:69 app/ui/git/ventana_git.py:896 app/ui/repositorio/paneles.py:394 app/ui/repositorio/vistas.py:1775 app/ui/vistas/principales.py:109 app/ui/vistas/principales.py:850
 #, python-brace-format
 msgid "Estado: {e}"
 msgstr ""
@@ -1947,7 +1968,7 @@ msgstr ""
 msgid "Archivo del flujo: {p}"
 msgstr ""
 
-#: app/ui/detalle/acciones.py:422 app/ui/detalle/conversacion.py:348 app/ui/detalle/discusiones.py:87 app/ui/detalle/gist.py:63 app/ui/detalle/organizacion.py:75 app/ui/detalle/proyectos.py:116 app/ui/detalle/releases.py:75 app/ui/detalle/usuario.py:84 app/ui/repositorio/vistas.py:1352 app/ui/repositorio/vistas.py:1776 app/ui/vistas/principales.py:73 app/ui/vistas/principales.py:117 app/ui/vistas/principales.py:853
+#: app/ui/detalle/acciones.py:422 app/ui/detalle/conversacion.py:348 app/ui/detalle/discusiones.py:87 app/ui/detalle/gist.py:63 app/ui/detalle/organizacion.py:75 app/ui/detalle/proyectos.py:116 app/ui/detalle/releases.py:75 app/ui/detalle/usuario.py:84 app/ui/repositorio/vistas.py:1354 app/ui/repositorio/vistas.py:1778 app/ui/vistas/principales.py:73 app/ui/vistas/principales.py:117 app/ui/vistas/principales.py:853
 #, python-brace-format
 msgid "Enlace: {u}"
 msgstr ""
@@ -1979,7 +2000,7 @@ msgstr ""
 msgid "Trabajos"
 msgstr ""
 
-#: app/ui/detalle/acciones.py:550 app/ui/detalle/acciones.py:553 app/ui/detalle/acciones.py:579 app/ui/detalle/gist.py:98 app/ui/detalle/organizacion.py:385 app/ui/detalle/organizacion.py:430 app/ui/detalle/pull_request.py:347 app/ui/detalle/releases.py:180 app/ui/detalle/usuario.py:217 app/ui/herramientas/claves.py:110 app/ui/repositorio/vistas.py:440 app/ui/repositorio/vistas.py:1133 app/ui/repositorio/vistas.py:1245 app/ui/repositorio/vistas.py:1323 app/ui/repositorio/vistas.py:1573 app/ui/repositorio/vistas.py:1921 app/ui/repositorio/vistas.py:1979 app/ui/repositorio/vistas.py:2144 app/ui/vistas/principales.py:46 app/ui/vistas/principales.py:558 app/ui/vistas/principales.py:627 app/ui/vistas/principales.py:721
+#: app/ui/detalle/acciones.py:550 app/ui/detalle/acciones.py:553 app/ui/detalle/acciones.py:579 app/ui/detalle/gist.py:98 app/ui/detalle/organizacion.py:385 app/ui/detalle/organizacion.py:430 app/ui/detalle/pull_request.py:347 app/ui/detalle/releases.py:180 app/ui/detalle/usuario.py:217 app/ui/herramientas/claves.py:110 app/ui/repositorio/vistas.py:440 app/ui/repositorio/vistas.py:1135 app/ui/repositorio/vistas.py:1247 app/ui/repositorio/vistas.py:1325 app/ui/repositorio/vistas.py:1575 app/ui/repositorio/vistas.py:1923 app/ui/repositorio/vistas.py:1981 app/ui/repositorio/vistas.py:2146 app/ui/vistas/principales.py:46 app/ui/vistas/principales.py:558 app/ui/vistas/principales.py:627 app/ui/vistas/principales.py:721
 msgid "Nombre"
 msgstr ""
 
@@ -1999,7 +2020,7 @@ msgstr ""
 msgid "Pasos"
 msgstr ""
 
-#: app/ui/detalle/acciones.py:553 app/ui/detalle/issue.py:339 app/ui/detalle/organizacion.py:293 app/ui/repositorio/vistas.py:803 app/ui/repositorio/vistas.py:897 app/ui/repositorio/vistas.py:1041 app/ui/repositorio/vistas.py:1459 app/ui/repositorio/vistas.py:1865 app/ui/vistas/principales.py:86 app/ui/vistas/principales.py:515 app/ui/vistas/principales.py:705
+#: app/ui/detalle/acciones.py:553 app/ui/detalle/issue.py:340 app/ui/detalle/organizacion.py:293 app/ui/repositorio/vistas.py:804 app/ui/repositorio/vistas.py:899 app/ui/repositorio/vistas.py:1043 app/ui/repositorio/vistas.py:1461 app/ui/repositorio/vistas.py:1867 app/ui/vistas/principales.py:86 app/ui/vistas/principales.py:515 app/ui/vistas/principales.py:705
 msgid "Número"
 msgstr ""
 
@@ -2043,7 +2064,7 @@ msgstr ""
 msgid "Nivel"
 msgstr ""
 
-#: app/ui/detalle/acciones.py:576 app/ui/detalle/organizacion.py:63 app/ui/detalle/usuario.py:67 app/ui/repositorio/vistas.py:1864
+#: app/ui/detalle/acciones.py:576 app/ui/detalle/organizacion.py:63 app/ui/detalle/usuario.py:67 app/ui/repositorio/vistas.py:1866
 msgid "Ubicación"
 msgstr ""
 
@@ -2119,7 +2140,7 @@ msgstr ""
 msgid "Volver a ejecutar el t&rabajo elegido"
 msgstr ""
 
-#: app/ui/detalle/acciones.py:609 app/ui/repositorio/vistas.py:1051
+#: app/ui/detalle/acciones.py:609 app/ui/repositorio/vistas.py:1053
 msgid "&Cancelar la ejecución"
 msgstr ""
 
@@ -2370,7 +2391,7 @@ msgstr ""
 msgid "Cancelar a la fuerza"
 msgstr ""
 
-#: app/ui/detalle/acciones.py:1056 app/ui/repositorio/vistas.py:1023
+#: app/ui/detalle/acciones.py:1056 app/ui/repositorio/vistas.py:1025
 msgid "Cancelación pedida."
 msgstr ""
 
@@ -2435,7 +2456,7 @@ msgstr ""
 msgid "Borrar ejecución"
 msgstr ""
 
-#: app/ui/detalle/acciones.py:1100 app/ui/repositorio/vistas.py:1030
+#: app/ui/detalle/acciones.py:1100 app/ui/repositorio/vistas.py:1032
 msgid "Ejecución borrada."
 msgstr ""
 
@@ -2459,7 +2480,7 @@ msgstr ""
 msgid "los registros"
 msgstr ""
 
-#: app/ui/detalle/acciones.py:1132 app/ui/detalle/discusiones.py:276 app/ui/detalle/gist.py:331 app/ui/detalle/issue.py:355 app/ui/detalle/proyectos.py:619 app/ui/detalle/pull_request.py:923 app/ui/detalle/releases.py:383 app/ui/vistas/base.py:543
+#: app/ui/detalle/acciones.py:1132 app/ui/detalle/discusiones.py:276 app/ui/detalle/gist.py:331 app/ui/detalle/issue.py:356 app/ui/detalle/proyectos.py:619 app/ui/detalle/pull_request.py:925 app/ui/detalle/releases.py:383 app/ui/vistas/base.py:543
 msgid "Enlace copiado."
 msgstr ""
 
@@ -2468,7 +2489,7 @@ msgstr ""
 msgid "Nivel: {n}"
 msgstr ""
 
-#: app/ui/detalle/acciones.py:1148 app/ui/repositorio/vistas.py:1774
+#: app/ui/detalle/acciones.py:1148 app/ui/repositorio/vistas.py:1776
 #, python-brace-format
 msgid "Ubicación: {u}"
 msgstr ""
@@ -2573,7 +2594,7 @@ msgstr ""
 msgid "Este repositorio no tiene flujos de Actions."
 msgstr ""
 
-#: app/ui/detalle/acciones.py:1344 app/ui/detalle/acciones.py:1352 app/ui/detalle/acciones.py:1379 app/ui/repositorio/vistas.py:958 app/ui/repositorio/vistas.py:960 app/ui/repositorio/vistas.py:964
+#: app/ui/detalle/acciones.py:1344 app/ui/detalle/acciones.py:1352 app/ui/detalle/acciones.py:1379 app/ui/repositorio/vistas.py:960 app/ui/repositorio/vistas.py:962 app/ui/repositorio/vistas.py:966
 msgid "Lanzar un flujo"
 msgstr ""
 
@@ -2585,7 +2606,7 @@ msgstr ""
 msgid "&Flujo que lanzar:"
 msgstr ""
 
-#: app/ui/detalle/acciones.py:1356 app/ui/repositorio/vistas.py:1004
+#: app/ui/detalle/acciones.py:1356 app/ui/repositorio/vistas.py:1006
 msgid "Cargando los flujos…"
 msgstr ""
 
@@ -2633,7 +2654,7 @@ msgstr ""
 msgid "Frase breve que describe el cambio."
 msgstr ""
 
-#: app/ui/detalle/archivos.py:147 app/ui/repositorio/paneles.py:489 app/ui/repositorio/vistas.py:314 app/ui/repositorio/vistas.py:1010 app/ui/repositorio/vistas.py:1386 app/ui/repositorio/vistas.py:2139
+#: app/ui/detalle/archivos.py:147 app/ui/repositorio/paneles.py:489 app/ui/repositorio/vistas.py:314 app/ui/repositorio/vistas.py:1012 app/ui/repositorio/vistas.py:1388 app/ui/repositorio/vistas.py:2141
 msgid "&Rama:"
 msgstr ""
 
@@ -2677,7 +2698,7 @@ msgstr ""
 msgid "¿Descartar los cambios del archivo?"
 msgstr ""
 
-#: app/ui/detalle/archivos.py:197 app/ui/editor.py:321 app/ui/git/ventana_git.py:946
+#: app/ui/detalle/archivos.py:197 app/ui/editor.py:454 app/ui/git/ventana_git.py:946
 msgid "Descartar cambios"
 msgstr ""
 
@@ -2711,7 +2732,7 @@ msgstr ""
 msgid "No se pudo guardar"
 msgstr ""
 
-#: app/ui/detalle/archivos.py:259 app/ui/detalle/archivos.py:260 app/ui/repositorio/vistas.py:1964
+#: app/ui/detalle/archivos.py:259 app/ui/detalle/archivos.py:260 app/ui/repositorio/vistas.py:1966
 msgid "Guardando…"
 msgstr ""
 
@@ -2944,15 +2965,15 @@ msgstr ""
 msgid "Líneas"
 msgstr ""
 
-#: app/ui/detalle/archivos.py:480 app/ui/detalle/archivos.py:510 app/ui/detalle/conversacion.py:729 app/ui/detalle/discusiones.py:123 app/ui/detalle/gist.py:362 app/ui/detalle/pull_request.py:321 app/ui/git/ventana_git.py:994 app/ui/repositorio/vistas.py:808 app/ui/repositorio/vistas.py:901 app/ui/repositorio/vistas.py:1137 app/ui/repositorio/vistas.py:1425 app/ui/vistas/principales.py:93 app/ui/vistas/principales.py:474 app/ui/vistas/principales.py:710
+#: app/ui/detalle/archivos.py:480 app/ui/detalle/archivos.py:510 app/ui/detalle/conversacion.py:729 app/ui/detalle/discusiones.py:123 app/ui/detalle/gist.py:362 app/ui/detalle/pull_request.py:321 app/ui/git/ventana_git.py:994 app/ui/repositorio/vistas.py:809 app/ui/repositorio/vistas.py:903 app/ui/repositorio/vistas.py:1139 app/ui/repositorio/vistas.py:1427 app/ui/vistas/principales.py:93 app/ui/vistas/principales.py:474 app/ui/vistas/principales.py:710
 msgid "Autor"
 msgstr ""
 
-#: app/ui/detalle/archivos.py:480 app/ui/detalle/archivos.py:510 app/ui/detalle/conversacion.py:729 app/ui/detalle/discusiones.py:123 app/ui/detalle/gist.py:362 app/ui/detalle/organizacion.py:277 app/ui/detalle/organizacion.py:457 app/ui/detalle/pull_request.py:321 app/ui/detalle/releases.py:180 app/ui/git/ventana_git.py:995 app/ui/git/ventana_git.py:1104 app/ui/git/ventana_git.py:1213 app/ui/git/ventana_git.py:1258 app/ui/repositorio/vistas.py:1043 app/ui/repositorio/vistas.py:1426 app/ui/repositorio/vistas.py:1866 app/ui/repositorio/vistas.py:2197 app/ui/vistas/principales.py:210 app/ui/vistas/principales.py:297 app/ui/vistas/principales.py:728
+#: app/ui/detalle/archivos.py:480 app/ui/detalle/archivos.py:510 app/ui/detalle/conversacion.py:729 app/ui/detalle/discusiones.py:123 app/ui/detalle/gist.py:362 app/ui/detalle/organizacion.py:277 app/ui/detalle/organizacion.py:457 app/ui/detalle/pull_request.py:321 app/ui/detalle/releases.py:180 app/ui/git/ventana_git.py:995 app/ui/git/ventana_git.py:1104 app/ui/git/ventana_git.py:1213 app/ui/git/ventana_git.py:1258 app/ui/repositorio/vistas.py:1045 app/ui/repositorio/vistas.py:1428 app/ui/repositorio/vistas.py:1868 app/ui/repositorio/vistas.py:2199 app/ui/vistas/principales.py:210 app/ui/vistas/principales.py:297 app/ui/vistas/principales.py:728
 msgid "Fecha"
 msgstr ""
 
-#: app/ui/detalle/archivos.py:480 app/ui/detalle/archivos.py:510 app/ui/detalle/conversacion.py:216 app/ui/detalle/pull_request.py:321 app/ui/git/ventana_git.py:835 app/ui/git/ventana_git.py:841 app/ui/git/ventana_git.py:844 app/ui/git/ventana_git.py:992 app/ui/git/ventana_git.py:1212 app/ui/git/ventana_git.py:1343 app/ui/git/ventana_git.py:1361 app/ui/git/ventana_git.py:1397 app/ui/repositorio/vistas.py:1324 app/ui/repositorio/vistas.py:2195 app/ui/vistas/principales.py:724
+#: app/ui/detalle/archivos.py:480 app/ui/detalle/archivos.py:510 app/ui/detalle/conversacion.py:216 app/ui/detalle/pull_request.py:321 app/ui/git/ventana_git.py:835 app/ui/git/ventana_git.py:841 app/ui/git/ventana_git.py:844 app/ui/git/ventana_git.py:992 app/ui/git/ventana_git.py:1212 app/ui/git/ventana_git.py:1343 app/ui/git/ventana_git.py:1361 app/ui/git/ventana_git.py:1397 app/ui/repositorio/vistas.py:1326 app/ui/repositorio/vistas.py:2197 app/ui/vistas/principales.py:724
 msgid "Commit"
 msgstr ""
 
@@ -3069,7 +3090,7 @@ msgstr ""
 msgid "Descripción del pull request"
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:161 app/ui/detalle/organizacion.py:63 app/ui/detalle/organizacion.py:231 app/ui/detalle/usuario.py:126 app/ui/detalle/usuario.py:148 app/ui/detalle/usuario.py:217 app/ui/git/ventana_git.py:1344 app/ui/repositorio/vistas.py:1462 app/ui/repositorio/vistas.py:1523 app/ui/repositorio/vistas.py:1575 app/ui/repositorio/vistas.py:2198 app/ui/vistas/principales.py:47 app/ui/vistas/principales.py:471 app/ui/vistas/principales.py:494 app/ui/vistas/principales.py:518 app/ui/vistas/principales.py:706
+#: app/ui/detalle/conversacion.py:161 app/ui/detalle/organizacion.py:63 app/ui/detalle/organizacion.py:231 app/ui/detalle/usuario.py:126 app/ui/detalle/usuario.py:148 app/ui/detalle/usuario.py:217 app/ui/git/ventana_git.py:1344 app/ui/repositorio/vistas.py:1464 app/ui/repositorio/vistas.py:1525 app/ui/repositorio/vistas.py:1577 app/ui/repositorio/vistas.py:2200 app/ui/vistas/principales.py:47 app/ui/vistas/principales.py:471 app/ui/vistas/principales.py:494 app/ui/vistas/principales.py:518 app/ui/vistas/principales.py:706
 msgid "Descripción"
 msgstr ""
 
@@ -3116,7 +3137,7 @@ msgstr ""
 msgid "con el commit {c}"
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:194 app/ui/detalle/discusiones.py:74 app/ui/repositorio/vistas.py:840
+#: app/ui/detalle/conversacion.py:194 app/ui/detalle/discusiones.py:74 app/ui/repositorio/vistas.py:841
 msgid "Cerrada"
 msgstr ""
 
@@ -3331,7 +3352,7 @@ msgstr ""
 msgid "borró un comentario"
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:257 app/ui/detalle/conversacion.py:259 app/ui/detalle/pull_request.py:795
+#: app/ui/detalle/conversacion.py:257 app/ui/detalle/conversacion.py:259 app/ui/detalle/pull_request.py:796
 msgid "Fusión automática"
 msgstr ""
 
@@ -3355,7 +3376,7 @@ msgstr ""
 msgid "quitó un vínculo"
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:264 app/ui/detalle/organizacion.py:292 app/ui/repositorio/vistas.py:1458 app/ui/vistas/principales.py:514
+#: app/ui/detalle/conversacion.py:264 app/ui/detalle/organizacion.py:292 app/ui/repositorio/vistas.py:1460 app/ui/vistas/principales.py:514
 msgid "Proyecto"
 msgstr ""
 
@@ -3371,7 +3392,7 @@ msgstr ""
 msgid "se desplegó"
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:267 app/ui/repositorio/vistas.py:1040
+#: app/ui/detalle/conversacion.py:267 app/ui/repositorio/vistas.py:1042
 msgid "Evento"
 msgstr ""
 
@@ -3483,7 +3504,7 @@ msgstr ""
 msgid "C&onversación:"
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:729 app/ui/detalle/diferencias.py:77 app/ui/detalle/discusiones.py:123 app/ui/detalle/proyectos.py:180 app/ui/detalle/proyectos.py:267 app/ui/detalle/usuario.py:115 app/ui/git/ventana_git.py:1101 app/ui/repositorio/vistas.py:441 app/ui/repositorio/vistas.py:1135 app/ui/repositorio/vistas.py:1721 app/ui/repositorio/vistas.py:1860 app/ui/repositorio/vistas.py:1980 app/ui/repositorio/vistas.py:2145 app/ui/vistas/principales.py:55 app/ui/vistas/principales.py:294 app/ui/vistas/principales.py:536
+#: app/ui/detalle/conversacion.py:729 app/ui/detalle/diferencias.py:77 app/ui/detalle/discusiones.py:123 app/ui/detalle/proyectos.py:180 app/ui/detalle/proyectos.py:267 app/ui/detalle/usuario.py:115 app/ui/git/ventana_git.py:1101 app/ui/repositorio/vistas.py:441 app/ui/repositorio/vistas.py:1137 app/ui/repositorio/vistas.py:1723 app/ui/repositorio/vistas.py:1862 app/ui/repositorio/vistas.py:1982 app/ui/repositorio/vistas.py:2147 app/ui/vistas/principales.py:55 app/ui/vistas/principales.py:294 app/ui/vistas/principales.py:536
 msgid "Tipo"
 msgstr ""
 
@@ -3581,7 +3602,7 @@ msgstr ""
 msgid "{c} comentarios y {e} eventos."
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:896 app/ui/detalle/conversacion.py:927 app/ui/detalle/pull_request.py:586
+#: app/ui/detalle/conversacion.py:896 app/ui/detalle/conversacion.py:928 app/ui/detalle/pull_request.py:586
 msgid "El comentario está vacío."
 msgstr ""
 
@@ -3594,35 +3615,35 @@ msgstr ""
 msgid "&Enviar comentario"
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:908
+#: app/ui/detalle/conversacion.py:909
 msgid "Este elemento no tiene texto que citar."
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:911
+#: app/ui/detalle/conversacion.py:912
 msgid "escribió:"
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:916
+#: app/ui/detalle/conversacion.py:917
 msgid "Solo puede editar sus propios comentarios y descripciones."
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:930 app/ui/detalle/gist.py:253
+#: app/ui/detalle/conversacion.py:931 app/ui/detalle/gist.py:253
 msgid "Editar la descripción"
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:930
+#: app/ui/detalle/conversacion.py:931
 msgid "Editar mi comentario"
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:931 app/ui/detalle/gist.py:200 app/ui/detalle/issue.py:238 app/ui/detalle/organizacion.py:360 app/ui/detalle/organizacion.py:407 app/ui/detalle/organizacion.py:579 app/ui/detalle/pull_request.py:857 app/ui/detalle/releases.py:348 app/ui/detalle/usuario.py:362
+#: app/ui/detalle/conversacion.py:932 app/ui/detalle/gist.py:200 app/ui/detalle/issue.py:238 app/ui/detalle/organizacion.py:360 app/ui/detalle/organizacion.py:407 app/ui/detalle/organizacion.py:579 app/ui/detalle/pull_request.py:858 app/ui/detalle/releases.py:348 app/ui/detalle/usuario.py:362
 msgid "&Guardar"
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:935
+#: app/ui/detalle/conversacion.py:937
 msgid "Solo puede borrar sus propios comentarios."
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:938
+#: app/ui/detalle/conversacion.py:940
 #, python-brace-format
 msgid ""
 "¿Borrar su comentario del {f}? No se puede deshacer.\n"
@@ -3630,37 +3651,37 @@ msgid ""
 "{t}"
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:940 app/ui/detalle/gist.py:420
+#: app/ui/detalle/conversacion.py:942 app/ui/detalle/gist.py:421
 msgid "Borrar comentario"
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:943 app/ui/detalle/gist.py:430
+#: app/ui/detalle/conversacion.py:945 app/ui/detalle/gist.py:431
 msgid "Comentario borrado."
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:950
+#: app/ui/detalle/conversacion.py:952
 msgid "Solo se puede reaccionar a la descripción y a los comentarios."
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:954
+#: app/ui/detalle/conversacion.py:956
 msgid "Reaccionar"
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:954
+#: app/ui/detalle/conversacion.py:956
 msgid "&Reacción:"
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:963
+#: app/ui/detalle/conversacion.py:965
 #, python-brace-format
 msgid "Reacción «{r}» añadida."
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:973
+#: app/ui/detalle/conversacion.py:975
 #, python-brace-format
 msgid "{t} de {a} en #{n}"
 msgstr ""
 
-#: app/ui/detalle/conversacion.py:987 app/ui/vistas/base.py:545 app/ui/vistas/base.py:552
+#: app/ui/detalle/conversacion.py:989 app/ui/vistas/base.py:545 app/ui/vistas/base.py:552
 msgid "Este elemento no tiene enlace."
 msgstr ""
 
@@ -3778,7 +3799,7 @@ msgstr ""
 msgid "Cargando las diferencias…"
 msgstr ""
 
-#: app/ui/detalle/diferencias.py:334 app/ui/git/ventana_git.py:982 app/ui/git/ventana_git.py:1019 app/ui/repositorio/vistas.py:1348
+#: app/ui/detalle/diferencias.py:334 app/ui/git/ventana_git.py:982 app/ui/git/ventana_git.py:1019 app/ui/repositorio/vistas.py:1350
 #, python-brace-format
 msgid "Commit {s}"
 msgstr ""
@@ -3793,7 +3814,7 @@ msgstr ""
 msgid "Cambios: {t} líneas ({a} añadidas, {e} eliminadas) en {n} archivos"
 msgstr ""
 
-#: app/ui/detalle/diferencias.py:339 app/ui/repositorio/vistas.py:1351
+#: app/ui/detalle/diferencias.py:339 app/ui/repositorio/vistas.py:1353
 #, python-brace-format
 msgid "Verificado: {v}"
 msgstr ""
@@ -3824,7 +3845,7 @@ msgstr ""
 msgid "Comentario, respuesta marcada"
 msgstr ""
 
-#: app/ui/detalle/discusiones.py:74 app/ui/repositorio/vistas.py:843
+#: app/ui/detalle/discusiones.py:74 app/ui/repositorio/vistas.py:844
 msgid "Abierta"
 msgstr ""
 
@@ -3842,7 +3863,7 @@ msgstr ""
 msgid "Categoría: {c}"
 msgstr ""
 
-#: app/ui/detalle/discusiones.py:82 app/ui/detalle/organizacion.py:74 app/ui/detalle/releases.py:72 app/ui/repositorio/vistas.py:1775
+#: app/ui/detalle/discusiones.py:82 app/ui/detalle/organizacion.py:74 app/ui/detalle/releases.py:72 app/ui/repositorio/vistas.py:1777
 #, python-brace-format
 msgid "Creada: {c}"
 msgstr ""
@@ -3875,7 +3896,7 @@ msgstr ""
 msgid "Comentarios y respuestas"
 msgstr ""
 
-#: app/ui/detalle/discusiones.py:123 app/ui/repositorio/vistas.py:903 app/ui/vistas/principales.py:715
+#: app/ui/detalle/discusiones.py:123 app/ui/repositorio/vistas.py:905 app/ui/vistas/principales.py:715
 msgid "Votos"
 msgstr ""
 
@@ -3998,11 +4019,11 @@ msgstr ""
 msgid "Cerrar la discusión"
 msgstr ""
 
-#: app/ui/detalle/discusiones.py:246 app/ui/repositorio/vistas.py:671
+#: app/ui/detalle/discusiones.py:246 app/ui/repositorio/vistas.py:672
 msgid "&Motivo del cierre:"
 msgstr ""
 
-#: app/ui/detalle/discusiones.py:251 app/ui/repositorio/vistas.py:888
+#: app/ui/detalle/discusiones.py:251 app/ui/repositorio/vistas.py:890
 msgid "Discusión cerrada."
 msgstr ""
 
@@ -4010,7 +4031,7 @@ msgstr ""
 msgid "La discusión ya está abierta."
 msgstr ""
 
-#: app/ui/detalle/discusiones.py:259 app/ui/repositorio/vistas.py:892
+#: app/ui/detalle/discusiones.py:259 app/ui/repositorio/vistas.py:894
 msgid "Discusión reabierta."
 msgstr ""
 
@@ -4024,11 +4045,11 @@ msgstr ""
 msgid "Visibilidad: {v}"
 msgstr ""
 
-#: app/ui/detalle/gist.py:59 app/ui/detalle/gist.py:465 app/ui/detalle/usuario.py:128 app/ui/repositorio/dialogos.py:184 app/ui/vistas/principales.py:473
+#: app/ui/detalle/gist.py:59 app/ui/detalle/gist.py:466 app/ui/detalle/usuario.py:128 app/ui/repositorio/dialogos.py:184 app/ui/vistas/principales.py:473
 msgid "Público"
 msgstr ""
 
-#: app/ui/detalle/gist.py:59 app/ui/detalle/organizacion.py:232 app/ui/detalle/usuario.py:128 app/ui/repositorio/vistas.py:1980 app/ui/vistas/principales.py:473
+#: app/ui/detalle/gist.py:59 app/ui/detalle/organizacion.py:232 app/ui/detalle/usuario.py:128 app/ui/repositorio/vistas.py:1982 app/ui/vistas/principales.py:473
 msgid "Secreto"
 msgstr ""
 
@@ -4066,7 +4087,7 @@ msgstr ""
 msgid "&Archivos:"
 msgstr ""
 
-#: app/ui/detalle/gist.py:98 app/ui/detalle/usuario.py:127 app/ui/repositorio/vistas.py:1136 app/ui/vistas/principales.py:472
+#: app/ui/detalle/gist.py:98 app/ui/detalle/usuario.py:127 app/ui/repositorio/vistas.py:1138 app/ui/vistas/principales.py:472
 msgid "Archivos"
 msgstr ""
 
@@ -4182,7 +4203,7 @@ msgstr ""
 msgid "&Añadir"
 msgstr ""
 
-#: app/ui/detalle/gist.py:220 app/ui/detalle/gist.py:475
+#: app/ui/detalle/gist.py:220 app/ui/detalle/gist.py:476
 msgid "&Nombre del archivo:"
 msgstr ""
 
@@ -4331,142 +4352,142 @@ msgstr ""
 msgid "C&omentar"
 msgstr ""
 
-#: app/ui/detalle/gist.py:420
+#: app/ui/detalle/gist.py:421
 #, python-brace-format
 msgid "¿Borrar el comentario de {a}?"
 msgstr ""
 
-#: app/ui/detalle/gist.py:453
+#: app/ui/detalle/gist.py:454
 msgid "Nuevo gist"
 msgstr ""
 
-#: app/ui/detalle/gist.py:460 app/ui/detalle/organizacion.py:146 app/ui/detalle/organizacion.py:572 app/ui/repositorio/dialogos.py:432 app/ui/repositorio/dialogos.py:888 app/ui/repositorio/dialogos.py:950
+#: app/ui/detalle/gist.py:461 app/ui/detalle/organizacion.py:146 app/ui/detalle/organizacion.py:572 app/ui/repositorio/dialogos.py:432 app/ui/repositorio/dialogos.py:888 app/ui/repositorio/dialogos.py:950
 msgid "&Descripción:"
 msgstr ""
 
-#: app/ui/detalle/gist.py:462
+#: app/ui/detalle/gist.py:463
 msgid "Descripción breve del gist (opcional)."
 msgstr ""
 
-#: app/ui/detalle/gist.py:464 app/ui/repositorio/dialogos.py:183 app/ui/repositorio/dialogos.py:440
+#: app/ui/detalle/gist.py:465 app/ui/repositorio/dialogos.py:183 app/ui/repositorio/dialogos.py:440
 msgid "&Visibilidad:"
 msgstr ""
 
-#: app/ui/detalle/gist.py:465
+#: app/ui/detalle/gist.py:466
 msgid "Secreto (solo con el enlace)"
 msgstr ""
 
-#: app/ui/detalle/gist.py:467
+#: app/ui/detalle/gist.py:468
 msgid "Un gist secreto no aparece en las búsquedas, pero cualquiera con el enlace lo ve."
 msgstr ""
 
-#: app/ui/detalle/gist.py:469
+#: app/ui/detalle/gist.py:470
 msgid "&Archivos del gist:"
 msgstr ""
 
-#: app/ui/detalle/gist.py:470 app/ui/detalle/gist.py:535 app/ui/detalle/gist.py:542 app/ui/detalle/gist.py:545 app/ui/detalle/gist.py:573 app/ui/herramientas/claves.py:110
+#: app/ui/detalle/gist.py:471 app/ui/detalle/gist.py:536 app/ui/detalle/gist.py:543 app/ui/detalle/gist.py:546 app/ui/detalle/gist.py:574 app/ui/herramientas/claves.py:110
 msgid "(sin nombre)"
 msgstr ""
 
-#: app/ui/detalle/gist.py:472
+#: app/ui/detalle/gist.py:473
 msgid "Archivos que tendrá el gist. Al elegir uno, su nombre y su contenido aparecen debajo."
 msgstr ""
 
-#: app/ui/detalle/gist.py:477
+#: app/ui/detalle/gist.py:478
 msgid "Con extensión (notas.md, script.py): GitHub la usa para colorear el código."
 msgstr ""
 
-#: app/ui/detalle/gist.py:480
+#: app/ui/detalle/gist.py:481
 msgid "Con&tenido:"
 msgstr ""
 
-#: app/ui/detalle/gist.py:482
+#: app/ui/detalle/gist.py:483
 msgid "Contenido del archivo. Control+Intro crea el gist."
 msgstr ""
 
-#: app/ui/detalle/gist.py:486
+#: app/ui/detalle/gist.py:487
 msgid "Añadir &otro archivo"
 msgstr ""
 
-#: app/ui/detalle/gist.py:486
+#: app/ui/detalle/gist.py:487
 msgid "Añade un archivo vacío y pone el foco en su nombre."
 msgstr ""
 
-#: app/ui/detalle/gist.py:487
+#: app/ui/detalle/gist.py:488
 msgid "Car&gar desde disco…"
 msgstr ""
 
-#: app/ui/detalle/gist.py:487
+#: app/ui/detalle/gist.py:488
 msgid "Añade uno o varios archivos de texto del ordenador."
 msgstr ""
 
-#: app/ui/detalle/gist.py:488
+#: app/ui/detalle/gist.py:489
 msgid "&Quitar este archivo"
 msgstr ""
 
-#: app/ui/detalle/gist.py:488
+#: app/ui/detalle/gist.py:489
 msgid "Quita del gist el archivo elegido en la lista."
 msgstr ""
 
-#: app/ui/detalle/gist.py:497
+#: app/ui/detalle/gist.py:498
 msgid "C&rear el gist"
 msgstr ""
 
-#: app/ui/detalle/gist.py:550
+#: app/ui/detalle/gist.py:551
 #, python-brace-format
 msgid "Archivo {n} de {t}."
 msgstr ""
 
-#: app/ui/detalle/gist.py:553
+#: app/ui/detalle/gist.py:554
 msgid "Elija los archivos de texto que añadir al gist"
 msgstr ""
 
-#: app/ui/detalle/gist.py:564
+#: app/ui/detalle/gist.py:565
 msgid "Algunos archivos no se cargaron"
 msgstr ""
 
-#: app/ui/detalle/gist.py:566
+#: app/ui/detalle/gist.py:567
 #, python-brace-format
 msgid "{n} archivos cargados. El gist tiene {t}."
 msgstr ""
 
-#: app/ui/detalle/gist.py:575
+#: app/ui/detalle/gist.py:576
 msgid "Archivo vaciado: un gist necesita al menos uno."
 msgstr ""
 
-#: app/ui/detalle/gist.py:582
+#: app/ui/detalle/gist.py:583
 #, python-brace-format
 msgid "Archivo quitado. Quedan {n}."
 msgstr ""
 
-#: app/ui/detalle/gist.py:590
+#: app/ui/detalle/gist.py:591
 #, python-brace-format
 msgid "El archivo {n} no tiene nombre."
 msgstr ""
 
-#: app/ui/detalle/gist.py:592
+#: app/ui/detalle/gist.py:593
 #, python-brace-format
 msgid "Hay dos archivos llamados {n}."
 msgstr ""
 
-#: app/ui/detalle/gist.py:595
+#: app/ui/detalle/gist.py:596
 #, python-brace-format
 msgid "El archivo {n} está vacío: GitHub no admite archivos vacíos en un gist."
 msgstr ""
 
-#: app/ui/detalle/gist.py:608
+#: app/ui/detalle/gist.py:609
 msgid "No se puede crear el gist"
 msgstr ""
 
-#: app/ui/detalle/gist.py:617
+#: app/ui/detalle/gist.py:618
 msgid "Creando el gist…"
 msgstr ""
 
-#: app/ui/detalle/gist.py:624
+#: app/ui/detalle/gist.py:625
 msgid "Gist creado."
 msgstr ""
 
-#: app/ui/detalle/gist.py:635
+#: app/ui/detalle/gist.py:636
 msgid "No se pudo crear el gist"
 msgstr ""
 
@@ -4479,11 +4500,11 @@ msgstr ""
 msgid "{n}: {d}"
 msgstr ""
 
-#: app/ui/detalle/issue.py:87 app/ui/repositorio/vistas.py:580
+#: app/ui/detalle/issue.py:87 app/ui/repositorio/vistas.py:581
 msgid "&Etiquetas:"
 msgstr ""
 
-#: app/ui/detalle/issue.py:87 app/ui/repositorio/vistas.py:580
+#: app/ui/detalle/issue.py:87 app/ui/repositorio/vistas.py:581
 #, python-brace-format
 msgid "Etiquetas de #{n}"
 msgstr ""
@@ -4500,11 +4521,11 @@ msgstr ""
 msgid "No hay nadie a quien asignar."
 msgstr ""
 
-#: app/ui/detalle/issue.py:112 app/ui/repositorio/vistas.py:602
+#: app/ui/detalle/issue.py:112 app/ui/repositorio/vistas.py:603
 msgid "&Personas asignadas:"
 msgstr ""
 
-#: app/ui/detalle/issue.py:112 app/ui/repositorio/vistas.py:602
+#: app/ui/detalle/issue.py:112 app/ui/repositorio/vistas.py:603
 #, python-brace-format
 msgid "Asignados de #{n}"
 msgstr ""
@@ -4517,7 +4538,7 @@ msgstr ""
 msgid "Asignados guardados."
 msgstr ""
 
-#: app/ui/detalle/issue.py:130 app/ui/repositorio/vistas.py:688
+#: app/ui/detalle/issue.py:130 app/ui/repositorio/vistas.py:689
 msgid "(sin hito)"
 msgstr ""
 
@@ -4526,16 +4547,16 @@ msgstr ""
 msgid "(vence {f})"
 msgstr ""
 
-#: app/ui/detalle/issue.py:136 app/ui/repositorio/vistas.py:534 app/ui/repositorio/vistas.py:687
+#: app/ui/detalle/issue.py:136 app/ui/repositorio/vistas.py:534 app/ui/repositorio/vistas.py:688
 msgid "&Hito:"
 msgstr ""
 
-#: app/ui/detalle/issue.py:136 app/ui/repositorio/vistas.py:687
+#: app/ui/detalle/issue.py:136 app/ui/repositorio/vistas.py:688
 #, python-brace-format
 msgid "Hito de #{n}"
 msgstr ""
 
-#: app/ui/detalle/issue.py:140 app/ui/repositorio/vistas.py:1495
+#: app/ui/detalle/issue.py:140 app/ui/repositorio/vistas.py:1497
 msgid "Hito guardado."
 msgstr ""
 
@@ -4626,107 +4647,107 @@ msgstr ""
 msgid "Editar la issue #{n}"
 msgstr ""
 
-#: app/ui/detalle/issue.py:256
+#: app/ui/detalle/issue.py:257
 msgid "Conversación desbloqueada."
 msgstr ""
 
-#: app/ui/detalle/issue.py:258
+#: app/ui/detalle/issue.py:259
 msgid "Bloquear la conversación"
 msgstr ""
 
-#: app/ui/detalle/issue.py:258 app/ui/repositorio/vistas.py:1813
+#: app/ui/detalle/issue.py:259 app/ui/repositorio/vistas.py:1815
 msgid "&Motivo:"
 msgstr ""
 
-#: app/ui/detalle/issue.py:263
+#: app/ui/detalle/issue.py:264
 msgid "Conversación bloqueada: solo colaboradores pueden comentar."
 msgstr ""
 
-#: app/ui/detalle/issue.py:272
+#: app/ui/detalle/issue.py:273
 msgid "Issue fijada en el repositorio."
 msgstr ""
 
-#: app/ui/detalle/issue.py:272
+#: app/ui/detalle/issue.py:273
 msgid "Issue quitada de las fijadas."
 msgstr ""
 
-#: app/ui/detalle/issue.py:276
+#: app/ui/detalle/issue.py:277
 msgid "&Repositorio de destino (dueño/nombre):"
 msgstr ""
 
-#: app/ui/detalle/issue.py:276 app/ui/detalle/issue.py:283
+#: app/ui/detalle/issue.py:277 app/ui/detalle/issue.py:284
 msgid "Transferir la issue"
 msgstr ""
 
-#: app/ui/detalle/issue.py:279
+#: app/ui/detalle/issue.py:280
 msgid "Escriba el repositorio como dueño/nombre."
 msgstr ""
 
-#: app/ui/detalle/issue.py:282
+#: app/ui/detalle/issue.py:283
 #, python-brace-format
 msgid "¿Transferir la issue #{n} a {d}? Se moverán sus comentarios y quedará una redirección."
 msgstr ""
 
-#: app/ui/detalle/issue.py:291
+#: app/ui/detalle/issue.py:292
 #, python-brace-format
 msgid "No se encontró el repositorio {d}."
 msgstr ""
 
-#: app/ui/detalle/issue.py:300
+#: app/ui/detalle/issue.py:301
 msgid "Transfiriendo…"
 msgstr ""
 
-#: app/ui/detalle/issue.py:301
+#: app/ui/detalle/issue.py:302
 #, python-brace-format
 msgid "Issue transferida a {d} con el número {n}."
 msgstr ""
 
-#: app/ui/detalle/issue.py:305
+#: app/ui/detalle/issue.py:306
 msgid "Suscripción a la issue"
 msgstr ""
 
-#: app/ui/detalle/issue.py:305
+#: app/ui/detalle/issue.py:306
 msgid "&Notificaciones:"
 msgstr ""
 
-#: app/ui/detalle/issue.py:316
+#: app/ui/detalle/issue.py:317
 msgid "Suscripción cambiada."
 msgstr ""
 
-#: app/ui/detalle/issue.py:322
+#: app/ui/detalle/issue.py:323
 msgid "&Número de la issue de este repositorio:"
 msgstr ""
 
-#: app/ui/detalle/issue.py:322
+#: app/ui/detalle/issue.py:323
 msgid "Añadir subissue"
 msgstr ""
 
-#: app/ui/detalle/issue.py:331
+#: app/ui/detalle/issue.py:332
 msgid "Subissue añadida."
 msgstr ""
 
-#: app/ui/detalle/issue.py:338
+#: app/ui/detalle/issue.py:339
 msgid "&Subissues:"
 msgstr ""
 
-#: app/ui/detalle/issue.py:338
+#: app/ui/detalle/issue.py:339
 #, python-brace-format
 msgid "Subissues de #{n}"
 msgstr ""
 
-#: app/ui/detalle/issue.py:339 app/ui/detalle/proyectos.py:180 app/ui/detalle/proyectos.py:267 app/ui/detalle/proyectos.py:301 app/ui/herramientas/claves.py:118 app/ui/repositorio/vistas.py:804 app/ui/repositorio/vistas.py:898 app/ui/repositorio/vistas.py:1037 app/ui/repositorio/vistas.py:1517 app/ui/repositorio/vistas.py:2087 app/ui/vistas/principales.py:87 app/ui/vistas/principales.py:292
+#: app/ui/detalle/issue.py:340 app/ui/detalle/proyectos.py:180 app/ui/detalle/proyectos.py:267 app/ui/detalle/proyectos.py:301 app/ui/herramientas/claves.py:118 app/ui/repositorio/vistas.py:805 app/ui/repositorio/vistas.py:900 app/ui/repositorio/vistas.py:1039 app/ui/repositorio/vistas.py:1519 app/ui/repositorio/vistas.py:2089 app/ui/vistas/principales.py:87 app/ui/vistas/principales.py:292
 msgid "Título"
 msgstr ""
 
-#: app/ui/detalle/issue.py:339 app/ui/repositorio/vistas.py:810 app/ui/vistas/principales.py:96
+#: app/ui/detalle/issue.py:340 app/ui/repositorio/vistas.py:811 app/ui/vistas/principales.py:96
 msgid "Asignados"
 msgstr ""
 
-#: app/ui/detalle/issue.py:342 app/ui/detalle/organizacion.py:300 app/ui/detalle/usuario.py:133 app/ui/detalle/usuario.py:150 app/ui/vistas/principales.py:168 app/ui/vistas/principales.py:401 app/ui/vistas/principales.py:432 app/ui/vistas/principales.py:480 app/ui/vistas/principales.py:498 app/ui/vistas/principales.py:523 app/ui/vistas/principales.py:633 app/ui/vistas/principales.py:941
+#: app/ui/detalle/issue.py:343 app/ui/detalle/organizacion.py:300 app/ui/detalle/usuario.py:133 app/ui/detalle/usuario.py:150 app/ui/vistas/principales.py:168 app/ui/vistas/principales.py:401 app/ui/vistas/principales.py:432 app/ui/vistas/principales.py:480 app/ui/vistas/principales.py:498 app/ui/vistas/principales.py:523 app/ui/vistas/principales.py:633 app/ui/vistas/principales.py:941
 msgid "&Abrir"
 msgstr ""
 
-#: app/ui/detalle/issue.py:342
+#: app/ui/detalle/issue.py:343
 msgid "Añadir s&ubissue…"
 msgstr ""
 
@@ -4809,7 +4830,7 @@ msgstr ""
 msgid "Miembros"
 msgstr ""
 
-#: app/ui/detalle/organizacion.py:131 app/ui/detalle/organizacion.py:184 app/ui/detalle/usuario.py:114 app/ui/repositorio/vistas.py:1676 app/ui/repositorio/vistas.py:1720 app/ui/vistas/principales.py:536
+#: app/ui/detalle/organizacion.py:131 app/ui/detalle/organizacion.py:184 app/ui/detalle/usuario.py:114 app/ui/repositorio/vistas.py:1678 app/ui/repositorio/vistas.py:1722 app/ui/vistas/principales.py:536
 msgid "Usuario"
 msgstr ""
 
@@ -4932,7 +4953,7 @@ msgstr ""
 msgid "Permiso del equipo"
 msgstr ""
 
-#: app/ui/detalle/organizacion.py:199 app/ui/repositorio/vistas.py:1630
+#: app/ui/detalle/organizacion.py:199 app/ui/repositorio/vistas.py:1632
 msgid "&Permiso:"
 msgstr ""
 
@@ -4966,7 +4987,7 @@ msgstr ""
 msgid "Repositorio"
 msgstr ""
 
-#: app/ui/detalle/organizacion.py:219 app/ui/detalle/organizacion.py:233 app/ui/repositorio/vistas.py:1630 app/ui/repositorio/vistas.py:1677 app/ui/repositorio/vistas.py:2088
+#: app/ui/detalle/organizacion.py:219 app/ui/detalle/organizacion.py:233 app/ui/repositorio/vistas.py:1632 app/ui/repositorio/vistas.py:1679 app/ui/repositorio/vistas.py:2090
 msgid "Permiso"
 msgstr ""
 
@@ -5043,7 +5064,7 @@ msgstr ""
 msgid "¿Cancelar la invitación a {q}?"
 msgstr ""
 
-#: app/ui/detalle/organizacion.py:269 app/ui/repositorio/vistas.py:1670
+#: app/ui/detalle/organizacion.py:269 app/ui/repositorio/vistas.py:1672
 msgid "Invitación cancelada."
 msgstr ""
 
@@ -5051,7 +5072,7 @@ msgstr ""
 msgid "Invitaciones pendientes"
 msgstr ""
 
-#: app/ui/detalle/organizacion.py:274 app/ui/detalle/usuario.py:65 app/ui/detalle/usuario.py:115 app/ui/repositorio/vistas.py:1721 app/ui/vistas/principales.py:211 app/ui/vistas/principales.py:536 app/ui/vistas/principales.py:695
+#: app/ui/detalle/organizacion.py:274 app/ui/detalle/usuario.py:65 app/ui/detalle/usuario.py:115 app/ui/repositorio/vistas.py:1723 app/ui/vistas/principales.py:211 app/ui/vistas/principales.py:536 app/ui/vistas/principales.py:695
 msgid "Persona"
 msgstr ""
 
@@ -5063,7 +5084,7 @@ msgstr ""
 msgid "&Invitar por correo…"
 msgstr ""
 
-#: app/ui/detalle/organizacion.py:282 app/ui/repositorio/vistas.py:1688
+#: app/ui/detalle/organizacion.py:282 app/ui/repositorio/vistas.py:1690
 msgid "&Cancelar la invitación…"
 msgstr ""
 
@@ -5071,23 +5092,23 @@ msgstr ""
 msgid "No hay invitaciones pendientes."
 msgstr ""
 
-#: app/ui/detalle/organizacion.py:290 app/ui/repositorio/vistas.py:1456 app/ui/vistas/principales.py:512
+#: app/ui/detalle/organizacion.py:290 app/ui/repositorio/vistas.py:1458 app/ui/vistas/principales.py:512
 msgid "Proyectos"
 msgstr ""
 
-#: app/ui/detalle/organizacion.py:294 app/ui/detalle/proyectos.py:180 app/ui/repositorio/vistas.py:1460 app/ui/vistas/principales.py:516
+#: app/ui/detalle/organizacion.py:294 app/ui/detalle/proyectos.py:180 app/ui/repositorio/vistas.py:1462 app/ui/vistas/principales.py:516
 msgid "Elementos"
 msgstr ""
 
-#: app/ui/detalle/organizacion.py:295 app/ui/detalle/proyectos.py:111 app/ui/repositorio/dialogos.py:956 app/ui/repositorio/vistas.py:1461 app/ui/repositorio/vistas.py:1518 app/ui/vistas/principales.py:517
+#: app/ui/detalle/organizacion.py:295 app/ui/detalle/proyectos.py:111 app/ui/repositorio/dialogos.py:956 app/ui/repositorio/vistas.py:1463 app/ui/repositorio/vistas.py:1520 app/ui/vistas/principales.py:517
 msgid "Cerrado"
 msgstr ""
 
-#: app/ui/detalle/organizacion.py:295 app/ui/detalle/proyectos.py:111 app/ui/repositorio/dialogos.py:956 app/ui/repositorio/vistas.py:1461 app/ui/repositorio/vistas.py:1518 app/ui/vistas/principales.py:517
+#: app/ui/detalle/organizacion.py:295 app/ui/detalle/proyectos.py:111 app/ui/repositorio/dialogos.py:956 app/ui/repositorio/vistas.py:1463 app/ui/repositorio/vistas.py:1520 app/ui/vistas/principales.py:517
 msgid "Abierto"
 msgstr ""
 
-#: app/ui/detalle/organizacion.py:296 app/ui/detalle/organizacion.py:387 app/ui/detalle/usuario.py:129 app/ui/repositorio/vistas.py:811 app/ui/repositorio/vistas.py:1463 app/ui/repositorio/vistas.py:1925 app/ui/repositorio/vistas.py:1982 app/ui/vistas/principales.py:53 app/ui/vistas/principales.py:98 app/ui/vistas/principales.py:476 app/ui/vistas/principales.py:519
+#: app/ui/detalle/organizacion.py:296 app/ui/detalle/organizacion.py:387 app/ui/detalle/usuario.py:129 app/ui/repositorio/vistas.py:812 app/ui/repositorio/vistas.py:1465 app/ui/repositorio/vistas.py:1927 app/ui/repositorio/vistas.py:1984 app/ui/vistas/principales.py:53 app/ui/vistas/principales.py:98 app/ui/vistas/principales.py:476 app/ui/vistas/principales.py:519
 msgid "Actualizado"
 msgstr ""
 
@@ -5124,7 +5145,7 @@ msgstr ""
 msgid "¿Borrar el webhook {u}?"
 msgstr ""
 
-#: app/ui/detalle/organizacion.py:326 app/ui/repositorio/vistas.py:2020
+#: app/ui/detalle/organizacion.py:326 app/ui/repositorio/vistas.py:2022
 msgid "Webhook borrado."
 msgstr ""
 
@@ -5132,19 +5153,19 @@ msgstr ""
 msgid "Aviso de prueba (ping) enviado."
 msgstr ""
 
-#: app/ui/detalle/organizacion.py:335 app/ui/repositorio/vistas.py:2045
+#: app/ui/detalle/organizacion.py:335 app/ui/repositorio/vistas.py:2047
 msgid "Webhooks"
 msgstr ""
 
-#: app/ui/detalle/organizacion.py:337 app/ui/repositorio/vistas.py:2047
+#: app/ui/detalle/organizacion.py:337 app/ui/repositorio/vistas.py:2049
 msgid "URL"
 msgstr ""
 
-#: app/ui/detalle/organizacion.py:338 app/ui/repositorio/dialogos.py:755 app/ui/repositorio/vistas.py:2048
+#: app/ui/detalle/organizacion.py:338 app/ui/repositorio/dialogos.py:755 app/ui/repositorio/vistas.py:2050
 msgid "Eventos"
 msgstr ""
 
-#: app/ui/detalle/organizacion.py:339 app/ui/repositorio/vistas.py:2049
+#: app/ui/detalle/organizacion.py:339 app/ui/repositorio/vistas.py:2051
 msgid "Activo"
 msgstr ""
 
@@ -5189,7 +5210,7 @@ msgstr ""
 msgid "Secreto {n} guardado."
 msgstr ""
 
-#: app/ui/detalle/organizacion.py:375 app/ui/repositorio/vistas.py:1968
+#: app/ui/detalle/organizacion.py:375 app/ui/repositorio/vistas.py:1970
 #, python-brace-format
 msgid "¿Borrar el secreto {n}? Los flujos que lo usen fallarán."
 msgstr ""
@@ -5214,7 +5235,7 @@ msgstr ""
 msgid "&Nuevo secreto…"
 msgstr ""
 
-#: app/ui/detalle/organizacion.py:392 app/ui/repositorio/vistas.py:1986
+#: app/ui/detalle/organizacion.py:392 app/ui/repositorio/vistas.py:1988
 msgid "Cambiar el &valor…"
 msgstr ""
 
@@ -5238,7 +5259,7 @@ msgstr ""
 msgid "Borrar variable"
 msgstr ""
 
-#: app/ui/detalle/organizacion.py:421 app/ui/repositorio/vistas.py:1969
+#: app/ui/detalle/organizacion.py:421 app/ui/repositorio/vistas.py:1971
 #, python-brace-format
 msgid "¿Borrar la variable {n}?"
 msgstr ""
@@ -5251,7 +5272,7 @@ msgstr ""
 msgid "Variables de Actions"
 msgstr ""
 
-#: app/ui/detalle/organizacion.py:431 app/ui/repositorio/vistas.py:1981
+#: app/ui/detalle/organizacion.py:431 app/ui/repositorio/vistas.py:1983
 msgid "Valor"
 msgstr ""
 
@@ -5320,7 +5341,7 @@ msgstr ""
 msgid "Pestañas de la organización. Control+Tabulador pasa a la siguiente."
 msgstr ""
 
-#: app/ui/detalle/organizacion.py:497 app/ui/detalle/usuario.py:185 app/ui/repositorio/vistas.py:1861
+#: app/ui/detalle/organizacion.py:497 app/ui/detalle/usuario.py:185 app/ui/repositorio/vistas.py:1863
 msgid "Resumen"
 msgstr ""
 
@@ -5422,7 +5443,7 @@ msgstr ""
 msgid " (archivado)"
 msgstr ""
 
-#: app/ui/detalle/proyectos.py:105 app/ui/detalle/usuario.py:65 app/ui/repositorio/vistas.py:1770
+#: app/ui/detalle/proyectos.py:105 app/ui/detalle/usuario.py:65 app/ui/repositorio/vistas.py:1772
 #, python-brace-format
 msgid "Tipo: {t}"
 msgstr ""
@@ -5957,7 +5978,7 @@ msgstr ""
 msgid "Conversación"
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:279 app/ui/repositorio/vistas.py:1422
+#: app/ui/detalle/pull_request.py:279 app/ui/repositorio/vistas.py:1424
 msgid "Commits"
 msgstr ""
 
@@ -6017,7 +6038,7 @@ msgstr ""
 msgid "Actualizar la rama con la &base"
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:304 app/ui/detalle/pull_request.py:541 app/ui/repositorio/vistas.py:821
+#: app/ui/detalle/pull_request.py:304 app/ui/detalle/pull_request.py:541 app/ui/repositorio/vistas.py:822
 msgid "&Cerrar el pull request"
 msgstr ""
 
@@ -6169,7 +6190,7 @@ msgstr ""
 msgid "desactualizado"
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:541 app/ui/repositorio/vistas.py:823
+#: app/ui/detalle/pull_request.py:541 app/ui/repositorio/vistas.py:824
 msgid "&Reabrir el pull request"
 msgstr ""
 
@@ -6185,7 +6206,7 @@ msgstr ""
 msgid "Este archivo no tiene diferencias de texto que mostrar."
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:574 app/ui/detalle/pull_request.py:756
+#: app/ui/detalle/pull_request.py:574 app/ui/detalle/pull_request.py:757
 msgid "Todavía no se ha cargado el pull request."
 msgstr ""
 
@@ -6199,7 +6220,7 @@ msgstr ""
 msgid "Comentar la línea {n} de {r}"
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:593 app/ui/editor.py:130
+#: app/ui/detalle/pull_request.py:593 app/ui/editor.py:148
 msgid "&Enviar"
 msgstr ""
 
@@ -6263,117 +6284,117 @@ msgstr ""
 msgid "&Enviar respuesta"
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:719
+#: app/ui/detalle/pull_request.py:720
 msgid "La línea ya no aparece en las diferencias (el hilo puede estar desactualizado)."
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:725
+#: app/ui/detalle/pull_request.py:726
 msgid "Es su propio pull request: solo podrá enviar una revisión de tipo Comentar."
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:734
+#: app/ui/detalle/pull_request.py:735
 msgid "Para pedir cambios hay que explicar cuáles en el texto de la revisión."
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:734 app/ui/detalle/pull_request.py:737
+#: app/ui/detalle/pull_request.py:735 app/ui/detalle/pull_request.py:738
 msgid "Falta el texto"
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:737
+#: app/ui/detalle/pull_request.py:738
 msgid "Una revisión de tipo Comentar necesita texto o comentarios en línea."
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:749
+#: app/ui/detalle/pull_request.py:750
 msgid "Revisión enviada: aprobado."
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:749
+#: app/ui/detalle/pull_request.py:750
 msgid "Revisión enviada: cambios pedidos."
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:750
+#: app/ui/detalle/pull_request.py:751
 msgid "Revisión enviada."
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:760
+#: app/ui/detalle/pull_request.py:761
 msgid "No se puede fusionar"
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:784 app/ui/git/ventana_git.py:1185
+#: app/ui/detalle/pull_request.py:785 app/ui/git/ventana_git.py:1185
 msgid "Fusionando…"
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:785
+#: app/ui/detalle/pull_request.py:786
 #, python-brace-format
 msgid "Pull request #{n} fusionado."
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:786
+#: app/ui/detalle/pull_request.py:787
 msgid "No se pudo fusionar"
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:793
+#: app/ui/detalle/pull_request.py:794
 msgid "Fusión automática desactivada."
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:795
+#: app/ui/detalle/pull_request.py:796
 msgid "&Método cuando se cumplan los requisitos:"
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:801
+#: app/ui/detalle/pull_request.py:802
 msgid "Fusión automática activada: se fusionará cuando pase todo lo obligatorio."
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:807
+#: app/ui/detalle/pull_request.py:808
 msgid "Marcado como listo para revisión."
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:807
+#: app/ui/detalle/pull_request.py:808
 msgid "Vuelto a borrador."
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:820
+#: app/ui/detalle/pull_request.py:821
 msgid "No hay nadie a quien pedir revisión."
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:822
+#: app/ui/detalle/pull_request.py:823
 msgid "Pedir revisión"
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:822
+#: app/ui/detalle/pull_request.py:823
 msgid "&Revisores:"
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:823
+#: app/ui/detalle/pull_request.py:824
 msgid "Marque con Espacio a quién pedir la revisión."
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:835
+#: app/ui/detalle/pull_request.py:836
 msgid "Revisores actualizados."
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:841
+#: app/ui/detalle/pull_request.py:842
 msgid "Actualizando la rama…"
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:842
+#: app/ui/detalle/pull_request.py:843
 msgid "GitHub está actualizando la rama con los cambios de la base."
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:848
+#: app/ui/detalle/pull_request.py:849
 msgid "Pull request cerrado."
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:848
+#: app/ui/detalle/pull_request.py:849
 msgid "Pull request reabierto."
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:856
+#: app/ui/detalle/pull_request.py:857
 #, python-brace-format
 msgid "Editar el pull request #{n}"
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:889
+#: app/ui/detalle/pull_request.py:891
 #, python-brace-format
 msgid ""
 "No hay ningún repositorio local configurado cuyo remoto sea {r}.\n"
@@ -6381,33 +6402,33 @@ msgid ""
 "Clone el repositorio o añada su carpeta en la sección «Repositorios locales» de la ventana principal y vuelva a intentarlo. Entonces se ejecutará «git fetch origin pull/{n}/head:pr-{n}» y se cambiará a la rama pr-{n}."
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:894 app/ui/detalle/pull_request.py:898
+#: app/ui/detalle/pull_request.py:896 app/ui/detalle/pull_request.py:900
 msgid "Checkout local"
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:898
+#: app/ui/detalle/pull_request.py:900
 msgid "&Repositorio local:"
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:914
+#: app/ui/detalle/pull_request.py:916
 msgid "Trayendo el pull request…"
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:915
+#: app/ui/detalle/pull_request.py:917
 msgid "No se pudo hacer el checkout"
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:915
+#: app/ui/detalle/pull_request.py:917
 #, python-brace-format
 msgid "Rama {b} lista en {c}."
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:927
+#: app/ui/detalle/pull_request.py:929
 #, python-brace-format
 msgid "Hay {n} comentarios en línea pendientes sin enviar. ¿Cerrar y perderlos?"
 msgstr ""
 
-#: app/ui/detalle/pull_request.py:928
+#: app/ui/detalle/pull_request.py:930
 msgid "Comentarios pendientes"
 msgstr ""
 
@@ -6415,11 +6436,11 @@ msgstr ""
 msgid "Borrador (no publicada)"
 msgstr ""
 
-#: app/ui/detalle/releases.py:57 app/ui/repositorio/vistas.py:1070
+#: app/ui/detalle/releases.py:57 app/ui/repositorio/vistas.py:1072
 msgid "Prelanzamiento"
 msgstr ""
 
-#: app/ui/detalle/releases.py:59 app/ui/repositorio/vistas.py:1071 app/ui/repositorio/vistas.py:1138
+#: app/ui/detalle/releases.py:59 app/ui/repositorio/vistas.py:1073 app/ui/repositorio/vistas.py:1140
 msgid "Publicada"
 msgstr ""
 
@@ -6662,11 +6683,11 @@ msgstr ""
 msgid "¿Borrar también la etiqueta git «{e}»? Si no, la etiqueta seguirá en el repositorio."
 msgstr ""
 
-#: app/ui/detalle/releases.py:378 app/ui/repositorio/vistas.py:1117
+#: app/ui/detalle/releases.py:378 app/ui/repositorio/vistas.py:1119
 msgid "Release borrada."
 msgstr ""
 
-#: app/ui/detalle/releases.py:415 app/ui/repositorio/vistas.py:1099
+#: app/ui/detalle/releases.py:415 app/ui/repositorio/vistas.py:1101
 #, python-brace-format
 msgid "Nueva release en {n}"
 msgstr ""
@@ -6687,7 +6708,7 @@ msgstr ""
 msgid "Rama o SHA de commit donde se crea la etiqueta si aún no existe."
 msgstr ""
 
-#: app/ui/detalle/releases.py:431 app/ui/editor.py:98 app/ui/repositorio/dialogos.py:825 app/ui/repositorio/dialogos.py:948
+#: app/ui/detalle/releases.py:431 app/ui/editor.py:107 app/ui/repositorio/dialogos.py:825 app/ui/repositorio/dialogos.py:948
 msgid "&Título:"
 msgstr ""
 
@@ -6703,7 +6724,7 @@ msgstr ""
 msgid "Notas de la versión en Markdown. Control+Intro crea la release; F7 muestra la vista previa."
 msgstr ""
 
-#: app/ui/detalle/releases.py:440 app/ui/repositorio/vistas.py:1107
+#: app/ui/detalle/releases.py:440 app/ui/repositorio/vistas.py:1109
 msgid "&Generar las notas automáticamente"
 msgstr ""
 
@@ -6711,7 +6732,7 @@ msgstr ""
 msgid "GitHub escribe las notas a partir de los pull requests desde la etiqueta anterior."
 msgstr ""
 
-#: app/ui/detalle/releases.py:444 app/ui/editor.py:124
+#: app/ui/detalle/releases.py:444 app/ui/editor.py:133
 msgid "&Vista previa (F7)"
 msgstr ""
 
@@ -6788,7 +6809,7 @@ msgstr ""
 msgid "Preparando la nueva release…"
 msgstr ""
 
-#: app/ui/detalle/usuario.py:65 app/ui/detalle/usuario.py:115 app/ui/detalle/usuario.py:147 app/ui/repositorio/vistas.py:1721 app/ui/vistas/principales.py:493 app/ui/vistas/principales.py:536 app/ui/vistas/principales.py:695
+#: app/ui/detalle/usuario.py:65 app/ui/detalle/usuario.py:115 app/ui/detalle/usuario.py:147 app/ui/repositorio/vistas.py:1723 app/ui/vistas/principales.py:493 app/ui/vistas/principales.py:536 app/ui/vistas/principales.py:695
 msgid "Organización"
 msgstr ""
 
@@ -7064,7 +7085,7 @@ msgstr ""
 msgid "Principal"
 msgstr ""
 
-#: app/ui/detalle/usuario.py:398 app/ui/repositorio/vistas.py:1428
+#: app/ui/detalle/usuario.py:398 app/ui/repositorio/vistas.py:1430
 msgid "Verificado"
 msgstr ""
 
@@ -7495,89 +7516,184 @@ msgstr ""
 msgid "&Contenido:"
 msgstr ""
 
-#: app/ui/editor.py:91
+#: app/ui/editor.py:100
 msgid "En &respuesta a:"
 msgstr ""
 
-#: app/ui/editor.py:100
+#: app/ui/editor.py:109
 msgid "Título breve y descriptivo."
 msgstr ""
 
-#: app/ui/editor.py:104
+#: app/ui/editor.py:113
 msgid "P&lantilla:"
 msgstr ""
 
-#: app/ui/editor.py:107
+#: app/ui/editor.py:116
 msgid "Al elegir una plantilla, su texto sustituye al cuerpo si está vacío."
 msgstr ""
 
-#: app/ui/editor.py:111
+#: app/ui/editor.py:120
 msgid "Te&xto (Markdown):"
 msgstr ""
 
-#: app/ui/editor.py:113
+#: app/ui/editor.py:122
 msgid "Texto en Markdown. Control+Intro envía; F7 muestra la vista previa. Tabulador escribe una tabulación; Control+Tabulador pasa al control siguiente."
 msgstr ""
 
-#: app/ui/editor.py:181
+#: app/ui/editor.py:138
+msgid "Ad&juntar archivo…"
+msgstr ""
+
+#: app/ui/editor.py:139
+msgid "Añade archivos de texto, como registros .log: dentro del texto en un bloque plegado o, si son largos, subidos a un gist secreto con su enlace. GitHub no deja subir imágenes desde aplicaciones."
+msgstr ""
+
+#: app/ui/editor.py:199
 #, python-brace-format
 msgid "Hay un borrador sin enviar de {f}. ¿Recuperarlo?"
 msgstr ""
 
-#: app/ui/editor.py:182
+#: app/ui/editor.py:200
 msgid "Borrador guardado"
 msgstr ""
 
-#: app/ui/editor.py:233
+#: app/ui/editor.py:251
 msgid "No hay texto que mostrar."
 msgstr ""
 
-#: app/ui/editor.py:236
+#: app/ui/editor.py:254
 #, python-brace-format
 msgid "Vista previa: {t}"
 msgstr ""
 
-#: app/ui/editor.py:244
+#: app/ui/editor.py:260
+msgid "Adjuntar archivos de texto"
+msgstr ""
+
+#: app/ui/editor.py:261
+msgid "Todos los archivos (*.*)|*.*|Registros y texto (*.log;*.txt)|*.log;*.txt"
+msgstr ""
+
+#: app/ui/editor.py:280
+msgid "No se pudo leer el archivo"
+msgstr ""
+
+#: app/ui/editor.py:292
+msgid "No se puede adjuntar"
+msgstr ""
+
+#: app/ui/editor.py:292
+#, python-brace-format
+msgid "«{n}»: {m}"
+msgstr ""
+
+#: app/ui/editor.py:303
+#, python-brace-format
+msgid "«{n}»: {t}, {l}."
+msgstr ""
+
+#: app/ui/editor.py:305
+msgid "Antes, revise que no lleve contraseñas, tokens ni datos personales: lo leerá cualquiera que vea el texto. Un gist secreto no sale en los listados, pero lo abre cualquiera que tenga el enlace."
+msgstr ""
+
+#: app/ui/editor.py:309
+msgid "&Dentro del texto, plegado"
+msgstr ""
+
+#: app/ui/editor.py:309
+msgid "Como &gist secreto, con su enlace"
+msgstr ""
+
+#: app/ui/editor.py:312
+msgid "¿Cómo quiere adjuntarlo?"
+msgstr ""
+
+#: app/ui/editor.py:315
+#, python-brace-format
+msgid "Es demasiado largo para ir dentro del texto (GitHub admite {n} caracteres). ¿Subirlo a un gist secreto y añadir su enlace?"
+msgstr ""
+
+#: app/ui/editor.py:319
+msgid "Adjuntar archivo"
+msgstr ""
+
+#: app/ui/editor.py:324
+#, python-brace-format
+msgid "Adjuntado «{n}» dentro del texto, plegado."
+msgstr ""
+
+#: app/ui/editor.py:337 app/ui/editor.py:338
+#, python-brace-format
+msgid "Subiendo «{n}» a un gist secreto…"
+msgstr ""
+
+#: app/ui/editor.py:341
+#, python-brace-format
+msgid "Adjunto: {n}"
+msgstr ""
+
+#: app/ui/editor.py:351
+#, python-brace-format
+msgid "Subido «{n}»; su enlace está en el texto."
+msgstr ""
+
+#: app/ui/editor.py:360
+#, python-brace-format
+msgid ""
+"No se pudo subir «{n}» a un gist: {m}\n"
+"\n"
+"Si la sesión se inició con un token, compruebe que tiene el permiso «gist»."
+msgstr ""
+
+#: app/ui/editor.py:363
+msgid "No se pudo adjuntar"
+msgstr ""
+
+#: app/ui/editor.py:374
 msgid "¿Sustituir el texto escrito por la plantilla?"
 msgstr ""
 
-#: app/ui/editor.py:244
+#: app/ui/editor.py:374
 msgid "Plantilla"
 msgstr ""
 
-#: app/ui/editor.py:271 app/ui/repositorio/dialogos.py:841
+#: app/ui/editor.py:400
+msgid "Espere a que termine de subirse el adjunto."
+msgstr ""
+
+#: app/ui/editor.py:404 app/ui/repositorio/dialogos.py:841
 msgid "Escriba un título."
 msgstr ""
 
-#: app/ui/editor.py:271
+#: app/ui/editor.py:404
 msgid "Falta el título"
 msgstr ""
 
-#: app/ui/editor.py:276 app/ui/editor.py:277
+#: app/ui/editor.py:409 app/ui/editor.py:410
 msgid "Enviando…"
 msgstr ""
 
-#: app/ui/editor.py:284
+#: app/ui/editor.py:417
 msgid "Enviado."
 msgstr ""
 
-#: app/ui/editor.py:298
+#: app/ui/editor.py:431
 msgid "No se pudo enviar"
 msgstr ""
 
-#: app/ui/editor.py:306
+#: app/ui/editor.py:439
 msgid "Espere a que termine el envío."
 msgstr ""
 
-#: app/ui/editor.py:311
+#: app/ui/editor.py:444
 msgid "¿Guardar lo escrito como borrador para recuperarlo después?"
 msgstr ""
 
-#: app/ui/editor.py:311
+#: app/ui/editor.py:444
 msgid "Cerrar el editor"
 msgstr ""
 
-#: app/ui/editor.py:321
+#: app/ui/editor.py:454
 msgid "¿Descartar el texto escrito?"
 msgstr ""
 
@@ -8260,7 +8376,7 @@ msgstr ""
 msgid "Cambios"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:181 app/ui/git/ventana_git.py:1098 app/ui/repositorio/vistas.py:1243
+#: app/ui/git/ventana_git.py:181 app/ui/git/ventana_git.py:1098 app/ui/repositorio/vistas.py:1245
 msgid "Ramas"
 msgstr ""
 
@@ -8268,7 +8384,7 @@ msgstr ""
 msgid "&Ramas:"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:182 app/ui/git/ventana_git.py:1209 app/ui/repositorio/vistas.py:578 app/ui/repositorio/vistas.py:809 app/ui/vistas/principales.py:95 app/ui/vistas/principales.py:712
+#: app/ui/git/ventana_git.py:182 app/ui/git/ventana_git.py:1209 app/ui/repositorio/vistas.py:579 app/ui/repositorio/vistas.py:810 app/ui/vistas/principales.py:95 app/ui/vistas/principales.py:712
 msgid "Etiquetas"
 msgstr ""
 
@@ -8668,7 +8784,7 @@ msgstr ""
 msgid "Rama &base:"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:703 app/ui/repositorio/vistas.py:777
+#: app/ui/git/ventana_git.py:703 app/ui/repositorio/vistas.py:778
 msgid "Rama en la que se fusionarán los cambios."
 msgstr ""
 
@@ -8676,7 +8792,7 @@ msgstr ""
 msgid "Crear como bo&rrador"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:704 app/ui/repositorio/vistas.py:779
+#: app/ui/git/ventana_git.py:704 app/ui/repositorio/vistas.py:780
 msgid "Un borrador no se puede fusionar hasta marcarlo como listo."
 msgstr ""
 
@@ -8831,7 +8947,7 @@ msgstr ""
 msgid "Q&uitar todo de preparados"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:886 app/ui/git/ventana_git.py:1000 app/ui/git/ventana_git.py:1262 app/ui/git/ventana_git.py:1428 app/ui/repositorio/vistas.py:817
+#: app/ui/git/ventana_git.py:886 app/ui/git/ventana_git.py:1000 app/ui/git/ventana_git.py:1262 app/ui/git/ventana_git.py:1428 app/ui/repositorio/vistas.py:818
 msgid "&Ver las diferencias"
 msgstr ""
 
@@ -8958,12 +9074,12 @@ msgstr ""
 msgid "«{l}» ya estaba en .gitignore."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:982 app/ui/repositorio/vistas.py:1349
+#: app/ui/git/ventana_git.py:982 app/ui/repositorio/vistas.py:1351
 #, python-brace-format
 msgid "Autor: {a} <{c}>"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:983 app/ui/repositorio/vistas.py:1350
+#: app/ui/git/ventana_git.py:983 app/ui/repositorio/vistas.py:1352
 #, python-brace-format
 msgid "Fecha: {f}"
 msgstr ""
@@ -9010,11 +9126,11 @@ msgstr ""
 msgid "Crear una &etiqueta aquí…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1006 app/ui/git/ventana_git.py:1406 app/ui/repositorio/vistas.py:1434
+#: app/ui/git/ventana_git.py:1006 app/ui/git/ventana_git.py:1406 app/ui/repositorio/vistas.py:1436
 msgid "Copiar el &SHA"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1006 app/ui/git/ventana_git.py:1406 app/ui/repositorio/vistas.py:1434
+#: app/ui/git/ventana_git.py:1006 app/ui/git/ventana_git.py:1406 app/ui/repositorio/vistas.py:1436
 msgid "SHA copiado."
 msgstr ""
 
@@ -9135,7 +9251,7 @@ msgstr ""
 msgid "local"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1100 app/ui/git/ventana_git.py:1360 app/ui/repositorio/vistas.py:806 app/ui/repositorio/vistas.py:1010 app/ui/repositorio/vistas.py:1039 app/ui/repositorio/vistas.py:1386 app/ui/vistas/principales.py:561
+#: app/ui/git/ventana_git.py:1100 app/ui/git/ventana_git.py:1360 app/ui/repositorio/vistas.py:807 app/ui/repositorio/vistas.py:1012 app/ui/repositorio/vistas.py:1041 app/ui/repositorio/vistas.py:1388 app/ui/vistas/principales.py:561
 msgid "Rama"
 msgstr ""
 
@@ -9143,7 +9259,7 @@ msgstr ""
 msgid "Seguimiento"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1103 app/ui/repositorio/vistas.py:1248
+#: app/ui/git/ventana_git.py:1103 app/ui/repositorio/vistas.py:1250
 msgid "Último commit"
 msgstr ""
 
@@ -9155,11 +9271,11 @@ msgstr ""
 msgid "&Nueva rama desde esta…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1110 app/ui/repositorio/vistas.py:1255
+#: app/ui/git/ventana_git.py:1110 app/ui/repositorio/vistas.py:1257
 msgid "&Renombrar…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1111 app/ui/repositorio/vistas.py:1256
+#: app/ui/git/ventana_git.py:1111 app/ui/repositorio/vistas.py:1258
 msgid "&Borrar la rama…"
 msgstr ""
 
@@ -9221,7 +9337,7 @@ msgstr ""
 msgid "La rama {r} tiene commits que no están en ninguna otra rama. Si la borra, se perderán. ¿Borrarla igualmente?"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1159 app/ui/git/ventana_git.py:1164 app/ui/repositorio/vistas.py:1188
+#: app/ui/git/ventana_git.py:1159 app/ui/git/ventana_git.py:1164 app/ui/repositorio/vistas.py:1190
 msgid "Rama borrada."
 msgstr ""
 
@@ -9289,11 +9405,11 @@ msgstr ""
 msgid "La rama actual sigue ahora a {r}."
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1211 app/ui/repositorio/vistas.py:1134
+#: app/ui/git/ventana_git.py:1211 app/ui/repositorio/vistas.py:1136
 msgid "Etiqueta"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1218 app/ui/git/ventana_git.py:1404 app/ui/repositorio/vistas.py:1328 app/ui/repositorio/vistas.py:1433
+#: app/ui/git/ventana_git.py:1218 app/ui/git/ventana_git.py:1404 app/ui/repositorio/vistas.py:1330 app/ui/repositorio/vistas.py:1435
 msgid "&Ver el commit"
 msgstr ""
 
@@ -9301,7 +9417,7 @@ msgstr ""
 msgid "&Nueva etiqueta en el commit actual…"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1220 app/ui/repositorio/vistas.py:1331
+#: app/ui/git/ventana_git.py:1220 app/ui/repositorio/vistas.py:1333
 msgid "&Borrar la etiqueta…"
 msgstr ""
 
@@ -9327,7 +9443,7 @@ msgstr ""
 msgid "Borrar etiqueta"
 msgstr ""
 
-#: app/ui/git/ventana_git.py:1234 app/ui/repositorio/vistas.py:1309 app/ui/repositorio/vistas.py:1562
+#: app/ui/git/ventana_git.py:1234 app/ui/repositorio/vistas.py:1311 app/ui/repositorio/vistas.py:1564
 msgid "Etiqueta borrada."
 msgstr ""
 
@@ -9670,15 +9786,15 @@ msgstr ""
 msgid "Correos"
 msgstr ""
 
-#: app/ui/herramientas/claves.py:113 app/ui/repositorio/vistas.py:2090
+#: app/ui/herramientas/claves.py:113 app/ui/repositorio/vistas.py:2092
 msgid "nunca"
 msgstr ""
 
-#: app/ui/herramientas/claves.py:114 app/ui/herramientas/claves.py:120 app/ui/repositorio/vistas.py:2089
+#: app/ui/herramientas/claves.py:114 app/ui/herramientas/claves.py:120 app/ui/repositorio/vistas.py:2091
 msgid "Creada"
 msgstr ""
 
-#: app/ui/herramientas/claves.py:119 app/ui/repositorio/vistas.py:2091
+#: app/ui/herramientas/claves.py:119 app/ui/repositorio/vistas.py:2093
 msgid "Clave"
 msgstr ""
 
@@ -9690,7 +9806,7 @@ msgstr ""
 msgid "&Nueva clave…"
 msgstr ""
 
-#: app/ui/herramientas/claves.py:126 app/ui/repositorio/vistas.py:2096
+#: app/ui/herramientas/claves.py:126 app/ui/repositorio/vistas.py:2098
 msgid "&Borrar la clave…"
 msgstr ""
 
@@ -9777,11 +9893,11 @@ msgstr ""
 msgid "¿Quitar de su cuenta la clave «{n}»? Los equipos que la usan dejarán de poder conectarse o de firmar con ella."
 msgstr ""
 
-#: app/ui/herramientas/claves.py:218 app/ui/repositorio/vistas.py:2078
+#: app/ui/herramientas/claves.py:218 app/ui/repositorio/vistas.py:2080
 msgid "Borrar la clave"
 msgstr ""
 
-#: app/ui/herramientas/claves.py:222 app/ui/repositorio/vistas.py:2081
+#: app/ui/herramientas/claves.py:222 app/ui/repositorio/vistas.py:2083
 msgid "Clave borrada."
 msgstr ""
 
@@ -11340,7 +11456,7 @@ msgstr ""
 msgid "Su permiso: {p}"
 msgstr ""
 
-#: app/ui/repositorio/paneles.py:236 app/ui/repositorio/vistas.py:2126
+#: app/ui/repositorio/paneles.py:236 app/ui/repositorio/vistas.py:2128
 msgid "(sin datos)"
 msgstr ""
 
@@ -11805,7 +11921,7 @@ msgstr ""
 msgid "No hay otras ramas."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:179 app/ui/repositorio/vistas.py:783
+#: app/ui/repositorio/vistas.py:179 app/ui/repositorio/vistas.py:784
 msgid "Cargando las ramas…"
 msgstr ""
 
@@ -11922,11 +12038,11 @@ msgstr ""
 msgid "{r} borrado."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:385 app/ui/repositorio/vistas.py:1318
+#: app/ui/repositorio/vistas.py:385 app/ui/repositorio/vistas.py:1320
 msgid "Descargando…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:386 app/ui/repositorio/vistas.py:398 app/ui/repositorio/vistas.py:1318
+#: app/ui/repositorio/vistas.py:386 app/ui/repositorio/vistas.py:398 app/ui/repositorio/vistas.py:1320
 #, python-brace-format
 msgid "Guardado en {r}."
 msgstr ""
@@ -11977,7 +12093,7 @@ msgstr ""
 msgid "(carpeta superior)"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:447 app/ui/repositorio/vistas.py:700 app/ui/repositorio/vistas.py:815 app/ui/repositorio/vistas.py:908 app/ui/repositorio/vistas.py:1047 app/ui/repositorio/vistas.py:1142 app/ui/repositorio/vistas.py:1466 app/ui/repositorio/vistas.py:1703
+#: app/ui/repositorio/vistas.py:447 app/ui/repositorio/vistas.py:701 app/ui/repositorio/vistas.py:816 app/ui/repositorio/vistas.py:910 app/ui/repositorio/vistas.py:1049 app/ui/repositorio/vistas.py:1144 app/ui/repositorio/vistas.py:1468 app/ui/repositorio/vistas.py:1705
 msgid "A&brir"
 msgstr ""
 
@@ -12062,7 +12178,7 @@ msgstr ""
 msgid "Etiqueta: {v}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:492 app/ui/repositorio/vistas.py:493 app/ui/repositorio/vistas.py:496 app/ui/repositorio/vistas.py:1378
+#: app/ui/repositorio/vistas.py:492 app/ui/repositorio/vistas.py:493 app/ui/repositorio/vistas.py:496 app/ui/repositorio/vistas.py:1380
 msgid "cualquiera"
 msgstr ""
 
@@ -12080,11 +12196,11 @@ msgstr ""
 msgid "Quitar todos los filtros"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:498 app/ui/repositorio/vistas.py:994 app/ui/repositorio/vistas.py:1380
+#: app/ui/repositorio/vistas.py:498 app/ui/repositorio/vistas.py:996 app/ui/repositorio/vistas.py:1382
 msgid "Filtro de GitHub"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:498 app/ui/repositorio/vistas.py:994 app/ui/repositorio/vistas.py:1380
+#: app/ui/repositorio/vistas.py:498 app/ui/repositorio/vistas.py:996 app/ui/repositorio/vistas.py:1382
 msgid "&Filtro que quiere cambiar:"
 msgstr ""
 
@@ -12100,7 +12216,7 @@ msgstr ""
 msgid "(cualquiera)"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:519 app/ui/repositorio/vistas.py:591
+#: app/ui/repositorio/vistas.py:519 app/ui/repositorio/vistas.py:592
 msgid "Cargando las etiquetas…"
 msgstr ""
 
@@ -12120,7 +12236,7 @@ msgstr ""
 msgid "Con alguien asignado"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:531 app/ui/repositorio/vistas.py:616
+#: app/ui/repositorio/vistas.py:531 app/ui/repositorio/vistas.py:617
 msgid "Cargando las personas asignables…"
 msgstr ""
 
@@ -12132,7 +12248,7 @@ msgstr ""
 msgid "Sin hito"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:548 app/ui/repositorio/vistas.py:695
+#: app/ui/repositorio/vistas.py:548 app/ui/repositorio/vistas.py:696
 msgid "Cargando los hitos…"
 msgstr ""
 
@@ -12141,1455 +12257,1455 @@ msgstr ""
 msgid "Comentar en #{n}: {t}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:578
+#: app/ui/repositorio/vistas.py:579
 msgid "El repositorio no tiene etiquetas. Créelas en la sección «Etiquetas de issues»."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:587
+#: app/ui/repositorio/vistas.py:588
 msgid "Etiquetas cambiadas."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:614
+#: app/ui/repositorio/vistas.py:615
 msgid "Asignados cambiados."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:658
+#: app/ui/repositorio/vistas.py:659
 #, python-brace-format
 msgid "Issue #{n} creada."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:660
+#: app/ui/repositorio/vistas.py:661
 #, python-brace-format
 msgid "Nueva issue en {n}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:671
+#: app/ui/repositorio/vistas.py:672
 #, python-brace-format
 msgid "Cerrar la issue #{n}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:677
+#: app/ui/repositorio/vistas.py:678
 #, python-brace-format
 msgid "Issue #{n} cerrada."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:681
+#: app/ui/repositorio/vistas.py:682
 #, python-brace-format
 msgid "Issue #{n} reabierta."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:693
+#: app/ui/repositorio/vistas.py:694
 msgid "Hito cambiado."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:698 app/ui/repositorio/vistas.py:712
+#: app/ui/repositorio/vistas.py:699 app/ui/repositorio/vistas.py:713
 msgid "Issues"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:701
+#: app/ui/repositorio/vistas.py:702
 msgid "Nueva &issue…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:702 app/ui/repositorio/vistas.py:818 app/ui/repositorio/vistas.py:910
+#: app/ui/repositorio/vistas.py:703 app/ui/repositorio/vistas.py:819 app/ui/repositorio/vistas.py:912
 msgid "Comen&tar…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:703 app/ui/repositorio/vistas.py:819
+#: app/ui/repositorio/vistas.py:704 app/ui/repositorio/vistas.py:820
 msgid "Cambiar las etiquetas (&labels)…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:704 app/ui/repositorio/vistas.py:820
+#: app/ui/repositorio/vistas.py:705 app/ui/repositorio/vistas.py:821
 msgid "Cambiar los a&signados…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:705
+#: app/ui/repositorio/vistas.py:706
 msgid "Cambiar el &hito…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:706
+#: app/ui/repositorio/vistas.py:707
 msgid "&Cerrar la issue…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:707
+#: app/ui/repositorio/vistas.py:708
 msgid "&Reabrir la issue"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:708
+#: app/ui/repositorio/vistas.py:709
 msgid "Filtro de &GitHub (estado, etiqueta, asignación, hito)…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:711
+#: app/ui/repositorio/vistas.py:712
 msgid "No hay issues con este filtro. Cree una con Control+N o cambie el filtro con F4."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:756
+#: app/ui/repositorio/vistas.py:757
 msgid "Hace falta al menos otra rama además de la principal para abrir un pull request."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:757
+#: app/ui/repositorio/vistas.py:758
 msgid "Nuevo pull request"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:764
+#: app/ui/repositorio/vistas.py:765
 msgid "La rama de origen y la de destino deben ser distintas."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:770
+#: app/ui/repositorio/vistas.py:771
 #, python-brace-format
 msgid "Pull request #{n} creado."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:772
+#: app/ui/repositorio/vistas.py:773
 #, python-brace-format
 msgid "Nuevo pull request en {n}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:774
+#: app/ui/repositorio/vistas.py:775
 msgid "Rama de &origen (con los cambios):"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:775
+#: app/ui/repositorio/vistas.py:776
 msgid "Rama cuyos commits quiere fusionar."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:776
+#: app/ui/repositorio/vistas.py:777
 msgid "Rama de &destino (base):"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:778
+#: app/ui/repositorio/vistas.py:779
 msgid "Crear como &borrador"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:787
+#: app/ui/repositorio/vistas.py:788
 #, python-brace-format
 msgid "Pull request #{n} cerrado."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:787
+#: app/ui/repositorio/vistas.py:788
 #, python-brace-format
 msgid "Pull request #{n} reabierto."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:794
+#: app/ui/repositorio/vistas.py:795
 #, python-brace-format
 msgid "Diferencias del pull request #{n} de {r}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:801 app/ui/repositorio/vistas.py:829
+#: app/ui/repositorio/vistas.py:802 app/ui/repositorio/vistas.py:830
 msgid "Pull requests"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:807
+#: app/ui/repositorio/vistas.py:808
 msgid "Destino"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:816
+#: app/ui/repositorio/vistas.py:817
 msgid "Nuevo &pull request…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:825
+#: app/ui/repositorio/vistas.py:826
 msgid "Filtro de &GitHub (estado, etiqueta, asignación)…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:828
+#: app/ui/repositorio/vistas.py:829
 msgid "No hay pull requests con este filtro. Cree uno con Control+N o cambie el filtro con F4."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:842
+#: app/ui/repositorio/vistas.py:843
 msgid "Respondida"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:866
+#: app/ui/repositorio/vistas.py:867
 msgid "Las discusiones no están activadas en este repositorio."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:866 app/ui/repositorio/vistas.py:868
+#: app/ui/repositorio/vistas.py:867 app/ui/repositorio/vistas.py:869
 msgid "Nueva discusión"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:868
+#: app/ui/repositorio/vistas.py:869
 msgid "&Categoría:"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:873
+#: app/ui/repositorio/vistas.py:874
 #, python-brace-format
 msgid "Nueva discusión en {c}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:877
+#: app/ui/repositorio/vistas.py:878
 msgid "Cargando las categorías…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:883
+#: app/ui/repositorio/vistas.py:884
 #, python-brace-format
 msgid "Comentar en la discusión #{n}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:895
+#: app/ui/repositorio/vistas.py:897
 msgid "Discusiones"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:899 app/ui/vistas/principales.py:714
+#: app/ui/repositorio/vistas.py:901 app/ui/vistas/principales.py:714
 msgid "Categoría"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:902
+#: app/ui/repositorio/vistas.py:904
 msgid "Respuestas"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:904
+#: app/ui/repositorio/vistas.py:906
 msgid "Actualizada"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:909
+#: app/ui/repositorio/vistas.py:911
 msgid "Nue&va discusión…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:911
+#: app/ui/repositorio/vistas.py:913
 msgid "&Cerrar la discusión"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:912
+#: app/ui/repositorio/vistas.py:914
 msgid "&Reabrir la discusión"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:914
+#: app/ui/repositorio/vistas.py:916
 msgid "No hay discusiones (o no están activadas en este repositorio)."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:957
+#: app/ui/repositorio/vistas.py:959
 msgid "Ningún flujo de este repositorio se puede lanzar a mano: necesitan el disparador «workflow_dispatch»."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:960
+#: app/ui/repositorio/vistas.py:962
 msgid "&Flujo de trabajo:"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:964
+#: app/ui/repositorio/vistas.py:966
 msgid "&Rama en la que se ejecuta:"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:970
+#: app/ui/repositorio/vistas.py:972
 #, python-brace-format
 msgid "Flujo «{f}» lanzado en {r}. Aparecerá en la lista en unos segundos."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:972
+#: app/ui/repositorio/vistas.py:974
 msgid "Buscando los flujos que se pueden lanzar…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:985
+#: app/ui/repositorio/vistas.py:987
 #, python-brace-format
 msgid "flujo «{f}»"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:987 app/ui/repositorio/vistas.py:1365
+#: app/ui/repositorio/vistas.py:989 app/ui/repositorio/vistas.py:1367
 #, python-brace-format
 msgid "rama {r}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:988 app/ui/repositorio/vistas.py:1034
+#: app/ui/repositorio/vistas.py:990 app/ui/repositorio/vistas.py:1036
 msgid "Ejecuciones de Actions"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:992
+#: app/ui/repositorio/vistas.py:994
 #, python-brace-format
 msgid "Flujo de trabajo: {v}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:992 app/ui/repositorio/vistas.py:1537
+#: app/ui/repositorio/vistas.py:994 app/ui/repositorio/vistas.py:1539
 msgid "todos"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:993 app/ui/repositorio/vistas.py:1379
+#: app/ui/repositorio/vistas.py:995 app/ui/repositorio/vistas.py:1381
 msgid "Quitar los filtros"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:993 app/ui/repositorio/vistas.py:1377
+#: app/ui/repositorio/vistas.py:995 app/ui/repositorio/vistas.py:1379
 #, python-brace-format
 msgid "Rama: {v}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:993 app/ui/repositorio/vistas.py:1880 app/ui/repositorio/vistas.py:1924
+#: app/ui/repositorio/vistas.py:995 app/ui/repositorio/vistas.py:1882 app/ui/repositorio/vistas.py:1926
 msgid "todas"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:997
+#: app/ui/repositorio/vistas.py:999
 msgid "Flujo de trabajo"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:997
+#: app/ui/repositorio/vistas.py:999
 msgid "&Flujo:"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:997
+#: app/ui/repositorio/vistas.py:999
 msgid "(todos)"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1019
+#: app/ui/repositorio/vistas.py:1021
 msgid "Ejecución relanzada."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1026
+#: app/ui/repositorio/vistas.py:1028
 #, python-brace-format
 msgid "¿Borrar la ejecución «{t}» y sus registros?"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1027
+#: app/ui/repositorio/vistas.py:1029
 msgid "Borrar la ejecución"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1036
+#: app/ui/repositorio/vistas.py:1038
 msgid "Flujo"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1042
+#: app/ui/repositorio/vistas.py:1044
 msgid "Lanzada por"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1048
+#: app/ui/repositorio/vistas.py:1050
 msgid "&Volver a ejecutar"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1049
+#: app/ui/repositorio/vistas.py:1051
 msgid "Volver a ejecutar so&lo los trabajos fallidos"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1052
+#: app/ui/repositorio/vistas.py:1054
 msgid "Borrar la e&jecución…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1053
+#: app/ui/repositorio/vistas.py:1055
 msgid "Lan&zar un flujo de trabajo…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1055
+#: app/ui/repositorio/vistas.py:1057
 msgid "Filtro de &GitHub (flujo, rama)…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1057
+#: app/ui/repositorio/vistas.py:1059
 msgid "No hay ejecuciones de Actions."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1095
+#: app/ui/repositorio/vistas.py:1097
 msgid "Escriba la etiqueta de la versión (por ejemplo, v1.0.0)."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1100
+#: app/ui/repositorio/vistas.py:1102
 msgid "Te&xto de la release (Markdown):"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1102
+#: app/ui/repositorio/vistas.py:1104
 msgid "Eti&queta de la versión (por ejemplo, v1.0.0):"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1103
+#: app/ui/repositorio/vistas.py:1105
 msgid "Si no existe, GitHub la crea en la rama indicada."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1104
+#: app/ui/repositorio/vistas.py:1106
 msgid "Rama o co&mmit de origen (vacío = rama por defecto):"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1105
+#: app/ui/repositorio/vistas.py:1107
 msgid "Guardar como &borrador"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1106
+#: app/ui/repositorio/vistas.py:1108
 msgid "Marcar como &prelanzamiento"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1113
+#: app/ui/repositorio/vistas.py:1115
 #, python-brace-format
 msgid "¿Borrar la release «{t}»? La etiqueta git se conserva."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1114
+#: app/ui/repositorio/vistas.py:1116
 msgid "Borrar la release"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1122
+#: app/ui/repositorio/vistas.py:1124
 msgid "Release publicada."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1128
+#: app/ui/repositorio/vistas.py:1130
 msgid "Marcada como prelanzamiento."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1128
+#: app/ui/repositorio/vistas.py:1130
 msgid "Ya no es un prelanzamiento."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1131
+#: app/ui/repositorio/vistas.py:1133
 msgid "Releases"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1143
+#: app/ui/repositorio/vistas.py:1145
 msgid "Nue&va release…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1144
+#: app/ui/repositorio/vistas.py:1146
 msgid "&Publicar el borrador"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1145
+#: app/ui/repositorio/vistas.py:1147
 msgid "Cambiar la marca de pre&lanzamiento"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1146
+#: app/ui/repositorio/vistas.py:1148
 msgid "Bo&rrar la release…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1148
+#: app/ui/repositorio/vistas.py:1150
 msgid "No hay releases. Cree una con Control+N."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1165 app/ui/repositorio/vistas.py:1406
+#: app/ui/repositorio/vistas.py:1167 app/ui/repositorio/vistas.py:1408
 msgid "Crear una rama"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1165
+#: app/ui/repositorio/vistas.py:1167
 #, python-brace-format
 msgid "&Nombre de la rama nueva (a partir de {r}):"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1170 app/ui/repositorio/vistas.py:1411
+#: app/ui/repositorio/vistas.py:1172 app/ui/repositorio/vistas.py:1413
 #, python-brace-format
 msgid "Rama {r} creada."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1173
+#: app/ui/repositorio/vistas.py:1175
 msgid "&Nuevo nombre de la rama:"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1173
+#: app/ui/repositorio/vistas.py:1175
 msgid "Renombrar la rama"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1177
+#: app/ui/repositorio/vistas.py:1179
 #, python-brace-format
 msgid "Rama renombrada a {r}."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1181
+#: app/ui/repositorio/vistas.py:1183
 msgid "No se puede borrar la rama por defecto. Elija otra como rama por defecto antes."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1182 app/ui/repositorio/vistas.py:1185
+#: app/ui/repositorio/vistas.py:1184 app/ui/repositorio/vistas.py:1187
 msgid "Borrar la rama"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1184
+#: app/ui/repositorio/vistas.py:1186
 #, python-brace-format
 msgid "¿Borrar la rama {r}? Los commits que solo estén en ella se perderán."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1195
+#: app/ui/repositorio/vistas.py:1197
 #, python-brace-format
 msgid "¿Quitar todas las reglas de protección de {r}?"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1196
+#: app/ui/repositorio/vistas.py:1198
 msgid "Quitar la protección"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1199
+#: app/ui/repositorio/vistas.py:1201
 msgid "Protección quitada."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1206
+#: app/ui/repositorio/vistas.py:1208
 #, python-brace-format
 msgid "¿Fusionar {c} en {b}? Se creará un commit de fusión en {b}."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1207
+#: app/ui/repositorio/vistas.py:1209
 msgid "Fusionar ramas"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1211
+#: app/ui/repositorio/vistas.py:1213
 #, python-brace-format
 msgid "{c} fusionada en {b}."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1211
+#: app/ui/repositorio/vistas.py:1213
 #, python-brace-format
 msgid "No había nada que fusionar: {b} ya contiene {c}."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1216
+#: app/ui/repositorio/vistas.py:1218
 msgid "&Rama de destino:"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1216
+#: app/ui/repositorio/vistas.py:1218
 #, python-brace-format
 msgid "Fusionar {r}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1225
+#: app/ui/repositorio/vistas.py:1227
 #, python-brace-format
 msgid "Comparación de {b} con {c}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1228
+#: app/ui/repositorio/vistas.py:1230
 msgid "&Comparar con la rama:"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1228
+#: app/ui/repositorio/vistas.py:1230
 #, python-brace-format
 msgid "Comparar {r}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1231
+#: app/ui/repositorio/vistas.py:1233
 msgid "Rama por defecto"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1231
+#: app/ui/repositorio/vistas.py:1233
 #, python-brace-format
 msgid "¿Hacer de {r} la rama por defecto?"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1240
+#: app/ui/repositorio/vistas.py:1242
 #, python-brace-format
 msgid "{r} es ahora la rama por defecto."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1246
+#: app/ui/repositorio/vistas.py:1248
 msgid "Por defecto"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1247
+#: app/ui/repositorio/vistas.py:1249
 msgid "Protegida"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1252
+#: app/ui/repositorio/vistas.py:1254
 msgid "&Ver los commits de la rama"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1253
+#: app/ui/repositorio/vistas.py:1255
 msgid "E&xplorar el código de esta rama"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1254
+#: app/ui/repositorio/vistas.py:1256
 msgid "Crear una rama a &partir de esta…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1257
+#: app/ui/repositorio/vistas.py:1259
 msgid "Pro&teger la rama…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1258
+#: app/ui/repositorio/vistas.py:1260
 msgid "Q&uitar la protección"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1259
+#: app/ui/repositorio/vistas.py:1261
 msgid "Fu&sionar en otra rama…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1260
+#: app/ui/repositorio/vistas.py:1262
 msgid "&Comparar con otra rama…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1261
+#: app/ui/repositorio/vistas.py:1263
 msgid "&Hacer rama por defecto"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1263
+#: app/ui/repositorio/vistas.py:1265
 msgid "No hay ramas."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1275
+#: app/ui/repositorio/vistas.py:1277
 #, python-brace-format
 msgid "Protección de {r} guardada."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1276
+#: app/ui/repositorio/vistas.py:1278
 msgid "No se pudo proteger la rama"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1278
+#: app/ui/repositorio/vistas.py:1280
 msgid "Cargando la protección…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1286 app/ui/repositorio/vistas.py:1414
+#: app/ui/repositorio/vistas.py:1288 app/ui/repositorio/vistas.py:1416
 msgid "&Nombre de la etiqueta (por ejemplo, v1.0.0):"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1286 app/ui/repositorio/vistas.py:1292 app/ui/repositorio/vistas.py:1302
+#: app/ui/repositorio/vistas.py:1288 app/ui/repositorio/vistas.py:1294 app/ui/repositorio/vistas.py:1304
 msgid "Crear una etiqueta"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1292
+#: app/ui/repositorio/vistas.py:1294
 msgid "&Mensaje (vacío = etiqueta ligera, sin anotar):"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1300
+#: app/ui/repositorio/vistas.py:1302
 #, python-brace-format
 msgid "Etiqueta {e} creada en {r}."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1302
+#: app/ui/repositorio/vistas.py:1304
 msgid "&Rama cuyo último commit se etiqueta:"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1305
+#: app/ui/repositorio/vistas.py:1307
 #, python-brace-format
 msgid "¿Borrar la etiqueta {e}? Las releases que la usen quedarán como borradores."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1306 app/ui/repositorio/vistas.py:1559
+#: app/ui/repositorio/vistas.py:1308 app/ui/repositorio/vistas.py:1561
 msgid "Borrar la etiqueta"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1313
+#: app/ui/repositorio/vistas.py:1315
 msgid "Guardar en zip"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1321
+#: app/ui/repositorio/vistas.py:1323
 msgid "Etiquetas git (tags)"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1329
+#: app/ui/repositorio/vistas.py:1331
 msgid "E&xplorar el código en esta etiqueta"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1330
+#: app/ui/repositorio/vistas.py:1332
 msgid "&Crear una etiqueta…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1332
+#: app/ui/repositorio/vistas.py:1334
 msgid "Descargar en &zip…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1334
+#: app/ui/repositorio/vistas.py:1336
 msgid "No hay etiquetas git."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1365 app/ui/repositorio/vistas.py:1377
+#: app/ui/repositorio/vistas.py:1367 app/ui/repositorio/vistas.py:1379
 msgid "por defecto"
-msgstr ""
-
-#: app/ui/repositorio/vistas.py:1367
-#, python-brace-format
-msgid "ruta {r}"
 msgstr ""
 
 #: app/ui/repositorio/vistas.py:1369
 #, python-brace-format
+msgid "ruta {r}"
+msgstr ""
+
+#: app/ui/repositorio/vistas.py:1371
+#, python-brace-format
 msgid "autor {a}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1370
+#: app/ui/repositorio/vistas.py:1372
 #, python-brace-format
 msgid "Commits ({p})"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1378
+#: app/ui/repositorio/vistas.py:1380
 #, python-brace-format
 msgid "Autor: {v}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1379
+#: app/ui/repositorio/vistas.py:1381
 #, python-brace-format
 msgid "Ruta: {v}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1379
+#: app/ui/repositorio/vistas.py:1381
 msgid "todo el repositorio"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1389
+#: app/ui/repositorio/vistas.py:1391
 msgid "&Usuario de GitHub o correo del autor (vacío = cualquiera):"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1390
+#: app/ui/repositorio/vistas.py:1392
 msgid "&Ruta de un archivo o carpeta (vacío = todo):"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1391
+#: app/ui/repositorio/vistas.py:1393
 msgid "Filtro de commits"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1406
+#: app/ui/repositorio/vistas.py:1408
 #, python-brace-format
 msgid "&Nombre de la rama nueva (en el commit {s}):"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1414
+#: app/ui/repositorio/vistas.py:1416
 msgid "Etiquetar el commit"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1419
+#: app/ui/repositorio/vistas.py:1421
 #, python-brace-format
 msgid "Etiqueta {e} creada."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1427
+#: app/ui/repositorio/vistas.py:1429
 msgid "SHA"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1435
+#: app/ui/repositorio/vistas.py:1437
 msgid "E&xplorar el código en este commit"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1436
+#: app/ui/repositorio/vistas.py:1438
 msgid "Crear una &rama desde este commit…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1437
+#: app/ui/repositorio/vistas.py:1439
 msgid "Crear una e&tiqueta en este commit…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1438
+#: app/ui/repositorio/vistas.py:1440
 msgid "Filtro de &GitHub (rama, autor, ruta)…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1439
+#: app/ui/repositorio/vistas.py:1441
 msgid "Q&uitar los filtros de GitHub"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1442
+#: app/ui/repositorio/vistas.py:1444
 msgid "No hay commits con este filtro."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1467
+#: app/ui/repositorio/vistas.py:1469
 msgid "Este repositorio no tiene proyectos."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1474
+#: app/ui/repositorio/vistas.py:1476
 msgid "sin issues"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1498
+#: app/ui/repositorio/vistas.py:1500
 #, python-brace-format
 msgid "¿Borrar el hito «{t}»? Sus issues se quedan sin hito."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1499
+#: app/ui/repositorio/vistas.py:1501
 msgid "Borrar el hito"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1502
+#: app/ui/repositorio/vistas.py:1504
 msgid "Hito borrado."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1508
+#: app/ui/repositorio/vistas.py:1510
 msgid "Hito cerrado."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1508
+#: app/ui/repositorio/vistas.py:1510
 msgid "Hito reabierto."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1511 app/ui/repositorio/vistas.py:1515
+#: app/ui/repositorio/vistas.py:1513 app/ui/repositorio/vistas.py:1517
 msgid "Hitos"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1520
+#: app/ui/repositorio/vistas.py:1522
 msgid "Abiertas"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1521
+#: app/ui/repositorio/vistas.py:1523
 msgid "Cerradas"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1522
+#: app/ui/repositorio/vistas.py:1524
 msgid "Fecha límite"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1527
+#: app/ui/repositorio/vistas.py:1529
 msgid "&Ver las issues del hito"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1528
+#: app/ui/repositorio/vistas.py:1530
 msgid "Nuevo &hito…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1529
+#: app/ui/repositorio/vistas.py:1531
 msgid "Cambiar el hi&to…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1530
+#: app/ui/repositorio/vistas.py:1532
 msgid "&Borrar el hito…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1531
+#: app/ui/repositorio/vistas.py:1533
 msgid "&Cerrar el hito"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1532
+#: app/ui/repositorio/vistas.py:1534
 msgid "&Reabrir el hito"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1533
+#: app/ui/repositorio/vistas.py:1535
 msgid "Filtro de &GitHub (abiertos, cerrados, todos)…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1535
+#: app/ui/repositorio/vistas.py:1537
 msgid "No hay hitos con este filtro. Cree uno con Control+N."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1536
+#: app/ui/repositorio/vistas.py:1538
 #, python-brace-format
 msgid "Hitos ({e})"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1536
+#: app/ui/repositorio/vistas.py:1538
 msgid "abiertos"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1536
+#: app/ui/repositorio/vistas.py:1538
 msgid "cerrados"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1555
+#: app/ui/repositorio/vistas.py:1557
 msgid "Etiqueta guardada."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1558
+#: app/ui/repositorio/vistas.py:1560
 #, python-brace-format
 msgid "¿Borrar la etiqueta «{e}»? Se quitará de todas las issues y pull requests."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1571
+#: app/ui/repositorio/vistas.py:1573
 msgid "Etiquetas de issues (labels)"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1574 app/ui/vistas/principales.py:727
+#: app/ui/repositorio/vistas.py:1576 app/ui/vistas/principales.py:727
 msgid "Color"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1579
+#: app/ui/repositorio/vistas.py:1581
 msgid "&Ver las issues con esta etiqueta"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1580
+#: app/ui/repositorio/vistas.py:1582
 msgid "Nueva &label…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1581
+#: app/ui/repositorio/vistas.py:1583
 msgid "Cam&biar la label (nombre, color, descripción)…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1582
+#: app/ui/repositorio/vistas.py:1584
 msgid "Bo&rrar la label…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1584
+#: app/ui/repositorio/vistas.py:1586
 msgid "No hay etiquetas. Cree una con Control+N."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1635
+#: app/ui/repositorio/vistas.py:1637
 msgid "&Usuario de GitHub que quiere invitar:"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1635
+#: app/ui/repositorio/vistas.py:1637
 msgid "Invitar a una persona"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1643
+#: app/ui/repositorio/vistas.py:1645
 #, python-brace-format
 msgid "Invitación enviada a {l}."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1656
+#: app/ui/repositorio/vistas.py:1658
 msgid "Permiso cambiado."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1660
+#: app/ui/repositorio/vistas.py:1662
 msgid "Quitar el acceso"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1660
+#: app/ui/repositorio/vistas.py:1662
 #, python-brace-format
 msgid "¿Quitar a {l} el acceso al repositorio?"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1663
+#: app/ui/repositorio/vistas.py:1665
 #, python-brace-format
 msgid "Acceso quitado a {l}."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1667
+#: app/ui/repositorio/vistas.py:1669
 msgid "Cancelar la invitación"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1667
+#: app/ui/repositorio/vistas.py:1669
 #, python-brace-format
 msgid "¿Cancelar la invitación a {l}?"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1674
+#: app/ui/repositorio/vistas.py:1676
 msgid "Colaboradores e invitaciones"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1678
+#: app/ui/repositorio/vistas.py:1680
 msgid "Situación"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1678
+#: app/ui/repositorio/vistas.py:1680
 msgid "Invitación pendiente"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1678
+#: app/ui/repositorio/vistas.py:1680
 msgid "Colaborador"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1679
+#: app/ui/repositorio/vistas.py:1681
 msgid "Invitado"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1684 app/ui/repositorio/vistas.py:1724
+#: app/ui/repositorio/vistas.py:1686 app/ui/repositorio/vistas.py:1726
 msgid "&Ver el perfil"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1685
+#: app/ui/repositorio/vistas.py:1687
 msgid "&Invitar a una persona…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1686
+#: app/ui/repositorio/vistas.py:1688
 msgid "Cambiar el &permiso…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1687
+#: app/ui/repositorio/vistas.py:1689
 msgid "Q&uitar el acceso…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1690
+#: app/ui/repositorio/vistas.py:1692
 msgid "Solo usted tiene acceso. Invite a alguien con Control+N."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1700
+#: app/ui/repositorio/vistas.py:1702
 msgid "Bifurcaciones (forks)"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1704
+#: app/ui/repositorio/vistas.py:1706
 msgid "Ver al &propietario"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1705
+#: app/ui/repositorio/vistas.py:1707
 msgid "&Comparar con este repositorio"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1709
+#: app/ui/repositorio/vistas.py:1711
 msgid "Nadie ha bifurcado este repositorio."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1718
+#: app/ui/repositorio/vistas.py:1720
 msgid "Personas que le han dado estrella"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1725
+#: app/ui/repositorio/vistas.py:1727
 msgid "Nadie le ha dado estrella todavía."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1771
+#: app/ui/repositorio/vistas.py:1773
 #, python-brace-format
 msgid "Alerta #{n}: {r}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1772
+#: app/ui/repositorio/vistas.py:1774
 #, python-brace-format
 msgid "Gravedad: {g}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1782
+#: app/ui/repositorio/vistas.py:1784
 #, python-brace-format
 msgid "Identificadores: {i}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1783
+#: app/ui/repositorio/vistas.py:1785
 #, python-brace-format
 msgid "Versiones afectadas: {v}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1784
+#: app/ui/repositorio/vistas.py:1786
 #, python-brace-format
 msgid "Versión corregida: {v}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1804
+#: app/ui/repositorio/vistas.py:1806
 #, python-brace-format
 msgid "{t}: no disponible ({m})."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1813 app/ui/repositorio/vistas.py:1816
+#: app/ui/repositorio/vistas.py:1815 app/ui/repositorio/vistas.py:1818
 msgid "Descartar la alerta"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1816
+#: app/ui/repositorio/vistas.py:1818
 msgid "&Comentario (opcional):"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1827
+#: app/ui/repositorio/vistas.py:1829
 msgid "Alerta descartada."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1834
+#: app/ui/repositorio/vistas.py:1836
 msgid "Alerta reabierta."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1843
+#: app/ui/repositorio/vistas.py:1845
 msgid "El repositorio no tiene política de seguridad (SECURITY.md)."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1843
+#: app/ui/repositorio/vistas.py:1845
 msgid "Política de seguridad"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1845
+#: app/ui/repositorio/vistas.py:1847
 #, python-brace-format
 msgid "Política de seguridad de {n}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1847
+#: app/ui/repositorio/vistas.py:1849
 msgid "Buscando SECURITY.md…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1850
+#: app/ui/repositorio/vistas.py:1852
 msgid "Alertas"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1858
+#: app/ui/repositorio/vistas.py:1860
 msgid "Alertas de seguridad"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1862
+#: app/ui/repositorio/vistas.py:1864
 msgid "Gravedad"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1870
+#: app/ui/repositorio/vistas.py:1872
 msgid "&Ver los detalles"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1871
+#: app/ui/repositorio/vistas.py:1873
 msgid "Des&cartar la alerta…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1872
+#: app/ui/repositorio/vistas.py:1874
 msgid "&Reabrir la alerta"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1874
+#: app/ui/repositorio/vistas.py:1876
 msgid "Ver la &política de seguridad (SECURITY.md)"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1875
+#: app/ui/repositorio/vistas.py:1877
 msgid "Filtro de &GitHub (abiertas, descartadas, corregidas)…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1877
+#: app/ui/repositorio/vistas.py:1879
 msgid "No hay alertas de seguridad con este filtro."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1879
+#: app/ui/repositorio/vistas.py:1881
 #, python-brace-format
 msgid "Alertas de seguridad ({e})"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1879
+#: app/ui/repositorio/vistas.py:1881
 msgid "abiertas"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1879
+#: app/ui/repositorio/vistas.py:1881
 msgid "descartadas"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1880
+#: app/ui/repositorio/vistas.py:1882
 msgid "corregidas"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1893
+#: app/ui/repositorio/vistas.py:1895
 #, python-brace-format
 msgid "espera {n} min"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1897
+#: app/ui/repositorio/vistas.py:1899
 #, python-brace-format
 msgid "revisores: {r}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1899
+#: app/ui/repositorio/vistas.py:1901
 msgid "política de ramas"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1900
+#: app/ui/repositorio/vistas.py:1902
 msgid "ninguna"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1908
+#: app/ui/repositorio/vistas.py:1910
 msgid "Entorno guardado."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1911
+#: app/ui/repositorio/vistas.py:1913
 #, python-brace-format
 msgid "¿Borrar el entorno {e} con sus secretos y reglas?"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1912
+#: app/ui/repositorio/vistas.py:1914
 msgid "Borrar el entorno"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1915
+#: app/ui/repositorio/vistas.py:1917
 msgid "Entorno borrado."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1919
+#: app/ui/repositorio/vistas.py:1921
 msgid "Entornos de despliegue"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1922
+#: app/ui/repositorio/vistas.py:1924
 msgid "Reglas de protección"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1923
+#: app/ui/repositorio/vistas.py:1925
 msgid "Ramas que pueden desplegar"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1923
+#: app/ui/repositorio/vistas.py:1925
 msgid "solo protegidas"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1924
+#: app/ui/repositorio/vistas.py:1926
 msgid "personalizadas"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1929
+#: app/ui/repositorio/vistas.py:1931
 msgid "Cam&biar el entorno…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1930
+#: app/ui/repositorio/vistas.py:1932
 msgid "Nuevo en&torno…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1931
+#: app/ui/repositorio/vistas.py:1933
 msgid "Bo&rrar el entorno…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1933
+#: app/ui/repositorio/vistas.py:1935
 msgid "No hay entornos. Cree uno con Control+N."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1963
+#: app/ui/repositorio/vistas.py:1965
 msgid "Guardado."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1969
+#: app/ui/repositorio/vistas.py:1971
 msgid "Borrar"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1973
+#: app/ui/repositorio/vistas.py:1975
 msgid "Borrado."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1977
+#: app/ui/repositorio/vistas.py:1979
 msgid "Secretos y variables de Actions"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1980
+#: app/ui/repositorio/vistas.py:1982
 msgid "Variable"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1981
+#: app/ui/repositorio/vistas.py:1983
 msgid "(oculto)"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1987
+#: app/ui/repositorio/vistas.py:1989
 msgid "Nuevo &secreto o variable…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1988 app/ui/vistas/principales.py:482 app/ui/vistas/principales.py:571
+#: app/ui/repositorio/vistas.py:1990 app/ui/vistas/principales.py:482 app/ui/vistas/principales.py:571
 msgid "&Borrar…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1989
+#: app/ui/repositorio/vistas.py:1991
 msgid "Copiar el va&lor de la variable"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1989
+#: app/ui/repositorio/vistas.py:1991
 msgid "Valor copiado."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:1992
+#: app/ui/repositorio/vistas.py:1994
 msgid "No hay secretos ni variables. Cree uno con Control+N."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2013
+#: app/ui/repositorio/vistas.py:2015
 msgid "Webhook guardado."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2016
+#: app/ui/repositorio/vistas.py:2018
 #, python-brace-format
 msgid "¿Borrar el webhook a {u}?"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2017
+#: app/ui/repositorio/vistas.py:2019
 msgid "Borrar el webhook"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2028
+#: app/ui/repositorio/vistas.py:2030
 msgid "Este webhook no tiene entregas recientes."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2028
+#: app/ui/repositorio/vistas.py:2030
 msgid "Entregas"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2030
+#: app/ui/repositorio/vistas.py:2032
 #, python-brace-format
 msgid "{f}: {e} {a} → {s} {c} ({t} s){r}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2033
+#: app/ui/repositorio/vistas.py:2035
 msgid ", reenviada"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2034
+#: app/ui/repositorio/vistas.py:2036
 msgid "Entregas recientes del webhook"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2034
+#: app/ui/repositorio/vistas.py:2036
 msgid "&Entregas (la más reciente primero):"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2036
+#: app/ui/repositorio/vistas.py:2038
 msgid "Cargando las entregas…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2041
+#: app/ui/repositorio/vistas.py:2043
 msgid "sin entregas"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2050
+#: app/ui/repositorio/vistas.py:2052
 msgid "Última respuesta"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2051
+#: app/ui/repositorio/vistas.py:2053
 msgid "Contenido"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2055
+#: app/ui/repositorio/vistas.py:2057
 msgid "Cam&biar el webhook…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2056
+#: app/ui/repositorio/vistas.py:2058
 msgid "Nuevo &webhook…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2057
+#: app/ui/repositorio/vistas.py:2059
 msgid "Bo&rrar el webhook…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2058
+#: app/ui/repositorio/vistas.py:2060
 msgid "&Probar (enviar un ping)"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2059
+#: app/ui/repositorio/vistas.py:2061
 msgid "Prueba enviada. Mire las entregas en unos segundos."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2060
+#: app/ui/repositorio/vistas.py:2062
 msgid "&Ver las entregas recientes"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2061
+#: app/ui/repositorio/vistas.py:2063
 msgid "Ac&tivar o desactivar"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2062
+#: app/ui/repositorio/vistas.py:2064
 msgid "Webhook desactivado."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2062
+#: app/ui/repositorio/vistas.py:2064
 msgid "Webhook activado."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2064
+#: app/ui/repositorio/vistas.py:2066
 msgid "No hay webhooks. Cree uno con Control+N."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2074
+#: app/ui/repositorio/vistas.py:2076
 msgid "Clave añadida."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2077
+#: app/ui/repositorio/vistas.py:2079
 #, python-brace-format
 msgid "¿Borrar la clave «{t}»? Lo que la use dejará de tener acceso."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2085
+#: app/ui/repositorio/vistas.py:2087
 msgid "Claves de despliegue"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2088
+#: app/ui/repositorio/vistas.py:2090
 msgid "Solo lectura"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2088
+#: app/ui/repositorio/vistas.py:2090
 msgid "Lectura y escritura"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2090 app/ui/vistas/principales.py:563
+#: app/ui/repositorio/vistas.py:2092 app/ui/vistas/principales.py:563
 msgid "Último uso"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2095
+#: app/ui/repositorio/vistas.py:2097
 msgid "Nueva &clave…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2097
+#: app/ui/repositorio/vistas.py:2099
 msgid "Copiar la clave &pública"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2097
+#: app/ui/repositorio/vistas.py:2099
 msgid "Clave copiada."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2099
+#: app/ui/repositorio/vistas.py:2101
 msgid "No hay claves de despliegue. Añada una con Control+N."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2125
+#: app/ui/repositorio/vistas.py:2127
 #, python-brace-format
 msgid "Regla {n}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2126
+#: app/ui/repositorio/vistas.py:2128
 msgid "Cargando la regla…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2126
+#: app/ui/repositorio/vistas.py:2128
 msgid "&Detalle de la regla:"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2129
+#: app/ui/repositorio/vistas.py:2131
 msgid "Borrar la regla"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2129
+#: app/ui/repositorio/vistas.py:2131
 #, python-brace-format
 msgid "¿Borrar la regla «{n}»?"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2136
+#: app/ui/repositorio/vistas.py:2138
 msgid "Regla borrada."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2139
+#: app/ui/repositorio/vistas.py:2141
 msgid "Proteger una rama"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2142
+#: app/ui/repositorio/vistas.py:2144
 msgid "Reglas y protección de ramas"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2145
+#: app/ui/repositorio/vistas.py:2147
 msgid "Conjunto de reglas"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2145
+#: app/ui/repositorio/vistas.py:2147
 msgid "Protección de rama"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2146
+#: app/ui/repositorio/vistas.py:2148
 msgid "Se aplica a"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2146
+#: app/ui/repositorio/vistas.py:2148
 msgid "ramas"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2146
+#: app/ui/repositorio/vistas.py:2148
 msgid "etiquetas"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2146
+#: app/ui/repositorio/vistas.py:2148
 msgid "envíos"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2148
+#: app/ui/repositorio/vistas.py:2150
 msgid "Aplicación"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2152
+#: app/ui/repositorio/vistas.py:2154
 msgid "&Ver el detalle"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2153
+#: app/ui/repositorio/vistas.py:2155
 msgid "&Proteger una rama…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2154
+#: app/ui/repositorio/vistas.py:2156
 msgid "&Borrar la regla…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2156
+#: app/ui/repositorio/vistas.py:2158
 msgid "No hay reglas ni ramas protegidas. Proteja una con Control+N."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2168
+#: app/ui/repositorio/vistas.py:2170
 msgid "Este despliegue no tiene estados."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2168 app/ui/repositorio/vistas.py:2178
+#: app/ui/repositorio/vistas.py:2170 app/ui/repositorio/vistas.py:2180
 msgid "Estados del despliegue"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2172
+#: app/ui/repositorio/vistas.py:2174
 #, python-brace-format
 msgid "{f}: {s}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2176
+#: app/ui/repositorio/vistas.py:2178
 #, python-brace-format
 msgid ". Dirección: {u}"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2178
+#: app/ui/repositorio/vistas.py:2180
 msgid "&Estados (el más reciente primero):"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2180
+#: app/ui/repositorio/vistas.py:2182
 msgid "Cargando los estados…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2183
+#: app/ui/repositorio/vistas.py:2185
 #, python-brace-format
 msgid "¿Borrar el despliegue a {e}? GitHub solo deja borrar los inactivos."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2184
+#: app/ui/repositorio/vistas.py:2186
 msgid "Borrar el despliegue"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2187
+#: app/ui/repositorio/vistas.py:2189
 msgid "Despliegue borrado."
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2191
+#: app/ui/repositorio/vistas.py:2193
 msgid "Despliegues"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2193
+#: app/ui/repositorio/vistas.py:2195
 msgid "Entorno"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2194
+#: app/ui/repositorio/vistas.py:2196
 msgid "Rama o etiqueta"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2196
+#: app/ui/repositorio/vistas.py:2198
 msgid "Creado por"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2202
+#: app/ui/repositorio/vistas.py:2204
 msgid "&Ver los estados"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2203
+#: app/ui/repositorio/vistas.py:2205
 msgid "&Borrar el despliegue…"
 msgstr ""
 
-#: app/ui/repositorio/vistas.py:2205
+#: app/ui/repositorio/vistas.py:2207
 msgid "No hay despliegues."
 msgstr ""
 

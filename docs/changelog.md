@@ -2,6 +2,12 @@
 
 Cada versión tiene su apartado, de la más reciente a la más antigua. Dentro de cada versión, los cambios se agrupan en Novedades, Mejoras y Correcciones, contados con palabras de quien usa la aplicación.
 
+## Versión 1.0.3 - 2026-11-22
+
+### Novedades
+
+- Al escribir una issue, un pull request, una discusión o un comentario se pueden adjuntar archivos de texto, como un registro `.log`, con el botón «Adjuntar archivo» (Alt+J). El contenido va dentro del texto, en un bloque plegado con el nombre del archivo, o, si es muy largo, se sube a un gist secreto y el texto lleva su enlace. Lo pidió Slann Tonić en la primera issue del proyecto. GitHub no deja subir imágenes ni otros archivos binarios desde aplicaciones; para esos sigue haciendo falta su web.
+
 ## Versión 1.0.2 - 2026-11-21
 
 ### Mejoras

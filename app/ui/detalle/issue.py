@@ -235,7 +235,8 @@ class VentanaIssue(VentanaDetalle):
 			return api.editar_issue(self.nombre, self.numero, title=valores["titulo"], body=valores.get("cuerpo") or "")
 
 		if editor.editar(self, self.ctx, _("Editar la issue #{n}").format(n=self.numero), enviar, con_titulo=True,
-			titulo=self.issue.get("title", ""), cuerpo=self.issue.get("body") or "", etiqueta_enviar=_("&Guardar")) is not None:
+			titulo=self.issue.get("title", ""), cuerpo=self.issue.get("body") or "", etiqueta_enviar=_("&Guardar"),
+			con_adjuntos=True) is not None:
 			self.cargar()
 
 	def etiquetas(self) -> None:

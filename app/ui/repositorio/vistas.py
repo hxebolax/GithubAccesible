@@ -563,7 +563,8 @@ def _comentar(panel: Any, elemento: dict) -> None:
 		panel.sustituir(elemento, dict(elemento, comments=int(elemento.get("comments") or 0) + 1))
 
 	editar(panel, panel.ctx, _("Comentar en #{n}: {t}").format(n=numero, t=elemento.get("title", "")),
-		lambda v: api.comentar(nombre, numero, v["cuerpo"]), texto_contexto=elemento.get("body") or "", al_enviar=comentado)
+		lambda v: api.comentar(nombre, numero, v["cuerpo"]), texto_contexto=elemento.get("body") or "", al_enviar=comentado,
+		con_adjuntos=True)
 
 
 def _cambiar_etiquetas(panel: Any, elemento: dict) -> None:
@@ -659,7 +660,7 @@ def vista_issues(nombre: str, host: str = "github.com") -> VistaRepo:
 
 			editar(panel, panel.ctx, _("Nueva issue en {n}").format(n=nombre),
 				lambda v: api.crear_issue(nombre, v["titulo"], v["cuerpo"]), con_titulo=True, plantillas=lista or None,
-				al_enviar=creada)
+				al_enviar=creada, con_adjuntos=True)
 
 		def sin_plantillas(error: BaseException) -> None:
 			log.warning("No se pudieron cargar las plantillas de issue: %s", mensaje_error(error))
@@ -778,7 +779,7 @@ def vista_prs(nombre: str, host: str = "github.com") -> VistaRepo:
 					CampoExtra("borrador", _("Crear como &borrador"), "bool", False,
 						ayuda=_("Un borrador no se puede fusionar hasta marcarlo como listo.")),
 				],
-				al_enviar=creado)
+				al_enviar=creado, con_adjuntos=True)
 
 		_en_fondo(panel, lambda: _nombres_ramas(api, nombre), abrir_editor, inicio=_("Cargando las ramas…"))
 
@@ -872,7 +873,7 @@ def vista_discusiones(nombre: str, host: str = "github.com") -> VistaRepo:
 			categoria = categorias[eleccion]
 			editar(panel, panel.ctx, _("Nueva discusión en {c}").format(c=categoria.get("name", "")),
 				lambda v: api.crear_discusion(id_repo, categoria["id"], v["titulo"], v["cuerpo"]), con_titulo=True,
-				al_enviar=lambda _r: panel.cargar(anunciar=False))
+				al_enviar=lambda _r: panel.cargar(anunciar=False), con_adjuntos=True)
 
 		_en_fondo(panel, lambda: api.categorias_discusion(nombre), elegir, inicio=_("Cargando las categorías…"))
 
@@ -881,7 +882,8 @@ def vista_discusiones(nombre: str, host: str = "github.com") -> VistaRepo:
 
 		api = panel.ctx.api()
 		editar(panel, panel.ctx, _("Comentar en la discusión #{n}").format(n=_numero(dis)),
-			lambda v: api.comentar_discusion(dis["id"], v["cuerpo"]), al_enviar=lambda _r: panel.cargar(anunciar=False))
+			lambda v: api.comentar_discusion(dis["id"], v["cuerpo"]), al_enviar=lambda _r: panel.cargar(anunciar=False),
+			con_adjuntos=True)
 
 	def cerrar(panel: Any, dis: dict) -> None:
 		api = panel.ctx.api()

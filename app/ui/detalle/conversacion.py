@@ -897,7 +897,8 @@ class PanelConversacion(wx.Panel):
 			return api.comentar(nombre, numero, cuerpo)
 
 		resultado = editor.editar(self, self.ctx, _("Comentar en #{n} de {r}").format(n=numero, r=nombre), enviar,
-			cuerpo=cuerpo_inicial, etiqueta_enviar=_("&Enviar comentario"), texto_contexto=contexto_texto)
+			cuerpo=cuerpo_inicial, etiqueta_enviar=_("&Enviar comentario"), texto_contexto=contexto_texto,
+			con_adjuntos=True)
 		if resultado is not None:
 			self.cargar()
 
@@ -928,7 +929,8 @@ class PanelConversacion(wx.Panel):
 			return api.editar_comentario(nombre, elemento.id, cuerpo)
 
 		titulo = _("Editar la descripción") if elemento.clase == DESCRIPCION else _("Editar mi comentario")
-		if editor.editar(self, self.ctx, titulo, enviar, cuerpo=elemento.texto, etiqueta_enviar=_("&Guardar")) is not None:
+		if editor.editar(self, self.ctx, titulo, enviar, cuerpo=elemento.texto, etiqueta_enviar=_("&Guardar"),
+			con_adjuntos=True) is not None:
 			self.cargar()
 
 	def borrar_mio(self) -> None:

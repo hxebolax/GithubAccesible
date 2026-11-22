@@ -147,5 +147,6 @@ En toda la aplicación, elegir algo (una sección, una opción de un desplegable
 
 - Control+Intro: enviar.
 - F7: vista previa con formato.
+- Alt+J: adjuntar archivos de texto, como registros (en issues, pull requests, discusiones y comentarios).
 - Tabulador: escribe una tabulación; Control+Tabulador pasa al siguiente control.
 - Escape: cerrar (ofrece guardar un borrador).

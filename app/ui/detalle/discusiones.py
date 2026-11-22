@@ -192,7 +192,7 @@ class VentanaDiscusion(VentanaDetalle):
 		api = self.ctx.api()
 		resultado = editar(self, self.ctx, _("Comentar la discusión"),
 			lambda valores: api.comentar_discusion(self.discusion["id"], valores["cuerpo"]),
-			etiqueta_cuerpo=_("Te&xto del comentario (Markdown):"))
+			etiqueta_cuerpo=_("Te&xto del comentario (Markdown):"), con_adjuntos=True)
 		if resultado is not None and self.viva():
 			self.cargar(anunciar=False, enfocar_id=(resultado or {}).get("id"))
 
@@ -206,7 +206,7 @@ class VentanaDiscusion(VentanaDetalle):
 		cita = _("{a} escribió:").format(a=_autor(comentario)) + "\n" + (comentario.get("body") or "")
 		resultado = editar(self, self.ctx, _("Responder a {a}").format(a=_autor(comentario)),
 			lambda valores: api.comentar_discusion(self.discusion["id"], valores["cuerpo"], responde_a=comentario["id"]),
-			etiqueta_cuerpo=_("Te&xto de la respuesta (Markdown):"), texto_contexto=cita)
+			etiqueta_cuerpo=_("Te&xto de la respuesta (Markdown):"), texto_contexto=cita, con_adjuntos=True)
 		if resultado is not None and self.viva():
 			self.cargar(anunciar=False, enfocar_id=(resultado or {}).get("id"))
 
