@@ -629,38 +629,14 @@ def vista_issues(nombre: str, host: str = "github.com") -> VistaRepo:
 		abrir.issue(panel.ctx, panel, nombre, _numero(issue))
 
 	def nueva(panel: Any, _e: Any) -> None:
-		from app.ui.editor import editar
+		# Plantillas Markdown, formularios YAML y config.yml: app/ui/detalle/formulario_issue.py.
+		from app.ui.detalle.formulario_issue import nueva_issue
 
-		api = panel.ctx.api()
+		def creada(issue: dict) -> None:
+			panel.cargar(anunciar=False)
+			panel.ctx.avisar(_("Issue #{n} creada.").format(n=issue.get("number", "")), interrumpir=False)
 
-		def plantillas() -> list[tuple[str, str]]:
-			resultado = []
-			for elemento in api.plantillas_issue(nombre) or []:
-				if not str(elemento.get("name", "")).lower().endswith(".md"):
-					continue  # los formularios .yml no son Markdown
-				try:
-					contenido, _sha = api.leer_archivo(nombre, elemento.get("path", ""))
-				except Exception:  # noqa: BLE001 - una plantilla ilegible se omite
-					log.warning("No se pudo leer la plantilla %s", elemento.get("path"), exc_info=True)
-					continue
-				resultado.append((elemento.get("name", ""), _quitar_cabecera_yaml(contenido.decode("utf-8", errors="replace"))))
-			return resultado
-
-		def abrir_editor(lista: list[tuple[str, str]]) -> None:
-			def creada(issue: Any) -> None:
-				panel.cargar(anunciar=False)
-				if isinstance(issue, dict):
-					panel.ctx.avisar(_("Issue #{n} creada.").format(n=issue.get("number", "")), interrumpir=False)
-
-			editar(panel, panel.ctx, _("Nueva issue en {n}").format(n=nombre),
-				lambda v: api.crear_issue(nombre, v["titulo"], v["cuerpo"]), con_titulo=True, plantillas=lista or None,
-				al_enviar=creada, con_adjuntos=True)
-
-		def sin_plantillas(error: BaseException) -> None:
-			log.warning("No se pudieron cargar las plantillas de issue: %s", mensaje_error(error))
-			abrir_editor([])
-
-		en_segundo_plano(panel, panel.ctx, plantillas, al_terminar=abrir_editor, al_fallar=sin_plantillas, sonido="")
+		nueva_issue(panel, panel.ctx, nombre, al_crear=creada)
 
 	def cerrar(panel: Any, issue: dict) -> None:
 		eleccion = elegir_uno(panel, _("Cerrar la issue #{n}").format(n=_numero(issue)), _("&Motivo del cierre:"),
@@ -708,13 +684,22 @@ def vista_issues(nombre: str, host: str = "github.com") -> VistaRepo:
 	)
 
 
-def _quitar_cabecera_yaml(texto: str) -> str:
-	"""Quita el bloque «--- … ---» del principio de una plantilla de issue (son metadatos, no texto)."""
-	if texto.startswith("---"):
-		fin = texto.find("\n---", 3)
-		if fin >= 0:
-			return texto[fin + 4:].lstrip("\n")
-	return texto
+def _elegir_plantilla_pr(panel: Any, plantillas: list[tuple[str, str]]) -> str | None:
+	"""Texto inicial de la descripción de un pull request según las plantillas del repositorio.
+
+	Sin plantillas, vacío; con una, esa; con varias, se elige (o ninguna).
+	Devuelve ``None`` si se cancela la elección.
+	"""
+	if not plantillas:
+		return ""
+	if len(plantillas) == 1:
+		return plantillas[0][1]
+	eleccion = elegir_uno(panel, _("Plantilla del pull request"), _("&Plantilla para la descripción:"),
+		[ruta for ruta, _texto in plantillas] + [_("Sin plantilla (descripción vacía)")],
+		ayuda=_("El repositorio tiene varias plantillas de pull request; su texto será el principio de la descripción."))
+	if eleccion is None:
+		return None
+	return plantillas[eleccion][1] if eleccion < len(plantillas) else ""
 
 
 def vista_prs(nombre: str, host: str = "github.com") -> VistaRepo:
@@ -746,10 +731,23 @@ def vista_prs(nombre: str, host: str = "github.com") -> VistaRepo:
 
 		api = panel.ctx.api()
 
-		def abrir_editor(ramas: list[str]) -> None:
+		def cargar() -> tuple[list[str], list[tuple[str, str]]]:
+			ramas = _nombres_ramas(api, nombre)
+			try:
+				plantillas = api.plantillas_pr(nombre) if len(ramas) >= 2 else []
+			except Exception:  # noqa: BLE001 - sin plantilla se escribe la descripción desde cero
+				log.warning("No se pudieron leer las plantillas de pull request de %s", nombre, exc_info=True)
+				plantillas = []
+			return ramas, plantillas
+
+		def abrir_editor(datos: tuple[list[str], list[tuple[str, str]]]) -> None:
+			ramas, plantillas = datos
 			if len(ramas) < 2:
 				mostrar_mensaje(panel, _("Hace falta al menos otra rama además de la principal para abrir un pull request."),
 					_("Nuevo pull request"))
+				return
+			cuerpo = _elegir_plantilla_pr(panel, plantillas)
+			if cuerpo is None:
 				return
 			base = _rama_defecto(panel) if _rama_defecto(panel) in ramas else ramas[0]
 			cabeza = next((r for r in ramas if r != base), ramas[0])
@@ -764,7 +762,7 @@ def vista_prs(nombre: str, host: str = "github.com") -> VistaRepo:
 				if isinstance(pr, dict):
 					panel.ctx.avisar(_("Pull request #{n} creado.").format(n=pr.get("number", "")), interrumpir=False)
 
-			editar(panel, panel.ctx, _("Nuevo pull request en {n}").format(n=nombre), enviar, con_titulo=True,
+			editar(panel, panel.ctx, _("Nuevo pull request en {n}").format(n=nombre), enviar, con_titulo=True, cuerpo=cuerpo,
 				extras=[
 					CampoExtra("cabeza", _("Rama de &origen (con los cambios):"), "opcion", cabeza, [(r, r) for r in ramas],
 						_("Rama cuyos commits quiere fusionar.")),
@@ -775,7 +773,7 @@ def vista_prs(nombre: str, host: str = "github.com") -> VistaRepo:
 				],
 				al_enviar=creado, con_adjuntos=True)
 
-		_en_fondo(panel, lambda: _nombres_ramas(api, nombre), abrir_editor, inicio=_("Cargando las ramas…"))
+		_en_fondo(panel, cargar, abrir_editor, inicio=_("Cargando las ramas…"))
 
 	def cambiar_estado(panel: Any, pr: dict, estado: str) -> None:
 		api = panel.ctx.api()
@@ -1018,6 +1016,14 @@ def vista_acciones(nombre: str, host: str = "github.com") -> VistaRepo:
 		api = panel.ctx.api()
 		_hacer(panel, lambda: api.cancelar_ejecucion(nombre, ejecucion["id"]), _("Cancelación pedida."))
 
+	def vigilar_ejecucion(panel: Any, ejecucion: dict) -> None:
+		from app.services import vigilancia_actions as va
+
+		principal = panel.ctx.ventana_principal
+		if principal is None or not hasattr(principal, "vigilar"):
+			return
+		principal.vigilar(va.nueva_ejecucion(nombre, ejecucion))
+
 	def borrar(panel: Any, ejecucion: dict) -> None:
 		if not confirmar_peligro(panel, _("¿Borrar la ejecución «{t}» y sus registros?").format(
 			t=ejecucion.get("display_title") or ejecucion.get("name", "")), _("Borrar la ejecución")):
@@ -1045,6 +1051,9 @@ def vista_acciones(nombre: str, host: str = "github.com") -> VistaRepo:
 			Accion(_("Volver a ejecutar so&lo los trabajos fallidos"), lambda p, e: volver(p, e, True),
 				disponible=lambda p, e: e.get("conclusion") in ("failure", "cancelled", "timed_out", "startup_failure")),
 			Accion(_("&Cancelar la ejecución"), cancelar, "Ctrl+Shift+X", disponible=lambda p, e: e.get("status") in EN_CURSO),
+			Accion(_("Avisarme cuando &termine"), vigilar_ejecucion, "Ctrl+Shift+W",
+				disponible=lambda p, e: e.get("status") != "completed",
+				ayuda=_("Vigila la ejecución en segundo plano y avisa con voz y sonido cuando termine, aunque cierre esta ventana.")),
 			Accion(_("Borrar la e&jecución…"), borrar, "Supr", disponible=lambda p, e: e.get("status") == "completed"),
 			Accion(_("Lan&zar un flujo de trabajo…"), lambda p, e: lanzar_flujo_repo(p), "Ctrl+N", requiere_elemento=False,
 				separador_antes=True),

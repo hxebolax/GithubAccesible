@@ -33,9 +33,11 @@ from app.core.instancia_unica import ORDEN_ABRIR, ORDEN_MOSTRAR, InstanciaUnica,
 from app.core.version import APP_VERSION, NOMBRE_APLICACION, URL_DONACIONES, URL_PROYECTO
 from app.ui import abrir
 from app.ui.accesibilidad.dialogos import pedir_texto
-from app.ui.bandeja import IconoBandeja
+from app.ui import orden_secciones, paleta
+from app.ui.bandeja import IconoBandeja, OrdenBandeja
 from app.ui.comunes import confirmar, elegir_uno, en_segundo_plano, mostrar_error, mostrar_mensaje
 from app.ui.vistas import principales
+from app.ui.teclas_globales import GestorTeclasGlobales
 from app.ui.vistas.base import PanelLista
 
 log = logging.getLogger(__name__)
@@ -64,7 +66,10 @@ class VentanaPrincipal(wx.Frame):
 		self._notificaciones_vistas: set[str] = set()
 		self._primera_comprobacion = True
 		self._sin_leer = 0
-		self.definiciones = [(clave, fabrica()) for clave, fabrica in principales.SECCIONES]
+		self._ultimas_notificaciones: list[dict] = []
+		# Todas las secciones (de fábrica) y las visibles en el orden que eligió la persona.
+		self._todas_definiciones = [(clave, fabrica()) for clave, fabrica in principales.SECCIONES]
+		self.definiciones = self._secciones_visibles()
 		self.paneles: dict[str, PanelLista] = {}
 		self.config_actualizador = None
 		self.comprobador_actualizaciones = None
@@ -95,9 +100,32 @@ class VentanaPrincipal(wx.Frame):
 		contexto.cuentas.suscribir(lambda _cuenta: wx.CallAfter(self._al_cambiar_cuenta))
 		contexto.config.suscribir(self._al_cambiar_config, prefijo="notificaciones.")
 		contexto.config.suscribir(self._al_cambiar_config, prefijo="actualizaciones.")
+		contexto.config.suscribir(self._al_cambiar_config, prefijo="teclas_globales.")
+		contexto.config.suscribir(self._al_cambiar_config, prefijo="secciones.")
+		contexto.config.suscribir(self._al_cambiar_config, prefijo="general.icono_bandeja")
+		contexto.config.suscribir(self._al_cambiar_config, prefijo="acciones.")
+
+		# Teclas que funcionan desde cualquier programa (se registran ya: la ventana existe aunque esté oculta).
+		self.teclas_globales = GestorTeclasGlobales(self, contexto.config, {
+			"mostrar_ocultar": self.mostrar_u_ocultar,
+			"decir_notificaciones": self.decir_notificaciones,
+			"abrir_notificaciones": self.abrir_notificaciones_desde_fuera,
+			"buscar": self.buscar_desde_fuera,
+			"comprobar_notificaciones": lambda: self.comprobar_notificaciones(informar=True),
+		}, avisar=lambda texto: self.ctx.avisar(texto, interrumpir=False))
+		wx.CallAfter(self.teclas_globales.registrar)
+		paleta.instalar(self)
+
+		# Ejecuciones de Actions vigiladas en segundo plano.
+		self._vigilando = False
+		self._temporizador_actions = wx.Timer(self)
+		self.Bind(wx.EVT_TIMER, lambda _e: self.comprobar_vigiladas(), self._temporizador_actions)
+		wx.CallAfter(self.programar_vigilancia)
+		wx.CallAfter(self._actualizar_bandeja)
 
 		inicial = contexto.config.obtener("general.seccion_inicial", "notificaciones")
-		self.ir_a_seccion(inicial if inicial in dict(self.definiciones) else "notificaciones", enfocar=False)
+		visibles = dict(self.definiciones)
+		self.ir_a_seccion(inicial if inicial in visibles else next(iter(visibles)), enfocar=False)
 
 	# ── Construcción ──────────────────────────────────────────────────────────
 
@@ -143,25 +171,12 @@ class VentanaPrincipal(wx.Frame):
 		self._item(archivo, _("Cambiar de c&uenta…\tCtrl+Shift+U"), _("Elige la cuenta activa."), self.cambiar_cuenta, "cambiar_cuenta")
 		self._item(archivo, _("Ad&ministrar las cuentas…"), _("Lista de cuentas: añadir, comprobar y quitar."), self.gestionar_cuentas)
 		archivo.AppendSeparator()
+		self._item(archivo, _("Ocultar en la &bandeja del sistema"), _("Oculta la ventana; la aplicación sigue en la bandeja, junto al reloj."),
+			self.ocultar_en_bandeja, "ocultar")
 		self._item(archivo, _("&Salir\tCtrl+Q"), _("Cierra la aplicación."), self.salir, "salir")
 		barra.Append(archivo, _("&Archivo"))
 
-		ver = wx.Menu()
-		# Letra de acceso: el número de la sección (1 a 9 y 0) y, a partir de la undécima, una letra libre.
-		letras_extra = {"vigilados": _("Repositorios &vigilados"), "seguidores": _("S&eguidores"), "seguidos": _("&Personas que sigo"),
-			"codespaces": _("C&odespaces"), "busqueda": _("&Resultados de la búsqueda")}
-		for indice, (clave, definicion) in enumerate(self.definiciones):
-			if indice < 10:
-				numero = (indice + 1) % 10
-				etiqueta = f"&{numero} {definicion.titulo}\tAlt+{numero}"
-			else:
-				etiqueta = letras_extra.get(clave, definicion.titulo)
-			self._item(ver, etiqueta, _("Ir a la sección {s}.").format(s=definicion.titulo),
-				lambda c=clave: self.ir_a_seccion(c))
-		ver.AppendSeparator()
-		self._item(ver, _("&Actualizar\tF5"), _("Vuelve a cargar la sección."), self.actualizar, "actualizar")
-		self._item(ver, _("Cambiar entre secciones y &contenido\tF6"), _("Lleva el foco a la otra zona."), self.alternar_zona)
-		barra.Append(ver, _("&Ver"))
+		barra.Append(self._crear_menu_ver(), _("&Ver"))
 
 		self.menu_acciones = wx.Menu()
 		barra.Append(self.menu_acciones, _("Ac&ciones"))
@@ -178,6 +193,10 @@ class VentanaPrincipal(wx.Frame):
 		self._item(herramientas, _("&Preferencias…\tCtrl+P"), _("Opciones de la aplicación: accesibilidad, sonidos, columnas, notificaciones, git…"), self.preferencias, "preferencias")
 		self._item(herramientas, _("Claves &SSH y GPG…"), _("Administra las claves de la cuenta y genera una clave SSH."), self.claves)
 		self._item(herramientas, _("Configuración de &git…"), _("Nombre, correo, rama por defecto y firma de git en este equipo."), self.configuracion_git)
+		self._item(herramientas, _("Pale&ta de órdenes…\tCtrl+Shift+O"), _("Busca cualquier orden escribiendo parte de su nombre."),
+			lambda: paleta.abrir(self), "paleta")
+		self._item(herramientas, _("Ejecuciones de Actions &vigiladas…"), _("Lo que se vigila en segundo plano: ver y dejar de vigilar."),
+			self.ver_vigiladas, "vigiladas")
 		herramientas.AppendSeparator()
 		self._item(herramientas, _("&Límite de uso de la API"), _("Cuántas peticiones quedan y cuándo se renuevan."), self.limite_uso)
 		self._item(herramientas, _("&Estado de GitHub"), _("Si GitHub tiene incidencias en este momento."), self.estado_github)
@@ -204,6 +223,61 @@ class VentanaPrincipal(wx.Frame):
 		barra.Append(ayuda, _("A&yuda"))
 		self.SetMenuBar(barra)
 
+	def _crear_menu_ver(self) -> wx.Menu:
+		"""Menú Ver con las secciones visibles en su orden: las diez primeras con su número (Alt+1 a Alt+0)."""
+		from app.ui.repositorio.vistas import etiqueta_con_letra
+
+		ver = wx.Menu()
+		# Letra de acceso: el número de la sección (1 a 9 y 0) y, a partir de la undécima, una letra libre.
+		letras_extra = {"vigilados": _("Repositorios &vigilados"), "seguidores": _("S&eguidores"), "seguidos": _("&Personas que sigo"),
+			"codespaces": _("C&odespaces"), "busqueda": _("&Resultados de la búsqueda")}
+		ocupadas = "ac"  # «&Actualizar» y «Cambiar entre secciones y &contenido»
+		for indice, (clave, definicion) in enumerate(self.definiciones):
+			if indice < 10:
+				numero = (indice + 1) % 10
+				etiqueta = f"&{numero} {definicion.titulo}\tAlt+{numero}"
+			else:
+				etiqueta = letras_extra.get(clave, "")
+				letra = etiqueta.partition("&")[2][:1].lower()
+				if not letra or letra in ocupadas:
+					etiqueta = etiqueta_con_letra(definicion.titulo, ocupadas)
+				ocupadas += etiqueta.partition("&")[2][:1].lower()
+			self._item(ver, etiqueta, _("Ir a la sección {s}.").format(s=definicion.titulo),
+				lambda c=clave: self.ir_a_seccion(c))
+		ver.AppendSeparator()
+		self._item(ver, _("&Actualizar\tF5"), _("Vuelve a cargar la sección."), self.actualizar, "actualizar")
+		self._item(ver, _("Cambiar entre secciones y &contenido\tF6"), _("Lleva el foco a la otra zona."), self.alternar_zona)
+		return ver
+
+	# ── Orden y secciones visibles ────────────────────────────────────────────
+
+	def _secciones_visibles(self) -> list[tuple[str, Any]]:
+		todas = dict(self._todas_definiciones)
+		claves = orden_secciones.de_configuracion(self.ctx.config, "principal", [c for c, _d in self._todas_definiciones])
+		return [(clave, todas[clave]) for clave in claves]
+
+	def aplicar_secciones(self) -> None:
+		"""Rehace la lista de secciones y el menú Ver con el orden elegido en Preferencias (al momento)."""
+		if not self:
+			return
+		actual = self._clave_actual()
+		self.definiciones = self._secciones_visibles()
+		claves = [c for c, _d in self.definiciones]
+		en_secciones = self.secciones.HasFocus()
+		self.secciones.Set([d.titulo for _c, d in self.definiciones])
+		barra = self.GetMenuBar()
+		posicion = barra.FindMenu(_("Ver"))
+		if posicion != wx.NOT_FOUND:
+			anterior = barra.Replace(posicion, self._crear_menu_ver(), _("&Ver"))
+			if anterior is not None:
+				anterior.Destroy()
+		destino = actual if actual in claves else claves[0]
+		self.secciones.SetSelection(claves.index(destino))
+		self._mostrar_seccion(claves.index(destino))
+		if en_secciones and not self.secciones.HasFocus():
+			self.secciones.SetFocus()
+		self.marcar_contador_notificaciones(self._sin_leer)
+
 	def _aplicar_icono(self) -> None:
 		icono = paths.ruta_iconos() / "app.ico"
 		if icono.is_file():
@@ -220,7 +294,14 @@ class VentanaPrincipal(wx.Frame):
 		return self.paneles.get(self._clave_actual())
 
 	def ir_a_seccion(self, clave: str, enfocar: bool = True) -> PanelLista:
-		indice = [c for c, _d in self.definiciones].index(clave)
+		claves = [c for c, _d in self.definiciones]
+		if clave not in claves:
+			# Oculta en Preferencias: se avisa y se va a la primera, en vez de fallar.
+			definicion = dict(self._todas_definiciones).get(clave)
+			self.ctx.avisar(_("La sección {s} está oculta. Puede mostrarla en Preferencias, Secciones.").format(
+				s=getattr(definicion, "titulo", clave)))
+			clave = claves[0]
+		indice = claves.index(clave)
 		self.secciones.SetSelection(indice)
 		panel = self._mostrar_seccion(indice)
 		if enfocar:
@@ -462,7 +543,7 @@ class VentanaPrincipal(wx.Frame):
 		# así no hay que escribir el nombre; se cambia escribiendo encima.
 		from app.ui.vistas.principales import persona_del_elemento
 
-		panel = self.panel_actual()
+		panel = self.panel_actual
 		propuesta = ""
 		if panel is not None:
 			try:
@@ -477,7 +558,7 @@ class VentanaPrincipal(wx.Frame):
 		from app.ui.preferencias import mostrar_preferencias
 		from app.ui.vistas import principales as p
 
-		vistas = [d for _c, d in self.definiciones]
+		vistas = [d for _c, d in self._todas_definiciones]
 		try:
 			from app.ui.repositorio import vistas as vistas_repo
 
@@ -626,9 +707,32 @@ class VentanaPrincipal(wx.Frame):
 			wx.CallAfter(self.programar_notificaciones)
 		elif clave.startswith("actualizaciones."):
 			wx.CallAfter(self._aplicar_origen_actualizaciones)
+		elif clave.startswith("teclas_globales."):
+			wx.CallAfter(self._reprogramar_teclas)
+		elif clave.startswith("secciones.principal"):
+			wx.CallAfter(self.aplicar_secciones)
+		elif clave == "general.icono_bandeja_siempre":
+			wx.CallAfter(self._actualizar_bandeja)
+		elif clave == "acciones.intervalo_vigilancia_s":
+			wx.CallAfter(self.programar_vigilancia)
 
-	def comprobar_notificaciones(self) -> None:
+	def _reprogramar_teclas(self) -> None:
+		# Varias claves cambian a la vez al Aplicar: se registra una sola vez, al final.
+		if self and not getattr(self, "_teclas_pendientes", False):
+			self._teclas_pendientes = True
+
+			def hacer() -> None:
+				self._teclas_pendientes = False
+				if self:
+					self.teclas_globales.registrar()
+
+			wx.CallLater(200, hacer)
+
+	def comprobar_notificaciones(self, informar: bool = False) -> None:
+		"""Pregunta a GitHub por las notificaciones. ``informar``: decir el resultado aunque no haya nuevas."""
 		if not self or self.ctx.cuenta is None:
+			if informar:
+				self.ctx.avisar(_("No hay ninguna sesión iniciada."))
 			return
 		participando = self.ctx.config.obtener("notificaciones.solo_participando", False)
 		api = self.ctx.api()
@@ -658,7 +762,10 @@ class VentanaPrincipal(wx.Frame):
 				datos = [(n.get("id"), n.get("updated_at") or "") for n in lista]
 				self.ctx.tareas.enviar(lambda tarea: self.ctx.almacen.marcar_avisadas(cuenta, datos), nombre="notificaciones:guardar")
 			sin_leer = sum(1 for n in lista if n.get("unread"))
+			self._ultimas_notificaciones = [n for n in lista if n.get("unread")]
 			self.marcar_contador_notificaciones(sin_leer)
+			if informar and not nuevas:
+				self.ctx.avisar(self.texto_sin_leer(), interrumpir=False)
 			if self._primera_comprobacion:
 				self._primera_comprobacion = False
 				if nuevas:
@@ -674,20 +781,170 @@ class VentanaPrincipal(wx.Frame):
 
 		def fallo(error: BaseException) -> None:
 			log.info("No se pudieron comprobar las notificaciones: %s", error)
+			if informar and self:
+				self.ctx.avisar(_("No se pudieron comprobar las notificaciones: {m}").format(
+					m=getattr(error, "mensaje_usuario", None) or error))
 
 		self.ctx.tareas.enviar(lambda tarea: obtener(), al_terminar=recibidas, al_fallar=fallo, clave_unica="notificaciones:sondeo",
 			nombre="notificaciones:sondeo")
+
+	# ── Ejecuciones de Actions vigiladas ──────────────────────────────────────
+
+	@property
+	def vigiladas(self) -> list[dict]:
+		return [dict(v) for v in self.ctx.config.obtener("acciones.vigiladas", []) or [] if isinstance(v, dict)]
+
+	def _guardar_vigiladas(self, vigiladas: list[dict]) -> None:
+		self.ctx.config.establecer("acciones.vigiladas", vigiladas)
+
+	def vigilar(self, elemento: dict, anunciar: bool = True) -> None:
+		"""Añade algo que vigilar (ejecución, commit o repositorio) y empieza a comprobar."""
+		from app.services import vigilancia_actions as va
+
+		actuales = self.vigiladas
+		if any(va.misma(elemento, v) for v in actuales):
+			if anunciar:
+				self.ctx.avisar(_("Ya se está vigilando: {d}.").format(d=va.describir(elemento)))
+			return
+		self._guardar_vigiladas([*actuales, elemento])
+		if anunciar:
+			self.ctx.avisar(_("Vigilando: {d}. Se avisará al terminar.").format(d=va.describir(elemento)))
+		self.programar_vigilancia()
+
+	def dejar_de_vigilar(self, elemento: dict) -> None:
+		from app.services import vigilancia_actions as va
+
+		self._guardar_vigiladas([v for v in self.vigiladas if not va.misma(elemento, v)])
+		self.programar_vigilancia()
+
+	def esta_vigilado(self, elemento: dict) -> bool:
+		from app.services import vigilancia_actions as va
+
+		return any(va.misma(elemento, v) for v in self.vigiladas)
+
+	def programar_vigilancia(self) -> None:
+		if not self:
+			return
+		self._temporizador_actions.Stop()
+		if self.vigiladas and self.ctx.cuenta is not None:
+			intervalo = max(15, int(self.ctx.config.obtener("acciones.intervalo_vigilancia_s", 30)))
+			self._temporizador_actions.Start(intervalo * 1000)
+
+	def comprobar_vigiladas(self) -> None:
+		"""Pregunta por lo vigilado en un hilo y dice lo que haya terminado."""
+		from app.services import vigilancia_actions as va
+
+		if not self or self._vigilando or self.ctx.cuenta is None:
+			return
+		vigiladas = self.vigiladas
+		if not vigiladas:
+			self._temporizador_actions.Stop()
+			return
+		self._vigilando = True
+		api = self.ctx.api()
+
+		def recibidos(resultado: tuple[list, list[dict]]) -> None:
+			self._vigilando = False
+			if not self:
+				return
+			avisos, siguen = resultado
+			# Lo que la persona quitó o añadió mientras se comprobaba se respeta: siguen las comprobadas
+			# que aún estén en la lista (con su estado al día) y las añadidas entretanto.
+			actuales = self.vigiladas
+			restantes = [s for s in siguen if any(va.misma(s, a) for a in actuales)]
+			restantes += [a for a in actuales if not any(va.misma(a, v) for v in vigiladas)]
+			if restantes != actuales:
+				self._guardar_vigiladas(restantes)
+			for aviso in avisos:
+				self._avisar_ejecucion(aviso)
+			if not restantes:
+				self._temporizador_actions.Stop()
+
+		def fallo(error: BaseException) -> None:
+			self._vigilando = False
+			log.info("No se pudo comprobar la vigilancia de Actions: %s", error)
+
+		self.ctx.tareas.enviar(lambda tarea: va.comprobar(api, vigiladas), al_terminar=recibidos, al_fallar=fallo,
+			clave_unica="actions:vigilancia", nombre="actions:vigilancia")
+
+	def _avisar_ejecucion(self, aviso: Any) -> None:
+		self.ctx.sonar("accion_exito" if aviso.correcta else "accion_fallo")
+		self.ctx.avisar(aviso.texto, interrumpir=False)
+		if self.ctx.config.obtener("acciones.notificacion_windows", True):
+			try:
+				import wx.adv
+
+				nota = wx.adv.NotificationMessage(NOMBRE_APLICACION, aviso.texto, self)
+				nota.Show(timeout=wx.adv.NotificationMessage.Timeout_Auto)
+			except Exception:  # noqa: BLE001 - el aviso del sistema es opcional
+				log.debug("No se pudo mostrar la notificación de Windows", exc_info=True)
+
+	def ver_vigiladas(self) -> None:
+		"""Lista de lo vigilado: elegir uno lo deja de vigilar (pregunta antes)."""
+		from app.services import vigilancia_actions as va
+
+		vigiladas = self.vigiladas
+		if not vigiladas:
+			mostrar_mensaje(self, _("No se está vigilando ninguna ejecución. Para vigilar una, use «Avisarme cuando termine» en la "
+				"sección Actions de un repositorio, o «Vigilar todas las ejecuciones» en su menú Repositorio."),
+				_("Ejecuciones vigiladas"))
+			return
+		eleccion = elegir_uno(self, _("Ejecuciones vigiladas"), _("&Vigiladas (Intro deja de vigilar la elegida):"),
+			[va.describir(v) for v in vigiladas])
+		if eleccion is None:
+			return
+		elegido = vigiladas[eleccion]
+		if confirmar(self, _("¿Dejar de vigilar: {d}?").format(d=va.describir(elegido)), _("Ejecuciones vigiladas")) == wx.ID_YES:
+			self.dejar_de_vigilar(elegido)
+			self.ctx.avisar(_("Ya no se vigila: {d}.").format(d=va.describir(elegido)))
 
 	def marcar_contador_notificaciones(self, sin_leer: int) -> None:
 		"""Pone «Notificaciones (n)» en la lista de secciones, o solo el nombre si no hay."""
 		if not self:
 			return
 		self._sin_leer = sin_leer
-		indice = [c for c, _d in self.definiciones].index("notificaciones")
+		self._actualizar_bandeja()
+		claves = [c for c, _d in self.definiciones]
+		if "notificaciones" not in claves:
+			return  # sección oculta en Preferencias
+		indice = claves.index("notificaciones")
 		titulo = dict(self.definiciones)["notificaciones"].titulo
 		texto = f"{titulo} ({sin_leer})" if sin_leer else titulo
 		if self.secciones.GetString(indice) != texto:
 			self.secciones.SetString(indice, texto)
+
+	def texto_sin_leer(self, detalle: int = 3) -> str:
+		"""«3 notificaciones sin leer. nvaccess/nvda: título; …» con las ``detalle`` más recientes."""
+		if not self._sin_leer:
+			return _("No hay notificaciones sin leer.")
+		cabecera = _("1 notificación sin leer.") if self._sin_leer == 1 else _("{n} notificaciones sin leer.").format(n=self._sin_leer)
+		partes = [_("{r}: {t}").format(r=(n.get("repository") or {}).get("full_name", ""), t=(n.get("subject") or {}).get("title", ""))
+			for n in self._ultimas_notificaciones[:detalle]]
+		return " ".join([cabecera, "; ".join(partes)]).strip()
+
+	# ── Órdenes de las teclas globales ────────────────────────────────────────
+
+	def mostrar_u_ocultar(self) -> None:
+		"""A la vista y en primer plano: se oculta en la bandeja. Si no: se muestra y se trae al frente."""
+		if self.IsShown() and not self.IsIconized() and self.IsActive():
+			if not self.ocultar_en_bandeja():
+				self.Iconize(True)
+			return
+		self.restaurar()
+
+	def decir_notificaciones(self) -> None:
+		if self.ctx.cuenta is None:
+			self.ctx.avisar(_("No hay ninguna sesión iniciada."))
+			return
+		self.ctx.avisar(self.texto_sin_leer())
+
+	def abrir_notificaciones_desde_fuera(self) -> None:
+		self.restaurar()
+		wx.CallAfter(lambda: self and self.ir_a_seccion("notificaciones"))
+
+	def buscar_desde_fuera(self) -> None:
+		self.restaurar()
+		wx.CallAfter(lambda: self and self.buscar())
 
 	def _avisar_nuevas(self, nuevas: list) -> None:
 		importante = any(n.get("reason") in ("mention", "team_mention", "review_requested", "assign") for n in nuevas)
@@ -716,10 +973,53 @@ class VentanaPrincipal(wx.Frame):
 		self.Raise()
 		wx.CallAfter(self.secciones.SetFocus)
 
-	def ocultar_en_bandeja(self) -> bool:
+	def texto_bandeja(self) -> str:
+		"""Lo que lee el lector al llegar al icono: el nombre y las notificaciones sin leer."""
+		if self._sin_leer:
+			return _("{a}: {n} notificaciones sin leer").format(a=NOMBRE_APLICACION, n=self._sin_leer)
+		return NOMBRE_APLICACION
+
+	def ordenes_bandeja(self) -> list[OrdenBandeja]:
+		"""Órdenes del menú del icono (se piden cada vez que se abre: así dicen lo de ahora)."""
+		notificaciones = _("&Notificaciones ({n} sin leer)").format(n=self._sin_leer) if self._sin_leer else _("&Notificaciones")
+		ordenes: list[OrdenBandeja] = []
+		if self.IsShown():
+			ordenes.append((_("&Ocultar en la bandeja"), self.ocultar_en_bandeja))
+		ordenes += [
+			(notificaciones, self.abrir_notificaciones_desde_fuera),
+			(_("&Decir las notificaciones sin leer"), self.decir_notificaciones),
+			(_("&Comprobar notificaciones ahora"), lambda: self.comprobar_notificaciones(informar=True)),
+			None,
+			(_("&Buscar en GitHub…"), self.buscar_desde_fuera),
+			(_("&Preferencias…"), lambda: (self.restaurar(), wx.CallAfter(self.preferencias))),
+		]
+		return ordenes
+
+	def _crear_bandeja(self) -> IconoBandeja:
 		if self._bandeja is None:
-			self._bandeja = IconoBandeja(NOMBRE_APLICACION, self.restaurar, self.salir)
-		if not self._bandeja.mostrar():
+			self._bandeja = IconoBandeja(self.texto_bandeja(), self.restaurar, self.salir, self.ordenes_bandeja)
+		return self._bandeja
+
+	def _actualizar_bandeja(self) -> None:
+		"""Pone o quita el icono permanente y le pone el texto con el contador."""
+		if not self:
+			return
+		siempre = bool(self.ctx.config.obtener("general.icono_bandeja_siempre", False))
+		if siempre and self._bandeja is None:
+			if not self._crear_bandeja().mostrar():
+				log.warning("No se pudo poner el icono permanente en la bandeja.")
+				self._quitar_bandeja()
+				return
+		elif not siempre and self._bandeja is not None and self.IsShown():
+			self._quitar_bandeja()
+			return
+		if self._bandeja is not None:
+			self._bandeja.cambiar_texto(self.texto_bandeja())
+
+	def ocultar_en_bandeja(self) -> bool:
+		bandeja = self._crear_bandeja()
+		bandeja.cambiar_texto(self.texto_bandeja())
+		if not bandeja.IsIconInstalled() and not bandeja.mostrar():
 			log.warning("No se pudo poner el icono en la bandeja; la ventana no se oculta.")
 			self._quitar_bandeja()
 			return False
@@ -739,7 +1039,8 @@ class VentanaPrincipal(wx.Frame):
 		if self.IsIconized():
 			self.Iconize(False)
 		self.Raise()
-		wx.CallAfter(self._quitar_bandeja)
+		if not self.ctx.config.obtener("general.icono_bandeja_siempre", False):
+			wx.CallAfter(self._quitar_bandeja)
 		dialogo = next((v for v in wx.GetTopLevelWindows() if isinstance(v, wx.Dialog) and v.IsShown() and v.IsEnabled()), None)
 		if dialogo is not None:
 			dialogo.Raise()
@@ -785,12 +1086,19 @@ class VentanaPrincipal(wx.Frame):
 		evento.Skip()
 
 	def _al_cerrar(self, evento: wx.CloseEvent) -> None:
+		# «Al cerrar, dejarla en la bandeja»: Alt+F4 y el botón X la ocultan; Salir (Ctrl+Q) pone _forzar_salida.
+		if (not self._forzar_salida and evento.CanVeto() and self.ctx.config.obtener("general.cerrar_a_bandeja", False)
+			and self.ocultar_en_bandeja()):
+			evento.Veto()
+			return
 		if (not self._forzar_salida and evento.CanVeto() and self.ctx.config.obtener("general.confirmar_salida", False)
 			and confirmar(self, _("¿Salir de {n}?").format(n=NOMBRE_APLICACION), _("Salir")) != wx.ID_YES):
 			evento.Veto()
 			return
-		for temporizador in (self._temporizador_buzon, self._temporizador_notificaciones, self._temporizador_estado):
+		for temporizador in (self._temporizador_buzon, self._temporizador_notificaciones, self._temporizador_estado,
+			self._temporizador_actions):
 			temporizador.Stop()
+		self.teclas_globales.quitar()
 		if self.comprobador_actualizaciones is not None:
 			try:
 				self.comprobador_actualizaciones.detener()

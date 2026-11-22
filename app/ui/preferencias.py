@@ -27,6 +27,7 @@ from app.ui.dialogo_preferencias import (
 	CARPETA,
 	ENTERO,
 	OPCION,
+	TECLA,
 	TEXTO,
 	DialogoPreferencias,
 	Opcion,
@@ -47,6 +48,18 @@ def N_(texto: str) -> str:  # noqa: N802
 
 TITULO_SONIDOS = N_("Sonidos")
 TITULO_COLUMNAS = N_("Columnas de las listas")
+TITULO_SECCIONES = N_("Secciones")
+
+
+def secciones_de(ventana: str) -> list[tuple[str, str]]:
+	"""(identificador, título) de todas las secciones de fábrica de ``ventana`` («principal» o «repositorio»)."""
+	if ventana == "principal":
+		from app.ui.vistas import principales
+
+		return [(clave, fabrica().titulo) for clave, fabrica in principales.SECCIONES]
+	from app.ui.repositorio.ventana import SECCIONES
+
+	return [(s.id, _(s.titulo)) for s in SECCIONES]
 
 
 def paginas(paquetes: list[str]) -> tuple[Pagina, ...]:
@@ -62,8 +75,14 @@ def paginas(paquetes: list[str]) -> tuple[Pagina, ...]:
 				N_("Dice «Iniciando GitHub Accesible» mientras se carga.")),
 			Opcion("general.minimizar_a_bandeja", N_("&Minimizar a la bandeja del sistema"), BOOL,
 				N_("Al minimizar, la ventana se oculta y queda un icono junto al reloj.")),
+			Opcion("general.cerrar_a_bandeja", N_("Al cerrar la ventana, dejarla en la &bandeja (Control+Q sale)"), BOOL,
+				N_("Alt+F4 o el botón Cerrar ocultan la ventana en la bandeja del sistema en vez de salir; la aplicación sigue "
+					"avisando de las notificaciones. Para salir de verdad: Archivo, Salir (Control+Q) o el menú del icono.")),
 			Opcion("general.iniciar_en_bandeja", N_("&Iniciar oculta en la bandeja"), BOOL,
 				N_("Al arrancar, la ventana queda en la bandeja del sistema (útil para recibir notificaciones).")),
+			Opcion("general.icono_bandeja_siempre", N_("Icono en la bandeja &todo el tiempo"), BOOL,
+				N_("Deja el icono junto al reloj también con la ventana a la vista. Su texto dice cuántas notificaciones "
+					"hay sin leer y su menú (Aplicaciones) ofrece las órdenes más usadas.")),
 			Opcion("general.confirmar_salida", N_("Con&firmar antes de salir"), BOOL,
 				N_("Pregunta antes de cerrar la aplicación.")),
 			Opcion("general.carpeta_descargas", N_("Carpeta de &descargas:"), CARPETA,
@@ -151,6 +170,32 @@ def paginas(paquetes: list[str]) -> tuple[Pagina, ...]:
 			Opcion("notificaciones.marcar_leida_al_abrir", N_("&Marcar como leída al abrir una notificación"), BOOL,
 				N_("Al pulsar Intro sobre una notificación, se marca como leída en GitHub.")),
 		)),
+		Pagina(N_("Teclas globales"), (
+			Opcion("teclas_globales.activadas", N_("Acti&var las teclas globales"), BOOL,
+				N_("Combinaciones que funcionan desde cualquier programa, aunque la aplicación esté en la bandeja.")),
+			*(Opcion(f"teclas_globales.{clave}", etiqueta, TECLA, N_(
+				"Pulse aquí la combinación que quiera: Control, Alt o Windows (y si quiere Mayúsculas) con una letra, un "
+				"número o de F1 a F24. Retroceso o Suprimir la quitan. Windows no deja usar una combinación que ya tenga "
+				"otro programa: si pasa, la aplicación lo dice al aplicar."))
+				for clave, etiqueta in (
+					("mostrar_ocultar", N_("&Mostrar u ocultar la aplicación:")),
+					("decir_notificaciones", N_("Decir las &notificaciones sin leer:")),
+					("abrir_notificaciones", N_("Abrir la sección Notificacione&s:")),
+					("buscar", N_("&Buscar en GitHub:")),
+					("comprobar_notificaciones", N_("Comprobar a&hora si hay notificaciones nuevas:")),
+				)),
+		)),
+		Pagina(N_("Actions"), (
+			Opcion("acciones.intervalo_vigilancia_s", N_("&Intervalo para vigilar ejecuciones (segundos, mínimo 15):"), ENTERO,
+				N_("Cada cuánto se pregunta a GitHub por las ejecuciones que vigila. GitHub limita las peticiones por hora.")),
+			Opcion("acciones.vigilar_tras_enviar", N_("Tras en&viar cambios con git, avisar del resultado de sus ejecuciones"), BOOL,
+				N_("Después de un push a GitHub desde la ventana de git, vigila las ejecuciones de Actions que lance ese commit "
+					"y dice si han ido bien o mal. Si el repositorio no tiene Actions, no dice nada.")),
+			Opcion("acciones.notificacion_windows", N_("Notificación de &Windows al terminar una ejecución vigilada"), BOOL,
+				N_("Además del sonido y el aviso por voz, muestra un aviso del sistema.")),
+			Opcion("acciones.mostrar_horas", N_("&Mostrar la hora en cada línea de los registros"), BOOL,
+				N_("En la ventana de una ejecución, pone al principio de cada línea del registro la hora en que se escribió.")),
+		)),
 		Pagina(N_("Git"), (
 			Opcion("git.ruta", N_("Ruta de &git.exe (vacío: detectar):"), TEXTO,
 				N_("Normalmente se encuentra solo. Indíquela si instaló Git en un sitio poco habitual.")),
@@ -191,6 +236,7 @@ class DialogoPreferenciasGitHub(DialogoPreferencias):
 		self._columnas_elegidas: dict[str, list[str]] = dict(ctx.config.obtener("listas.columnas", {}) or {})
 		super().__init__(padre, ctx.config, paginas(paquetes), secretos=None, anunciar=lambda t: ctx.avisar(t))
 		self._crear_pagina_columnas()
+		self._crear_pagina_secciones()
 
 	# ── Página de sonidos: se añade la lista de eventos ───────────────────────
 
@@ -299,9 +345,148 @@ class DialogoPreferenciasGitHub(DialogoPreferencias):
 		self._mostrar_columnas()
 		self.ctx.anunciar(_("Columnas de fábrica."))
 
+	# ── Página de secciones ───────────────────────────────────────────────────
+
+	VENTANAS_SECCIONES = (("principal", N_("Ventana principal")), ("repositorio", N_("Ventana de un repositorio")))
+
+	def _crear_pagina_secciones(self) -> None:
+		from app.ui import orden_secciones
+
+		# Estado en memoria por ventana: orden completo y ocultas (se guarda al Aplicar o Aceptar).
+		self._secciones: dict[str, tuple[list[str], set[str]]] = {}
+		self._titulos_secciones: dict[str, dict[str, str]] = {}
+		for ventana, _nombre in self.VENTANAS_SECCIONES:
+			todas = secciones_de(ventana)
+			self._titulos_secciones[ventana] = dict(todas)
+			prefijo, obligatorias = orden_secciones.VENTANAS[ventana]
+			orden = orden_secciones.orden_completo([c for c, _t in todas], self.ctx.config.obtener(f"{prefijo}_orden", []) or [])
+			ocultas = set(self.ctx.config.obtener(f"{prefijo}_ocultas", []) or []) - set(obligatorias)
+			self._secciones[ventana] = (orden, ocultas)
+		panel = wx.Panel(self.libro)
+		sizer = wx.BoxSizer(wx.VERTICAL)
+		texto = wx.StaticText(panel, label=_(
+			"Elija una ventana y marque las secciones que quiere ver. El orden de arriba abajo es el de la lista de secciones; "
+			"Alt+1 a Alt+9 siguen ese orden. «Resultados de la búsqueda» y «Resumen» no se pueden ocultar."))
+		texto.Wrap(self.FromDIP(560))
+		sizer.Add(texto, 0, wx.ALL, 6)
+		sizer.Add(wx.StaticText(panel, label=_("&Ventana:")), 0, wx.LEFT | wx.TOP, 6)
+		self.selector_ventana = wx.Choice(panel, choices=[_(n) for _v, n in self.VENTANAS_SECCIONES])
+		self.selector_ventana.SetHelpText(_("Ventana cuyas secciones quiere ordenar u ocultar. La del repositorio se aplica "
+			"a las ventanas de repositorio que se abran a partir de ahora."))
+		self.selector_ventana.Bind(wx.EVT_CHOICE, lambda _e: self._mostrar_secciones())
+		sizer.Add(self.selector_ventana, 0, wx.EXPAND | wx.ALL, 6)
+		sizer.Add(wx.StaticText(panel, label=_("&Secciones visibles y su orden:")), 0, wx.LEFT | wx.TOP, 6)
+		self.lista_secciones_pref = ListaCasillas(panel, _("Secciones visibles y su orden"), [], config=self.ctx.config)
+		self.lista_secciones_pref.Bind(wx.EVT_CHECKLISTBOX, self._al_marcar_seccion)
+		sizer.Add(self.lista_secciones_pref, 1, wx.EXPAND | wx.ALL, 6)
+		fila = wx.BoxSizer(wx.HORIZONTAL)
+		for etiqueta, manejador, ayuda in (
+			(_("S&ubir"), lambda _e: self._mover_seccion(-1), _("Sube la sección elegida un puesto.")),
+			(_("Ba&jar"), lambda _e: self._mover_seccion(1), _("Baja la sección elegida un puesto.")),
+			(_("&Orden de fábrica"), lambda _e: self._secciones_de_fabrica(), _("Muestra todas las secciones de esta ventana "
+				"en su orden original.")),
+		):
+			boton = wx.Button(panel, label=etiqueta)
+			boton.SetHelpText(ayuda)
+			boton.Bind(wx.EVT_BUTTON, manejador)
+			fila.Add(boton, 0, wx.RIGHT, 6)
+		sizer.Add(fila, 0, wx.ALL, 6)
+		panel.SetSizer(sizer)
+		self.libro.AddPage(panel, _(TITULO_SECCIONES))
+		self.selector_ventana.SetSelection(0)
+		self._mostrar_secciones()
+
+	def _ventana_secciones(self) -> str:
+		return self.VENTANAS_SECCIONES[max(0, self.selector_ventana.GetSelection())][0]
+
+	def _mostrar_secciones(self, seleccion: int = 0) -> None:
+		ventana = self._ventana_secciones()
+		orden, ocultas = self._secciones[ventana]
+		titulos = self._titulos_secciones[ventana]
+		self.lista_secciones_pref.Set([titulos[c] for c in orden])
+		for indice, clave in enumerate(orden):
+			wx.CheckListBox.Check(self.lista_secciones_pref, indice, clave not in ocultas)
+		if orden:
+			self.lista_secciones_pref.SetSelection(max(0, min(seleccion, len(orden) - 1)))
+
+	def _al_marcar_seccion(self, evento: wx.CommandEvent) -> None:
+		from app.ui import orden_secciones
+
+		evento.Skip()
+		ventana = self._ventana_secciones()
+		orden, ocultas = self._secciones[ventana]
+		indice = evento.GetInt()
+		if not 0 <= indice < len(orden):
+			return
+		clave = orden[indice]
+		if self.lista_secciones_pref.IsChecked(indice):
+			ocultas.discard(clave)
+		elif clave in orden_secciones.VENTANAS[ventana][1]:
+			# Obligatoria: se vuelve a marcar y se explica por qué.
+			wx.CallAfter(wx.CheckListBox.Check, self.lista_secciones_pref, indice, True)
+			self.ctx.anunciar(_("Esta sección no se puede ocultar."))
+		else:
+			ocultas.add(clave)
+			if len(ocultas) >= len(orden):
+				ocultas.discard(clave)
+				wx.CallAfter(wx.CheckListBox.Check, self.lista_secciones_pref, indice, True)
+
+	def _mover_seccion(self, paso: int) -> None:
+		ventana = self._ventana_secciones()
+		orden, _ocultas = self._secciones[ventana]
+		indice = self.lista_secciones_pref.GetSelection()
+		destino = indice + paso
+		if indice < 0 or not 0 <= destino < len(orden):
+			self.ctx.anunciar(_("No se puede mover más."))
+			return
+		orden[indice], orden[destino] = orden[destino], orden[indice]
+		self._mostrar_secciones(destino)
+		# El foco se queda donde estaba (el botón o la lista): se puede seguir pulsando Subir o Bajar.
+		self.ctx.anunciar(_("{c}, posición {p}").format(c=self.lista_secciones_pref.GetString(destino), p=destino + 1))
+
+	def _secciones_de_fabrica(self) -> None:
+		ventana = self._ventana_secciones()
+		self._secciones[ventana] = ([c for c, _t in secciones_de(ventana)], set())
+		self._mostrar_secciones()
+		self.ctx.anunciar(_("Secciones de fábrica."))
+
+	def cambios_secciones(self) -> dict[str, Any]:
+		"""Claves de configuración que cambian con lo elegido en la página Secciones."""
+		from app.ui import orden_secciones
+
+		cambios: dict[str, Any] = {}
+		for ventana, (orden, ocultas) in getattr(self, "_secciones", {}).items():
+			prefijo, _obligatorias = orden_secciones.VENTANAS[ventana]
+			fabrica = [c for c, _t in secciones_de(ventana)]
+			valor_orden = [] if orden == fabrica else list(orden)
+			valor_ocultas = [c for c in orden if c in ocultas]
+			if valor_orden != list(self.ctx.config.obtener(f"{prefijo}_orden", []) or []):
+				cambios[f"{prefijo}_orden"] = valor_orden
+			if valor_ocultas != list(self.ctx.config.obtener(f"{prefijo}_ocultas", []) or []):
+				cambios[f"{prefijo}_ocultas"] = valor_ocultas
+		return cambios
+
 	# ── Guardar ───────────────────────────────────────────────────────────────
 
+	def teclas_repetidas(self) -> list[str]:
+		"""Claves de las teclas globales que repiten la combinación de otra anterior."""
+		vistas: set[str] = set()
+		repetidas = []
+		for clave, (opcion, control, _pagina) in self._controles.items():
+			if opcion.tipo != TECLA:
+				continue
+			valor = control.GetValue().strip()
+			if valor and valor in vistas:
+				repetidas.append(clave)
+			vistas.add(valor)
+		return repetidas
+
 	def aplicar(self) -> bool:
+		repetidas = self.teclas_repetidas()
+		if repetidas:
+			# Dos órdenes con la misma tecla: Windows solo daría una y la otra quedaría muerta.
+			self._senalar(repetidas[0], _("Esa combinación ya la tiene otra tecla global. Elija otra o quítela con Retroceso."))
+			return False
 		if not super().aplicar():
 			return False
 		cambios: dict[str, Any] = {}
@@ -313,6 +498,7 @@ class DialogoPreferenciasGitHub(DialogoPreferencias):
 			self._guardar_columnas_en_memoria()
 			if self._columnas_elegidas != (self.ctx.config.obtener("listas.columnas", {}) or {}):
 				cambios["listas.columnas"] = dict(self._columnas_elegidas)
+		cambios.update(self.cambios_secciones())
 		if cambios:
 			self.ctx.config.establecer_varias(cambios)
 		return True
@@ -325,6 +511,10 @@ class DialogoPreferenciasGitHub(DialogoPreferencias):
 		if self._vistas:
 			self._columnas_elegidas = {}
 			self._mostrar_columnas()
+		if hasattr(self, "_secciones"):
+			for ventana, _nombre in self.VENTANAS_SECCIONES:
+				self._secciones[ventana] = ([c for c, _t in secciones_de(ventana)], set())
+			self._mostrar_secciones()
 
 
 def mostrar_preferencias(padre: wx.Window | None, ctx: Any, vistas: list[Any] | None = None) -> bool:

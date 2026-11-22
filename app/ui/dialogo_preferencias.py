@@ -63,6 +63,13 @@ def N_(texto: str) -> str:  # noqa: N802 - convención de gettext
 BOOL, ENTERO, DECIMAL, TEXTO, OPCION, CARPETA, SECRETO = (
 	"bool", "entero", "decimal", "texto", "opcion", "carpeta", "secreto",
 )
+#: Combinación de teclas: el campo recoge lo que se pulsa (no se escribe letra a letra).
+TECLA = "tecla"
+#: Teclas que el campo de combinación deja pasar: moverse por el diálogo y cerrarlo.
+_TECLAS_DE_PASO = (wx.WXK_TAB, wx.WXK_ESCAPE, wx.WXK_RETURN, wx.WXK_NUMPAD_ENTER)
+_TECLAS_MODIFICADORAS = (wx.WXK_CONTROL, wx.WXK_ALT, wx.WXK_SHIFT, wx.WXK_WINDOWS_LEFT, wx.WXK_WINDOWS_RIGHT,
+	wx.WXK_WINDOWS_MENU, wx.WXK_RAW_CONTROL)
+_TECLAS_MOVIMIENTO = (wx.WXK_LEFT, wx.WXK_RIGHT, wx.WXK_UP, wx.WXK_DOWN, wx.WXK_HOME, wx.WXK_END)
 
 
 @dataclass(frozen=True)
@@ -229,6 +236,8 @@ class DialogoPreferencias(wx.Dialog):
 		# id de control (y de sus hijos, p. ej. el texto de un SpinCtrl) → clave
 		self._clave_por_id: dict[int, str] = {}
 		self._valores_secretos: dict[str, str] = {}
+		# Ids de los campos de combinación de teclas (los atiende EVT_CHAR_HOOK antes que nadie).
+		self._campos_tecla: set[int] = set()
 
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		self.libro = wx.Notebook(self)
@@ -314,6 +323,12 @@ class DialogoPreferencias(wx.Dialog):
 			control = wx.TextCtrl(panel, style=wx.TE_PASSWORD)
 		elif opcion.tipo in (TEXTO, CARPETA):
 			control = wx.TextCtrl(panel)
+		elif opcion.tipo == TECLA:
+			# Campo de texto normal (el lector lo lee y deletrea), pero lo que se pulsa se
+			# recoge como combinación en _al_tecla; aquí solo se impide escribir letras sueltas.
+			control = wx.TextCtrl(panel)
+			control.Bind(wx.EVT_CHAR, lambda evento: evento.Skip() if evento.GetKeyCode() == wx.WXK_TAB else None)
+			self._campos_tecla.add(control.GetId())
 		else:
 			raise ValueError(f"Tipo de opción desconocido: {opcion.tipo}")
 		if opcion.tipo == CARPETA:
@@ -486,7 +501,43 @@ class DialogoPreferencias(wx.Dialog):
 		if evento.GetKeyCode() in (ord("H"), ord("h")) and evento.GetModifiers() == wx.MOD_CONTROL:
 			self.mostrar_ayuda_de(wx.Window.FindFocus())
 			return
+		foco = wx.Window.FindFocus()
+		if foco is not None and foco.GetId() in self._campos_tecla and self.capturar_tecla(foco, evento.GetKeyCode(),
+			evento.GetModifiers()):
+			return
 		evento.Skip()
+
+	def capturar_tecla(self, control: wx.TextCtrl, codigo: int, modificadores: int) -> bool:
+		"""Pone en ``control`` la combinación pulsada. ``True`` si la tecla se ha atendido aquí.
+
+		Se atiende en EVT_CHAR_HOOK (antes que el propio campo y que las letras de
+		acceso del diálogo): así Alt+letra o Control+Alt+letra no saltan a otro control.
+		"""
+		from app.ui.teclas_globales import desde_evento
+
+		if codigo in _TECLAS_DE_PASO and modificadores in (wx.MOD_NONE, wx.MOD_SHIFT):
+			return False
+		if modificadores == wx.MOD_NONE and codigo in (wx.WXK_BACK, wx.WXK_DELETE):
+			control.ChangeValue("")
+			self._decir(_("Sin tecla."))
+			return True
+		if codigo in _TECLAS_MODIFICADORAS:
+			return True
+		combinacion = desde_evento(codigo, modificadores)
+		if combinacion is None:
+			if modificadores == wx.MOD_NONE and codigo in _TECLAS_MOVIMIENTO:
+				return False
+			self._decir(_("Esa combinación no vale. Use Control, Alt o Windows con una letra, un número o de F1 a F24. "
+				"Retroceso la quita."))
+			return True
+		control.ChangeValue(combinacion.texto)
+		control.SetInsertionPointEnd()
+		self._decir(combinacion.texto)
+		return True
+
+	def _decir(self, texto: str) -> None:
+		if self._anunciar is not None:
+			self._anunciar(texto)
 
 	def texto_ayuda(self, ventana: wx.Window | None) -> str:
 		"""Ayuda del control (o de su antecesor con ayuda) para Ctrl+H."""

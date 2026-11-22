@@ -124,6 +124,9 @@ class VentanaDetalle(wx.Frame):
 		self.CreateStatusBar()
 		self.Bind(wx.EVT_CHAR_HOOK, self._al_tecla_ventana)
 		self.Bind(wx.EVT_CLOSE, self._al_cerrar_ventana)
+		from app.ui import paleta
+
+		paleta.instalar(self)
 		if clave:
 			VentanaDetalle._abiertas[clave] = self
 

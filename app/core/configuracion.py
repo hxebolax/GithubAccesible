@@ -72,7 +72,11 @@ VALORES_POR_DEFECTO: dict[str, dict[str, Any]] = {
 		"idioma": "es",
 		"confirmar_salida": False,
 		"minimizar_a_bandeja": False,
+		# Cerrar la ventana (Alt+F4, el botón X) la deja en la bandeja en vez de salir; Salir (Ctrl+Q) sale siempre.
+		"cerrar_a_bandeja": False,
 		"iniciar_en_bandeja": False,
+		# Icono junto al reloj también con la ventana a la vista (con el contador de notificaciones).
+		"icono_bandeja_siempre": False,
 		"anunciar_arranque": True,
 		"preguntar_sesion": True,
 		"buscar_actualizaciones": True,
@@ -152,6 +156,28 @@ VALORES_POR_DEFECTO: dict[str, dict[str, Any]] = {
 	"acciones": {
 		# Mostrar la marca de tiempo al principio de cada línea del registro de Actions.
 		"mostrar_horas": False,
+		# Ejecuciones y repositorios vigilados en segundo plano (avisan al terminar).
+		"vigiladas": [],
+		"intervalo_vigilancia_s": 30,
+		# Tras enviar (push) a GitHub, avisar del resultado de las ejecuciones que lance el commit.
+		"vigilar_tras_enviar": True,
+		"notificacion_windows": True,
+	},
+	"teclas_globales": {
+		# Combinaciones que funcionan desde cualquier programa (vacío: sin tecla).
+		"activadas": True,
+		"mostrar_ocultar": "Control+Alt+Mayúsculas+G",
+		"decir_notificaciones": "Control+Alt+Mayúsculas+N",
+		"abrir_notificaciones": "",
+		"buscar": "",
+		"comprobar_notificaciones": "",
+	},
+	"secciones": {
+		# Orden y secciones ocultas de cada ventana (vacío: el de fábrica).
+		"principal_orden": [],
+		"principal_ocultas": [],
+		"repositorio_orden": [],
+		"repositorio_ocultas": [],
 	},
 	"proyectos": {
 		# Campo de selección única que usa «Mover a…» (vacío: Status o el primero).
@@ -213,6 +239,7 @@ REGLAS: dict[str, Regla] = {
 	"sonidos.volumen": Regla(minimo=0, maximo=100),
 	"listas.por_pagina": Regla(minimo=10, maximo=100),
 	"notificaciones.intervalo_s": Regla(minimo=30, maximo=86400),
+	"acciones.intervalo_vigilancia_s": Regla(minimo=15, maximo=3600),
 	"red.proxy": Regla(longitud_maxima=500),
 	"red.tiempo_espera_s": Regla(minimo=5, maximo=600),
 	"registro.nivel": Regla(opciones=("DEBUG", "INFO", "WARNING", "ERROR")),

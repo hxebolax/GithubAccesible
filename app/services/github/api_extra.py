@@ -56,9 +56,10 @@ class ApiAcciones(_Base):
 		self.c.post(f"{ruta_repo(nombre)}/actions/workflows/{_q(id_flujo)}/dispatches", {"ref": ref, "inputs": entradas or {}})
 
 	def ejecuciones(self, nombre: str, numero: int = 1, id_flujo: int | str | None = None, rama: str = "",
-		estado: str = "", evento: str = "", actor: str = "") -> Pagina:
+		estado: str = "", evento: str = "", actor: str = "", sha: str = "") -> Pagina:
 		ruta = f"{ruta_repo(nombre)}/actions/workflows/{_q(id_flujo)}/runs" if id_flujo else f"{ruta_repo(nombre)}/actions/runs"
-		params = _limpiar({"branch": rama or None, "status": estado or None, "event": evento or None, "actor": actor or None})
+		params = _limpiar({"branch": rama or None, "status": estado or None, "event": evento or None, "actor": actor or None,
+			"head_sha": sha or None})
 		return self.c.pagina(ruta, params, numero, 50, clave="workflow_runs")
 
 	def ejecucion(self, nombre: str, id_ejecucion: int) -> dict:

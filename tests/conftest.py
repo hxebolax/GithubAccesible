@@ -328,10 +328,12 @@ def _primer_foco_richedit_en_silencio(wx, config) -> None:
 	faulthandler.disable()
 	try:
 		marco = wx.Frame(None)
-		campo = wx.TextCtrl(marco, style=wx.TE_MULTILINE | wx.TE_RICH2)
-		campo.SetFocus()
-		for _ in range(3):
-			wx.GetApp().Yield(True)
+		# Las dos clases de RichEdit que usa wx (TE_RICH: RichEdit20W; TE_RICH2: RICHEDIT50W).
+		for estilo in (wx.TE_RICH2, wx.TE_RICH):
+			campo = wx.TextCtrl(marco, style=wx.TE_MULTILINE | estilo)
+			campo.SetFocus()
+			for _ in range(3):
+				wx.GetApp().Yield(True)
 		marco.Destroy()
 		for _ in range(3):
 			wx.GetApp().Yield(True)

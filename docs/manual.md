@@ -38,6 +38,7 @@ A la izquierda está la lista de **secciones**; a la derecha, la lista con el co
 - Al moverse por las secciones con las flechas, la sección se muestra a la derecha, pero el foco **se queda en la lista de secciones**. Para entrar en el contenido pulse Tabulador, Intro o F6.
 - F6 alterna entre las secciones y el contenido.
 - Alt+1 a Alt+9 y Alt+0 van directamente a las diez primeras secciones (y ponen el foco en su contenido).
+- En Preferencias, **Secciones**, se ocultan las que no use y se ordenan como quiera, en esta ventana y en la de los repositorios; Alt más un número sigue ese orden.
 - El menú **Acciones** cambia según la sección y el elemento elegido; es el mismo menú que aparece con la tecla Aplicaciones o Mayúsculas+F10 sobre un elemento.
 
 Secciones:
@@ -55,6 +56,30 @@ Control+U (ver un perfil) propone ya escrita la persona de la fila elegida: quie
 ### Notificaciones en segundo plano
 
 La aplicación comprueba sola las notificaciones (cada minuto o lo que pida GitHub). Cuando llega alguna nueva la anuncia por voz y con un sonido, distinto si le mencionan o le piden una revisión. El número de no leídas aparece junto a la sección. Se configura en Preferencias, Notificaciones (también un aviso de Windows y la bandeja del sistema).
+
+### La bandeja del sistema
+
+La aplicación puede seguir funcionando con la ventana oculta, con un icono junto al reloj (Windows+B lleva a la bandeja; las flechas, al icono). Archivo, «Ocultar en la bandeja del sistema», la oculta. En Preferencias, General, se elige:
+
+- **Minimizar a la bandeja del sistema**: al minimizar, se oculta en la bandeja.
+- **Al cerrar la ventana, dejarla en la bandeja**: Alt+F4 o el botón Cerrar la ocultan en vez de salir. Para salir de verdad: Archivo, Salir (Control+Q) o «Salir» en el menú del icono.
+- **Iniciar oculta en la bandeja**.
+- **Icono en la bandeja todo el tiempo**: el icono se queda también con la ventana a la vista.
+
+El texto del icono dice cuántas notificaciones hay sin leer. Intro o un clic muestran la ventana; la tecla Aplicaciones abre su menú: ocultar o mostrar la ventana, ir a las notificaciones, decir las no leídas, comprobar ahora, buscar en GitHub, Preferencias y Salir.
+
+### Teclas globales
+
+Funcionan desde cualquier programa, aunque la aplicación esté en la bandeja. De fábrica:
+
+- **Control+Alt+Mayúsculas+G**: mostrar u ocultar la aplicación. Si está a la vista y delante, la oculta en la bandeja; si no, la trae al frente.
+- **Control+Alt+Mayúsculas+N**: decir cuántas notificaciones hay sin leer y las tres más recientes, sin dejar lo que esté haciendo.
+
+En Preferencias, **Teclas globales**, se cambian estas y se pueden activar otras tres: abrir la sección Notificaciones, buscar en GitHub y comprobar ahora si hay notificaciones nuevas. En cada campo se pulsa la combinación que se quiera (Control, Alt o Windows, y si quiere Mayúsculas, con una letra, un número o de F1 a F24) y el lector la dice; Retroceso o Suprimir la quitan. Si otro programa ya tiene una combinación, Windows no la deja usar: la aplicación lo dice al arrancar o al aplicar, para que elija otra. También se pueden desactivar todas.
+
+### Paleta de órdenes
+
+Control+Mayúsculas+O, en cualquier ventana, abre la **paleta de órdenes**: escriba parte del nombre de lo que quiere hacer («defecto», «wiki», «clonar») y la lista muestra las órdenes de esa ventana que lo contienen, con su tecla y su menú; también las acciones del elemento elegido en la lista. Intro ejecuta la orden. Sirve para encontrar cualquier cosa sin recorrer los menús y para aprender sus teclas.
 
 ## Las listas
 
@@ -109,6 +134,10 @@ Las diferencias de un commit, un pull request o un archivo local se muestran com
 - Control+G: ir a una línea por su número.
 - Control+T: ver todo como texto para leerlo seguido o copiarlo.
 - Control+C: copiar la línea.
+- Control+D: dice qué ha cambiado dentro de la línea añadida o eliminada en la que está, comparándola con la línea a la que sustituye o que la sustituye («Cambia «timeout=30» por «timeout=60»», «Añade…», «Quita…» o «Línea reescrita»). Si no tiene pareja, lo dice.
+- Control+Mayúsculas+D: resumen de las diferencias (archivos, cambios y líneas añadidas y eliminadas), el archivo en el que está (nuevo, borrado, renombrado o modificado) y el número de cambio. F8 y Mayúsculas+F8 dicen también «Cambio n de m».
+- Control+Mayúsculas+T: las diferencias narradas, un texto que empieza por el resumen y recorre cada cambio con sus números de línea («Cambió la línea 12: … Por: …»).
+- Los caracteres que no se ven (controles, espacios especiales, marcas que cambian la dirección del texto) se muestran con su nombre, como «<U+202E RIGHT-TO-LEFT OVERRIDE>», y al llegar a una línea que los tiene se avisa «Contiene caracteres invisibles». Pueden esconder código malicioso, por eso conviene saberlo.
 - En un pull request, Intro comenta la línea y Control+Intro lee los comentarios que ya tiene (las líneas comentadas tienen un sonido de aviso y una columna «Comentarios»).
 
 ## La ventana de un repositorio
@@ -141,6 +170,14 @@ Si la wiki está desactivada, la etiqueta de la lista lo dice y las acciones ofr
 
 La ventana de una issue muestra arriba un resumen (título, estado, autor, etiquetas, asignados, hito, reacciones y fechas), después la **conversación** como lista (descripción, comentarios y eventos como «etiquetado» o «cerrado») y debajo el texto completo del elemento enfocado, que cambia al moverse sin quitar el foco de la lista. Desde la lista se comenta (Control+N), se responde citando (Control+R), se edita o borra un comentario propio, se reacciona (Control+E) y se ve con formato (Intro). Desde el menú Acciones: cerrar como completada o no planificada, reabrir, etiquetas, asignados, hito, bloquear, fijar, transferir y suscribirse.
 
+**Nueva issue** (Control+N en la sección Issues de un repositorio): si el repositorio tiene plantillas, se elige una de la lista, con su nombre y su descripción. «Issue en blanco» solo aparece si el repositorio lo permite, y sus enlaces de contacto (foros, avisos de seguridad) se abren en el navegador.
+
+- Las plantillas de texto abren el editor con su título y su contenido.
+- Los **formularios** piden cada dato en su propio campo: texto, texto largo, desplegable, lista de casillas o casillas. Los obligatorios dicen «(obligatorio)» y Control+H lee la explicación de cada campo. Control+Intro crea la issue y F7 muestra la vista previa; si falta algo obligatorio, se dice qué y el cursor va a ese campo. La issue queda igual que si se rellenara en la web.
+- La issue se crea con las etiquetas, las personas asignadas y el tipo que indique la plantilla; si GitHub no los acepta por falta de permiso, se crea sin ellos y se avisa.
+
+Al crear un **pull request** (desde el repositorio o desde la ventana de git), la descripción empieza con la plantilla del repositorio; si tiene varias, se elige una o ninguna.
+
 La ventana de un pull request tiene pestañas (Control+Tabulador):
 
 - **Conversación**: como en las issues.
@@ -160,6 +197,17 @@ El visor de un archivo lo muestra en un campo de solo lectura: Control+G va a un
 La ventana de una ejecución muestra la información, la lista de **trabajos**, la de **pasos** del trabajo elegido y su **registro** limpio (sin códigos de color; las marcas de tiempo se pueden mostrar con una casilla). En el registro, F8 salta al siguiente error o aviso y lo lee. Intro sobre un paso lleva a su parte del registro. Hay listas de anotaciones y de artefactos (Intro descarga). Se puede volver a ejecutar todo o solo lo fallido (Control+R y Control+Mayúsculas+R), cancelar, aprobar despliegues y «Seguir en vivo»: mientras está en curso se actualiza cada 10 segundos, anuncia los cambios y suena al terminar con un sonido de éxito o de fallo.
 
 «Lanzar flujo» (en la sección Actions del repositorio) lee las entradas del flujo y muestra un control para cada una.
+
+### Vigilar ejecuciones en segundo plano
+
+La aplicación puede avisarle cuando termine una ejecución aunque no tenga ninguna ventana abierta: dice el resultado («Actions de ana/proyecto: «CI» en main ha terminado: fallida»), suena el sonido de éxito o de fallo y, si quiere, muestra una notificación de Windows.
+
+- En la sección Actions de un repositorio, «Avisarme cuando termine» (Control+Mayúsculas+W) sobre una ejecución en curso. También está en el menú Ejecución de su ventana.
+- En el menú Repositorio, «Avisar al terminar cada ejecución de Actions» (casilla) vigila todas las de ese repositorio hasta que la desmarque.
+- Al enviar cambios (push) a GitHub desde la ventana de git, se vigilan solas las ejecuciones que lance ese commit y se dice cómo han ido. Si el repositorio no tiene Actions, no se dice nada.
+- Herramientas, «Ejecuciones de Actions vigiladas», muestra lo que se vigila y permite dejar de vigilarlo.
+
+Lo vigilado se recuerda al cerrar la aplicación. El intervalo, la notificación de Windows y la vigilancia tras enviar se eligen en Preferencias, Actions.
 
 ## Releases, gists, discusiones y proyectos
 
@@ -189,15 +237,16 @@ El menú Git trae, tira, envía y sincroniza con progreso hablado (solo en los h
 
 Herramientas, Preferencias (Control+P). Los cambios se aplican al momento en las ventanas abiertas; Cancelar no guarda nada y «Restablecer valores de fábrica» vuelve a lo original.
 
-- **General**: sección al abrir, voz al arrancar, bandeja del sistema, confirmar al salir, carpeta de descargas.
+- **General**: sección al abrir, voz al arrancar, bandeja del sistema (minimizar, cerrar, iniciar e icono permanente), confirmar al salir, carpeta de descargas.
 - **Actualizaciones**: buscar al arrancar y el origen (servidor del autor y GitHub, solo uno de ellos o una dirección personalizada).
 - **Cuentas**: identificador de la aplicación OAuth y permisos que se piden.
 - **Accesibilidad**: avisos por voz y braille, retardo, lectura por columnas, anuncio de las listas de casillas (estado, si va antes del texto, posición), explicaciones que lee el lector, columnas del visor de diferencias y sus sonidos, y formato HTML.
   - **Explicaciones**: cada control tiene una explicación, la misma que dice Control+H. El lector de pantalla también puede leerla sola al llegar al control. «Explicaciones: leerlas al llegar a botones y casillas» (activada de fábrica) la lee en botones y casillas sueltas. «Explicaciones: leerlas también en cada fila de las listas de casillas» (desactivada de fábrica) la repite en cada fila de una lista de casillas, como «Buscar el texto en» de la búsqueda. Si la desactiva, al moverse por la lista solo oye cada fila y si está marcada. Control+H sigue diciendo la explicación siempre.
 - **Sonidos**: activar, silenciar, volumen, paquete y una lista con cada evento para activar o desactivar su sonido, con un botón para probarlo.
 - **Listas**: elementos por página y fechas relativas o completas.
-- **Notificaciones**, **Git**, **Editor**, **Red y registro**.
+- **Notificaciones**, **Teclas globales** (ver arriba), **Actions** (vigilancia de ejecuciones y hora en los registros), **Git**, **Editor**, **Red y registro**.
 - **Columnas de las listas**: columnas visibles y su orden en cada lista.
+- **Secciones**: para la ventana principal y para la de un repositorio, qué secciones se ven (casillas) y en qué orden (Subir y Bajar). «Resultados de la búsqueda» y «Resumen» no se pueden ocultar. Si abre una sección oculta desde otro sitio, se dice que está oculta.
 
 ## Actualizaciones
 

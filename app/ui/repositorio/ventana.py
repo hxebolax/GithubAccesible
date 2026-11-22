@@ -101,6 +101,13 @@ class VentanaRepositorio(wx.Frame):
 		self.actual = ""
 		self._ids_acciones: list[int] = []
 		self._temporizador: wx.CallLater | None = None
+		# Secciones visibles en el orden elegido en Preferencias, Secciones (se lee al abrir la ventana).
+		from app.ui import orden_secciones
+
+		visibles = orden_secciones.de_configuracion(ctx.config, "repositorio", IDS)
+		por_id = {s.id: s for s in SECCIONES}
+		self.secciones_visibles: list[Seccion] = [por_id[i] for i in visibles]
+		self.ids: list[str] = list(visibles)
 		self._crear_contenido()
 		self._crear_menus()
 		self.CreateStatusBar()
@@ -108,6 +115,9 @@ class VentanaRepositorio(wx.Frame):
 		self.Bind(wx.EVT_CHAR_HOOK, self._al_pulsar)
 		self.Bind(wx.EVT_CLOSE, self._al_cerrar)
 		self.Bind(wx.EVT_MENU_OPEN, self._al_abrir_menu)
+		from app.ui import paleta
+
+		paleta.instalar(self)
 		self.mostrar_seccion(seccion or "resumen", enfocar=False)
 		self.cargar_info()
 
@@ -119,7 +129,7 @@ class VentanaRepositorio(wx.Frame):
 		columna = wx.BoxSizer(wx.VERTICAL)
 		# Etiqueta ANTES de la lista: el lector la anuncia como su nombre.
 		columna.Add(wx.StaticText(self.panel, label=_("&Secciones:")), 0, wx.ALL, 4)
-		self.lista_secciones = wx.ListBox(self.panel, choices=[_(s.titulo) for s in SECCIONES], style=wx.LB_SINGLE)
+		self.lista_secciones = wx.ListBox(self.panel, choices=[_(s.titulo) for s in self.secciones_visibles], style=wx.LB_SINGLE)
 		self.lista_secciones.SetHelpText(_(
 			"Secciones del repositorio. Las flechas cambian de sección; Intro o F6 van a su contenido. "
 			"Control+Tabulador pasa a la sección siguiente desde cualquier sitio."))
@@ -155,6 +165,9 @@ class VentanaRepositorio(wx.Frame):
 			_("Solo en una bifurcación: trae a una rama suya los cambios nuevos del repositorio original."))
 		self._elemento(menu, _("Ver el &propietario\tCtrl+Shift+P"), self.ver_propietario,
 			_("Abre el perfil de la persona u organización dueña del repositorio: sus repositorios y el botón Seguir."))
+		self.item_vigilar = menu.AppendCheckItem(wx.ID_ANY, _("Avisar al terminar cada e&jecución de Actions"),
+			_("Vigila en segundo plano todas las ejecuciones de Actions de este repositorio y avisa cuando termine cada una."))
+		self.Bind(wx.EVT_MENU, lambda _e: self.alternar_vigilancia(), self.item_vigilar)
 		self._elemento(menu, _("Con&figuración…"), self.configuracion, _("Nombre, visibilidad, fusiones, archivar, borrar…"))
 		menu.AppendSeparator()
 		self._elemento(menu, _("&Cerrar\tCtrl+W"), self.Close, _("Cierra la ventana del repositorio."))
@@ -164,8 +177,7 @@ class VentanaRepositorio(wx.Frame):
 		barra.Append(self.menu_acciones, _("Ac&ciones"))
 
 		menu_ir = wx.Menu()
-		for posicion, seccion in enumerate(SECCIONES):
-			etiqueta = _(seccion.menu) + (f"\tAlt+{posicion + 1}" if posicion < 9 else "")
+		for _posicion, seccion, etiqueta in etiquetas_menu_ir(self.secciones_visibles):
 			self._elemento(menu_ir, etiqueta, lambda s=seccion.id: self.mostrar_seccion(s), _("Va a la sección {s}.").format(
 				s=_(seccion.titulo)))
 		menu_ir.AppendSeparator()
@@ -206,8 +218,12 @@ class VentanaRepositorio(wx.Frame):
 		if seccion == "configuracion":
 			wx.CallAfter(self.configuracion)
 			seccion = self.actual or "resumen"
-		if seccion not in IDS:
-			if seccion:
+		if seccion not in self.ids:
+			if seccion in IDS:
+				# Existe pero está oculta en Preferencias: se dice en vez de abrir otra cosa en silencio.
+				self.ctx.avisar(_("La sección {s} está oculta. Puede mostrarla en Preferencias, Secciones.").format(
+					s=_(TITULOS[seccion])))
+			elif seccion:
 				log.warning("Sección desconocida «%s»; se muestra el resumen.", seccion)
 			seccion = "resumen"
 		# Recorrer las secciones no mueve el foco: la persona entra con Tab, Intro o F6.
@@ -225,7 +241,7 @@ class VentanaRepositorio(wx.Frame):
 				panel.cargar()
 		self.libro.ChangeSelection(self.libro.FindPage(panel))
 		self.actual = seccion
-		indice = IDS.index(seccion)
+		indice = self.ids.index(seccion)
 		if self.lista_secciones.GetSelection() != indice:
 			self.lista_secciones.SetSelection(indice)
 		panel.cargar_si_hace_falta()
@@ -262,10 +278,11 @@ class VentanaRepositorio(wx.Frame):
 			self.lista_secciones.SetFocus()
 
 	def cambiar_seccion(self, paso: int) -> None:
-		posicion = (IDS.index(self.actual or "resumen") + paso) % len(IDS)
+		ids = self.ids
+		posicion = (ids.index(self.actual if self.actual in ids else ids[0]) + paso) % len(ids)
 		en_lista = wx.Window.FindFocus() is self.lista_secciones
-		self.mostrar_seccion(IDS[posicion], enfocar=not en_lista)
-		self.ctx.avisar(_(TITULOS[IDS[posicion]]))
+		self.mostrar_seccion(ids[posicion], enfocar=not en_lista)
+		self.ctx.avisar(_(TITULOS[ids[posicion]]))
 
 	def _al_elegir_seccion(self, evento: wx.CommandEvent) -> None:
 		# Se espera un momento: al recorrer la lista con las flechas no se carga cada sección por la que se pasa.
@@ -278,14 +295,14 @@ class VentanaRepositorio(wx.Frame):
 		if not self:
 			return
 		indice = self.lista_secciones.GetSelection()
-		if 0 <= indice < len(IDS) and IDS[indice] != self.actual:
-			self.mostrar_seccion(IDS[indice], enfocar=False)
+		if 0 <= indice < len(self.ids) and self.ids[indice] != self.actual:
+			self.mostrar_seccion(self.ids[indice], enfocar=False)
 
 	def _al_pulsar_secciones(self, evento: wx.KeyEvent) -> None:
 		if evento.GetKeyCode() in (wx.WXK_RETURN, wx.WXK_NUMPAD_ENTER) and not evento.HasAnyModifiers():
 			indice = self.lista_secciones.GetSelection()
-			if 0 <= indice < len(IDS):
-				self.mostrar_seccion(IDS[indice], enfocar=True)
+			if 0 <= indice < len(self.ids):
+				self.mostrar_seccion(self.ids[indice], enfocar=True)
 			return
 		evento.Skip()
 
@@ -329,7 +346,30 @@ class VentanaRepositorio(wx.Frame):
 	def _al_abrir_menu(self, evento: wx.MenuEvent) -> None:
 		if evento.GetMenu() is self.menu_acciones:
 			self.reconstruir_menu_acciones()
+		self.item_vigilar.Check(self._vigilancia_activa())
 		evento.Skip()
+
+	# ── Vigilar las ejecuciones de Actions ───────────────────────────────────
+
+	def _vigilancia(self) -> dict:
+		from app.services import vigilancia_actions as va
+
+		return va.nuevo_repositorio(self.nombre)
+
+	def _vigilancia_activa(self) -> bool:
+		principal = self.ctx.ventana_principal
+		return bool(principal is not None and hasattr(principal, "esta_vigilado") and principal.esta_vigilado(self._vigilancia()))
+
+	def alternar_vigilancia(self) -> None:
+		principal = self.ctx.ventana_principal
+		if principal is None or not hasattr(principal, "vigilar"):
+			return
+		if self._vigilancia_activa():
+			principal.dejar_de_vigilar(self._vigilancia())
+			self.ctx.avisar(_("Ya no se vigilan las ejecuciones de {n}.").format(n=self.nombre))
+		else:
+			principal.vigilar(self._vigilancia())
+		self.item_vigilar.Check(self._vigilancia_activa())
 
 	# ── Datos del repositorio ─────────────────────────────────────────────────
 
@@ -538,6 +578,32 @@ class VentanaRepositorio(wx.Frame):
 			del _VENTANAS[clave]
 		self.ctx.sonar("cerrar")
 		evento.Skip()
+
+
+def etiquetas_menu_ir(secciones: list[Seccion]) -> list[tuple[int, Seccion, str]]:
+	"""Etiquetas del menú «Ir» en el orden elegido: las nueve primeras con su número (Alt+1 a Alt+9).
+
+	Las demás conservan su letra de fábrica si sigue libre; si no, toman la
+	primera libre de su nombre. El menú ya usa S, R y M (sección siguiente,
+	anterior y cambiar entre secciones y contenido).
+	"""
+	from app.ui.repositorio.vistas import etiqueta_con_letra
+
+	ocupadas = "srm"
+	resultado = []
+	for posicion, seccion in enumerate(secciones):
+		titulo = _(seccion.titulo)
+		if posicion < 9:
+			resultado.append((posicion, seccion, f"&{posicion + 1} {titulo}\tAlt+{posicion + 1}"))
+			continue
+		etiqueta = _(seccion.menu)
+		letra = etiqueta.partition("&")[2][:1].lower()
+		if not letra or letra.isdigit() or letra in ocupadas:
+			etiqueta = etiqueta_con_letra(titulo, ocupadas)
+			letra = etiqueta.partition("&")[2][:1].lower()
+		ocupadas += letra
+		resultado.append((posicion, seccion, etiqueta))
+	return resultado
 
 
 def abrir_ventana_repositorio(ctx: Any, nombre: str, seccion: str = "") -> VentanaRepositorio | None:

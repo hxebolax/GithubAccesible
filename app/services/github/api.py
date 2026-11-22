@@ -22,7 +22,7 @@ import builtins
 from typing import Any
 from urllib.parse import quote
 
-from app.services.github.cliente import ClienteGitHub, Pagina
+from app.services.github.cliente import ClienteGitHub, ErrorValidacion, NoEncontrado, Pagina, SinPermiso
 
 ACEPTAR_DIFF = "application/vnd.github.diff"
 ACEPTAR_PATCH = "application/vnd.github.patch"
@@ -758,17 +758,77 @@ class ApiIssues(_Base):
 		self.c.delete(f"{ruta_repo(nombre)}/milestones/{int(numero)}")
 
 	# Plantillas de issue
+	def crear_issue_con_plantilla(self, nombre: str, titulo: str, cuerpo: str = "", etiquetas: list[str] | None = None,
+		asignados: list[str] | None = None, tipo: str = "") -> tuple[dict, list[str]]:
+		"""Crea una issue con las etiquetas, asignados y tipo de una plantilla.
+
+		Quien no tiene permiso de clasificación en el repositorio no puede poner
+		etiquetas ni asignados: GitHub a veces los ignora sin decir nada y otras
+		rechaza la issue entera (422, o 403 con el tipo). En ese caso se crea sin
+		ellos, para no perder lo escrito.
+
+		:return: ``(issue, descartados)``; ``descartados`` dice qué no se aplicó
+			(``"etiquetas"``, ``"asignados"``, ``"tipo"``).
+		"""
+		pedidos = [(clave, valor) for clave, valor in (("etiquetas", etiquetas), ("asignados", asignados), ("tipo", tipo)) if valor]
+		try:
+			issue = self.crear_issue(nombre, titulo, cuerpo, etiquetas or None, asignados or None, tipo=tipo)
+		except (ErrorValidacion, SinPermiso):
+			if not pedidos:
+				raise
+			return self.crear_issue(nombre, titulo, cuerpo), [clave for clave, _v in pedidos]
+		issue = issue if isinstance(issue, dict) else {}
+		puestas = {str(e.get("name", "")).lower() for e in issue.get("labels") or [] if isinstance(e, dict)}
+		puestos = {str(u.get("login", "")).lower() for u in issue.get("assignees") or [] if isinstance(u, dict)}
+		descartados = []
+		if etiquetas and any(e.lower() not in puestas for e in etiquetas):
+			descartados.append("etiquetas")
+		if asignados and any(a.lower() not in puestos for a in asignados):
+			descartados.append("asignados")
+		if tipo and not issue.get("type"):
+			descartados.append("tipo")
+		return issue, descartados
+
 	def plantillas_issue(self, nombre: str) -> list[dict]:
-		"""Plantillas de .github/ISSUE_TEMPLATE (nombre de archivo y contenido)."""
+		"""Plantillas y formularios de .github/ISSUE_TEMPLATE (sin su config.yml)."""
 		try:
 			lista = self.c.get(f"{ruta_repo(nombre)}/contents/.github/ISSUE_TEMPLATE")
 		except Exception:  # noqa: BLE001 - sin plantillas: lista vacía
 			return []
 		resultado = []
 		for elemento in lista if isinstance(lista, list) else []:
-			if elemento.get("type") == "file" and elemento.get("name", "").lower().endswith((".md", ".yml", ".yaml")):
+			archivo = elemento.get("name", "").lower()
+			if elemento.get("type") == "file" and archivo.endswith((".md", ".yml", ".yaml")) and archivo not in (
+				"config.yml", "config.yaml"):
 				resultado.append(elemento)
 		return resultado
+
+	def leer_plantillas_issue(self, nombre: str) -> tuple[list[tuple[str, str]], str]:
+		"""Textos de las plantillas de .github/ISSUE_TEMPLATE y de su config.yml, en una sola llamada.
+
+		:return: ``([(archivo, texto), …], texto_de_config)``; sin carpeta, ``([], "")``.
+			Una plantilla que ha desaparecido entre el listado y la lectura se omite.
+		"""
+		try:
+			lista = self.c.get(f"{ruta_repo(nombre)}/contents/.github/ISSUE_TEMPLATE")
+		except NoEncontrado:
+			return [], ""
+		plantillas: list[tuple[str, str]] = []
+		config = ""
+		for elemento in lista if isinstance(lista, list) else []:
+			archivo = elemento.get("name", "")
+			if elemento.get("type") != "file" or not archivo.lower().endswith((".md", ".yml", ".yaml")):
+				continue
+			try:
+				bruto, _sha = self.leer_archivo(nombre, elemento.get("path") or f".github/ISSUE_TEMPLATE/{archivo}")
+			except NoEncontrado:
+				continue
+			texto = bruto.decode("utf-8", errors="replace")
+			if archivo.lower() in ("config.yml", "config.yaml"):
+				config = texto
+			else:
+				plantillas.append((archivo, texto))
+		return plantillas, config
 
 
 # ════════════════════════════════════════════════════════════════════════════
@@ -791,6 +851,44 @@ class ApiPulls(_Base):
 			"title": titulo, "head": cabeza, "base": base, "body": cuerpo, "draft": borrador,
 			"maintainer_can_modify": editable_por_mantenedores,
 		})
+
+	def plantillas_pr(self, nombre: str) -> list[tuple[str, str]]:
+		"""Plantillas de pull request: ``[(ruta, texto), …]`` en el orden en que las busca GitHub.
+
+		GitHub admite ``pull_request_template.md`` (sin distinguir mayúsculas) en
+		``.github/``, en la raíz o en ``docs/``, y varias plantillas dentro de una
+		carpeta ``PULL_REQUEST_TEMPLATE/`` en esos mismos sitios. Se lista cada
+		carpeta una vez (en lugar de probar cada nombre) para no gastar peticiones.
+		"""
+		resultado: list[tuple[str, str]] = []
+		for carpeta in (".github", "", "docs"):
+			try:
+				lista = self.contenido(nombre, carpeta)
+			except NoEncontrado:
+				continue
+			for elemento in lista if isinstance(lista, list) else []:
+				archivo = str(elemento.get("name", "")).lower()
+				ruta = elemento.get("path") or "/".join(p for p in (carpeta, elemento.get("name", "")) if p)
+				if elemento.get("type") == "file" and archivo in ("pull_request_template.md", "pull_request_template.txt"):
+					resultado.append((ruta, self._texto_plantilla(nombre, ruta)))
+				elif elemento.get("type") == "dir" and archivo == "pull_request_template":
+					try:
+						varias = self.contenido(nombre, ruta)
+					except NoEncontrado:
+						continue
+					for plantilla in varias if isinstance(varias, list) else []:
+						if plantilla.get("type") == "file" and str(plantilla.get("name", "")).lower().endswith((".md", ".txt")):
+							ruta_plantilla = plantilla.get("path") or f"{ruta}/{plantilla.get('name', '')}"
+							resultado.append((ruta_plantilla, self._texto_plantilla(nombre, ruta_plantilla)))
+		return [(ruta, texto) for ruta, texto in resultado if texto is not None]
+
+	def _texto_plantilla(self, nombre: str, ruta: str) -> str | None:
+		"""Texto de una plantilla, o ``None`` si ha desaparecido entre el listado y la lectura."""
+		try:
+			bruto, _sha = self.leer_archivo(nombre, ruta)
+		except NoEncontrado:
+			return None
+		return bruto.decode("utf-8", errors="replace")
 
 	def editar_pr(self, nombre: str, numero: int, **campos: Any) -> dict:
 		"""title, body, state, base, maintainer_can_modify."""

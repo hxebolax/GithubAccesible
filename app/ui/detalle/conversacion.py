@@ -483,6 +483,9 @@ class VentanaDetalle(wx.Frame):
 		VentanaDetalle._abiertas[clave] = self
 		self.Bind(wx.EVT_CLOSE, self._al_cerrar)
 		habilitar_ayuda_contextual(self)
+		from app.ui import paleta
+
+		paleta.instalar(self)
 
 	@classmethod
 	def abierta(cls, clave: str) -> VentanaDetalle | None:

@@ -84,6 +84,9 @@ def crear_contexto(api: Any | None = None, con_cuenta: bool = True):
 	from app.services.github.autenticacion import Cuenta, GestorCuentas
 
 	config = Configuracion()
+	# Las teclas globales son de todo Windows: las pruebas no deben quitárselas a la aplicación de verdad
+	# si está abierta. Las pruebas de teclas globales usan una ventana simulada.
+	config.establecer("teclas_globales.activadas", False)
 	secretos = SecretosMemoria()
 	cuentas = GestorCuentas(config, secretos)
 	if con_cuenta:

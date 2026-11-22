@@ -2,6 +2,23 @@
 
 Cada versión tiene su apartado, de la más reciente a la más antigua. Dentro de cada versión, los cambios se agrupan en Novedades, Mejoras y Correcciones, contados con palabras de quien usa la aplicación.
 
+## Versión 1.0.5 - 2026-11-22
+
+### Novedades
+
+- **Bandeja del sistema configurable** (Preferencias, General): además de minimizar e iniciar en la bandeja, ahora se puede hacer que cerrar la ventana la deje en la bandeja en vez de salir, y que el icono esté siempre. El icono dice cuántas notificaciones hay sin leer y su menú permite ir a ellas, oírlas, comprobarlas, buscar y abrir Preferencias. Archivo tiene «Ocultar en la bandeja del sistema».
+- **Teclas globales configurables**, que funcionan desde cualquier programa: Control+Alt+Mayúsculas+G muestra u oculta la aplicación y Control+Alt+Mayúsculas+N dice las notificaciones sin leer. En Preferencias, Teclas globales, se cambian pulsando la combinación que se quiera y se pueden activar otras tres (abrir Notificaciones, buscar y comprobar ahora). Si otro programa ya usa una, se avisa.
+- **Secciones a su gusto** (Preferencias, Secciones): se ocultan las que no use y se ordenan, en la ventana principal y en la de los repositorios. Alt más un número sigue el orden elegido.
+- **Paleta de órdenes** (Control+Mayúsculas+O en cualquier ventana): se escribe parte del nombre de lo que se quiere hacer y se ejecuta con Intro; dice la tecla y el menú de cada orden.
+- **Vigilar ejecuciones de Actions en segundo plano**: «Avisarme cuando termine» en las ejecuciones en curso (Control+Mayúsculas+W), vigilar todas las de un repositorio desde su menú, y aviso automático del resultado de las ejecuciones que lanza un push hecho desde la aplicación. Avisa con voz, sonido y, si se quiere, una notificación de Windows. Herramientas, «Ejecuciones de Actions vigiladas», muestra lo vigilado.
+- **Diferencias narradas** en el visor de diferencias: Control+D dice qué cambia dentro de una línea («Cambia «30» por «60»»), Control+Mayúsculas+D da el resumen, Control+Mayúsculas+T muestra las diferencias contadas como texto y F8 dice «Cambio n de m». Los caracteres invisibles o que cambian la dirección del texto se ven con su nombre y se avisan.
+- **Formularios de issue**: los formularios del repositorio se rellenan en un cuadro accesible, con un campo por dato y los obligatorios marcados, y la issue queda igual que en la web. Las plantillas de texto conservan su título, etiquetas, asignados y tipo; se respetan «Issue en blanco» y los enlaces de contacto. Los pull requests empiezan con la plantilla del repositorio.
+
+### Correcciones
+
+- Control+U (ver un perfil) fallaba con una sección abierta en la ventana principal desde la versión 1.0.4.
+- La ventana de una ejecución de Actions y el diálogo de actualización ya no dan el foco a controles de una ventana oculta.
+
 ## Versión 1.0.4 - 2026-11-22
 
 ### Novedades

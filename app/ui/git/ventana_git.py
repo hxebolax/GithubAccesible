@@ -164,6 +164,9 @@ class VentanaGit(wx.Frame):
 		self.secciones.Bind(wx.EVT_LISTBOX, lambda _e: self.mostrar_seccion(self.secciones.GetSelection()))
 		self.Bind(wx.EVT_CHAR_HOOK, self._al_pulsar)
 		self.Bind(wx.EVT_MENU_OPEN, self._al_abrir_menu)
+		from app.ui import paleta
+
+		paleta.instalar(self)
 		self.Bind(wx.EVT_CLOSE, self._al_cerrar)
 		self.Bind(wx.EVT_WINDOW_DESTROY, self._al_destruir)
 		self.secciones.SetSelection(0)
@@ -623,9 +626,36 @@ class VentanaGit(wx.Frame):
 				lambda al_linea, cancelado: self.repo.empujar(remoto, destino, forzar=forzar, establecer_seguimiento=seguimiento,
 					al_linea=al_linea, cancelado=cancelado),
 				_("Rama {r} enviada a {o}.").format(r=estado.rama, o=remoto),
+				al_terminar=lambda _r: self.vigilar_actions_del_envio(remoto),
 			)
 
 		self._con_estado(seguir)
+
+	def vigilar_actions_del_envio(self, remoto: str) -> None:
+		"""Tras enviar a GitHub, vigila las ejecuciones de Actions que lance ese commit y avisa al terminar.
+
+		Se hace en silencio (sin anunciar que se vigila): si el repositorio no tiene
+		flujos de Actions, se deja de esperar a los pocos minutos sin decir nada.
+		"""
+		if not self.ctx.config.obtener("acciones.vigilar_tras_enviar", True):
+			return
+		principal = self.ctx.ventana_principal
+		if principal is None or not hasattr(principal, "vigilar") or self.ctx.cuenta is None:
+			return
+
+		def trabajo() -> tuple[str, str]:
+			url = self.repo.git("remote", "get-url", remoto).strip()
+			return op.nombre_github(url, self.ctx.host) or "", self.repo.git("rev-parse", "HEAD").strip()
+
+		def listo(datos: tuple[str, str]) -> None:
+			nombre, sha = datos
+			if nombre and sha:
+				from app.services import vigilancia_actions as va
+
+				principal.vigilar(va.nuevo_commit(nombre, sha), anunciar=False)
+
+		en_segundo_plano(self, self.ctx, trabajo, al_terminar=listo, sonido="",
+			al_fallar=lambda error: log.info("No se pudo vigilar Actions tras enviar: %s", error))
 
 	def sincronizar(self) -> None:
 		def seguir(estado: git_local.EstadoRepositorio, _remotos: list[str]) -> None:
@@ -668,12 +698,22 @@ class VentanaGit(wx.Frame):
 		en_segundo_plano(self, self.ctx, self._url_origin, al_terminar=self._vivo(listo), sonido="")
 
 	def crear_pull_request(self) -> None:
-		def trabajo() -> tuple[str, git_local.EstadoRepositorio, list[str]]:
-			ramas = [r.nombre for r in self.repo.ramas(remotas=True) if r.remota and r.nombre.startswith("origin/")]
-			return self._url_origin(), self.repo.estado(), ramas
+		api = self.ctx.api()
 
-		def listo(resultado: tuple[str, git_local.EstadoRepositorio, list[str]]) -> None:
-			url, estado, ramas = resultado
+		def trabajo() -> tuple[str, git_local.EstadoRepositorio, list[str], list[tuple[str, str]]]:
+			ramas = [r.nombre for r in self.repo.ramas(remotas=True) if r.remota and r.nombre.startswith("origin/")]
+			url = self._url_origin()
+			nombre = op.nombre_github(url, self.ctx.host)
+			plantillas: list[tuple[str, str]] = []
+			if nombre:
+				try:
+					plantillas = list(api.plantillas_pr(nombre) or [])
+				except Exception:  # noqa: BLE001 - sin plantilla se escribe la descripción desde cero
+					log.warning("No se pudieron leer las plantillas de pull request de %s", nombre, exc_info=True)
+			return url, self.repo.estado(), ramas, plantillas
+
+		def listo(resultado: tuple[str, git_local.EstadoRepositorio, list[str], list[tuple[str, str]]]) -> None:
+			url, estado, ramas, plantillas = resultado
 			nombre = op.nombre_github(url, self.ctx.host)
 			if not nombre:
 				mostrar_mensaje(self, _("El remoto origin no es de {h}: no se puede crear un pull request.").format(h=self.ctx.host),
@@ -682,11 +722,16 @@ class VentanaGit(wx.Frame):
 			if not estado.rama or not estado.rama_remota:
 				mostrar_mensaje(self, _("Envíe primero la rama actual a GitHub (menú Git, Enviar)."), _("Crear pull request"))
 				return
-			self.dialogo_pull_request(nombre, estado.rama, [r.removeprefix("origin/") for r in ramas])
+			from app.ui.repositorio.vistas import _elegir_plantilla_pr
+
+			cuerpo = _elegir_plantilla_pr(self, plantillas)
+			if cuerpo is None:
+				return
+			self.dialogo_pull_request(nombre, estado.rama, [r.removeprefix("origin/") for r in ramas], cuerpo)
 
 		en_segundo_plano(self, self.ctx, trabajo, al_terminar=self._vivo(listo), sonido="")
 
-	def dialogo_pull_request(self, nombre: str, rama: str, bases: list[str]) -> Any:
+	def dialogo_pull_request(self, nombre: str, rama: str, bases: list[str], cuerpo: str = "") -> Any:
 		from app.ui.editor import CampoExtra, editar
 
 		bases = [b for b in bases if b != rama] or ["main"]
@@ -697,7 +742,7 @@ class VentanaGit(wx.Frame):
 			return api.crear_pr(nombre, valores["titulo"], rama, valores["base"], valores["cuerpo"], bool(valores.get("borrador")))
 
 		resultado = editar(
-			self, self.ctx, _("Nuevo pull request desde {r}").format(r=rama), enviar, con_titulo=True,
+			self, self.ctx, _("Nuevo pull request desde {r}").format(r=rama), enviar, con_titulo=True, cuerpo=cuerpo,
 			etiqueta_enviar=_("Crear el &pull request"), con_adjuntos=True,
 			extras=[
 				CampoExtra("base", _("Rama &base:"), "opcion", defecto, [(b, b) for b in bases], _("Rama en la que se fusionarán los cambios.")),

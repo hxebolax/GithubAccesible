@@ -611,6 +611,7 @@ class VentanaEjecucion(VentanaDetalle):
 				(_("Cancelar a la &fuerza"), lambda: self.cancelar(forzar=True)),
 				(_("A&probar la ejecución pendiente"), self.aprobar),
 				(_("Re&visar los despliegues pendientes…"), self.revisar_despliegues),
+				(_("Avisar&me cuando termine, aunque cierre la ventana"), self.vigilar_en_segundo_plano),
 				None,
 				(_("&Borrar la ejecución…"), self.borrar),
 				(_("Borrar los re&gistros…"), self.borrar_registros),
@@ -957,6 +958,18 @@ class VentanaEjecucion(VentanaDetalle):
 		self.ir_a_linea(linea, largo=len(self.buscado), columna=columna)
 
 	# ── Seguimiento en vivo ───────────────────────────────────────────────────
+
+	def vigilar_en_segundo_plano(self) -> None:
+		"""La vigila la ventana principal: avisa al terminar aunque esta ventana se cierre."""
+		from app.services import vigilancia_actions as va
+
+		if self.ejecucion.get("status") == "completed":
+			self.ctx.avisar(_("Esta ejecución ya ha terminado."))
+			return
+		principal = self.ctx.ventana_principal
+		if principal is None or not hasattr(principal, "vigilar"):
+			return
+		principal.vigilar(va.nueva_ejecucion(self.nombre, dict(self.ejecucion, id=self.id_ejecucion)))
 
 	def seguir_en_vivo(self, activar: bool, anunciar: bool = True) -> None:
 		if activar and self.cargada and self.terminada:

@@ -18,8 +18,17 @@ En toda la aplicación, elegir algo (una sección, una opción de un desplegable
 - Control+Mayúsculas+U: cambiar de cuenta.
 - Control+P: Preferencias.
 - Control+Mayúsculas+H: historial de avisos de voz.
+- Control+Mayúsculas+O: paleta de órdenes (también en las demás ventanas).
 - F1: manual. Mayúsculas+F1: lista de teclas.
 - Control+Q: salir.
+
+## Teclas globales (desde cualquier programa)
+
+Se cambian en Preferencias, Teclas globales.
+
+- Control+Alt+Mayúsculas+G: mostrar u ocultar la aplicación.
+- Control+Alt+Mayúsculas+N: decir las notificaciones sin leer.
+- Sin tecla de fábrica: abrir Notificaciones, buscar en GitHub y comprobar las notificaciones ahora.
 
 ## Todas las listas
 
@@ -53,7 +62,7 @@ En toda la aplicación, elegir algo (una sección, una opción de un desplegable
 - Código: Retroceso sube de carpeta, F4 cambia de rama, Control+P busca un archivo en todo el árbol, Control+U sube un archivo, Control+S descarga el archivo.
 - Issues y pull requests: Control+R comentar, Control+L etiquetas, Control+Mayúsculas+A asignados, Control+Mayúsculas+X cerrar o reabrir.
 - Pull requests y ramas: Control+D ver las diferencias o comparar.
-- Actions: Control+R volver a ejecutar, Control+N lanzar un flujo.
+- Actions: Control+R volver a ejecutar, Control+N lanzar un flujo, Control+Mayúsculas+W avisarme cuando termine.
 - Commits: Control+Mayúsculas+S copiar el identificador (SHA).
 - Wiki: Intro leer la página, F2 editarla, Control+N página nueva, Suprimir borrarla, Control+P buscar en todas las páginas.
 
@@ -79,6 +88,9 @@ En toda la aplicación, elegir algo (una sección, una opción de un desplegable
 - Control+G: ir a una línea.
 - Control+T: ver todo como texto.
 - Control+C: copiar la línea.
+- Control+D: qué cambia dentro de la línea.
+- Control+Mayúsculas+D: resumen de las diferencias.
+- Control+Mayúsculas+T: ver las diferencias narradas.
 - Intro: comentar la línea (en pull requests). Control+Intro: leer sus comentarios.
 
 ## Archivo del repositorio
