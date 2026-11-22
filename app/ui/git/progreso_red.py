@@ -35,17 +35,17 @@ def _(texto: str) -> str:
 HITOS = (25, 50, 75, 100)
 
 _FASES = {
-	"counting objects": "Contando objetos",
-	"compressing objects": "Comprimiendo objetos",
-	"enumerating objects": "Enumerando objetos",
-	"receiving objects": "Recibiendo objetos",
-	"resolving deltas": "Resolviendo diferencias",
-	"writing objects": "Enviando objetos",
-	"updating files": "Actualizando archivos",
-	"checking out files": "Extrayendo archivos",
-	"filtering content": "Filtrando contenido",
-	"checking connectivity": "Comprobando la conectividad",
-	"updating index flags": "Actualizando el índice",
+	"counting objects": N_("Contando objetos"),
+	"compressing objects": N_("Comprimiendo objetos"),
+	"enumerating objects": N_("Enumerando objetos"),
+	"receiving objects": N_("Recibiendo objetos"),
+	"resolving deltas": N_("Resolviendo diferencias"),
+	"writing objects": N_("Enviando objetos"),
+	"updating files": N_("Actualizando archivos"),
+	"checking out files": N_("Extrayendo archivos"),
+	"filtering content": N_("Filtrando contenido"),
+	"checking connectivity": N_("Comprobando la conectividad"),
+	"updating index flags": N_("Actualizando el índice"),
 }
 
 #: Fases rápidas que se muestran pero no se anuncian (en inglés y en español).

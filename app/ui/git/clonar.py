@@ -42,7 +42,7 @@ def _(texto: str) -> str:
 
 PROTOCOLOS = ("https", "ssh")
 
-MENSAJE_SIN_GIT = (
+MENSAJE_SIN_GIT = N_(
 	"Para clonar hace falta Git, y no está instalado (o no se encuentra).\n\n"
 	"Cómo instalarlo:\n"
 	"1. Descargue Git for Windows desde https://git-scm.com/download/win, o en una consola escriba: "

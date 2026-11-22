@@ -47,6 +47,12 @@ def _(texto: str) -> str:
 LETRAS_FIJAS = "tcvn"
 
 
+def letras_fijas() -> set[str]:
+	"""Las de ``LETRAS_FIJAS`` en el idioma de la interfaz (en inglés «&Title», «&Preview»...)."""
+	textos = (_("&Título:"), _("&Vista previa"), _("&Crear la issue"), _("Ca&ncelar"))
+	return {t[t.index("&") + 1].lower() for t in textos if "&" in t[:-1]}
+
+
 def _es_letra_valida(caracter: str) -> bool:
 	return (caracter.isascii() and caracter.isalnum()) or caracter == "ñ"
 
@@ -94,7 +100,7 @@ class DialogoFormularioIssue(wx.Dialog):
 		self.resultado: Any = None
 		#: Control de cada pregunta por ``Elemento.clave`` (lista de casillas en ``checkboxes``).
 		self.controles: dict[str, Any] = {}
-		self._letras = set(LETRAS_FIJAS)
+		self._letras = letras_fijas()
 		raiz = wx.BoxSizer(wx.VERTICAL)
 
 		# Panel con barra de desplazamiento: un formulario puede tener muchos campos

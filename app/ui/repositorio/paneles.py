@@ -24,7 +24,7 @@ from app.services import formato as f
 from app.ui.accesibilidad.dialogos import mostrar_error
 from app.ui.accesibilidad.teclado import copiar_texto, vincular_menu_contextual
 from app.ui.comunes import confirmar_peligro, elegir_uno, en_segundo_plano, mensaje_error, mostrar_mensaje
-from app.ui.vistas.base import Accion
+from app.ui.vistas.base import Accion, atajo_visible
 from app.ui.vistas.principales import detalle_repositorio
 
 log = logging.getLogger(__name__)
@@ -104,7 +104,8 @@ class PanelSeccion(wx.Panel):
 		for accion in acciones if acciones is not None else self.acciones_disponibles():
 			etiqueta = accion.etiqueta
 			if accion.atajo:
-				etiqueta += f" ({accion.atajo})" if en_barra else f"\t{accion.atajo}"
+				atajo = atajo_visible(accion.atajo)
+				etiqueta += f" ({atajo})" if en_barra else f"\t{atajo}"
 			item = menu.Append(wx.ID_ANY, etiqueta, accion.ayuda)
 			menu.Bind(wx.EVT_MENU, lambda _e, a=accion: wx.CallAfter(self.ejecutar, a), item)
 		return menu
@@ -141,7 +142,7 @@ class PanelSeccion(wx.Panel):
 			self.cargando = False
 			self.ctx.sonar("error")
 			self.poner_texto(_("No se pudo cargar: {m}").format(m=mensaje_error(error)))
-			self.ctx.avisar(_("Error al cargar {t}: {m}").format(t=self.titulo, m=mensaje_error(error)))
+			self.ctx.avisar(_("Error al cargar {t}: {m}").format(t=_(self.titulo) if self.titulo else "", m=mensaje_error(error)))
 
 		self.ctx.tareas.enviar(lambda tarea: self.obtener(api), al_terminar=al_terminar, al_fallar=al_fallar,
 			nombre=f"repositorio:{type(self).__name__}", duplicadas="permitir")
@@ -178,7 +179,7 @@ def porcentajes_lenguajes(lenguajes: dict | None) -> list[str]:
 
 
 class PanelResumen(PanelSeccion):
-	titulo = "Resumen"
+	titulo = N_("Resumen")
 
 	def __init__(self, padre: wx.Window, ctx: Any, datos: dict) -> None:
 		super().__init__(padre, ctx, datos)
@@ -352,7 +353,7 @@ def componer_estadisticas(datos: dict) -> str:
 
 
 class PanelEstadisticas(PanelSeccion):
-	titulo = "Estadísticas"
+	titulo = N_("Estadísticas")
 
 	def __init__(self, padre: wx.Window, ctx: Any, datos: dict) -> None:
 		super().__init__(padre, ctx, datos)
@@ -410,7 +411,7 @@ def componer_pages(pages: dict | None, compilaciones: list | None) -> str:
 
 
 class PanelPages(PanelSeccion):
-	titulo = "Pages"
+	titulo = N_("Pages")
 
 	def __init__(self, padre: wx.Window, ctx: Any, datos: dict) -> None:
 		super().__init__(padre, ctx, datos)

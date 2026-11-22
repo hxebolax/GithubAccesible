@@ -37,16 +37,17 @@ def _(texto: str) -> str:
 
 _CB_GETDROPPEDSTATE = 0x0157
 
-# Etiquetas en español de los botones estándar.
+# Etiquetas en español de los botones estándar (se traducen con _() al crear el botón;
+# N_ ya está en builtins porque ``ayuda`` importa app.core.i18n).
 ETIQUETAS = {
-	wx.ID_OK: "&Aceptar",
-	wx.ID_CANCEL: "&Cancelar",
-	wx.ID_YES: "&Sí",
-	wx.ID_NO: "&No",
-	wx.ID_APPLY: "A&plicar",
-	wx.ID_CLOSE: "C&errar",
-	wx.ID_HELP: "A&yuda",
-	wx.ID_SAVE: "&Guardar",
+	wx.ID_OK: N_("&Aceptar"),
+	wx.ID_CANCEL: N_("&Cancelar"),
+	wx.ID_YES: N_("&Sí"),
+	wx.ID_NO: N_("&No"),
+	wx.ID_APPLY: N_("A&plicar"),
+	wx.ID_CLOSE: N_("C&errar"),
+	wx.ID_HELP: N_("A&yuda"),
+	wx.ID_SAVE: N_("&Guardar"),
 }
 
 

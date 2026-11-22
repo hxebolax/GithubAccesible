@@ -48,12 +48,19 @@ def clave_organizacion(login: str) -> str:
 	return f"organizacion:{login.lower()}"
 
 
-ROLES_MIEMBRO = [("member", "Miembro"), ("admin", "Propietario (administración)")]
-ROLES_INVITACION = [("direct_member", "Miembro"), ("admin", "Propietario"), ("billing_manager", "Gestor de facturación")]
-PRIVACIDAD_EQUIPO = [("closed", "Visible para toda la organización"), ("secret", "Secreto: solo sus miembros")]
-PERMISOS_REPO = [("pull", "Lectura"), ("triage", "Clasificación"), ("push", "Escritura"), ("maintain", "Mantenimiento"),
-	("admin", "Administración")]
-VISIBILIDAD_ACTIONS = [("all", "Todos los repositorios"), ("private", "Repositorios privados"), ("selected", "Repositorios elegidos")]
+ROLES_MIEMBRO = [("member", N_("Miembro")), ("admin", N_("Propietario (administración)"))]
+ROLES_INVITACION = [("direct_member", N_("Miembro")), ("admin", N_("Propietario")), ("billing_manager", N_("Gestor de facturación"))]
+PRIVACIDAD_EQUIPO = [("closed", N_("Visible para toda la organización")), ("secret", N_("Secreto: solo sus miembros"))]
+PERMISOS_REPO = [("pull", N_("Lectura")), ("triage", N_("Clasificación")), ("push", N_("Escritura")), ("maintain", N_("Mantenimiento")),
+	("admin", N_("Administración"))]
+VISIBILIDAD_ACTIONS = [("all", N_("Todos los repositorios")), ("private", N_("Repositorios privados")), ("selected", N_("Repositorios elegidos"))]
+
+
+def texto_visibilidad(valor: str) -> str:
+	"""Nombre traducido de la visibilidad de un secreto o variable de Actions (la clave tal cual si es desconocida)."""
+	texto = dict(VISIBILIDAD_ACTIONS).get(valor, valor)
+	# _("") devolvería la cabecera del catálogo: una celda vacía se queda vacía.
+	return _(texto) if texto else ""
 
 
 def texto_organizacion(org: dict) -> str:
@@ -383,7 +390,7 @@ def _vista_secretos() -> DefinicionVista:
 		"org_secretos", _("Secretos de Actions"),
 		[
 			Columna("nombre", _("Nombre"), lambda s, c: s.get("name", ""), 260),
-			Columna("visibilidad", _("Disponible para"), lambda s, c: dict(VISIBILIDAD_ACTIONS).get(s.get("visibility", ""), s.get("visibility", "")), 180),
+			Columna("visibilidad", _("Disponible para"), lambda s, c: texto_visibilidad(s.get("visibility", "")), 180),
 			Columna("actualizado", _("Actualizado"), lambda s, c: f.fecha(s.get("updated_at"), c.relativas()), 120),
 		],
 		lambda api, pagina, panel: api.secretos_org(_org(panel)), None,
@@ -429,7 +436,7 @@ def _vista_variables() -> DefinicionVista:
 		[
 			Columna("nombre", _("Nombre"), lambda v, c: v.get("name", ""), 240),
 			Columna("valor", _("Valor"), lambda v, c: v.get("value", ""), 280),
-			Columna("visibilidad", _("Disponible para"), lambda v, c: dict(VISIBILIDAD_ACTIONS).get(v.get("visibility", ""), v.get("visibility", "")), 180),
+			Columna("visibilidad", _("Disponible para"), lambda v, c: texto_visibilidad(v.get("visibility", "")), 180),
 		],
 		lambda api, pagina, panel: api.variables_org(_org(panel)), None,
 		[

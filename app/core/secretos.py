@@ -38,6 +38,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Protocol
 
+import app.core.i18n  # noqa: F401 - instala _ en builtins (los errores al guardar llegan a Preferencias)
+
 log = logging.getLogger(__name__)
 
 VARIABLE_DATA = "APP_DATA_DIR"
@@ -119,7 +121,8 @@ class ProteccionDPAPI:
 		if not funcion(ctypes.byref(entrada), descripcion, ctypes.byref(entropia), None, None,
 				self._SIN_INTERFAZ, ctypes.byref(salida)):
 			codigo = ctypes.get_last_error()
-			raise ErrorSecretos(f"DPAPI falló (código {codigo}): {ctypes.FormatError(codigo)}")
+			raise ErrorSecretos(
+				_("DPAPI falló (código {codigo}): {mensaje}").format(codigo=codigo, mensaje=ctypes.FormatError(codigo)))
 		try:
 			return ctypes.string_at(salida.pbData, salida.cbData)
 		finally:
@@ -273,7 +276,7 @@ class AlmacenSecretos:
 			os.replace(self.ruta, destino)
 			log.warning("Secretos ilegibles apartados en %s; se empieza un almacén nuevo", destino.name)
 		except OSError as error:
-			raise ErrorSecretos("No se pudo apartar el archivo de secretos ilegible.") from error
+			raise ErrorSecretos(_("No se pudo apartar el archivo de secretos ilegible.")) from error
 
 	def _escribir(self, datos: dict[str, str]) -> None:
 		claro = json.dumps(datos, ensure_ascii=False).encode("utf-8")
@@ -303,7 +306,7 @@ class AlmacenSecretos:
 			try:
 				self._escribir(datos)
 			except OSError as error:
-				raise ErrorSecretos(f"No se pudieron guardar los secretos: {error}") from error
+				raise ErrorSecretos(_("No se pudieron guardar los secretos: {error}").format(error=error)) from error
 		log.info("Secretos actualizados: %s", ", ".join(sorted(cambios)))
 
 	def guardar(self, nombre: str, valor: str) -> None:

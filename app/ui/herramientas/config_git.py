@@ -36,29 +36,29 @@ SIN_CONFIGURAR = ""
 #: (valor, texto) de cada desplegable; «» = sin configurar.
 OPCIONES = {
 	"core.autocrlf": [
-		(SIN_CONFIGURAR, "(sin configurar)"),
-		("true", "true: convertir a CRLF de Windows al extraer y a LF al guardar"),
-		("input", "input: convertir a LF solo al guardar"),
-		("false", "false: no convertir nunca"),
+		(SIN_CONFIGURAR, N_("(sin configurar)")),
+		("true", N_("true: convertir a CRLF de Windows al extraer y a LF al guardar")),
+		("input", N_("input: convertir a LF solo al guardar")),
+		("false", N_("false: no convertir nunca")),
 	],
 	"pull.rebase": [
-		(SIN_CONFIGURAR, "(sin configurar)"),
-		("false", "false: fusionar (merge)"),
-		("true", "true: reorganizar (rebase)"),
-		("merges", "merges: reorganizar conservando las fusiones"),
+		(SIN_CONFIGURAR, N_("(sin configurar)")),
+		("false", N_("false: fusionar (merge)")),
+		("true", N_("true: reorganizar (rebase)")),
+		("merges", N_("merges: reorganizar conservando las fusiones")),
 	],
 	"gpg.format": [
-		(SIN_CONFIGURAR, "(sin configurar: openpgp)"),
-		("openpgp", "openpgp: claves GPG"),
-		("ssh", "ssh: claves SSH"),
-		("x509", "x509: certificados S/MIME"),
+		(SIN_CONFIGURAR, N_("(sin configurar: openpgp)")),
+		("openpgp", N_("openpgp: claves GPG")),
+		("ssh", N_("ssh: claves SSH")),
+		("x509", N_("x509: certificados S/MIME")),
 	],
 }
 
 CLAVES = ("user.name", "user.email", "init.defaultBranch", "core.autocrlf", "pull.rebase", "commit.gpgsign", "gpg.format",
 	"user.signingkey", "credential.helper")
 
-TEXTO_SIN_GIT = (
+TEXTO_SIN_GIT = N_(
 	"Git no está instalado o no se encuentra.\n"
 	"Instale Git for Windows desde https://git-scm.com/download/win (o con «winget install --id Git.Git -e»). "
 	"Si lo tiene en otra carpeta, escriba abajo la ruta de git.exe."

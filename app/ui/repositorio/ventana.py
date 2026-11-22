@@ -30,7 +30,7 @@ import wx
 from app.ui.comunes import confirmar, copiar, en_segundo_plano, mensaje_error, mostrar_error
 from app.ui.repositorio.paneles import PANELES
 from app.ui.repositorio.vistas import VISTAS, etiqueta_con_letra, rotular
-from app.ui.vistas.base import PanelLista
+from app.ui.vistas.base import PanelLista, atajo_visible
 
 log = logging.getLogger(__name__)
 
@@ -50,32 +50,32 @@ class Seccion:
 
 
 SECCIONES: list[Seccion] = [
-	Seccion("resumen", "Resumen", "&1 Resumen"),
-	Seccion("codigo", "Código", "&2 Código"),
-	Seccion("issues", "Issues", "&3 Issues"),
-	Seccion("prs", "Pull requests", "&4 Pull requests"),
-	Seccion("discusiones", "Discusiones", "&5 Discusiones"),
-	Seccion("acciones", "Actions", "&6 Actions"),
-	Seccion("releases", "Releases", "&7 Releases"),
-	Seccion("ramas", "Ramas", "&8 Ramas"),
-	Seccion("etiquetas", "Etiquetas git (tags)", "&9 Etiquetas git (tags)"),
-	Seccion("commits", "Commits", "&Commits"),
-	Seccion("proyectos", "Proyectos", "&Proyectos"),
-	Seccion("wiki", "Wiki", "Wi&ki"),
-	Seccion("hitos", "Hitos", "&Hitos"),
-	Seccion("labels", "Etiquetas de issues (labels)", "Eti&quetas de issues (labels)"),
-	Seccion("colaboradores", "Colaboradores", "C&olaboradores"),
-	Seccion("bifurcaciones", "Bifurcaciones", "&Bifurcaciones"),
-	Seccion("observadores", "Estrellas (quién le dio estrella)", "Es&trellas (quién le dio estrella)"),
-	Seccion("seguridad", "Seguridad", "S&eguridad"),
-	Seccion("entornos", "Entornos", "E&ntornos"),
-	Seccion("secretos", "Secretos y variables", "Secretos y &variables"),
-	Seccion("webhooks", "Webhooks", "&Webhooks"),
-	Seccion("claves", "Claves de despliegue", "C&laves de despliegue"),
-	Seccion("reglas", "Reglas y protección", "Re&glas y protección"),
-	Seccion("estadisticas", "Estadísticas", "Esta&dísticas"),
-	Seccion("despliegues", "Despliegues", "Desplieg&ues"),
-	Seccion("pages", "Pages", "P&ages"),
+	Seccion("resumen", N_("Resumen"), N_("&1 Resumen")),
+	Seccion("codigo", N_("Código"), N_("&2 Código")),
+	Seccion("issues", N_("Issues"), N_("&3 Issues")),
+	Seccion("prs", N_("Pull requests"), N_("&4 Pull requests")),
+	Seccion("discusiones", N_("Discusiones"), N_("&5 Discusiones")),
+	Seccion("acciones", N_("Actions"), N_("&6 Actions")),
+	Seccion("releases", N_("Releases"), N_("&7 Releases")),
+	Seccion("ramas", N_("Ramas"), N_("&8 Ramas")),
+	Seccion("etiquetas", N_("Etiquetas git (tags)"), N_("&9 Etiquetas git (tags)")),
+	Seccion("commits", N_("Commits"), N_("&Commits")),
+	Seccion("proyectos", N_("Proyectos"), N_("&Proyectos")),
+	Seccion("wiki", N_("Wiki"), N_("Wi&ki")),
+	Seccion("hitos", N_("Hitos"), N_("&Hitos")),
+	Seccion("labels", N_("Etiquetas de issues (labels)"), N_("Eti&quetas de issues (labels)")),
+	Seccion("colaboradores", N_("Colaboradores"), N_("C&olaboradores")),
+	Seccion("bifurcaciones", N_("Bifurcaciones"), N_("&Bifurcaciones")),
+	Seccion("observadores", N_("Estrellas (quién le dio estrella)"), N_("Es&trellas (quién le dio estrella)")),
+	Seccion("seguridad", N_("Seguridad"), N_("S&eguridad")),
+	Seccion("entornos", N_("Entornos"), N_("E&ntornos")),
+	Seccion("secretos", N_("Secretos y variables"), N_("Secretos y &variables")),
+	Seccion("webhooks", N_("Webhooks"), N_("&Webhooks")),
+	Seccion("claves", N_("Claves de despliegue"), N_("C&laves de despliegue")),
+	Seccion("reglas", N_("Reglas y protección"), N_("Re&glas y protección")),
+	Seccion("estadisticas", N_("Estadísticas"), N_("Esta&dísticas")),
+	Seccion("despliegues", N_("Despliegues"), N_("Desplieg&ues")),
+	Seccion("pages", N_("Pages"), N_("P&ages")),
 ]
 IDS = [s.id for s in SECCIONES]
 TITULOS = {s.id: s.titulo for s in SECCIONES}
@@ -337,7 +337,7 @@ class VentanaRepositorio(wx.Frame):
 		for accion in acciones:
 			if accion.separador_antes and not primero:
 				menu.AppendSeparator()
-			etiqueta = accion.etiqueta + (f" ({accion.atajo})" if accion.atajo else "")
+			etiqueta = accion.etiqueta + (f" ({atajo_visible(accion.atajo)})" if accion.atajo else "")
 			item = menu.Append(wx.ID_ANY, etiqueta, accion.ayuda)
 			self.Bind(wx.EVT_MENU, lambda _e, a=accion, p=panel: wx.CallAfter(p.ejecutar, a), item)
 			self._ids_acciones.append(item.GetId())

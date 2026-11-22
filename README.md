@@ -1,6 +1,8 @@
 # GitHub Accesible
 
-Aplicación de escritorio para Windows con la que se maneja **GitHub entero y git local desde el teclado y con lector de pantalla** (NVDA, JAWS o Narrador). Todo está en español, cada pantalla está pensada para escucharse bien y nada obliga a usar el ratón ni la web.
+[English version of this page](README.en.md)
+
+Aplicación de escritorio para Windows con la que se maneja **GitHub entero y git local desde el teclado y con lector de pantalla** (NVDA, JAWS o Narrador). Está en español y en inglés (elige sola el idioma de Windows y se cambia en Preferencias), cada pantalla está pensada para escucharse bien y nada obliga a usar el ratón ni la web.
 
 - Autor: Héctor J. Benítez Corredera.
 - Licencia: GPL versión 3 (ver [LICENSE](LICENSE)).
@@ -139,7 +141,7 @@ Sin el menú: `.venv\Scripts\python.exe -m pytest` y `.venv\Scripts\python.exe m
 ### Publicar una versión
 
 1. Cambie `APP_VERSION` en `app/core/version.py` (la única fuente de la versión) y `version` en `pyproject.toml`.
-2. Añada sus novedades en `docs/changelog.md`.
+2. Añada sus novedades en `docs/changelog.md` y, traducidas, en `docs/en/changelog.md` (la misma versión en los dos).
 3. Ejecute `.venv\Scripts\python.exe tools\publicar.py`. Compila, empaqueta, firma el `version.json` con la clave privada de `tools/claves/` (que nunca se sube al repositorio), copia el ZIP y el manifiesto a la carpeta sincronizada con el servidor y crea la release de GitHub con `gh`.
 
 La clave privada de firma es imprescindible para publicar versiones que acepten las instalaciones existentes: guarde una copia fuera del equipo.
@@ -156,14 +158,16 @@ El inicio «con el navegador y un código» necesita el Client ID de una aplicac
 - `app/ui`: interfaz. `accesibilidad/` (listas, casillas, diálogos, voz, teclado), `vistas/` (marco de listas y secciones), `repositorio/`, `detalle/` (issues, pull requests, diferencias, Actions, releases...), `git/`, `herramientas/`, preferencias, inicio de sesión.
 - `tests`: pruebas de pytest, sin red y sin tocar el `data` real.
 - `tools`: compilación, empaquetado, firma, publicación, traducciones y comprobación de teclas.
-- `docs`: manual, lista de teclas y registro de cambios.
+- `docs`: manual, lista de teclas y registro de cambios en español; `docs/en`, los mismos en inglés.
+- `data/locales`: plantilla de traducción (`.pot`) y catálogo inglés (`en/LC_MESSAGES/githubaccesible.po` y `.mo`).
 - `adjuntos`: investigación y repositorios de referencia usados durante el desarrollo (no se distribuye).
 
 ### Convenciones
 
 - Código con tabulaciones y `ruff` (`.venv\Scripts\ruff.exe check .`).
-- Todo en español: interfaz, mensajes, registros, comentarios y documentación.
-- Accesibilidad obligatoria: etiqueta creada antes de cada control, letras de acceso sin repetir en cada pantalla (hay una prueba que lo revisa), botones en español, nada que bloquee la interfaz.
+- El español es el idioma principal y el inglés el secundario. El código, los comentarios y los registros están en español; todo texto que ve u oye la persona usuaria se marca con `_()` (o `N_()` en tablas) y se traduce en el catálogo inglés, y cada documento de `docs/` tiene su versión en `docs/en/`.
+- Para traducir: `tools\extraer_cadenas.py`, `tools\actualizar_po.py`, traducir lo nuevo en `data/locales/en/LC_MESSAGES/githubaccesible.po` y `tools\compilar_traducciones.py`.
+- Accesibilidad obligatoria: etiqueta creada antes de cada control, letras de acceso sin repetir en cada pantalla y en los dos idiomas (hay pruebas que lo revisan), botones en el idioma de la interfaz, nada que bloquee la interfaz.
 - Ningún error se pierde: todo queda en `data/logs` con archivo, línea y traza, y los tokens se tapan en los registros.
 
 ### Licencia

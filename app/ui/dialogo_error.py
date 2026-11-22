@@ -41,7 +41,7 @@ def _(texto: str) -> str:
 
 
 _candado = threading.Lock()
-_estado: dict = {"abierto": False, "pendientes": 0, "nombre_app": "la aplicación", "anunciar": None}
+_estado: dict = {"abierto": False, "pendientes": 0, "nombre_app": "", "anunciar": None}
 
 
 class DialogoError(wx.Dialog):
@@ -135,10 +135,11 @@ def _mostrar(tipo, valor, _rastro, ruta_registro: Path | None) -> None:
 			"Puede seguir trabajando; si el problema se repite, envíe al desarrollador "
 			"el botón «Copiar detalles» o la carpeta de registros.\n\n"
 			"Error: {tipo}: {mensaje}"
-		).format(app=_estado["nombre_app"], tipo=tipo.__name__, mensaje=registro.redactar(str(valor)))
+		).format(app=_estado["nombre_app"] or _("la aplicación"), tipo=tipo.__name__, mensaje=registro.redactar(str(valor)))
 		detalles = registro.redactar(
-			f"{tipo.__name__}: {valor}\nOrigen: {origen}\nCódigo propio: {origen_app}\n"
-			f"Registro: {ruta_registro.name if ruta_registro else '-'}"
+			f"{tipo.__name__}: {valor}\n"
+			+ _("Origen: {origen}\nCódigo propio: {propio}\nRegistro: {registro}").format(
+				origen=origen, propio=origen_app, registro=ruta_registro.name if ruta_registro else "-")
 		)
 		app = wx.GetApp()
 		padre = app.GetTopWindow() if app else None

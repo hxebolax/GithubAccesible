@@ -25,8 +25,12 @@ Orden para elegir el idioma:
 1. La variable de entorno ``APP_IDIOMA`` (para probar una traducción sin
    tocar la configuración).
 2. El valor guardado en la configuración (argumento ``idioma``).
-3. El idioma de la interfaz de Windows (``GetUserDefaultUILanguage``) o, en
-   otros sistemas, el de ``locale``.
+3. Automático (``"auto"``, el valor de fábrica): el idioma de la interfaz de
+   Windows (``GetUserDefaultUILanguage``) o, en otros sistemas, el de
+   ``locale``. Cualquier variante de español (``es``, ``es_ES``, ``es_MX``,
+   ``es_US``...) da español; un idioma con catálogo propio, ese; cualquier
+   otro, el inglés (``IDIOMA_SECUNDARIO``), que entiende más gente que el
+   español entre quienes no hablan ninguno de los dos.
 4. Español: el idioma del código, que no necesita catálogo.
 
 Si el idioma elegido no tiene catálogo o el catálogo está dañado, se usa el
@@ -65,6 +69,8 @@ log = logging.getLogger(__name__)
 DOMINIO = "githubaccesible"
 # Idioma en el que está escrito el código fuente.
 IDIOMA_BASE = "es"
+# Idioma para quien no tiene el sistema en un idioma con traducción.
+IDIOMA_SECUNDARIO = "en"
 VARIABLE_DATA = "APP_DATA_DIR"
 VARIABLE_IDIOMA = "APP_IDIOMA"
 # Valores de configuración que significan «el del sistema».
@@ -180,14 +186,35 @@ def nombre_idioma(codigo: str) -> str:
 	return NOMBRES_IDIOMA.get(codigo) or NOMBRES_IDIOMA.get(codigo.split("_")[0]) or codigo
 
 
+def es_automatico(configurado: str | None) -> bool:
+	"""``True`` si el valor guardado significa «el idioma del sistema»."""
+	return configurado is None or configurado.strip().casefold() in AUTOMATICO
+
+
+def idioma_automatico(sistema: str | None = None, dominio: str = DOMINIO) -> str:
+	"""Idioma que corresponde al del sistema: español, uno traducido o el inglés.
+
+	:param sistema: código del sistema (``es_MX``, ``fr_FR``...); por defecto, ``idioma_sistema()``.
+	"""
+	codigo = normalizar(sistema if sistema is not None else idioma_sistema())
+	if not codigo or es_idioma_base(codigo):
+		# Sin dato del sistema se queda el idioma del código.
+		return IDIOMA_BASE
+	disponibles = idiomas_disponibles(dominio)
+	for candidato in (codigo, codigo.split("_")[0]):
+		if candidato in disponibles:
+			return candidato
+	return IDIOMA_SECUNDARIO
+
+
 def resolver_idioma(configurado: str | None = None) -> str:
 	"""Idioma que se intentará cargar, según el orden descrito en el módulo."""
 	forzado = os.environ.get(VARIABLE_IDIOMA, "").strip()
 	if forzado:
 		return normalizar(forzado)
-	if configurado and configurado.strip().casefold() not in AUTOMATICO:
+	if not es_automatico(configurado):
 		return normalizar(configurado)
-	return idioma_sistema() or IDIOMA_BASE
+	return idioma_automatico()
 
 
 # ── Instalación ──────────────────────────────────────────────────────────────
@@ -195,6 +222,14 @@ def resolver_idioma(configurado: str | None = None) -> str:
 def _instalar(traduccion: gettext.NullTranslations) -> None:
 	"""Publica las funciones en builtins para que todos los módulos las vean."""
 	traduccion.install(names=["gettext", "ngettext", "pgettext", "npgettext"])
+	traducir = traduccion.gettext
+
+	def _(texto: str) -> str:
+		# gettext("") devuelve la cabecera del catálogo («Project-Id-Version...»): un
+		# _(DICT.get(clave, "")) vacío debe seguir vacío.
+		return traducir(texto) if texto else texto
+
+	builtins._ = builtins.gettext = _
 	builtins.n_ = traduccion.ngettext
 	builtins.N_ = lambda texto: texto
 
@@ -231,6 +266,11 @@ def inicializar(idioma: str | None = None, dominio: str = DOMINIO) -> str:
 
 def idioma_actual() -> str:
 	return _idioma
+
+
+def idioma_corto() -> str:
+	"""Idioma activo sin región (``es``, ``en``): para elegir documentos y novedades."""
+	return (_idioma or IDIOMA_BASE).split("_")[0]
 
 
 def traduccion_actual() -> gettext.NullTranslations:

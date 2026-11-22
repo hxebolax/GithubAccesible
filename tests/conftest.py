@@ -81,6 +81,12 @@ HOSTS_LOCALES = {"localhost", "127.0.0.1", "::1", "0.0.0.0", ""}
 _DATA_SESION = Path(tempfile.mkdtemp(prefix="pruebas_data_"))
 os.environ[VARIABLE_DATA] = str(_DATA_SESION)
 
+# Revisión de la interfaz en otro idioma (APP_PRUEBAS_IDIOMA=en): ver tests/revision_idioma.py.
+from tests import revision_idioma  # noqa: E402
+
+if revision_idioma.idioma():
+	revision_idioma.activar()
+
 
 def _instantanea(carpeta: Path, limite: int = 20000) -> dict[str, tuple[int, int]]:
 	"""Tamaño y fecha de cada archivo de ``carpeta`` (para detectar cambios)."""
@@ -348,7 +354,7 @@ def app_wx(pytestconfig):
 	app = wx.App.Get() or wx.App(False)
 	# Como en main.py: ayuda contextual (Ctrl+H) y botones de wx en español.
 	wx.HelpProvider.Set(wx.SimpleHelpProvider())
-	idioma = wx.Locale(wx.LANGUAGE_SPANISH)
+	idioma = wx.Locale(wx.LANGUAGE_ENGLISH if revision_idioma.idioma() == "en" else wx.LANGUAGE_SPANISH)
 	_primer_foco_richedit_en_silencio(wx, pytestconfig)
 	yield app
 	del idioma
@@ -368,6 +374,9 @@ def _destruir_nuevas(antes: set[int]) -> None:
 
 	for ventana in list(wx.GetTopLevelWindows()):
 		if id(ventana) not in antes and ventana:
+			if revision_idioma.idioma():
+				# En la revisión en otro idioma se repasa cada ventana antes de cerrarla.
+				revision_idioma.apuntar(ventana)
 			ventana.Destroy()
 	procesar_eventos()
 

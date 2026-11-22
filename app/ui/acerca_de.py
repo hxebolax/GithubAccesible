@@ -24,6 +24,10 @@ def _(texto: str) -> str:
 	return traducir(texto) if callable(traducir) else texto
 
 
+# Para el catálogo: es el texto de LICENCIA (version.py se importa antes que la traducción y no puede marcarlo).
+N_("GPL (Licencia Pública General de GNU), versión 3")
+
+
 def texto_acerca_de() -> str:
 	"""Compone el texto del diálogo (sin wx en la lógica, para poder probarlo)."""
 	lineas = [
@@ -31,7 +35,7 @@ def texto_acerca_de() -> str:
 		_("Versión: {version}").format(version=APP_VERSION),
 		_("Autor: {autor}").format(autor=AUTOR),
 		f"Copyright (C) {ANIO_COPYRIGHT} {AUTOR}",
-		_("Licencia: {licencia}").format(licencia=LICENCIA),
+		_("Licencia: {licencia}").format(licencia=_(LICENCIA)),
 		_("Página del proyecto: {url}").format(url=URL_PROYECTO),
 		"",
 		_(

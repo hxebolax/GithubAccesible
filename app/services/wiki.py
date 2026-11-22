@@ -53,7 +53,7 @@ FORMATOS: dict[str, str] = {
 }
 #: Páginas especiales: la portada y los bloques que GitHub pone a un lado y al pie de todas.
 PORTADA = "Home"
-ESPECIALES = {"_sidebar": "Barra lateral", "_footer": "Pie de página"}
+ESPECIALES = {"_sidebar": N_("Barra lateral"), "_footer": N_("Pie de página")}
 #: Caracteres que GitHub no admite en el nombre de una página (los cambia por guiones).
 _PROHIBIDOS = re.compile(r'[\\/:*?"<>|\x00-\x1f]')
 

@@ -40,10 +40,6 @@ def _(texto: str) -> str:
 	return traducir(texto) if callable(traducir) else texto
 
 
-def N_(texto: str) -> str:  # noqa: N802 - convención de gettext
-	return texto
-
-
 # Evento → (descripción para Preferencias, receta del sonido de fábrica).
 # Receta: lista de (frecuencia inicial, frecuencia final, milisegundos, forma).
 EVENTOS: dict[str, tuple[str, list[tuple[float, float, int, str]]]] = {

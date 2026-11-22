@@ -2,6 +2,21 @@
 
 Cada versión tiene su apartado, de la más reciente a la más antigua. Dentro de cada versión, los cambios se agrupan en Novedades, Mejoras y Correcciones, contados con palabras de quien usa la aplicación.
 
+## Versión 1.0.7 - 2026-11-22
+
+### Novedades
+
+- **La aplicación, en inglés**. El español sigue siendo el idioma principal y el inglés es el segundo: toda la interfaz, los mensajes, los avisos por voz, el manual, la lista de teclas y las novedades están en los dos idiomas.
+- **Idioma automático**: al abrirla, la aplicación usa el español si Windows está en cualquier variante de español (es-ES, es-MX, es-US…) y el inglés en cualquier otro idioma. Quien ya la tenía instalada pasa también al idioma de Windows.
+- **Elegir el idioma** en Preferencias, General, «Idioma de la interfaz»: automático, español o inglés. Al cambiarlo, la aplicación ofrece reiniciarse para aplicarlo.
+- **Documentación en su idioma**: F1 (manual), la lista de teclas y Ayuda, Novedades se abren en el idioma de la interfaz. Las novedades tras actualizar y las de la ventana «Actualización disponible» también; la página de cada versión en GitHub las trae en los dos idiomas.
+
+### Mejoras
+
+- Fechas, números y tamaños con el formato de cada idioma (en inglés, «Nov 22, 2026» y «1,234»).
+- Las teclas globales y los atajos de los menús se dicen con los nombres de tecla del idioma elegido («Shift», «Del» o «Enter» en inglés).
+- Algunos mensajes que se montaban por trozos se dicen ahora con frases completas, como «ana envió 1 commit» (antes «1 commits») y «creó la rama dev» (antes «creó branch dev»).
+
 ## Versión 1.0.6 - 2026-11-22
 
 ### Mejoras

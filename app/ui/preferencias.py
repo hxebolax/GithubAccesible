@@ -46,6 +46,9 @@ def N_(texto: str) -> str:  # noqa: N802
 	return texto
 
 
+# Valores de «general.idioma» cuyo nombre se muestra en su propio idioma.
+NOMBRES_IDIOMA = {"es", "en"}
+
 TITULO_SONIDOS = N_("Sonidos")
 TITULO_COLUMNAS = N_("Columnas de las listas")
 TITULO_SECCIONES = N_("Secciones")
@@ -67,6 +70,11 @@ def paginas(paquetes: list[str]) -> tuple[Pagina, ...]:
 	A, C, P ni R (botones Aceptar, Cancelar, Aplicar y Restablecer)."""
 	return (
 		Pagina(N_("General"), (
+			Opcion("general.idioma", N_("Idioma de la i&nterfaz:"), OPCION,
+				N_("Idioma de menús, mensajes, documentación y novedades. «Automático» usa el español si Windows está en "
+					"cualquier variante de español y el inglés en los demás casos. Se aplica al reiniciar la aplicación."),
+				# Los nombres de los idiomas se escriben en su propio idioma (ver NOMBRES_IDIOMA en el diálogo).
+				opciones=(("auto", N_("Automático (el idioma de Windows)")), ("es", "Español"), ("en", "English"))),
 			Opcion("general.seccion_inicial", N_("&Sección al abrir:"), OPCION,
 				N_("Qué sección se muestra al abrir la aplicación."),
 				opciones=(("notificaciones", N_("Notificaciones")), ("inicio", N_("Inicio")), ("repositorios", N_("Mis repositorios")),
@@ -235,8 +243,31 @@ class DialogoPreferenciasGitHub(DialogoPreferencias):
 		self._eventos = list(sonidos_servicio.EVENTOS)
 		self._columnas_elegidas: dict[str, list[str]] = dict(ctx.config.obtener("listas.columnas", {}) or {})
 		super().__init__(padre, ctx.config, paginas(paquetes), secretos=None, anunciar=lambda t: ctx.avisar(t))
+		self._nombres_idioma_propios()
 		self._crear_pagina_columnas()
 		self._crear_pagina_secciones()
+
+	def _nombres_idioma_propios(self) -> None:
+		"""Cada idioma, escrito en ese idioma («Español», «English»), sin traducir.
+
+		El diálogo base pasa por ``_()`` el texto de cada opción, y «Español» se
+		traduciría a «Spanish»: quien no entiende el idioma actual debe reconocer el suyo.
+		"""
+		datos = self._controles.get("general.idioma")
+		if datos is None:
+			return
+		opcion, control, _pagina = datos
+		for posicion, (valor, nombre) in enumerate(opcion.opciones):
+			if valor in NOMBRES_IDIOMA:
+				control.SetString(posicion, nombre)
+
+	def _escribir_control(self, opcion: Opcion, control: wx.Window, valor: Any) -> None:
+		if opcion.tipo == TECLA and valor:
+			# Las de fábrica se guardan en español («Mayúsculas»): se enseñan en el idioma de la interfaz.
+			from app.ui.teclas_globales import normalizar
+
+			valor = normalizar(str(valor)) or valor
+		super()._escribir_control(opcion, control, valor)
 
 	# ── Página de sonidos: se añade la lista de eventos ───────────────────────
 
@@ -518,8 +549,28 @@ class DialogoPreferenciasGitHub(DialogoPreferencias):
 
 
 def mostrar_preferencias(padre: wx.Window | None, ctx: Any, vistas: list[Any] | None = None) -> bool:
+	idioma_antes = ctx.config.obtener("general.idioma", "auto")
 	dialogo = DialogoPreferenciasGitHub(padre, ctx, vistas)
 	try:
-		return dialogo.ShowModal() == wx.ID_OK
+		aceptado = dialogo.ShowModal() == wx.ID_OK
 	finally:
 		dialogo.Destroy()
+	# Aplicar también guarda: se compara con lo que había al abrir, no solo al aceptar.
+	if ctx.config.obtener("general.idioma", "auto") != idioma_antes:
+		ofrecer_reinicio_idioma(padre)
+	return aceptado
+
+
+def ofrecer_reinicio_idioma(padre: wx.Window | None) -> None:
+	"""El idioma se fija al arrancar: ofrece reiniciar ya (o dejarlo para la próxima vez)."""
+	from app.core import reinicio
+	from app.ui.accesibilidad.dialogos import confirmar
+
+	respuesta = confirmar(padre, _("El idioma nuevo se aplicará al reiniciar la aplicación. ¿Quiere reiniciarla ahora?"),
+		_("Cambiar el idioma"))
+	if respuesta != wx.ID_YES:
+		return
+	reinicio.solicitar()
+	salir = getattr(padre, "salir", None)
+	if callable(salir):
+		salir()

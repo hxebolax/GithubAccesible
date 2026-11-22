@@ -72,14 +72,14 @@ def clave_pr(nombre: str, numero: int) -> str:
 
 
 ESTADOS_ARCHIVO = {
-	"added": "Añadido", "modified": "Modificado", "removed": "Eliminado", "renamed": "Renombrado",
-	"copied": "Copiado", "changed": "Cambiado", "unchanged": "Sin cambios",
+	"added": N_("Añadido"), "modified": N_("Modificado"), "removed": N_("Eliminado"), "renamed": N_("Renombrado"),
+	"copied": N_("Copiado"), "changed": N_("Cambiado"), "unchanged": N_("Sin cambios"),
 }
 
 METODOS_FUSION = [
-	("merge", "MERGE", "Crear un commit de &fusión (merge)"),
-	("squash", "SQUASH", "&Squash: un solo commit con todos los cambios"),
-	("rebase", "REBASE", "&Rebase: reaplicar los commits sobre la base"),
+	("merge", "MERGE", N_("Crear un commit de &fusión (merge)")),
+	("squash", "SQUASH", N_("&Squash: un solo commit con todos los cambios")),
+	("rebase", "REBASE", N_("&Rebase: reaplicar los commits sobre la base")),
 ]
 
 _RUN_ACTIONS = re.compile(r"/actions/runs/(\d+)")
@@ -169,7 +169,7 @@ def remoto_coincide(url: str, nombre: str) -> bool:
 class DialogoRevision(wx.Dialog):
 	"""Enviar una revisión: Comentar, Aprobar o Pedir cambios, con los comentarios pendientes."""
 
-	EVENTOS = [("COMMENT", "C&omentar"), ("APPROVE", "&Aprobar"), ("REQUEST_CHANGES", "Pedir ca&mbios")]
+	EVENTOS = [("COMMENT", N_("C&omentar")), ("APPROVE", N_("&Aprobar")), ("REQUEST_CHANGES", N_("Pedir ca&mbios"))]
 
 	def __init__(self, padre: wx.Window | None, pendientes: list[dict]) -> None:
 		super().__init__(padre, title=_("Enviar la revisión"), size=(640, 520), style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)

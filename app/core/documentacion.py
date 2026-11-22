@@ -3,11 +3,14 @@
 Sin wx: lo usan el visor de ayuda (``app/ui/visor_ayuda.py``), las pruebas y
 las herramientas de publicación.
 
-Dónde se buscan los documentos, por orden:
+Cada documento existe en español (``docs/<nombre>``, el original) y en inglés
+(``docs/en/<nombre>``). Se abre el del idioma de la interfaz y, si falta, el
+español. Dónde se buscan, por orden (``<idioma>/`` solo si no es el español):
 
-1. ``data/docs/<nombre>``: donde están en la versión compilada (junto al
+1. ``data/docs/<idioma>/<nombre>`` y ``docs/<idioma>/<nombre>``.
+2. ``data/docs/<nombre>``: donde están en la versión compilada (junto al
    ``.exe``) y donde los deja la compilación.
-2. ``docs/<nombre>``: el original en el proyecto, al ejecutar desde código.
+3. ``docs/<nombre>``: el original en el proyecto, al ejecutar desde código.
 
 La última versión cuyas novedades se mostraron se guarda en
 ``data/config/novedades.json``. ``APP_DATA_DIR`` redirige ``data`` (pruebas).
@@ -60,9 +63,26 @@ def ruta_datos() -> Path:
 	return Path(redireccion).expanduser() if redireccion else ruta_base() / "data"
 
 
-def ruta_documento(nombre: str) -> Path | None:
-	"""Primer ``data/docs/<nombre>`` o ``docs/<nombre>`` que exista; None si no hay ninguno."""
-	for candidata in (ruta_datos() / "docs" / nombre, ruta_base() / "docs" / nombre):
+def idioma_documentos() -> str:
+	"""Idioma de los documentos: el de la interfaz sin región (``es``, ``en``)."""
+	from app.core import i18n
+
+	return i18n.idioma_corto()
+
+
+def candidatas_documento(nombre: str, idioma: str | None = None) -> list[Path]:
+	"""Rutas donde se busca un documento, de la preferida a la de reserva (español)."""
+	idioma = idioma or idioma_documentos()
+	carpetas = [ruta_datos() / "docs", ruta_base() / "docs"]
+	candidatas: list[Path] = []
+	if idioma and idioma != "es":
+		candidatas += [carpeta / idioma / nombre for carpeta in carpetas]
+	return candidatas + [carpeta / nombre for carpeta in carpetas]
+
+
+def ruta_documento(nombre: str, idioma: str | None = None) -> Path | None:
+	"""Primer documento que exista en el idioma pedido (por defecto, el de la interfaz) o en español."""
+	for candidata in candidatas_documento(nombre, idioma):
 		if candidata.is_file():
 			return candidata
 	return None
@@ -72,9 +92,9 @@ def ruta_estado() -> Path:
 	return ruta_datos() / "config" / ARCHIVO_ESTADO
 
 
-def leer_documento(nombre: str) -> str | None:
-	"""Texto de un documento o None (se registra el motivo)."""
-	ruta = ruta_documento(nombre)
+def leer_documento(nombre: str, idioma: str | None = None) -> str | None:
+	"""Texto de un documento (en el idioma de la interfaz si lo hay) o None (se registra el motivo)."""
+	ruta = ruta_documento(nombre, idioma)
 	if ruta is None:
 		log.warning("No se encontró el documento %s en data/docs ni en docs", nombre)
 		return None

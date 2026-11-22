@@ -38,7 +38,10 @@ PAQUETES = ["wx", "app", "markdown", "requests", "certifi", "cryptography", "url
 # accessible_output2 se importa de forma diferida: sus dependencias hay que nombrarlas.
 PAQUETES_OPCIONALES = ["accessible_output2", "libloader", "platform_utils", "comtypes", "win32com", "pythoncom"]
 # Documentación de usuario: la fuente está en docs/ y viaja a data/docs/.
-ARCHIVOS_EXTRA = [(f"docs/{nombre}", f"data/docs/{nombre}") for nombre in ("manual.md", "teclas.md", "changelog.md")]
+DOCUMENTOS = ("manual.md", "teclas.md", "changelog.md")
+ARCHIVOS_EXTRA = [(f"docs/{nombre}", f"data/docs/{nombre}") for nombre in DOCUMENTOS]
+# Los mismos documentos en inglés: se abren cuando la interfaz está en inglés.
+ARCHIVOS_EXTRA += [(f"docs/en/{nombre}", f"data/docs/en/{nombre}") for nombre in DOCUMENTOS]
 ARCHIVOS_EXTRA += [("LICENSE", "LICENSE.txt"), ("README.md", "README.md")]
 EXCLUDES = ["tkinter", "unittest", "pydoc_data", "pip", "pytest", "_pytest", "ruff", "cx_Freeze", "tests", "nacl"]
 

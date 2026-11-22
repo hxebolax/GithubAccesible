@@ -112,7 +112,7 @@ EVENTO = "evento"
 EVENTOS_IGNORADOS = {"subscribed", "unsubscribed", "mentioned"}
 
 _MOTIVOS_BLOQUEO = {
-	"off-topic": "fuera de tema", "too heated": "demasiado acalorada", "resolved": "resuelta", "spam": "spam",
+	"off-topic": N_("fuera de tema"), "too heated": N_("demasiado acalorada"), "resolved": N_("resuelta"), "spam": N_("spam"),
 }
 
 

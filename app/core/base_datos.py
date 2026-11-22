@@ -47,6 +47,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+import app.core.i18n  # noqa: F401 - instala _ en builtins (mensajes pensados para la persona usuaria)
+
 log = logging.getLogger(__name__)
 
 VARIABLE_DATA = "APP_DATA_DIR"
@@ -208,9 +210,9 @@ class Recuperacion:
 
 	def mensaje(self) -> str:
 		if self.restaurada_desde is not None:
-			return ("La base de datos estaba dañada y se ha restaurado la copia de seguridad "
-				f"«{self.restaurada_desde.name}». Pueden faltar los cambios posteriores a esa copia.")
-		return ("La base de datos estaba dañada y no había copias de seguridad sanas: se ha creado una "
+			return _("La base de datos estaba dañada y se ha restaurado la copia de seguridad "
+				"«{copia}». Pueden faltar los cambios posteriores a esa copia.").format(copia=self.restaurada_desde.name)
+		return _("La base de datos estaba dañada y no había copias de seguridad sanas: se ha creado una "
 			"nueva vacía. El archivo dañado se conserva en la carpeta de la base de datos.")
 
 
@@ -352,10 +354,10 @@ class BaseDatos:
 			except sqlite3.Error as error:
 				if _es_bloqueo(error):
 					if intento == self._reintentos:
-						raise ErrorBaseDatosBloqueada(
+						raise ErrorBaseDatosBloqueada(_(
 							"La base de datos está bloqueada por otro programa (antivirus, copia de "
 							"seguridad u otra instancia). No se ha tocado ningún dato."
-						) from error
+						)) from error
 					log.warning("Base de datos bloqueada; reintento %d de %d", intento, self._reintentos)
 					time.sleep(espera)
 					espera *= 2
@@ -457,10 +459,10 @@ class BaseDatos:
 		actual = self.version()
 		total = len(self._migraciones)
 		if actual > total:
-			raise ErrorVersionFutura(
-				f"La base de datos es de la versión {actual} y esta aplicación solo conoce hasta la {total}. "
+			raise ErrorVersionFutura(_(
+				"La base de datos es de la versión {actual} y esta aplicación solo conoce hasta la {total}. "
 				"Se creó con una versión más nueva de la aplicación; actualízala para abrirla."
-			)
+			).format(actual=actual, total=total))
 		if actual == total:
 			return
 		if actual > 0:

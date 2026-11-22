@@ -32,6 +32,7 @@ import unicodedata
 import wx
 import wx.adv
 
+import app.core.i18n  # noqa: F401 - instala N_ en builtins antes de usarlo al importar
 from app.ui.accesibilidad import voz
 
 
@@ -50,29 +51,31 @@ _NOMBRES_GENERICOS = {
 }
 
 # Ayuda por palabra clave de la etiqueta de un botón (lo más específico primero).
+# Las palabras clave se comparan con etiquetas en español y no se traducen; la
+# ayuda sí (N_ aquí, _() al devolverla en ``_ayuda_por_etiqueta``).
 _AYUDA_POR_ETIQUETA: tuple[tuple[tuple[str, ...], str], ...] = (
-	(("seleccionar todo", "marcar todo", "marcar todas", "marcar todos"), "Marca todos los elementos de la lista."),
-	(("desmarcar", "ninguno", "ninguna"), "Desmarca todos los elementos de la lista."),
-	(("examinar", "seleccionar...", "elegir"), "Abre un cuadro para elegir un archivo o una carpeta."),
-	(("vista previa", "previsualizar"), "Muestra una vista previa antes de aplicar los cambios."),
-	(("restablecer", "restaurar"), "Vuelve a los valores de fábrica."),
-	(("comprobar", "probar", "verificar", "detectar"), "Comprueba el estado y muestra el resultado, sin cambiar nada."),
-	(("actualizar", "refrescar", "recargar"), "Vuelve a cargar la información más reciente."),
-	(("copiar",), "Copia la información al portapapeles."),
-	(("exportar",), "Guarda la información en un archivo."),
-	(("importar",), "Carga información desde un archivo."),
-	(("abrir carpeta", "abrir la carpeta"), "Abre la carpeta en el Explorador de Windows."),
-	(("abrir",), "Abre el elemento seleccionado."),
-	(("detalles", "propiedades", "ficha"), "Muestra la información completa del elemento seleccionado."),
-	(("agregar", "añadir", "nuevo", "nueva"), "Crea un elemento nuevo."),
-	(("editar", "modificar"), "Edita el elemento seleccionado."),
-	(("eliminar", "borrar", "quitar"), "Elimina el elemento seleccionado; pide confirmación."),
-	(("buscar",), "Busca con el texto y los filtros indicados."),
-	(("guardar", "aplicar"), "Guarda los cambios realizados."),
-	(("aceptar",), "Acepta los cambios y cierra la ventana."),
-	(("cancelar",), "Cierra la ventana sin guardar los cambios."),
-	(("cerrar",), "Cierra esta ventana."),
-	(("ayuda",), "Muestra la ayuda."),
+	(("seleccionar todo", "marcar todo", "marcar todas", "marcar todos"), N_("Marca todos los elementos de la lista.")),
+	(("desmarcar", "ninguno", "ninguna"), N_("Desmarca todos los elementos de la lista.")),
+	(("examinar", "seleccionar...", "elegir"), N_("Abre un cuadro para elegir un archivo o una carpeta.")),
+	(("vista previa", "previsualizar"), N_("Muestra una vista previa antes de aplicar los cambios.")),
+	(("restablecer", "restaurar"), N_("Vuelve a los valores de fábrica.")),
+	(("comprobar", "probar", "verificar", "detectar"), N_("Comprueba el estado y muestra el resultado, sin cambiar nada.")),
+	(("actualizar", "refrescar", "recargar"), N_("Vuelve a cargar la información más reciente.")),
+	(("copiar",), N_("Copia la información al portapapeles.")),
+	(("exportar",), N_("Guarda la información en un archivo.")),
+	(("importar",), N_("Carga información desde un archivo.")),
+	(("abrir carpeta", "abrir la carpeta"), N_("Abre la carpeta en el Explorador de Windows.")),
+	(("abrir",), N_("Abre el elemento seleccionado.")),
+	(("detalles", "propiedades", "ficha"), N_("Muestra la información completa del elemento seleccionado.")),
+	(("agregar", "añadir", "nuevo", "nueva"), N_("Crea un elemento nuevo.")),
+	(("editar", "modificar"), N_("Edita el elemento seleccionado.")),
+	(("eliminar", "borrar", "quitar"), N_("Elimina el elemento seleccionado; pide confirmación.")),
+	(("buscar",), N_("Busca con el texto y los filtros indicados.")),
+	(("guardar", "aplicar"), N_("Guarda los cambios realizados.")),
+	(("aceptar",), N_("Acepta los cambios y cierra la ventana.")),
+	(("cancelar",), N_("Cierra la ventana sin guardar los cambios.")),
+	(("cerrar",), N_("Cierra esta ventana.")),
+	(("ayuda",), N_("Muestra la ayuda.")),
 )
 
 

@@ -35,9 +35,10 @@ from app.ui.editor import editar
 log = logging.getLogger(__name__)
 
 TIPOS_EDITABLES = ("TEXT", "NUMBER", "DATE", "SINGLE_SELECT", "ITERATION")
-TIPOS_ELEMENTO = {"ISSUE": "Issue", "PULL_REQUEST": "Pull request", "DRAFT_ISSUE": "Borrador", "REDACTED": "Oculto"}
+TIPOS_ELEMENTO = {"ISSUE": N_("Issue"), "PULL_REQUEST": N_("Pull request"), "DRAFT_ISSUE": N_("Borrador"), "REDACTED": N_("Oculto")}
 MAXIMO_ELEMENTOS = 5000
-SIN_VALOR = "(sin valor)"
+#: Se usa también como valor interno del filtro «sin valor»: se compara sin traducir y se traduce al mostrarlo.
+SIN_VALOR = N_("(sin valor)")
 
 
 def _(texto: str) -> str:
@@ -86,7 +87,8 @@ def titulo_elemento(elemento: dict) -> str:
 
 def tipo_elemento(elemento: dict) -> str:
 	tipo = elemento.get("type") or ""
-	texto = _(TIPOS_ELEMENTO.get(tipo, tipo.title()))
+	# Un tipo desconocido se muestra tal cual (y vacío no pasa por _(), que daría la cabecera del catálogo).
+	texto = _(TIPOS_ELEMENTO[tipo]) if tipo in TIPOS_ELEMENTO else tipo.title()
 	if elemento.get("isArchived"):
 		texto += _(" (archivado)")
 	return texto
@@ -299,7 +301,7 @@ class VentanaProyecto(VentanaDetalle):
 		partes = [_("{n} elementos").format(n=len(self.visibles))]
 		if self.filtro is not None:
 			partes.append(_("de {t}, con filtro «{c}: {v}»").format(t=len(self.elementos), c=self.filtro[0] or _("Título"),
-				v=self.filtro[1]))
+				v=_(SIN_VALOR) if self.filtro[1] == SIN_VALOR else self.filtro[1]))
 		if self.agrupado and self.campo_grupo is not None:
 			partes.append(_("agrupados por {c}").format(c=self.campo_grupo["name"]))
 		self.estado(", ".join(partes) + ".")

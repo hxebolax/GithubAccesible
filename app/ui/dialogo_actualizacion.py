@@ -70,10 +70,10 @@ def mostrar_mensaje(padre: wx.Window | None, mensaje: str, titulo: str, icono: i
 
 
 _NOMBRES_FASE = {
-	"descarga": "Descargando",
-	"verificacion": "Verificando el paquete",
-	"extraccion": "Descomprimiendo",
-	"preparacion": "Preparando la instalación",
+	"descarga": N_("Descargando"),
+	"verificacion": N_("Verificando el paquete"),
+	"extraccion": N_("Descomprimiendo"),
+	"preparacion": N_("Preparando la instalación"),
 }
 # Porcentajes de la descarga que se anuncian por voz (hitos, no cada cambio).
 _HITOS_VOZ = (25, 50, 75, 100)

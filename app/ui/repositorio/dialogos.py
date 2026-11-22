@@ -278,13 +278,13 @@ def dialogo_crear_repositorio(padre: wx.Window | None, ctx: Any, al_crear: Calla
 # ════════════════════════════════════════════════════════════════════════════
 
 OPCIONES_VIGILANCIA = [
-	("no", "&No vigilar",
-		"No recibe avisos de la actividad general. En GitHub equivale a «solo participando»: le seguirán llegando "
-		"los avisos de lo que usted abra, comente o donde le mencionen."),
-	("participando", "Solo cuando &participe o me mencionen",
-		"Solo recibe avisos de las conversaciones en las que participa o le mencionan (lo normal en GitHub)."),
-	("todo", "&Toda la actividad", "Recibe avisos de todas las issues, pull requests, releases y discusiones."),
-	("ignorar", "&Ignorar (ningún aviso)", "No recibe ningún aviso de este repositorio, ni siquiera si le mencionan."),
+	("no", N_("&No vigilar"),
+		N_("No recibe avisos de la actividad general. En GitHub equivale a «solo participando»: le seguirán llegando "
+		"los avisos de lo que usted abra, comente o donde le mencionen.")),
+	("participando", N_("Solo cuando &participe o me mencionen"),
+		N_("Solo recibe avisos de las conversaciones en las que participa o le mencionan (lo normal en GitHub).")),
+	("todo", N_("&Toda la actividad"), N_("Recibe avisos de todas las issues, pull requests, releases y discusiones.")),
+	("ignorar", N_("&Ignorar (ningún aviso)"), N_("No recibe ningún aviso de este repositorio, ni siquiera si le mencionan.")),
 ]
 
 
@@ -721,12 +721,12 @@ def proteccion_a_valores(proteccion: dict | None) -> dict:
 
 
 EVENTOS_WEBHOOK = [
-	("push", "push (envíos de commits)"), ("pull_request", "pull_request (pull requests)"), ("issues", "issues"),
-	("issue_comment", "issue_comment (comentarios)"), ("release", "release"), ("workflow_run", "workflow_run (Actions)"),
-	("create", "create (ramas o etiquetas creadas)"), ("delete", "delete (ramas o etiquetas borradas)"),
-	("pull_request_review", "pull_request_review (revisiones)"), ("discussion", "discussion (discusiones)"),
-	("star", "star (estrellas)"), ("fork", "fork (bifurcaciones)"), ("deployment", "deployment (despliegues)"),
-	("status", "status (estados de commits)"), ("*", "* (todos los eventos)"),
+	("push", N_("push (envíos de commits)")), ("pull_request", N_("pull_request (pull requests)")), ("issues", "issues"),
+	("issue_comment", N_("issue_comment (comentarios)")), ("release", "release"), ("workflow_run", N_("workflow_run (Actions)")),
+	("create", N_("create (ramas o etiquetas creadas)")), ("delete", N_("delete (ramas o etiquetas borradas)")),
+	("pull_request_review", N_("pull_request_review (revisiones)")), ("discussion", N_("discussion (discusiones)")),
+	("star", N_("star (estrellas)")), ("fork", N_("fork (bifurcaciones)")), ("deployment", N_("deployment (despliegues)")),
+	("status", N_("status (estados de commits)")), ("*", N_("* (todos los eventos)")),
 ]
 
 
@@ -858,8 +858,8 @@ def nombre_color(hexadecimal: str) -> str:
 	if saturacion < 0.15:
 		return _("gris claro") if luz > 0.6 else _("gris oscuro") if luz < 0.35 else _("gris")
 	grados = tono * 360
-	nombres = ((15, "rojo"), (40, "naranja"), (65, "amarillo"), (160, "verde"), (195, "turquesa"), (255, "azul"),
-		(290, "morado"), (335, "rosa"), (360, "rojo"))
+	nombres = ((15, N_("rojo")), (40, N_("naranja")), (65, N_("amarillo")), (160, N_("verde")), (195, N_("turquesa")), (255, N_("azul")),
+		(290, N_("morado")), (335, N_("rosa")), (360, N_("rojo")))
 	base = next(_(n) for limite, n in nombres if grados < limite)
 	if luz > 0.75:
 		return _("{c} claro").format(c=base)

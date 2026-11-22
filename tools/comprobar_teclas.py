@@ -85,7 +85,7 @@ _TECLAS = {
 	"ins": "Insertar", "insert": "Insertar", "insertar": "Insertar",
 	"up": "Arriba", "arriba": "Arriba", "down": "Abajo", "abajo": "Abajo",
 	"left": "Izquierda", "izquierda": "Izquierda", "right": "Derecha", "derecha": "Derecha",
-	"apps": "Aplicaciones", "aplicaciones": "Aplicaciones", "menu": "Aplicaciones",
+	"apps": "Aplicaciones", "aplicaciones": "Aplicaciones", "applications": "Aplicaciones", "menu": "Aplicaciones",
 	"coma": ",", "comma": ",", "punto": ".", "period": ".", "plus": "+", "más": "+", "minus": "-", "menos": "-",
 }
 # Constantes wx.WXK_* → nombre de tecla.
@@ -109,7 +109,7 @@ _RE_COMBINACION = re.compile(
 	re.IGNORECASE,
 )
 _RE_RANGO = re.compile(
-	rf"((?:(?:{_NOMBRES_MOD})\s*\+\s*)*)(F?\w)\s+a\s+((?:(?:{_NOMBRES_MOD})\s*\+\s*)*)(F?\w)\b", re.IGNORECASE
+	rf"((?:(?:{_NOMBRES_MOD})\s*\+\s*)*)(F?\w)\s+(?:a|to)\s+((?:(?:{_NOMBRES_MOD})\s*\+\s*)*)(F?\w)\b", re.IGNORECASE
 )
 _RE_MARCA_ATAJO = re.compile(r"#\s*atajo:\s*(.+)$", re.IGNORECASE)
 _RE_ENCABEZADO = re.compile(r"^(#{2,6})\s+(.+?)\s*#*\s*$")

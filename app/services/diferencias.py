@@ -37,6 +37,12 @@ BLOQUE = "bloque"
 ARCHIVO = "archivo"
 AVISO = "aviso"
 
+# Los tipos y los estados son claves (se comparan): se traducen solo al mostrarlos.
+#: Estado de un archivo dentro de una frase («ruta: modificado, …»).
+_ESTADOS_EN_FRASE = {
+	"modificado": N_("modificado"), "añadido": N_("añadido"), "eliminado": N_("eliminado"), "renombrado": N_("renombrado"),
+}
+
 _CABECERA_BLOQUE = re.compile(r"^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@(.*)$")
 _DIFF_GIT = re.compile(r'^diff --git "?a/(.+?)"? "?b/(.+?)"?$')
 
@@ -85,7 +91,7 @@ class ArchivoDiff:
 
 	def resumen(self) -> str:
 		texto = _("{ruta}: {estado}, {a} añadidas y {e} eliminadas").format(
-			ruta=self.ruta, estado=_(self.estado), a=self.añadidas, e=self.eliminadas
+			ruta=self.ruta, estado=_(_ESTADOS_EN_FRASE.get(self.estado, self.estado)), a=self.añadidas, e=self.eliminadas
 		)
 		if self.ruta_antigua and self.ruta_antigua != self.ruta:
 			texto += " " + _("(antes {r})").format(r=self.ruta_antigua)
@@ -350,11 +356,7 @@ def aviso_invisibles(texto: str) -> str:
 # Resumen
 # ════════════════════════════════════════════════════════════════════════════
 
-_ESTADOS = {"modificado": "Modificado", "añadido": "Nuevo", "eliminado": "Borrado", "renombrado": "Renombrado"}
-
-
-def _cuenta(numero: int, singular: str, plural: str) -> str:
-	return (singular if numero == 1 else plural).format(n=numero)
+_ESTADOS = {"modificado": N_("Modificado"), "añadido": N_("Nuevo"), "eliminado": N_("Borrado"), "renombrado": N_("Renombrado")}
 
 
 def resumen_archivo(archivo: ArchivoDiff, posicion: int, total: int) -> str:
@@ -368,9 +370,9 @@ def resumen_archivo(archivo: ArchivoDiff, posicion: int, total: int) -> str:
 	else:
 		partes = []
 		if archivo.añadidas:
-			partes.append(_cuenta(archivo.añadidas, _("{n} añadida"), _("{n} añadidas")))
+			partes.append(ngettext("{n} añadida", "{n} añadidas", archivo.añadidas).format(n=archivo.añadidas))
 		if archivo.eliminadas:
-			partes.append(_cuenta(archivo.eliminadas, _("{n} eliminada"), _("{n} eliminadas")))
+			partes.append(ngettext("{n} eliminada", "{n} eliminadas", archivo.eliminadas).format(n=archivo.eliminadas))
 		cambios = _y(partes) if partes else _("Sin líneas cambiadas")
 	return _("Archivo {p} de {t}: {r}. {e}. {c}.").format(
 		p=posicion, t=total, r=hacer_visibles(archivo.ruta) or _("(sin nombre)"), e=estado, c=cambios)
@@ -385,10 +387,10 @@ def resumen_diff(archivos: list[ArchivoDiff], total_cambios: int | None = None) 
 	añadidas = sum(a.añadidas for a in archivos)
 	eliminadas = sum(a.eliminadas for a in archivos)
 	total = _("{archivos} con {cambios}: {a} y {e}.").format(
-		archivos=_cuenta(len(archivos), _("{n} archivo cambiado"), _("{n} archivos cambiados")),
-		cambios=_cuenta(total_cambios, _("{n} cambio"), _("{n} cambios")),
-		a=_cuenta(añadidas, _("{n} línea añadida"), _("{n} líneas añadidas")),
-		e=_cuenta(eliminadas, _("{n} eliminada"), _("{n} eliminadas")),
+		archivos=ngettext("{n} archivo cambiado", "{n} archivos cambiados", len(archivos)).format(n=len(archivos)),
+		cambios=ngettext("{n} cambio", "{n} cambios", total_cambios).format(n=total_cambios),
+		a=ngettext("{n} línea añadida", "{n} líneas añadidas", añadidas).format(n=añadidas),
+		e=ngettext("{n} eliminada", "{n} eliminadas", eliminadas).format(n=eliminadas),
 	)
 	return [total] + [resumen_archivo(archivo, posicion, len(archivos)) for posicion, archivo in enumerate(archivos, 1)]
 
@@ -567,11 +569,11 @@ def _nombrar_espacios(espacios: str) -> str:
 	otros = len(espacios) - tabuladores - normales
 	partes = []
 	if tabuladores:
-		partes.append(_cuenta(tabuladores, _("{n} tabulador"), _("{n} tabuladores")))
+		partes.append(ngettext("{n} tabulador", "{n} tabuladores", tabuladores).format(n=tabuladores))
 	if normales:
-		partes.append(_cuenta(normales, _("{n} espacio"), _("{n} espacios")))
+		partes.append(ngettext("{n} espacio", "{n} espacios", normales).format(n=normales))
 	if otros:
-		partes.append(_cuenta(otros, _("{n} espacio especial"), _("{n} espacios especiales")))
+		partes.append(ngettext("{n} espacio especial", "{n} espacios especiales", otros).format(n=otros))
 	return _y(partes)
 
 
@@ -661,7 +663,7 @@ def describir_cambio(antes: str, despues: str) -> str:
 			partes.append(_("añade «{d}» {lugar}").format(d=_fragmento(despues, posiciones_d, j1, j2), lugar=lugar))
 	resto = len(cambios) - CAMBIOS_DICHOS
 	if resto > 0:
-		partes.append(_cuenta(resto, _("y {n} cambio más"), _("y {n} cambios más")))
+		partes.append(ngettext("y {n} cambio más", "y {n} cambios más", resto).format(n=resto))
 	partes.append(_cambio_de_sangria(antes, despues))
 	return _frase(partes)
 

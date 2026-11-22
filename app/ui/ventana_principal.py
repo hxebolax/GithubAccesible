@@ -38,7 +38,7 @@ from app.ui.bandeja import IconoBandeja, OrdenBandeja
 from app.ui.comunes import confirmar, elegir_uno, en_segundo_plano, mostrar_error, mostrar_mensaje
 from app.ui.vistas import principales
 from app.ui.teclas_globales import GestorTeclasGlobales
-from app.ui.vistas.base import PanelLista
+from app.ui.vistas.base import PanelLista, atajo_visible
 
 log = logging.getLogger(__name__)
 
@@ -231,7 +231,9 @@ class VentanaPrincipal(wx.Frame):
 		# Letra de acceso: el número de la sección (1 a 9 y 0) y, a partir de la undécima, una letra libre.
 		letras_extra = {"vigilados": _("Repositorios &vigilados"), "seguidores": _("S&eguidores"), "seguidos": _("&Personas que sigo"),
 			"codespaces": _("C&odespaces"), "busqueda": _("&Resultados de la búsqueda")}
-		ocupadas = "ac"  # «&Actualizar» y «Cambiar entre secciones y &contenido»
+		# Las letras de «&Actualizar» y «Cambiar entre secciones y &contenido», en el idioma de la interfaz.
+		ocupadas = "".join(t.partition("&")[2][:1].lower() for t in (
+			_("&Actualizar\tF5"), _("Cambiar entre secciones y &contenido\tF6")))
 		for indice, (clave, definicion) in enumerate(self.definiciones):
 			if indice < 10:
 				numero = (indice + 1) % 10
@@ -389,7 +391,7 @@ class VentanaPrincipal(wx.Frame):
 			if accion.separador_antes and not primero:
 				self.menu_acciones.AppendSeparator()
 			# Atajo entre paréntesis (no con tabulador): lo atiende la lista, no la ventana.
-			etiqueta = accion.etiqueta + (f" ({accion.atajo})" if accion.atajo else "")
+			etiqueta = accion.etiqueta + (f" ({atajo_visible(accion.atajo)})" if accion.atajo else "")
 			elemento = self.menu_acciones.Append(wx.ID_ANY, etiqueta, accion.ayuda)
 			self.Bind(wx.EVT_MENU, lambda _e, a=accion, p=panel: wx.CallAfter(p.ejecutar, a), elemento)
 			self._ids_acciones.append(elemento.GetId())

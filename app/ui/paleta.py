@@ -29,6 +29,8 @@ from typing import Any
 
 import wx
 
+from app.ui.vistas.base import atajo_visible
+
 log = logging.getLogger(__name__)
 
 #: Tecla de la paleta en todas las ventanas.
@@ -53,7 +55,7 @@ class Orden:
 	def texto(self) -> str:
 		partes = [self.etiqueta]
 		if self.atajo:
-			partes.append(f"({self.atajo})")
+			partes.append(f"({atajo_visible(self.atajo)})")
 		if self.ruta:
 			partes.append(f"— {self.ruta}")
 		return " ".join(partes)

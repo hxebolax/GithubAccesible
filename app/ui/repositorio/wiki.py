@@ -42,18 +42,18 @@ def _(texto: str) -> str:
 
 #: Qué se dice cuando la lista está vacía, según el estado de la wiki.
 TEXTOS_ESTADO = {
-	"activa": "La wiki no tiene páginas.",
-	"desactivada": "La wiki de este repositorio está desactivada. Puede activarla desde las acciones (Aplicaciones) si es suyo.",
-	"vacia": "La wiki está activada pero no tiene páginas todavía. GitHub solo la crea al guardar la primera página "
-		"desde la web: use «Crear la primera página en el navegador» en las acciones y luego actualice con F5.",
-	"sin_git": "Para leer y editar la wiki hace falta Git for Windows (la API de GitHub no da acceso a las wikis). "
-		"Instálelo desde https://git-scm.com o ábrala en el navegador.",
+	"activa": N_("La wiki no tiene páginas."),
+	"desactivada": N_("La wiki de este repositorio está desactivada. Puede activarla desde las acciones (Aplicaciones) si es suyo."),
+	"vacia": N_("La wiki está activada pero no tiene páginas todavía. GitHub solo la crea al guardar la primera página "
+		"desde la web: use «Crear la primera página en el navegador» en las acciones y luego actualice con F5."),
+	"sin_git": N_("Para leer y editar la wiki hace falta Git for Windows (la API de GitHub no da acceso a las wikis). "
+		"Instálelo desde https://git-scm.com o ábrala en el navegador."),
 }
 ETIQUETAS_ESTADO = {
-	"activa": "Wiki",
-	"desactivada": "Wiki (desactivada)",
-	"vacia": "Wiki (sin páginas todavía)",
-	"sin_git": "Wiki (necesita Git)",
+	"activa": N_("Wiki"),
+	"desactivada": N_("Wiki (desactivada)"),
+	"vacia": N_("Wiki (sin páginas todavía)"),
+	"sin_git": N_("Wiki (necesita Git)"),
 }
 #: Formatos que se ofrecen al crear una página (el primero, Markdown, es el de siempre).
 FORMATOS_NUEVA = [(".md", "Markdown"), (".mediawiki", "MediaWiki"), (".asciidoc", "AsciiDoc"), (".rst", "reStructuredText"),

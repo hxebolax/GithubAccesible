@@ -59,9 +59,15 @@ def _(texto: str) -> str:
 # Marco común
 # ════════════════════════════════════════════════════════════════════════════
 
-#: Letras que ya usa la ventana del repositorio: «&Secciones», «&Repositorio»,
+#: Letras que ya usa la ventana del repositorio en español: «&Secciones», «&Repositorio»,
 #: «Ac&ciones» e «&Ir». Las etiquetas de las listas no pueden usarlas.
 LETRAS_OCUPADAS = "rcis"
+
+
+def letras_ocupadas() -> str:
+	"""Las de ``LETRAS_OCUPADAS`` en el idioma de la interfaz (en inglés, «&Sections», «&Go»...)."""
+	textos = (_("&Secciones:"), _("&Repositorio"), _("Ac&ciones"), _("&Ir"))
+	return "".join(t[t.index("&") + 1].lower() for t in textos if "&" in t[:-1])
 
 
 @dataclass
@@ -71,8 +77,10 @@ class VistaRepo(DefinicionVista):
 	etiqueta_de: Callable[[Any], str] | None = None
 
 
-def etiqueta_con_letra(texto: str, ocupadas: str = LETRAS_OCUPADAS) -> str:
+def etiqueta_con_letra(texto: str, ocupadas: str | None = None) -> str:
 	"""Pone la letra de acceso en el primer carácter libre: «Issues» → «Iss&ues» si I y S están ocupadas."""
+	if ocupadas is None:
+		ocupadas = letras_ocupadas()
 	limpio = texto.replace("&", "&&")
 	for posicion, caracter in enumerate(limpio):
 		if caracter.isascii() and caracter.isalnum() and caracter.lower() not in ocupadas:
@@ -231,7 +239,7 @@ def _guardar_como(panel: Any, titulo: str, nombre_archivo: str, comodin: str = "
 		dialogo.Destroy()
 
 
-ESTADOS_LISTA = [("open", "abiertas"), ("closed", "cerradas"), ("all", "todas")]
+ESTADOS_LISTA = [("open", N_("abiertas")), ("closed", N_("cerradas")), ("all", N_("todas"))]
 
 
 def _texto_estado(clave: str) -> str:
@@ -254,8 +262,8 @@ def _elegir_estado(panel: Any, titulo: str, opciones: list[tuple[str, str]] | No
 # Código (explorador de archivos)
 # ════════════════════════════════════════════════════════════════════════════
 
-TIPOS_CONTENIDO = {"dir": "Carpeta", "file": "Archivo", "symlink": "Enlace simbólico", "submodule": "Submódulo",
-	"subir": "Carpeta superior"}
+TIPOS_CONTENIDO = {"dir": N_("Carpeta"), "file": N_("Archivo"), "symlink": N_("Enlace simbólico"), "submodule": N_("Submódulo"),
+	"subir": N_("Carpeta superior")}
 
 
 def _carpeta_padre(ruta: str) -> str:
@@ -611,7 +619,7 @@ def _cambiar_asignados(panel: Any, elemento: dict) -> None:
 	_en_fondo(panel, lambda: api.asignables(nombre), elegir, inicio=_("Cargando las personas asignables…"))
 
 
-MOTIVOS_CIERRE = [("completed", "Completada"), ("not_planned", "No planificada"), ("duplicate", "Duplicada")]
+MOTIVOS_CIERRE = [("completed", N_("Completada")), ("not_planned", N_("No planificada")), ("duplicate", N_("Duplicada"))]
 
 
 def vista_issues(nombre: str, host: str = "github.com") -> VistaRepo:
@@ -1510,7 +1518,7 @@ def vista_hitos(nombre: str, host: str = "github.com") -> VistaRepo:
 			_("Hito cerrado.") if estado == "closed" else _("Hito reabierto."))
 
 	def filtro(panel: Any, _e: Any) -> None:
-		if _elegir_estado(panel, _("Hitos"), [("open", "abiertos"), ("closed", "cerrados"), ("all", "todos")]):
+		if _elegir_estado(panel, _("Hitos"), [("open", N_("abiertos")), ("closed", N_("cerrados")), ("all", N_("todos"))]):
 			_recargar_filtrado(panel)
 
 	return VistaRepo(
@@ -1592,8 +1600,8 @@ def vista_labels(nombre: str, host: str = "github.com") -> VistaRepo:
 # Personas: colaboradores, bifurcaciones y estrellas
 # ════════════════════════════════════════════════════════════════════════════
 
-PERMISOS = [("pull", "Lectura"), ("triage", "Clasificación"), ("push", "Escritura"), ("maintain", "Mantenimiento"),
-	("admin", "Administración")]
+PERMISOS = [("pull", N_("Lectura")), ("triage", N_("Clasificación")), ("push", N_("Escritura")), ("maintain", N_("Mantenimiento")),
+	("admin", N_("Administración"))]
 #: Las invitaciones usan otros nombres para los mismos permisos.
 PERMISOS_INVITACION = {"pull": "read", "push": "write", "triage": "triage", "maintain": "maintain", "admin": "admin"}
 
@@ -1732,14 +1740,14 @@ def vista_observadores(nombre: str, host: str = "github.com") -> VistaRepo:
 # Seguridad
 # ════════════════════════════════════════════════════════════════════════════
 
-TIPOS_ALERTA = {"dependabot": "Dependabot", "codigo": "Escaneo de código", "secretos": "Secretos expuestos", "aviso": "No disponible"}
+TIPOS_ALERTA = {"dependabot": "Dependabot", "codigo": N_("Escaneo de código"), "secretos": N_("Secretos expuestos"), "aviso": N_("No disponible")}
 MOTIVOS_DESCARTE = {
-	"dependabot": [("fix_started", "Ya se está corrigiendo"), ("inaccurate", "La alerta no es correcta"),
-		("no_bandwidth", "No hay tiempo para corregirla"), ("not_used", "El código vulnerable no se usa"),
-		("tolerable_risk", "El riesgo es aceptable")],
-	"codigo": [("false positive", "Falso positivo"), ("won't fix", "No se corregirá"), ("used in tests", "Solo se usa en pruebas")],
-	"secretos": [("false_positive", "Falso positivo"), ("wont_fix", "No se corregirá"), ("revoked", "El secreto ya se revocó"),
-		("used_in_tests", "Solo se usa en pruebas")],
+	"dependabot": [("fix_started", N_("Ya se está corrigiendo")), ("inaccurate", N_("La alerta no es correcta")),
+		("no_bandwidth", N_("No hay tiempo para corregirla")), ("not_used", N_("El código vulnerable no se usa")),
+		("tolerable_risk", N_("El riesgo es aceptable"))],
+	"codigo": [("false positive", N_("Falso positivo")), ("won't fix", N_("No se corregirá")), ("used in tests", N_("Solo se usa en pruebas"))],
+	"secretos": [("false_positive", N_("Falso positivo")), ("wont_fix", N_("No se corregirá")), ("revoked", N_("El secreto ya se revocó")),
+		("used_in_tests", N_("Solo se usa en pruebas"))],
 }
 
 
@@ -1849,8 +1857,8 @@ def vista_seguridad(nombre: str, host: str = "github.com") -> VistaRepo:
 		_en_fondo(panel, lambda: api.politica_seguridad(nombre), mostrar, inicio=_("Buscando SECURITY.md…"))
 
 	def filtro(panel: Any, _e: Any) -> None:
-		if _elegir_estado(panel, _("Alertas"), [("open", "abiertas"), ("dismissed", "descartadas"), ("fixed", "corregidas"),
-			("all", "todas")]):
+		if _elegir_estado(panel, _("Alertas"), [("open", N_("abiertas")), ("dismissed", N_("descartadas")), ("fixed", N_("corregidas")),
+			("all", N_("todas"))]):
 			_recargar_filtrado(panel)
 
 	def real(_p: Any, a: dict) -> bool:
@@ -2103,7 +2111,7 @@ def vista_claves(nombre: str, host: str = "github.com") -> VistaRepo:
 	)
 
 
-APLICACION_REGLAS = {"active": "Activa", "disabled": "Desactivada", "evaluate": "Solo evaluación"}
+APLICACION_REGLAS = {"active": N_("Activa"), "disabled": N_("Desactivada"), "evaluate": N_("Solo evaluación")}
 
 
 def vista_reglas(nombre: str, host: str = "github.com") -> VistaRepo:

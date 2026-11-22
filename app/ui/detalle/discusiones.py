@@ -27,7 +27,7 @@ from app.ui.editor import editar
 
 log = logging.getLogger(__name__)
 
-MOTIVOS_CIERRE = [("RESOLVED", "Resuelta"), ("OUTDATED", "Obsoleta"), ("DUPLICATE", "Duplicada")]
+MOTIVOS_CIERRE = [("RESOLVED", N_("Resuelta")), ("OUTDATED", N_("Obsoleta")), ("DUPLICATE", N_("Duplicada"))]
 
 
 def _(texto: str) -> str:

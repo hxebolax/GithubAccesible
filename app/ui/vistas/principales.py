@@ -375,10 +375,10 @@ def vista_vigilados() -> DefinicionVista:
 
 
 FILTROS_ISSUES = [
-	("assigned", "Asignadas a mí"), ("created", "Creadas por mí"), ("mentioned", "Donde me mencionan"),
-	("subscribed", "A las que estoy suscrito"), ("repos", "De mis repositorios"), ("all", "Todas las que me afectan"),
+	("assigned", N_("Asignadas a mí")), ("created", N_("Creadas por mí")), ("mentioned", N_("Donde me mencionan")),
+	("subscribed", N_("A las que estoy suscrito")), ("repos", N_("De mis repositorios")), ("all", N_("Todas las que me afectan")),
 ]
-ESTADOS = [("open", "Abiertas"), ("closed", "Cerradas"), ("all", "Todas")]
+ESTADOS = [("open", N_("Abiertas")), ("closed", N_("Cerradas")), ("all", N_("Todas"))]
 
 
 def _elegir_filtro_y_estado(panel: Any, filtros: list[tuple[str, str]], clave_filtro: str) -> bool:
@@ -418,8 +418,8 @@ def vista_mis_issues() -> DefinicionVista:
 
 
 FILTROS_PR = [
-	("review-requested:@me", "Me piden revisión"), ("author:@me", "Creados por mí"), ("assignee:@me", "Asignados a mí"),
-	("mentions:@me", "Donde me mencionan"), ("involves:@me", "Todos en los que participo"), ("reviewed-by:@me", "Revisados por mí"),
+	("review-requested:@me", N_("Me piden revisión")), ("author:@me", N_("Creados por mí")), ("assignee:@me", N_("Asignados a mí")),
+	("mentions:@me", N_("Donde me mencionan")), ("involves:@me", N_("Todos en los que participo")), ("reviewed-by:@me", N_("Revisados por mí")),
 ]
 
 

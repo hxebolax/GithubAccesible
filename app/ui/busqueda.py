@@ -20,7 +20,6 @@ Cómo está hecho, y por qué así:
 
 from __future__ import annotations
 
-import builtins
 import logging
 import webbrowser
 from typing import Any
@@ -36,8 +35,15 @@ log = logging.getLogger(__name__)
 
 MAXIMO_HISTORIAL = 20
 
-#: Letras de acceso de los controles y botones que están fuera de las pestañas.
-LETRAS_FIJAS = frozenset("btlunjsc")
+def letras_fijas() -> frozenset[str]:
+	"""Letras de acceso de los controles y botones que están fuera de las pestañas.
+
+	Se calculan de las etiquetas traducidas (en español, «btlunjsc»): en inglés las
+	letras son otras y los filtros de las pestañas no deben repetirlas.
+	"""
+	textos = (_("&Buscar:"), _("&Texto (admite calificadores):"), _("Consulta resu&ltante:"), _("B&uscar"),
+		_("Abrir en el &navegador"), _("E&jemplos de calificadores…"), _("Guardar bú&squeda…"), _("&Cancelar"))
+	return frozenset(t[t.index("&") + 1].lower() for t in textos if "&" in t[:-1])
 
 # Compatibilidad con la versión anterior (historial antiguo y pruebas).
 ORDENES = b.ORDENES
@@ -46,18 +52,18 @@ LICENCIAS = b.LICENCIAS
 
 # (clave, nombre, calificador). En el calificador, «{v}» es el valor que escribe la persona.
 CATEGORIAS: list[tuple[str, str, str]] = [
-	("libre", "Búsqueda libre (sin categoría)", ""),
-	("populares", "Populares: estrellas mínimas", "stars:>{v}"),
-	("bifurcados", "Más bifurcados: bifurcaciones mínimas", "forks:>{v}"),
-	("recientes", "Actualizados desde una fecha (AAAA-MM-DD)", "pushed:>{v}"),
-	("desactualizados", "Sin actualizar desde una fecha (AAAA-MM-DD)", "pushed:<{v}"),
-	("buenas_primeras", "Con issues para empezar a colaborar", "good-first-issues:>0"),
-	("ayuda", "Que piden ayuda", "help-wanted-issues:>0"),
-	("awesome", "Listas Awesome", "awesome in:name,description"),
-	("nvda", "Complementos y programas para NVDA", "nvda"),
+	("libre", N_("Búsqueda libre (sin categoría)"), ""),
+	("populares", N_("Populares: estrellas mínimas"), "stars:>{v}"),
+	("bifurcados", N_("Más bifurcados: bifurcaciones mínimas"), "forks:>{v}"),
+	("recientes", N_("Actualizados desde una fecha (AAAA-MM-DD)"), "pushed:>{v}"),
+	("desactualizados", N_("Sin actualizar desde una fecha (AAAA-MM-DD)"), "pushed:<{v}"),
+	("buenas_primeras", N_("Con issues para empezar a colaborar"), "good-first-issues:>0"),
+	("ayuda", N_("Que piden ayuda"), "help-wanted-issues:>0"),
+	("awesome", N_("Listas Awesome"), "awesome in:name,description"),
+	("nvda", N_("Complementos y programas para NVDA"), "nvda"),
 ] + [(clave, nombre, f"topic:{valores['temas']}") for clave, nombre, valores in b.ATAJOS_REPOSITORIOS if "temas" in valores]
 
-AYUDA = """Calificadores útiles (se pueden combinar; los filtros de las pestañas los escriben por usted):
+AYUDA = N_("""Calificadores útiles (se pueden combinar; los filtros de las pestañas los escriben por usted):
 
 Repositorios: language:python, stars:>100, stars:10..50, forks:>=10, topic:accessibility, user:octocat, org:github, archived:false, is:public, pushed:>2025-01-01, created:2024-01-01..2024-12-31, license:mit, good-first-issues:>0, in:name,description, fork:true, is:sponsorable.
 Código: repo:dueño/nombre, path:app/ui, filename:setup.py, extension:py, language:python, in:path. Necesita sesión, al menos una palabra (salvo con filename:) y solo busca en la rama principal. La API usa la búsqueda de código antigua: las expresiones regulares (/patrón/), symbol: y los operadores de la web solo funcionan con «Abrir en el navegador».
@@ -71,12 +77,7 @@ Discusiones: is:answered, is:unanswered, category:Ideas, answered-by:usuario, re
 Tendencias: «Nuevos y populares» usa la API oficial (repositorios creados en el periodo con más estrellas). Las otras fuentes leen github.com/trending, que no tiene API oficial y puede dejar de funcionar.
 
 Frases entre comillas: "texto exacto". Excluir un calificador con un guion: -language:javascript. Excluir una palabra: NOT palabra.
-Límites de GitHub: 256 caracteres de texto, como mucho cinco operadores AND, OR o NOT y solo los 1000 primeros resultados de cada búsqueda."""
-
-
-def _(texto: str) -> str:
-	traducir = getattr(builtins, "_", None)
-	return traducir(texto) if callable(traducir) else texto
+Límites de GitHub: 256 caracteres de texto, como mucho cinco operadores AND, OR o NOT y solo los 1000 primeros resultados de cada búsqueda.""")
 
 
 def construir_consulta(texto: str, tipo: str = "repositories", categoria: str = "libre", valor: str = "",
@@ -268,7 +269,9 @@ class DialogoBusqueda(wx.Dialog):
 
 	@staticmethod
 	def _describir(datos: dict) -> str:
-		tipo = _(b.TIPOS.get(datos.get("tipo", ""), "")) or _("Repositorios")
+		# Sin tipo conocido no se llama a _(""), que devolvería la cabecera del catálogo.
+		clave = datos.get("tipo", "")
+		tipo = _(b.TIPOS[clave]) if clave in b.TIPOS else _("Repositorios")
 		return f"{tipo}: {datos.get('consulta', '')}"
 
 	def tipo_actual(self) -> str:
@@ -313,7 +316,7 @@ class DialogoBusqueda(wx.Dialog):
 		textos = [t for f in filtros for t in _etiquetas_de(f)]
 		if con_orden:
 			textos += [_("&Ordenar por:"), _("&Dirección:")]
-		etiquetas = iter(b.asignar_letras(textos, LETRAS_FIJAS))
+		etiquetas = iter(b.asignar_letras(textos, letras_fijas()))
 		rejilla = wx.FlexGridSizer(2, self.FromDIP(6), self.FromDIP(8))
 		rejilla.AddGrowableCol(1)
 
@@ -325,7 +328,8 @@ class DialogoBusqueda(wx.Dialog):
 			return control
 
 		for filtro in filtros:
-			ayuda = _(filtro.ayuda) or _(filtro.etiqueta)
+			# _("") devolvería la cabecera del catálogo, no una cadena vacía.
+			ayuda = _(filtro.ayuda) if filtro.ayuda else _(filtro.etiqueta)
 			controles: list[wx.Window] = []
 			if filtro.control in (b.TEXTO, b.MAYOR_QUE, b.EXCLUIR):
 				control = campo(wx.TextCtrl, ayuda)

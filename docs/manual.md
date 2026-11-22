@@ -25,6 +25,12 @@ Para GitHub Enterprise Server escriba la dirección de su servidor en el campo �
 
 El inicio con el navegador funciona sin configurar nada. Si el token que da GitHub caduca, la aplicación lo renueva sola. En GitHub Enterprise Server hay que registrar una aplicación OAuth en el propio servidor y escribir su identificador (Client ID) en Preferencias, Cuentas; los pasos están en [Activar el inicio de sesión con el navegador](https://github.com/hxebolax/GithubAccesible/blob/main/docs/oauth.md).
 
+### Idioma
+
+La aplicación está en español y en inglés. La primera vez que se abre usa el idioma de Windows: español si Windows está en cualquier variante de español (de España, de México, de Estados Unidos…) e inglés en cualquier otro caso. Se cambia en Preferencias, General, «Idioma de la interfaz»: «Automático (el idioma de Windows)», «Español» o «English». El idioma nuevo se aplica al reiniciar; la aplicación ofrece reiniciarla en ese momento.
+
+El idioma elegido vale para todo: menús, mensajes, avisos por voz, este manual (F1), la lista de teclas y las novedades, tanto las que salen tras actualizar como las de la ventana «Actualización disponible».
+
 ## El foco lo mueve usted
 
 En toda la aplicación, elegir algo no le cambia de sitio. Al moverse por una lista de secciones, al elegir en un desplegable (por ejemplo, «Buscar» en la búsqueda) o al cambiar unos botones de opción, lo que se ve a la derecha o debajo cambia al momento, pero el foco se queda en el control donde está. Usted decide cuándo ir al contenido: con Tabulador, con Intro en las listas de secciones o con F6.
@@ -237,7 +243,7 @@ El menú Git trae, tira, envía y sincroniza con progreso hablado (solo en los h
 
 Herramientas, Preferencias (Control+P). Los cambios se aplican al momento en las ventanas abiertas; Cancelar no guarda nada y «Restablecer valores de fábrica» vuelve a lo original.
 
-- **General**: sección al abrir, voz al arrancar, bandeja del sistema (minimizar, cerrar, iniciar e icono permanente), confirmar al salir, carpeta de descargas.
+- **General**: idioma de la interfaz, sección al abrir, voz al arrancar, bandeja del sistema (minimizar, cerrar, iniciar e icono permanente), confirmar al salir, carpeta de descargas.
 - **Actualizaciones**: buscar al arrancar y el origen (servidor del autor y GitHub, solo uno de ellos o una dirección personalizada).
 - **Cuentas**: identificador de la aplicación OAuth y permisos que se piden.
 - **Accesibilidad**: avisos por voz y braille, retardo, lectura por columnas, anuncio de las listas de casillas (estado, si va antes del texto, posición), explicaciones que lee el lector, columnas del visor de diferencias y sus sonidos, y formato HTML.

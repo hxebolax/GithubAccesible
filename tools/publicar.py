@@ -52,16 +52,31 @@ def ejecutar(orden: list[str], **opciones) -> None:
 VERSIONES_EN_NOTAS = 4
 
 
-def notas(version_actual: str) -> str:
-	"""Notas de la release desde docs/changelog.md: la versión y las anteriores, cada una con su encabezado."""
+def bajar_encabezados(texto: str) -> str:
+	"""Baja un nivel los encabezados del cuerpo (``###`` → ``####``) para que queden bajo su versión."""
+	return re.sub(r"^(#{1,5}) ", r"#\1 ", texto, flags=re.MULTILINE)
+
+
+def notas_idioma(version_actual: str, ruta: Path, por_defecto: str) -> str:
+	"""Novedades de la versión y de las anteriores desde un registro de cambios, cada una con su encabezado."""
 	sys.path.insert(0, str(RAIZ))
 	from app.core import documentacion as doc
 
-	texto = (RAIZ / "docs" / "changelog.md").read_text(encoding="utf-8")
+	if not ruta.is_file():
+		return por_defecto
+	texto = ruta.read_text(encoding="utf-8")
 	versiones = doc.novedades_entre(doc.leer_changelog(texto), None, version_actual)[:VERSIONES_EN_NOTAS]
 	if not versiones or doc.clave_version(versiones[0].numero) != doc.clave_version(version_actual):
-		return f"Versión {version_actual}."
-	return "\n\n".join(f"## {v.encabezado}\n\n{v.texto}".rstrip() for v in versiones)
+		return por_defecto
+	# Un nivel más abajo que en el registro: «## Español» y «## English» encabezan cada idioma.
+	return "\n\n".join(f"### {v.encabezado}\n\n{bajar_encabezados(v.texto)}".rstrip() for v in versiones)
+
+
+def notas(version_actual: str) -> str:
+	"""Notas de la release: primero en español (docs/changelog.md) y después en inglés (docs/en/changelog.md)."""
+	espanol = notas_idioma(version_actual, RAIZ / "docs" / "changelog.md", f"Versión {version_actual}.")
+	ingles = notas_idioma(version_actual, RAIZ / "docs" / "en" / "changelog.md", f"Version {version_actual}.")
+	return f"## Español\n\n{espanol}\n\n## English\n\n{ingles}\n"
 
 
 def comprobar_firma(ruta_json: Path) -> None:
@@ -82,6 +97,8 @@ def main(argumentos: list[str] | None = None) -> int:
 	actual = version()
 	print(f"Publicando GitHub Accesible {actual}")
 	if not opciones.sin_compilar:
+		# Catálogos .po → .mo antes de compilar: la versión compilada lleva los .mo de data/locales.
+		ejecutar([PYTHON, str(RAIZ / "tools" / "compilar_traducciones.py")])
 		ejecutar([PYTHON, "setup_cx.py", "build"])
 		ejecutar([PYTHON, str(RAIZ / "tools" / "empaquetar.py")])
 	zip_ = RAIZ / "build" / f"GithubAccesible_v{actual}.zip"

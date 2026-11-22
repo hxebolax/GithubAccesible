@@ -49,14 +49,14 @@ def clave_issue(nombre: str, numero: int) -> str:
 
 
 MOTIVOS_BLOQUEO = [
-	("", "Sin motivo"), ("off-topic", "Fuera de tema"), ("too heated", "Demasiado acalorada"),
-	("resolved", "Resuelta"), ("spam", "Spam"),
+	("", N_("Sin motivo")), ("off-topic", N_("Fuera de tema")), ("too heated", N_("Demasiado acalorada")),
+	("resolved", N_("Resuelta")), ("spam", N_("Spam")),
 ]
 
 SUSCRIPCIONES = [
-	("SUBSCRIBED", "Suscribirme: recibir todas las notificaciones"),
-	("UNSUBSCRIBED", "Cancelar la suscripción: solo si participo o me mencionan"),
-	("IGNORED", "Ignorar: no recibir ninguna notificación"),
+	("SUBSCRIBED", N_("Suscribirme: recibir todas las notificaciones")),
+	("UNSUBSCRIBED", N_("Cancelar la suscripción: solo si participo o me mencionan")),
+	("IGNORED", N_("Ignorar: no recibir ninguna notificación")),
 ]
 
 # Operación que la fachada de la API no tiene: se hace con el cliente crudo.

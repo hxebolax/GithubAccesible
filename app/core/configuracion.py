@@ -50,6 +50,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from app.core import i18n  # noqa: F401 - instala _ y N_ en builtins aunque se importe antes que nada
+
 log = logging.getLogger(__name__)
 
 # Variable de entorno que redirige la carpeta data (la usan las pruebas).
@@ -61,7 +63,7 @@ NOMBRE_ARCHIVO = "settings.json"
 CLAVE_VERSION = "version_esquema"
 
 # Versión actual del esquema. Súbela cuando añadas una migración.
-VERSION_ESQUEMA = 1
+VERSION_ESQUEMA = 2
 
 # ── Valores por defecto ──────────────────────────────────────────────────────
 # Un diccionario por sección. Cada valor fija también el TIPO esperado: si en el
@@ -69,7 +71,8 @@ VERSION_ESQUEMA = 1
 # usa el valor por defecto.
 VALORES_POR_DEFECTO: dict[str, dict[str, Any]] = {
 	"general": {
-		"idioma": "es",
+		# «auto»: el del sistema (cualquier variante de español → español; el resto → inglés).
+		"idioma": "auto",
 		"confirmar_salida": False,
 		"minimizar_a_bandeja": False,
 		# Cerrar la ventana (Alt+F4, el botón X) la deja en la bandeja en vez de salir; Salir (Ctrl+Q) sale siempre.
@@ -228,7 +231,7 @@ class Regla:
 
 # Reglas por clave «seccion.clave». Las claves sin regla solo comprueban el tipo.
 REGLAS: dict[str, Regla] = {
-	"general.idioma": Regla(opciones=("es", "en")),
+	"general.idioma": Regla(opciones=("auto", "es", "en")),
 	"general.seccion_inicial": Regla(opciones=("inicio", "notificaciones", "repositorios", "issues", "prs", "locales")),
 	"general.abrir_repositorio_en": Regla(opciones=("ventana", "misma")),
 	"cuentas.ambitos": Regla(opciones=("basicos", "completos")),
@@ -264,8 +267,8 @@ def renombrar_clave(datos: dict, antigua: str, nueva: str) -> bool:
 
 	:return: ``True`` si había algo que mover.
 	"""
-	sec_antigua, _, clave_antigua = antigua.partition(".")
-	sec_nueva, _, clave_nueva = nueva.partition(".")
+	sec_antigua, _punto, clave_antigua = antigua.partition(".")
+	sec_nueva, _punto, clave_nueva = nueva.partition(".")
 	origen = datos.get(sec_antigua)
 	if not isinstance(origen, dict) or clave_antigua not in origen:
 		return False
@@ -281,7 +284,7 @@ def renombrar_clave(datos: dict, antigua: str, nueva: str) -> bool:
 
 def eliminar_clave(datos: dict, clave: str) -> bool:
 	"""Elimina una clave obsoleta. ``True`` si existía."""
-	seccion, _, nombre = clave.partition(".")
+	seccion, _punto, nombre = clave.partition(".")
 	contenedor = datos.get(seccion)
 	if isinstance(contenedor, dict) and nombre in contenedor:
 		del contenedor[nombre]
@@ -292,7 +295,19 @@ def eliminar_clave(datos: dict, clave: str) -> bool:
 # MIGRACIONES[n] lleva los datos de la versión n a la n+1. Cada función recibe
 # el diccionario TAL COMO SE LEYÓ del archivo (antes de completar con los
 # valores por defecto) y lo modifica en el sitio. Deben ser idempotentes.
-MIGRACIONES: dict[int, Callable[[dict], None]] = {}
+def _idioma_automatico(datos: dict) -> None:
+	"""1 → 2 (versión 1.0.7): «es» pasa a «auto».
+
+	Hasta la 1.0.6 no se podía elegir el idioma y se guardaba «es» por defecto;
+	así, quien ya la tenía instalada en un Windows que no está en español
+	recibe la interfaz en inglés. Quien quiera el español lo fija en Preferencias.
+	"""
+	general = datos.get("general")
+	if isinstance(general, dict) and general.get("idioma") == "es":
+		general["idioma"] = "auto"
+
+
+MIGRACIONES: dict[int, Callable[[dict], None]] = {1: _idioma_automatico}
 
 
 # ── Rutas ────────────────────────────────────────────────────────────────────
@@ -359,24 +374,26 @@ def validar_valor(clave: str, valor: Any, reglas: dict[str, Regla] | None = None
 	"""Lanza ``ErrorValidacion`` si ``valor`` no es válido para ``clave``."""
 	reglas = REGLAS if reglas is None else reglas
 	por_defecto = VALORES_POR_DEFECTO if por_defecto is None else por_defecto
-	seccion, _, nombre = clave.partition(".")
+	seccion, _punto, nombre = clave.partition(".")
 	referencia = por_defecto.get(seccion, {}).get(nombre, _SIN_VALOR)
 	if referencia is not _SIN_VALOR and not _tipo_compatible(valor, referencia):
 		raise ErrorValidacion(
-			f"«{clave}» espera {type(referencia).__name__} y recibió {type(valor).__name__}."
+			_("«{clave}» espera {esperado} y recibió {recibido}.").format(
+				clave=clave, esperado=type(referencia).__name__, recibido=type(valor).__name__)
 		)
 	regla = reglas.get(clave)
 	if regla is None:
 		return
 	if regla.opciones is not None and valor not in regla.opciones:
-		raise ErrorValidacion(f"«{clave}» solo admite: {', '.join(map(str, regla.opciones))}.")
+		raise ErrorValidacion(_("«{clave}» solo admite: {opciones}.").format(
+			clave=clave, opciones=", ".join(map(str, regla.opciones))))
 	if isinstance(valor, (int, float)) and not isinstance(valor, bool):
 		if regla.minimo is not None and valor < regla.minimo:
-			raise ErrorValidacion(f"«{clave}» debe ser como mínimo {regla.minimo}.")
+			raise ErrorValidacion(_("«{clave}» debe ser como mínimo {minimo}.").format(clave=clave, minimo=regla.minimo))
 		if regla.maximo is not None and valor > regla.maximo:
-			raise ErrorValidacion(f"«{clave}» debe ser como máximo {regla.maximo}.")
+			raise ErrorValidacion(_("«{clave}» debe ser como máximo {maximo}.").format(clave=clave, maximo=regla.maximo))
 	if isinstance(valor, str) and regla.longitud_maxima is not None and len(valor) > regla.longitud_maxima:
-		raise ErrorValidacion(f"«{clave}» admite como máximo {regla.longitud_maxima} caracteres.")
+		raise ErrorValidacion(_("«{clave}» admite como máximo {n} caracteres.").format(clave=clave, n=regla.longitud_maxima))
 
 
 def _reemplazar(origen: Path, destino: Path, intentos: int = 5) -> None:
@@ -512,17 +529,18 @@ class Configuracion:
 					log.error("Configuración dañada (%s); copia apartada en %s", error, apartado)
 					leidos = self._leer_respaldo()
 					if leidos is not None:
-						self.recuperacion = "La configuración estaba dañada y se ha recuperado la copia anterior."
+						# N_: se lee antes de elegir el idioma; quien lo muestre lo traduce con _().
+						self.recuperacion = N_("La configuración estaba dañada y se ha recuperado la copia anterior.")
 					else:
 						leidos = {}
 						self.recuperacion = (
-							"La configuración estaba dañada y se han restablecido los valores de fábrica."
+							N_("La configuración estaba dañada y se han restablecido los valores de fábrica.")
 						)
 					reescribir = True
 				except OSError:
 					log.exception("No se pudo leer la configuración %s; no se sobrescribirá", self.ruta)
 					self._guardado_bloqueado = True
-					self.recuperacion = "No se pudo leer la configuración; se usan valores de fábrica sin guardar."
+					self.recuperacion = N_("No se pudo leer la configuración; se usan valores de fábrica sin guardar.")
 					leidos = {}
 
 			original = copy.deepcopy(leidos)
@@ -619,7 +637,7 @@ class Configuracion:
 
 	def valor_por_defecto(self, clave: str) -> Any:
 		"""Valor de fábrica de «seccion.clave» (``KeyError`` si no existe)."""
-		seccion, _, nombre = clave.partition(".")
+		seccion, _punto, nombre = clave.partition(".")
 		return copy.deepcopy(self._por_defecto[seccion][nombre])
 
 	def claves(self) -> list[str]:
@@ -775,7 +793,7 @@ class Configuracion:
 				except OSError:
 					log.debug("No se pudo borrar el temporal %s", temporal, exc_info=True)
 				log.exception("No se pudo guardar la configuración en %s", self.ruta)
-				raise ErrorConfiguracion(f"No se pudo guardar la configuración: {error}") from error
+				raise ErrorConfiguracion(_("No se pudo guardar la configuración: {error}").format(error=error)) from error
 
 	# ── Suscriptores ─────────────────────────────────────────────────────────
 

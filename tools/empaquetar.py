@@ -50,16 +50,17 @@ VERSIONES_HISTORIAL = 15
 VERSIONES_TEXTO = 4
 
 
-def novedades_del_changelog(version: str) -> tuple[str, list[dict]]:
+def novedades_del_changelog(version: str, idioma: str = "es") -> tuple[str, list[dict]]:
 	"""(texto de novedades para versiones antiguas, historial) desde ``docs/changelog.md``.
 
-	Solo versiones hasta ``version`` incluida (nunca las de una versión futura aún sin publicar).
+	Con ``idioma="en"`` se lee ``docs/en/changelog.md``. Solo versiones hasta
+	``version`` incluida (nunca las de una versión futura aún sin publicar).
 	"""
 	sys.path.insert(0, str(RAIZ))
 	from app.core import documentacion as doc
 	from app.services.actualizador import texto_plano
 
-	ruta = RAIZ / "docs" / "changelog.md"
+	ruta = RAIZ / "docs" / ("changelog.md" if idioma == "es" else f"{idioma}/changelog.md")
 	if not ruta.is_file():
 		return "", []
 	versiones = doc.novedades_entre(doc.leer_changelog(ruta.read_text(encoding="utf-8")), None, version)
@@ -146,6 +147,9 @@ def main() -> int:
 	novedades, historial = novedades_del_changelog(version)
 	if not historial:
 		print("Aviso: docs/changelog.md no tiene la entrada de esta versión; el manifiesto irá sin novedades.")
+	novedades_en, historial_en = novedades_del_changelog(version, "en")
+	if not historial_en or historial_en[0]["version"] != version:
+		print("Aviso: docs/en/changelog.md no tiene la entrada de esta versión; quien use el inglés verá las novedades en español.")
 	manifiesto = {
 		"version": version,
 		"file": zip_destino.name,
@@ -154,6 +158,9 @@ def main() -> int:
 		"date": date.today().isoformat(),
 		"novedades": novedades,
 		"historial": historial,
+		# Desde la 1.0.7: las mismas novedades en inglés (las versiones anteriores ignoran estos campos).
+		"novedades_en": novedades_en,
+		"historial_en": historial_en,
 	}
 	ruta_json = RAIZ / "build" / "version.json"
 	ruta_json.write_text(json.dumps(manifiesto, indent=4, ensure_ascii=False), encoding="utf-8")

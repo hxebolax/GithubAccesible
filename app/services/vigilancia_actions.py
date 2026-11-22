@@ -25,6 +25,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from typing import Any
 
+
 log = logging.getLogger(__name__)
 
 #: Minutos que se espera a que un commit lance sus ejecuciones antes de dejarlo.
@@ -39,15 +40,15 @@ def _(texto: str) -> str:
 
 
 RESULTADOS = {
-	"success": "correcta",
-	"failure": "fallida",
-	"cancelled": "cancelada",
-	"skipped": "omitida",
-	"timed_out": "se agotó el tiempo",
-	"action_required": "necesita aprobación",
-	"neutral": "neutra",
-	"stale": "caducada",
-	"startup_failure": "no pudo arrancar",
+	"success": N_("correcta"),
+	"failure": N_("fallida"),
+	"cancelled": N_("cancelada"),
+	"skipped": N_("omitida"),
+	"timed_out": N_("se agotó el tiempo"),
+	"action_required": N_("necesita aprobación"),
+	"neutral": N_("neutra"),
+	"stale": N_("caducada"),
+	"startup_failure": N_("no pudo arrancar"),
 }
 
 
@@ -68,7 +69,7 @@ class Aviso:
 
 	@property
 	def texto(self) -> str:
-		resultado = _(RESULTADOS.get(self.conclusion, self.conclusion or "terminada"))
+		resultado = _(RESULTADOS.get(self.conclusion, self.conclusion)) if self.conclusion else _("terminada")
 		rama = _(" en {r}").format(r=self.rama) if self.rama else ""
 		return _("Actions de {repo}: «{n}»{rama} ha terminado: {res}.").format(repo=self.repo, n=self.nombre, rama=rama,
 			res=resultado)

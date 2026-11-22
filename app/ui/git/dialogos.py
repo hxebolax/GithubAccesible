@@ -362,7 +362,7 @@ def elegir_modo_restablecer(padre: wx.Window | None, descripcion: str) -> str | 
 # Configuración del repositorio
 # ════════════════════════════════════════════════════════════════════════════
 
-_OPCIONES_FIRMA = (("", "(como en la configuración global)"), ("true", "Sí, firmar siempre"), ("false", "No firmar"))
+_OPCIONES_FIRMA = (("", N_("(como en la configuración global)")), ("true", N_("Sí, firmar siempre")), ("false", N_("No firmar")))
 
 
 class DialogoConfigRepo(wx.Dialog):
@@ -449,7 +449,7 @@ class DialogoConfigRepo(wx.Dialog):
 # Bisección guiada
 # ════════════════════════════════════════════════════════════════════════════
 
-EXPLICACION_BISECCION = _(
+EXPLICACION_BISECCION = N_(
 	"La bisección busca el commit que introdujo un fallo probando commits a medio camino.\n\n"
 	"1. Indique un commit malo (donde ya falla; normalmente el actual) y uno bueno (donde aún funcionaba).\n"
 	"2. Git cambia los archivos a un commit intermedio. Pruebe el programa y diga si ese commit está bien o mal "
@@ -472,7 +472,7 @@ class DialogoBiseccion(wx.Dialog):
 		self.codigo_salida = wx.ID_NONE
 		raiz = wx.BoxSizer(wx.VERTICAL)
 		raiz.Add(wx.StaticText(self, label=_("&Estado de la bisección:")), 0, wx.LEFT | wx.RIGHT | wx.TOP, 6)
-		self.campo = wx.TextCtrl(self, value=texto_inicial or EXPLICACION_BISECCION,
+		self.campo = wx.TextCtrl(self, value=texto_inicial or _(EXPLICACION_BISECCION),
 			style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH2)
 		self.campo.SetHelpText(_("Lo que dice git del paso actual: qué commit hay que probar o cuál es el primer commit malo."))
 		raiz.Add(self.campo, 1, wx.EXPAND | wx.ALL, 6)

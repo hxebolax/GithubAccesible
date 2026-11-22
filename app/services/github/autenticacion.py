@@ -60,25 +60,25 @@ AMBITOS_BASICOS = (
 )
 
 DESCRIPCION_AMBITOS = {
-	"repo": "Repositorios públicos y privados: código, issues, pull requests, ajustes.",
-	"workflow": "Modificar los flujos de trabajo de GitHub Actions.",
-	"write:packages": "Publicar paquetes.",
-	"delete:packages": "Borrar paquetes.",
-	"admin:org": "Administrar organizaciones, equipos y miembros.",
-	"read:org": "Ver organizaciones y equipos.",
-	"admin:public_key": "Administrar las claves SSH de la cuenta.",
-	"admin:repo_hook": "Administrar los webhooks de los repositorios.",
-	"admin:org_hook": "Administrar los webhooks de las organizaciones.",
-	"gist": "Crear y editar gists.",
-	"notifications": "Leer y marcar notificaciones.",
-	"user": "Perfil, correos y seguidores.",
-	"delete_repo": "Borrar repositorios.",
-	"write:discussion": "Discusiones de equipo.",
-	"project": "Proyectos (Projects).",
-	"admin:gpg_key": "Administrar las claves GPG.",
-	"admin:ssh_signing_key": "Administrar las claves SSH de firma.",
-	"codespace": "Codespaces.",
-	"read:audit_log": "Registro de auditoría de la empresa u organización.",
+	"repo": N_("Repositorios públicos y privados: código, issues, pull requests, ajustes."),
+	"workflow": N_("Modificar los flujos de trabajo de GitHub Actions."),
+	"write:packages": N_("Publicar paquetes."),
+	"delete:packages": N_("Borrar paquetes."),
+	"admin:org": N_("Administrar organizaciones, equipos y miembros."),
+	"read:org": N_("Ver organizaciones y equipos."),
+	"admin:public_key": N_("Administrar las claves SSH de la cuenta."),
+	"admin:repo_hook": N_("Administrar los webhooks de los repositorios."),
+	"admin:org_hook": N_("Administrar los webhooks de las organizaciones."),
+	"gist": N_("Crear y editar gists."),
+	"notifications": N_("Leer y marcar notificaciones."),
+	"user": N_("Perfil, correos y seguidores."),
+	"delete_repo": N_("Borrar repositorios."),
+	"write:discussion": N_("Discusiones de equipo."),
+	"project": N_("Proyectos (Projects)."),
+	"admin:gpg_key": N_("Administrar las claves GPG."),
+	"admin:ssh_signing_key": N_("Administrar las claves SSH de firma."),
+	"codespace": N_("Codespaces."),
+	"read:audit_log": N_("Registro de auditoría de la empresa u organización."),
 }
 
 URL_CREAR_TOKEN_CLASICO = "https://github.com/settings/tokens/new?description=GitHub%20Accesible&scopes="
@@ -91,11 +91,11 @@ METODO_GIT = "git"
 METODO_APP = "app"
 
 NOMBRES_METODO = {
-	METODO_DISPOSITIVO: "Navegador con código de dispositivo",
-	METODO_TOKEN: "Token de acceso personal",
-	METODO_GH: "Sesión de GitHub CLI",
-	METODO_GIT: "Credenciales de Git",
-	METODO_APP: "Token de aplicación de GitHub",
+	METODO_DISPOSITIVO: N_("Navegador con código de dispositivo"),
+	METODO_TOKEN: N_("Token de acceso personal"),
+	METODO_GH: N_("Sesión de GitHub CLI"),
+	METODO_GIT: N_("Credenciales de Git"),
+	METODO_APP: N_("Token de aplicación de GitHub"),
 }
 
 
@@ -225,13 +225,23 @@ class CodigoDispositivo:
 
 
 _MENSAJES_DISPOSITIVO = {
-	"expired_token": "El código ha caducado. Vuelva a empezar el inicio de sesión.",
-	"access_denied": "Se ha cancelado la autorización en el navegador.",
-	"unsupported_grant_type": "GitHub no admite este tipo de autorización.",
-	"incorrect_client_credentials": "El identificador de la aplicación OAuth no es válido. Revíselo en Preferencias, Cuentas.",
-	"incorrect_device_code": "El código de dispositivo no es válido.",
-	"device_flow_disabled": "La aplicación OAuth no tiene activado el flujo de dispositivo (Enable Device Flow).",
+	"expired_token": N_("El código ha caducado. Vuelva a empezar el inicio de sesión."),
+	"access_denied": N_("Se ha cancelado la autorización en el navegador."),
+	"unsupported_grant_type": N_("GitHub no admite este tipo de autorización."),
+	"incorrect_client_credentials": N_("El identificador de la aplicación OAuth no es válido. Revíselo en Preferencias, Cuentas."),
+	"incorrect_device_code": N_("El código de dispositivo no es válido."),
+	"device_flow_disabled": N_("La aplicación OAuth no tiene activado el flujo de dispositivo (Enable Device Flow)."),
 }
+
+
+def _mensaje_dispositivo(error: str, descripcion: Any = None) -> str:
+	"""Mensaje traducido para un código de error del flujo de dispositivo.
+
+	Se mira antes si el código es conocido porque ``_("")`` devuelve la cabecera
+	del catálogo, no una cadena vacía: sin esa comprobación nunca se usaría el respaldo.
+	"""
+	mensaje = _MENSAJES_DISPOSITIVO.get(error)
+	return _(mensaje) if mensaje else str(descripcion or error)
 
 
 class FlujoDispositivo:
@@ -278,7 +288,7 @@ class FlujoDispositivo:
 			"refresh_token": token_renovacion,
 		})
 		if not cuerpo.get("access_token"):
-			raise ErrorAutenticacion(str(cuerpo.get("error_description") or cuerpo.get("error") or "sin token"))
+			raise ErrorAutenticacion(str(cuerpo.get("error_description") or cuerpo.get("error") or _("sin token")))
 		return cuerpo["access_token"], self._datos_renovacion(cuerpo)
 
 	@property
@@ -315,8 +325,7 @@ class FlujoDispositivo:
 			))
 		cuerpo = self._post(self.url_codigo, {"client_id": self.id_cliente, "scope": " ".join(self.ambitos)})
 		if "error" in cuerpo:
-			raise ErrorAutenticacion(_(_MENSAJES_DISPOSITIVO.get(cuerpo["error"], "")) or str(
-				cuerpo.get("error_description") or cuerpo["error"]))
+			raise ErrorAutenticacion(_mensaje_dispositivo(cuerpo["error"], cuerpo.get("error_description")))
 		try:
 			return CodigoDispositivo(
 				codigo_dispositivo=cuerpo["device_code"],
@@ -348,7 +357,7 @@ class FlujoDispositivo:
 			# GitHub pide ir más despacio: suma 5 segundos al intervalo (o el que diga).
 			codigo.intervalo = int(cuerpo.get("interval") or codigo.intervalo + 5)
 			return None, "despacio"
-		raise ErrorAutenticacion(_(_MENSAJES_DISPOSITIVO.get(error, "")) or str(cuerpo.get("error_description") or error))
+		raise ErrorAutenticacion(_mensaje_dispositivo(error, cuerpo.get("error_description")))
 
 	def esperar_token(self, codigo: CodigoDispositivo, cancelado: Callable[[], bool] | None = None) -> str:
 		"""Espera (respetando el intervalo) hasta que la persona autoriza, cancela o caduca."""

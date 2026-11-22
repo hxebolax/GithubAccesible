@@ -428,17 +428,57 @@ def test_catalogo_danado_no_impide_arrancar(tmp_path, monkeypatch, caplog):
 	assert "no se pudo cargar" in caplog.text
 
 
-def test_orden_de_preferencia(monkeypatch):
+def test_orden_de_preferencia(monkeypatch, tmp_path):
+	monkeypatch.setenv("APP_DATA_DIR", str(tmp_path))
 	monkeypatch.setattr(i18n, "idioma_sistema", lambda: "fr_FR")
 	monkeypatch.delenv("APP_IDIOMA", raising=False)
-	assert i18n.resolver_idioma(None) == "fr_FR"
-	assert i18n.resolver_idioma("auto") == "fr_FR"
+	# Sin catálogo francés, el sistema en francés da el inglés.
+	assert i18n.resolver_idioma(None) == "en"
+	assert i18n.resolver_idioma("auto") == "en"
+	# Con catálogo francés, el francés.
+	carpeta = tmp_path / "locales" / "fr" / "LC_MESSAGES"
+	carpeta.mkdir(parents=True)
+	(carpeta / f"{i18n.DOMINIO}.mo").write_bytes(b"")
+	assert i18n.resolver_idioma("auto") == "fr"
 	assert i18n.resolver_idioma("en-US") == "en_US"
 	monkeypatch.setenv("APP_IDIOMA", "de")
 	assert i18n.resolver_idioma("en") == "de"
 	monkeypatch.delenv("APP_IDIOMA")
 	monkeypatch.setattr(i18n, "idioma_sistema", lambda: "")
 	assert i18n.resolver_idioma(None) == "es"
+
+
+@pytest.mark.parametrize("sistema", ["es", "es_ES", "es_MX", "es_US", "es-AR", "es_419", "Spanish_Spain", "ES"])
+def test_cualquier_variante_de_espanol_da_espanol(sistema, monkeypatch):
+	monkeypatch.delenv("APP_IDIOMA", raising=False)
+	monkeypatch.setattr(i18n, "idioma_sistema", lambda: i18n.normalizar(sistema))
+	assert i18n.idioma_automatico(i18n.normalizar(sistema)) == "es"
+	assert i18n.resolver_idioma("auto") == "es"
+
+
+@pytest.mark.parametrize("sistema", ["en_US", "en_GB", "en", "de_DE", "it_IT", "ca_ES", "ja_JP"])
+def test_otro_idioma_da_ingles(sistema, monkeypatch, tmp_path):
+	monkeypatch.setenv("APP_DATA_DIR", str(tmp_path))
+	monkeypatch.delenv("APP_IDIOMA", raising=False)
+	assert i18n.idioma_automatico(sistema) == "en"
+	monkeypatch.setattr(i18n, "idioma_sistema", lambda: sistema)
+	assert i18n.resolver_idioma(None) == "en"
+	# Lo elegido a mano en Preferencias manda sobre el sistema.
+	assert i18n.resolver_idioma("es") == "es"
+
+
+def test_el_catalogo_ingles_de_la_aplicacion_carga(monkeypatch):
+	"""El .mo inglés que se distribuye existe, carga y traduce los textos de la interfaz."""
+	monkeypatch.delenv("APP_DATA_DIR", raising=False)
+	monkeypatch.delenv("APP_IDIOMA", raising=False)
+	assert "en" in i18n.idiomas_disponibles()
+	try:
+		assert i18n.inicializar("en").startswith("en")
+		assert i18n.idioma_corto() == "en"
+		assert builtins._("Preferencias") != "Preferencias"
+	finally:
+		i18n.inicializar("es")
+	assert i18n.idioma_corto() == "es"
 
 
 def test_normalizar_codigos():

@@ -23,13 +23,16 @@ def limpiar_registro(texto: str, quitar_horas: bool = True) -> str:
 	de pantalla lee como basura y de una marca de tiempo larga al principio de
 	cada línea que hay que escuchar entera antes de llegar a lo importante.
 	"""
+	# Las marcas se traducen una vez; es_linea_marcada (detalle/acciones.py) busca
+	# los mismos textos traducidos para saltar de un error o aviso al siguiente.
+	error, aviso, nota, depuracion = _("ERROR: "), _("AVISO: "), _("NOTA: "), _("DEPURACIÓN: ")
 	lineas = []
 	for linea in texto.splitlines():
 		linea = _ANSI.sub("", linea)
 		if quitar_horas:
 			linea = _MARCA_TIEMPO.sub("", linea)
-		lineas.append(linea.replace("##[group]", "▸ ").replace("##[endgroup]", "").replace("##[error]", "ERROR: ")
-			.replace("##[warning]", "AVISO: ").replace("##[notice]", "NOTA: ").replace("##[debug]", "DEPURACIÓN: "))
+		lineas.append(linea.replace("##[group]", "▸ ").replace("##[endgroup]", "").replace("##[error]", error)
+			.replace("##[warning]", aviso).replace("##[notice]", nota).replace("##[debug]", depuracion))
 	return "\n".join(lineas)
 
 
@@ -373,27 +376,27 @@ class ApiGists(_Base):
 # ════════════════════════════════════════════════════════════════════════════
 
 MOTIVOS_NOTIFICACION = {
-	"approval_requested": "aprobación pedida",
-	"assign": "asignada a usted",
-	"author": "usted es autor",
-	"ci_activity": "actividad de Actions",
-	"comment": "comentario",
-	"invitation": "invitación",
-	"manual": "suscripción manual",
-	"member_feature_requested": "función pedida",
-	"mention": "le mencionan",
-	"review_requested": "revisión pedida",
-	"security_advisory_credit": "crédito en aviso de seguridad",
-	"security_alert": "alerta de seguridad",
-	"state_change": "cambio de estado",
-	"subscribed": "repositorio vigilado",
-	"team_mention": "mencionan a su equipo",
+	"approval_requested": N_("aprobación pedida"),
+	"assign": N_("asignada a usted"),
+	"author": N_("usted es autor"),
+	"ci_activity": N_("actividad de Actions"),
+	"comment": N_("comentario"),
+	"invitation": N_("invitación"),
+	"manual": N_("suscripción manual"),
+	"member_feature_requested": N_("función pedida"),
+	"mention": N_("le mencionan"),
+	"review_requested": N_("revisión pedida"),
+	"security_advisory_credit": N_("crédito en aviso de seguridad"),
+	"security_alert": N_("alerta de seguridad"),
+	"state_change": N_("cambio de estado"),
+	"subscribed": N_("repositorio vigilado"),
+	"team_mention": N_("mencionan a su equipo"),
 }
 
 TIPOS_SUJETO = {
-	"Issue": "Issue", "PullRequest": "Pull request", "Commit": "Commit", "Release": "Release",
-	"Discussion": "Discusión", "CheckSuite": "Actions", "RepositoryVulnerabilityAlert": "Alerta de seguridad",
-	"RepositoryDependabotAlertsThread": "Dependabot", "RepositoryInvitation": "Invitación",
+	"Issue": N_("Issue"), "PullRequest": N_("Pull request"), "Commit": N_("Commit"), "Release": N_("Release"),
+	"Discussion": N_("Discusión"), "CheckSuite": N_("Actions"), "RepositoryVulnerabilityAlert": N_("Alerta de seguridad"),
+	"RepositoryDependabotAlertsThread": N_("Dependabot"), "RepositoryInvitation": N_("Invitación"),
 }
 
 
@@ -545,13 +548,13 @@ class ApiOrganizaciones(_Base):
 # ════════════════════════════════════════════════════════════════════════════
 
 TIPOS_BUSQUEDA = {
-	"repositories": "Repositorios",
-	"code": "Código",
-	"issues": "Issues y pull requests",
-	"users": "Usuarios y organizaciones",
-	"commits": "Commits",
-	"topics": "Temas",
-	"labels": "Etiquetas",
+	"repositories": N_("Repositorios"),
+	"code": N_("Código"),
+	"issues": N_("Issues y pull requests"),
+	"users": N_("Usuarios y organizaciones"),
+	"commits": N_("Commits"),
+	"topics": N_("Temas"),
+	"labels": N_("Etiquetas"),
 }
 
 

@@ -196,7 +196,7 @@ def markdown_a_html(texto: str, titulo: str, teclas: dict[str, str] | None = Non
 		cuerpo = f"<h1>{html.escape(titulo)}</h1>\n{cuerpo}"
 	guion = f"<script>{guion_teclas(teclas, por_mensaje)}</script>\n" if teclas else ""
 	return (
-		'<!DOCTYPE html>\n<html lang="es">\n<head>\n<meta charset="utf-8">\n'
+		f'<!DOCTYPE html>\n<html lang="{documentacion.idioma_documentos()}">\n<head>\n<meta charset="utf-8">\n'
 		f"<title>{html.escape(titulo)}</title>\n<style>{_estilo()}</style>\n{guion}</head>\n"
 		f"<body>\n<main>\n{cuerpo}\n</main>\n</body>\n</html>\n"
 	)
@@ -698,11 +698,3 @@ def mostrar_novedades_si_procede(
 	# Se marca al mostrarlas: si la aplicación se cierra después, no se repiten.
 	documentacion.marcar_vista(version_actual)
 	return visor
-
-
-def abrir_accesibilidad(padre: wx.Window | None, **opciones) -> VisorAyuda | None:
-	return abrir_documento(padre, documentacion.ACCESIBILIDAD, _("Declaración de accesibilidad"), **opciones)
-
-
-def abrir_privacidad(padre: wx.Window | None, **opciones) -> VisorAyuda | None:
-	return abrir_documento(padre, documentacion.PRIVACIDAD, _("Privacidad"), **opciones)

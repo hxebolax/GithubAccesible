@@ -633,8 +633,8 @@ class ApiCommits(_Base):
 # ════════════════════════════════════════════════════════════════════════════
 
 REACCIONES = {
-	"+1": "Me gusta", "-1": "No me gusta", "laugh": "Risa", "confused": "Confusión",
-	"heart": "Corazón", "hooray": "Celebración", "rocket": "Cohete", "eyes": "Ojos",
+	"+1": N_("Me gusta"), "-1": N_("No me gusta"), "laugh": N_("Risa"), "confused": N_("Confusión"),
+	"heart": N_("Corazón"), "hooray": N_("Celebración"), "rocket": N_("Cohete"), "eyes": N_("Ojos"),
 }
 
 

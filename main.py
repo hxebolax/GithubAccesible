@@ -72,19 +72,6 @@ def _mostrar_error_arranque(mensaje: str) -> None:
 			print(mensaje, file=sys.__stderr__)
 
 
-def _fijar_idioma():
-	"""Pone wxWidgets en español (Aceptar, Cancelar, Sí, No...) y devuelve el ``wx.Locale``."""
-	from pathlib import Path
-
-	import wx
-
-	wx.Locale.AddCatalogLookupPathPrefix(str(Path(wx.__file__).resolve().parent / "locale"))
-	idioma = wx.Locale(wx.LANGUAGE_SPANISH)
-	if not idioma.IsOk():
-		log.warning("No se pudo activar el idioma español de wxWidgets; se usa el del sistema.")
-	return idioma
-
-
 def _configurar_voz(config) -> None:
 	from app.ui.accesibilidad import voz as voz_ui
 
@@ -158,7 +145,7 @@ def _principal(argumentos: list[str]) -> int:
 	nivel = str(config.obtener("registro.nivel", "INFO")).upper()
 	if nivel != "INFO":
 		registro.cambiar_nivel(nivel)
-	i18n.inicializar(config.obtener("general.idioma", "es"))
+	i18n.inicializar(config.obtener("general.idioma", "auto"))
 
 	# 4. wx, ayuda contextual, idioma e instancia única.
 	import wx
@@ -170,7 +157,8 @@ def _principal(argumentos: list[str]) -> int:
 	from app.ui.accesibilidad.ayuda import instalar_proveedor_ayuda
 
 	instalar_proveedor_ayuda(config)
-	_VIVOS["idioma"] = _fijar_idioma()
+	# Botones y diálogos estándar de wx (Aceptar, Cancelar, Sí...) en el idioma elegido.
+	_VIVOS["idioma"] = i18n.configurar_wx()
 
 	from app.core.instancia_unica import InstanciaUnica
 
@@ -236,6 +224,10 @@ def _principal(argumentos: list[str]) -> int:
 		log.exception("No se pudo guardar la configuración pendiente al salir")
 	instancia.liberar()
 	log.info("Cierre normal.")
+	from app.core import reinicio
+
+	# Después de liberar la instancia única: si no, la nueva vería a esta viva y se cerraría.
+	reinicio.relanzar_si_procede()
 	return 0
 
 

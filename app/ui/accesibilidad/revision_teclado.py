@@ -42,6 +42,12 @@ Lo que NO comprueba: el orden de Tab, lo que dice el lector de pantalla
 (pruebas MSAA y comprobación con NVDA) ni las ventanas que se crean después.
 Revise cada diálogo por separado.
 
+Traducción: los textos de este módulo (mensajes de ``Problema``, ``informe`` y
+nombres de teclas como «Re Pág» o «Bloq Mayús») NO se marcan para traducir a
+propósito. Solo los ven los programadores en las pruebas (``afirmar_teclado_correcto``);
+la aplicación nunca los muestra ni los lee, y los nombres de teclas son la forma
+normalizada con la que se comparan los atajos, no texto para la persona usuaria.
+
 PLANTILLA del agente «accesibilidad-wx».
 """
 
@@ -99,7 +105,9 @@ _ALIAS_TECLA = {
 	"del": "Supr", "delete": "Supr", "supr": "Supr", "ins": "Insert", "insert": "Insert",
 	"space": "Espacio", "espacio": "Espacio", "tab": "Tab", "back": "Retroceso",
 	"retroceso": "Retroceso", "home": "Inicio", "inicio": "Inicio", "end": "Fin", "fin": "Fin",
-	"pgup": "Re Pág", "re pág": "Re Pág", "pgdn": "Av Pág", "av pág": "Av Pág",
+	"pgup": "Re Pág", "pageup": "Re Pág", "re pág": "Re Pág", "pgdn": "Av Pág", "pgdown": "Av Pág",
+	"pagedown": "Av Pág", "av pág": "Av Pág", "backspace": "Retroceso", "capslock": "Bloq Mayús",
+	"bloq mayús": "Bloq Mayús",
 	"up": "Arriba", "arriba": "Arriba", "down": "Abajo", "abajo": "Abajo",
 	"left": "Izquierda", "izquierda": "Izquierda", "right": "Derecha", "derecha": "Derecha",
 }

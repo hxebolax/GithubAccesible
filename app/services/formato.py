@@ -7,23 +7,16 @@ breve y fácil de escuchar.
 
 from __future__ import annotations
 
-import builtins
 from datetime import UTC, datetime
 from typing import Any
 
+from app.core import i18n  # noqa: F401 - instala _, N_ y ngettext en builtins aunque se importe suelto (pruebas)
 from app.services.github.cliente import fecha_iso
 
 
-def _(texto: str) -> str:
-	traducir = getattr(builtins, "_", None)
-	return traducir(texto) if callable(traducir) else texto
-
-
 def ngettext_(singular: str, plural: str, n: int) -> str:
-	traducir = getattr(builtins, "ngettext", None)
-	if callable(traducir):
-		return traducir(singular, plural, n)
-	return singular if n == 1 else plural
+	"""Alias antiguo de ``ngettext`` (lo importa ``app.ui.editor``). El extractor no lo reconoce: use ``ngettext``."""
+	return ngettext(singular, plural, n)
 
 
 def fecha_relativa(texto_o_fecha: str | datetime | None, ahora: datetime | None = None) -> str:
@@ -43,18 +36,18 @@ def fecha_relativa(texto_o_fecha: str | datetime | None, ahora: datetime | None 
 	horas = int(segundos // 3600)
 	dias = int(segundos // 86400)
 	if minutos < 60:
-		cantidad = ngettext_("{n} minuto", "{n} minutos", max(1, minutos)).format(n=max(1, minutos))
+		cantidad = ngettext("{n} minuto", "{n} minutos", max(1, minutos)).format(n=max(1, minutos))
 	elif horas < 24:
-		cantidad = ngettext_("{n} hora", "{n} horas", horas).format(n=horas)
+		cantidad = ngettext("{n} hora", "{n} horas", horas).format(n=horas)
 	elif dias == 1 and not futuro:
 		return _("ayer")
 	elif dias < 30:
-		cantidad = ngettext_("{n} día", "{n} días", dias).format(n=dias)
+		cantidad = ngettext("{n} día", "{n} días", dias).format(n=dias)
 	elif dias < 365:
 		meses = dias // 30
-		cantidad = ngettext_("{n} mes", "{n} meses", meses).format(n=meses)
+		cantidad = ngettext("{n} mes", "{n} meses", meses).format(n=meses)
 	else:
-		return _("el {fecha}").format(fecha=fecha.astimezone().strftime("%d/%m/%Y"))
+		return _("el {fecha}").format(fecha=fecha.astimezone().strftime(_FORMATO_FECHA()))
 	return (_("dentro de {c}") if futuro else _("hace {c}")).format(c=cantidad)
 
 
@@ -62,7 +55,39 @@ def fecha_completa(texto_o_fecha: str | datetime | None) -> str:
 	fecha = texto_o_fecha if isinstance(texto_o_fecha, datetime) else fecha_iso(texto_o_fecha)
 	if fecha is None:
 		return ""
-	return fecha.astimezone().strftime("%d/%m/%Y %H:%M")
+	return fecha.astimezone().strftime(_FORMATO_FECHA_HORA())
+
+
+# Formatos que cambian con el idioma. Se deciden en el código y no en el catálogo: los
+# marcadores de strftime (%d, %Y...) no pueden cambiar en una traducción.
+#: idioma → (fecha, fecha y hora, separador decimal, separador de miles).
+_FORMATOS = {
+	"es": ("%d/%m/%Y", "%d/%m/%Y %H:%M", ",", "."),
+	# «Nov 22, 2026»: sin la ambigüedad de 11/22 frente a 22/11 entre países de habla inglesa.
+	"en": ("%b %d, %Y", "%b %d, %Y %H:%M", ".", ","),
+}
+
+
+def _formatos() -> tuple[str, str, str, str]:
+
+	return _FORMATOS.get(i18n.idioma_corto(), _FORMATOS["es"])
+
+
+def _FORMATO_FECHA() -> str:  # noqa: N802
+	return _formatos()[0]
+
+
+def _FORMATO_FECHA_HORA() -> str:  # noqa: N802
+	return _formatos()[1]
+
+
+def _SEPARADORES() -> str:  # noqa: N802
+	return _formatos()[2] + _formatos()[3]
+
+
+def _decimal(valor: float) -> str:
+	"""Un decimal con la coma o el punto del idioma."""
+	return f"{valor:.1f}".replace(".", _SEPARADORES()[0])
 
 
 def fecha(texto: str | None, relativa: bool = True) -> str:
@@ -76,8 +101,8 @@ def tamano(octetos: int | float | None) -> str:
 	for unidad in ("bytes", "KB", "MB", "GB", "TB"):
 		if valor < 1024 or unidad == "TB":
 			if unidad == "bytes":
-				return ngettext_("{n} byte", "{n} bytes", int(valor)).format(n=int(valor))
-			return f"{valor:.1f} {unidad}".replace(".", ",")
+				return ngettext("{n} byte", "{n} bytes", int(valor)).format(n=int(valor))
+			return f"{_decimal(valor)} {unidad}"
 		valor /= 1024
 	return ""
 
@@ -85,7 +110,8 @@ def tamano(octetos: int | float | None) -> str:
 def numero(valor: int | None) -> str:
 	if valor is None:
 		return ""
-	return f"{int(valor):,}".replace(",", ".")
+	# El inglés agrupa los miles con coma (1,234); el español, con punto (1.234).
+	return f"{int(valor):,}".replace(",", _SEPARADORES()[1])
 
 
 def duracion(segundos: float | None) -> str:
@@ -93,7 +119,7 @@ def duracion(segundos: float | None) -> str:
 		return ""
 	segundos = int(segundos)
 	if segundos < 60:
-		return ngettext_("{n} segundo", "{n} segundos", segundos).format(n=segundos)
+		return ngettext("{n} segundo", "{n} segundos", segundos).format(n=segundos)
 	minutos, s = divmod(segundos, 60)
 	if minutos < 60:
 		return _("{m} min {s} s").format(m=minutos, s=s)
@@ -102,59 +128,59 @@ def duracion(segundos: float | None) -> str:
 
 
 ESTADOS = {
-	"open": "Abierta",
-	"closed": "Cerrada",
-	"merged": "Fusionada",
-	"draft": "Borrador",
-	"queued": "En cola",
-	"in_progress": "En curso",
-	"completed": "Terminada",
-	"waiting": "Esperando",
-	"requested": "Pedida",
-	"pending": "Pendiente",
-	"success": "Correcto",
-	"failure": "Fallo",
-	"cancelled": "Cancelada",
-	"skipped": "Omitida",
-	"neutral": "Neutral",
-	"timed_out": "Tiempo agotado",
-	"action_required": "Requiere acción",
-	"stale": "Obsoleta",
-	"startup_failure": "Fallo al arrancar",
-	"error": "Error",
-	"active": "Activa",
-	"inactive": "Inactiva",
-	"dismissed": "Descartada",
-	"fixed": "Corregida",
-	"resolved": "Resuelta",
-	"auto_dismissed": "Descartada automáticamente",
-	"APPROVED": "Aprobada",
-	"CHANGES_REQUESTED": "Cambios pedidos",
-	"COMMENTED": "Comentada",
-	"DISMISSED": "Descartada",
-	"PENDING": "Pendiente",
-	"Available": "Disponible",
-	"Shutdown": "Apagado",
-	"Starting": "Arrancando",
-	"public": "Público",
-	"private": "Privado",
-	"internal": "Interno",
-	"admin": "Administración",
-	"maintain": "Mantenimiento",
-	"push": "Escritura",
-	"triage": "Clasificación",
-	"pull": "Lectura",
-	"write": "Escritura",
-	"read": "Lectura",
-	"member": "Miembro",
-	"maintainer": "Mantenedor",
-	"critical": "Crítica",
-	"high": "Alta",
-	"medium": "Media",
-	"moderate": "Moderada",
-	"low": "Baja",
-	"note": "Nota",
-	"warning": "Aviso",
+	"open": N_("Abierta"),
+	"closed": N_("Cerrada"),
+	"merged": N_("Fusionada"),
+	"draft": N_("Borrador"),
+	"queued": N_("En cola"),
+	"in_progress": N_("En curso"),
+	"completed": N_("Terminada"),
+	"waiting": N_("Esperando"),
+	"requested": N_("Pedida"),
+	"pending": N_("Pendiente"),
+	"success": N_("Correcto"),
+	"failure": N_("Fallo"),
+	"cancelled": N_("Cancelada"),
+	"skipped": N_("Omitida"),
+	"neutral": N_("Neutral"),
+	"timed_out": N_("Tiempo agotado"),
+	"action_required": N_("Requiere acción"),
+	"stale": N_("Obsoleta"),
+	"startup_failure": N_("Fallo al arrancar"),
+	"error": N_("Error"),
+	"active": N_("Activa"),
+	"inactive": N_("Inactiva"),
+	"dismissed": N_("Descartada"),
+	"fixed": N_("Corregida"),
+	"resolved": N_("Resuelta"),
+	"auto_dismissed": N_("Descartada automáticamente"),
+	"APPROVED": N_("Aprobada"),
+	"CHANGES_REQUESTED": N_("Cambios pedidos"),
+	"COMMENTED": N_("Comentada"),
+	"DISMISSED": N_("Descartada"),
+	"PENDING": N_("Pendiente"),
+	"Available": N_("Disponible"),
+	"Shutdown": N_("Apagado"),
+	"Starting": N_("Arrancando"),
+	"public": N_("Público"),
+	"private": N_("Privado"),
+	"internal": N_("Interno"),
+	"admin": N_("Administración"),
+	"maintain": N_("Mantenimiento"),
+	"push": N_("Escritura"),
+	"triage": N_("Clasificación"),
+	"pull": N_("Lectura"),
+	"write": N_("Escritura"),
+	"read": N_("Lectura"),
+	"member": N_("Miembro"),
+	"maintainer": N_("Mantenedor"),
+	"critical": N_("Crítica"),
+	"high": N_("Alta"),
+	"medium": N_("Media"),
+	"moderate": N_("Moderada"),
+	"low": N_("Baja"),
+	"note": N_("Nota"),
+	"warning": N_("Aviso"),
 }
 
 
@@ -236,24 +262,27 @@ def resumen_texto(texto: str | None, maximo: int = 300) -> str:
 	return plano if len(plano) <= maximo else plano[: maximo - 1] + "…"
 
 
+#: Frase de cada tipo de evento del feed que no tiene una más detallada en ``describir_evento``.
+#: Son frases enteras con marcadores ({a} quien lo hizo, {r} el repositorio) para que la
+#: traducción pueda reordenarlas.
 TIPOS_EVENTO = {
-	"PushEvent": "envió commits a",
-	"CreateEvent": "creó",
-	"DeleteEvent": "borró",
-	"ForkEvent": "bifurcó",
-	"WatchEvent": "puso estrella a",
-	"IssuesEvent": "issue en",
-	"IssueCommentEvent": "comentó en",
-	"PullRequestEvent": "pull request en",
-	"PullRequestReviewEvent": "revisó un pull request en",
-	"PullRequestReviewCommentEvent": "comentó una revisión en",
-	"ReleaseEvent": "publicó una release en",
-	"PublicEvent": "hizo público",
-	"MemberEvent": "añadió un colaborador a",
-	"GollumEvent": "editó la wiki de",
-	"CommitCommentEvent": "comentó un commit en",
-	"DiscussionEvent": "discusión en",
-	"SponsorshipEvent": "patrocinio",
+	"PushEvent": N_("{a} envió commits a {r}"),
+	"CreateEvent": N_("{a} creó {r}"),
+	"DeleteEvent": N_("{a} borró {r}"),
+	"ForkEvent": N_("{a} bifurcó {r}"),
+	"WatchEvent": N_("{a} puso estrella a {r}"),
+	"IssuesEvent": N_("{a} issue en {r}"),
+	"IssueCommentEvent": N_("{a} comentó en {r}"),
+	"PullRequestEvent": N_("{a} pull request en {r}"),
+	"PullRequestReviewEvent": N_("{a} revisó un pull request en {r}"),
+	"PullRequestReviewCommentEvent": N_("{a} comentó una revisión en {r}"),
+	"ReleaseEvent": N_("{a} publicó una release en {r}"),
+	"PublicEvent": N_("{a} hizo público {r}"),
+	"MemberEvent": N_("{a} añadió un colaborador a {r}"),
+	"GollumEvent": N_("{a} editó la wiki de {r}"),
+	"CommitCommentEvent": N_("{a} comentó un commit en {r}"),
+	"DiscussionEvent": N_("{a} discusión en {r}"),
+	"SponsorshipEvent": N_("{a} patrocinio {r}"),
 }
 
 
@@ -269,9 +298,15 @@ def describir_evento(evento: dict) -> str:
 	if tipo == "PushEvent":
 		n = carga.get("size") or len(carga.get("commits") or []) or 1
 		rama = str(carga.get("ref", "")).removeprefix("refs/heads/")
-		return _("{a} envió {n} commits a {r} (rama {b})").format(a=actor, n=n, r=repo, b=rama)
+		return ngettext("{a} envió {n} commit a {r} (rama {b})", "{a} envió {n} commits a {r} (rama {b})", n).format(
+			a=actor, n=n, r=repo, b=rama)
 	if tipo == "CreateEvent":
-		return _("{a} creó {t} {nombre} en {r}").format(a=actor, t=_(carga.get("ref_type", "")), nombre=carga.get("ref") or "", r=repo)
+		# ref_type llega de GitHub en inglés: se traduce aquí con artículo, no con _() sobre el dato.
+		tipo_ref = carga.get("ref_type", "")
+		if tipo_ref == "repository" or not carga.get("ref"):
+			return _("{a} creó el repositorio {r}").format(a=actor, r=repo)
+		cosas = {"branch": _("la rama"), "tag": _("la etiqueta")}
+		return _("{a} creó {t} {nombre} en {r}").format(a=actor, t=cosas.get(tipo_ref, tipo_ref), nombre=carga.get("ref"), r=repo)
 	if tipo in ("IssuesEvent", "PullRequestEvent"):
 		objeto = carga.get("issue") or carga.get("pull_request") or {}
 		que = _("la issue") if tipo == "IssuesEvent" else _("el pull request")
@@ -287,7 +322,10 @@ def describir_evento(evento: dict) -> str:
 		return _("{a} puso estrella a {r}").format(a=actor, r=repo)
 	if tipo == "ForkEvent":
 		return _("{a} bifurcó {r}").format(a=actor, r=repo)
-	return f"{actor} {_(TIPOS_EVENTO.get(tipo, tipo))} {repo}".strip()
+	if tipo in TIPOS_EVENTO:
+		return _(TIPOS_EVENTO[tipo]).format(a=actor, r=repo).strip()
+	# Tipo desconocido: el nombre técnico del evento, tal cual (no hay nada que traducir).
+	return f"{actor} {tipo} {repo}".strip()
 
 
 def url_web_de_api(url_api: str | None, host: str = "github.com") -> str:

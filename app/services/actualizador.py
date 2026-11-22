@@ -296,8 +296,26 @@ def leer_historial(valor: object) -> tuple[tuple[str, str, str], ...]:
 			clave_version(version)
 		except VersionInvalida:
 			continue
-		resultado.append((version, str(titulo or f"Versión {version}"), texto.strip()[:MAX_TEXTO_VERSION]))
+		resultado.append((version, str(titulo or _("Versión {version}").format(version=version)), texto.strip()[:MAX_TEXTO_VERSION]))
 	return tuple(sorted(resultado, key=lambda e: clave_version(e[0]), reverse=True))
+
+
+def campo_en_idioma(manifiesto: dict, campo: str, idioma: str | None = None) -> object:
+	"""``<campo>_<idioma>`` del manifiesto (``historial_en``) si existe; si no, ``<campo>`` (español).
+
+	Desde la 1.0.7 el manifiesto lleva las novedades en español (``historial``,
+	``novedades``: lo que leen las versiones anteriores) y en inglés (``historial_en``,
+	``novedades_en``). Todo va dentro de la firma.
+	"""
+	if idioma is None:
+		from app.core import i18n
+
+		idioma = i18n.idioma_corto()
+	if idioma and idioma != "es":
+		traducido = manifiesto.get(f"{campo}_{idioma}")
+		if traducido:
+			return traducido
+	return manifiesto.get(campo)
 
 
 def texto_plano(markdown: str) -> str:
@@ -364,7 +382,7 @@ def clave_version(texto: str) -> tuple:
 	"""
 	coincidencia = _PATRON_VERSION.match(str(texto or ""))
 	if not coincidencia:
-		raise VersionInvalida(f"Versión no válida: {texto!r}")
+		raise VersionInvalida(_("Versión no válida: {texto!r}").format(texto=texto))
 	release = tuple(int(parte) for parte in coincidencia["release"].split("."))
 	while len(release) > 1 and release[-1] == 0:
 		release = release[:-1]
@@ -607,8 +625,8 @@ def _info_desde_manifiesto(config: Configuracion, manifiesto: dict, url_manifies
 		sha256=sha,
 		tamano=tamano,
 		fecha=str(manifiesto.get("date") or ""),
-		novedades=str(manifiesto.get("novedades") or "").strip(),
-		historial=leer_historial(manifiesto.get("historial")),
+		novedades=str(campo_en_idioma(manifiesto, "novedades") or "").strip(),
+		historial=leer_historial(campo_en_idioma(manifiesto, "historial")),
 	)
 
 
@@ -1185,7 +1203,7 @@ def _comprobar_instalacion(config: Configuracion) -> None:
 		)
 	for nombre in config.data_actualizable:
 		if not re.fullmatch(r"[A-Za-z0-9_-]+", nombre):
-			raise ErrorActualizacion(f"Nombre de subcarpeta de data no válido: {nombre!r}")
+			raise ErrorActualizacion(_("Nombre de subcarpeta de data no válido: {nombre!r}").format(nombre=nombre))
 
 
 def preparar_sustitucion(config: Configuracion, info: InfoActualizacion) -> Path:

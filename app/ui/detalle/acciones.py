@@ -390,13 +390,13 @@ def asignar_letras(textos: list[str], ocupadas: set[str] | frozenset[str] = froz
 # ════════════════════════════════════════════════════════════════════════════
 
 EVENTOS = {
-	"push": "envío (push)", "pull_request": "pull request", "pull_request_target": "pull request (destino)",
-	"workflow_dispatch": "lanzado a mano", "schedule": "programado", "release": "release",
-	"workflow_run": "al terminar otro flujo", "repository_dispatch": "evento externo", "merge_group": "cola de fusión",
-	"issues": "issue", "issue_comment": "comentario de issue", "dynamic": "dinámico",
+	"push": N_("envío (push)"), "pull_request": N_("pull request"), "pull_request_target": N_("pull request (destino)"),
+	"workflow_dispatch": N_("lanzado a mano"), "schedule": N_("programado"), "release": N_("release"),
+	"workflow_run": N_("al terminar otro flujo"), "repository_dispatch": N_("evento externo"), "merge_group": N_("cola de fusión"),
+	"issues": N_("issue"), "issue_comment": N_("comentario de issue"), "dynamic": N_("dinámico"),
 }
 
-NIVELES_ANOTACION = {"failure": "Error", "warning": "Aviso", "notice": "Nota"}
+NIVELES_ANOTACION = {"failure": N_("Error"), "warning": N_("Aviso"), "notice": N_("Nota")}
 
 
 def texto_informacion(ejecucion: dict) -> str:
@@ -455,7 +455,8 @@ def cambios_de_estado(anteriores: list[dict], nuevos: list[dict]) -> list[str]:
 
 def es_linea_marcada(linea: str) -> bool:
 	"""Línea de error o de aviso del registro (tras ``limpiar_registro``)."""
-	return "ERROR:" in linea or "AVISO:" in linea
+	# Las mismas marcas traducidas que pone limpiar_registro.
+	return _("ERROR: ").strip() in linea or _("AVISO: ").strip() in linea
 
 
 def siguiente_marca(lineas: list[str], actual: int, atras: bool = False) -> int | None:

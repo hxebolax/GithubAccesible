@@ -42,6 +42,8 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
+import app.core.i18n  # noqa: F401 - instala N_ en builtins antes de usarlo al importar
+
 log = logging.getLogger(__name__)
 
 # urllib3 anota en DEBUG la URL completa, con tokens incluidos: se sube a INFO
@@ -281,6 +283,8 @@ def crear_sesion(configuracion: ConfiguracionRed | None = None) -> requests.Sess
 	sesion.limitador = limitador  # type: ignore[attr-defined]  # accesible para pruebas y diagnóstico
 
 	proxy = (configuracion.proxy or "sistema").strip()
+	# También en inglés («system», «none»): la explicación de Preferencias los nombra en los dos idiomas.
+	proxy = {"system": "sistema", "none": "ninguno"}.get(proxy.lower(), proxy)
 	if proxy.lower() == "ninguno":
 		# trust_env=False ignora HTTP(S)_PROXY y la configuración de Windows (y también
 		# .netrc y REQUESTS_CA_BUNDLE, que aquí no se quieren).
@@ -433,19 +437,19 @@ class ErrorClasificado:
 
 
 _MENSAJES_HTTP = {
-	400: ("cliente", False, "El servidor no ha entendido la petición (error 400)."),
-	401: ("cliente", False, "Hace falta iniciar sesión o la sesión ha caducado (error 401)."),
-	403: ("cliente", False, "El servidor ha denegado el acceso (error 403)."),
-	404: ("cliente", False, "No se ha encontrado lo que se buscaba en el servidor (error 404)."),
-	408: ("red", True, "El servidor tardó demasiado en recibir la petición (error 408)."),
-	410: ("cliente", False, "El recurso ya no existe en el servidor (error 410)."),
-	413: ("cliente", False, "El envío es demasiado grande para el servidor (error 413)."),
-	416: ("cliente", False, "El servidor no admite continuar desde ese punto (error 416)."),
-	429: ("servidor", True, "El servidor está recibiendo demasiadas peticiones; se volverá a intentar más tarde (error 429)."),
-	500: ("servidor", True, "El servidor ha tenido un error interno (error 500)."),
-	502: ("servidor", True, "El servidor no está disponible en este momento (error 502)."),
-	503: ("servidor", True, "El servidor está saturado o en mantenimiento (error 503)."),
-	504: ("servidor", True, "El servidor tardó demasiado en responder (error 504)."),
+	400: ("cliente", False, N_("El servidor no ha entendido la petición (error 400).")),
+	401: ("cliente", False, N_("Hace falta iniciar sesión o la sesión ha caducado (error 401).")),
+	403: ("cliente", False, N_("El servidor ha denegado el acceso (error 403).")),
+	404: ("cliente", False, N_("No se ha encontrado lo que se buscaba en el servidor (error 404).")),
+	408: ("red", True, N_("El servidor tardó demasiado en recibir la petición (error 408).")),
+	410: ("cliente", False, N_("El recurso ya no existe en el servidor (error 410).")),
+	413: ("cliente", False, N_("El envío es demasiado grande para el servidor (error 413).")),
+	416: ("cliente", False, N_("El servidor no admite continuar desde ese punto (error 416).")),
+	429: ("servidor", True, N_("El servidor está recibiendo demasiadas peticiones; se volverá a intentar más tarde (error 429).")),
+	500: ("servidor", True, N_("El servidor ha tenido un error interno (error 500).")),
+	502: ("servidor", True, N_("El servidor no está disponible en este momento (error 502).")),
+	503: ("servidor", True, N_("El servidor está saturado o en mantenimiento (error 503).")),
+	504: ("servidor", True, N_("El servidor tardó demasiado en responder (error 504).")),
 }
 
 
@@ -455,11 +459,11 @@ def _mensaje_http(codigo: int, respuesta: requests.Response | None) -> ErrorClas
 	if codigo in _MENSAJES_HTTP:
 		categoria, reintentar, texto = _MENSAJES_HTTP[codigo]
 	elif 400 <= codigo < 500:
-		categoria, reintentar, texto = "cliente", False, "El servidor ha rechazado la petición (error {codigo})."
+		categoria, reintentar, texto = "cliente", False, N_("El servidor ha rechazado la petición (error {codigo}).")
 	elif codigo >= 500:
-		categoria, reintentar, texto = "servidor", False, "El servidor ha fallado (error {codigo})."
+		categoria, reintentar, texto = "servidor", False, N_("El servidor ha fallado (error {codigo}).")
 	else:
-		categoria, reintentar, texto = "desconocido", False, "Respuesta inesperada del servidor (código {codigo})."
+		categoria, reintentar, texto = "desconocido", False, N_("Respuesta inesperada del servidor (código {codigo}).")
 	return ErrorClasificado(
 		categoria, _(texto).format(codigo=codigo), reintentar, codigo, espera, f"HTTP {codigo} en {url}".strip()
 	)

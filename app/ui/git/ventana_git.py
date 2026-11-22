@@ -51,7 +51,7 @@ from app.ui.comunes import (
 from app.ui.git import dialogos as dlg
 from app.ui.git import operaciones as op
 from app.ui.git.progreso_red import PanelProgresoGit
-from app.ui.vistas.base import Accion, Columna, DefinicionVista, PanelLista
+from app.ui.vistas.base import Accion, Columna, DefinicionVista, PanelLista, atajo_visible
 
 log = logging.getLogger(__name__)
 
@@ -63,7 +63,7 @@ def _(texto: str) -> str:
 
 POR_PAGINA_HISTORIAL = 100
 
-MENSAJE_SIN_GIT = (
+MENSAJE_SIN_GIT = N_(
 	"Git no está instalado o no se encuentra.\n\n"
 	"Instale Git for Windows desde https://git-scm.com/download/win (o con «winget install --id Git.Git -e») "
 	"y vuelva a abrir la ventana. Si ya lo tiene en otra carpeta, indique la ruta de git.exe en "
@@ -182,7 +182,7 @@ class VentanaGit(wx.Frame):
 		self._anadir_seccion("historial", _("Historial"), self._pagina_historial())
 		for clave, titulo, definicion, etiqueta in (
 			("ramas", _("Ramas"), self._vista_ramas(), _("&Ramas:")),
-			("etiquetas", _("Etiquetas"), self._vista_etiquetas(), _("E&tiquetas:")),
+			("etiquetas", pgettext("git", "Etiquetas"), self._vista_etiquetas(), _("E&tiquetas:")),
 			("stash", _("Stash"), self._vista_stash(), _("&Cambios guardados (stash):")),
 			("remotos", _("Remotos"), self._vista_remotos(), _("&Remotos:")),
 			("submodulos", _("Submódulos"), self._vista_submodulos(), _("S&ubmódulos:")),
@@ -392,7 +392,7 @@ class VentanaGit(wx.Frame):
 		for accion in panel.acciones_disponibles():
 			if accion.separador_antes and not primero:
 				self.menu_acciones.AppendSeparator()
-			etiqueta = accion.etiqueta + (f" ({accion.atajo})" if accion.atajo else "")
+			etiqueta = accion.etiqueta + (f" ({atajo_visible(accion.atajo)})" if accion.atajo else "")
 			item = self.menu_acciones.Append(wx.ID_ANY, etiqueta, accion.ayuda)
 			self._acciones_menu[item.GetId()] = (panel, accion)
 			primero = False
@@ -535,7 +535,9 @@ class VentanaGit(wx.Frame):
 		def fallo(error: BaseException) -> None:
 			texto = mensaje_error(error)
 			self.refrescar()
-			if "conflicto" in texto.lower():
+			# «conflict» vale para el español («conflicto»), el inglés y la salida de git
+			# («CONFLICT»), que va al final del mensaje: el aviso puede venir traducido.
+			if "conflict" in texto.lower():
 				self.ctx.sonar("aviso")
 				mostrar_mensaje(self, texto + "\n\n" + _("Resuélvalos en la sección Conflictos."), _("Hay conflictos"),
 					wx.ICON_WARNING)
@@ -572,7 +574,7 @@ class VentanaGit(wx.Frame):
 			texto = mensaje_error(error)
 			self.progreso.terminar(_("No se pudo completar: {m}").format(m=texto.splitlines()[0] if texto else ""), correcto=False)
 			self.refrescar()
-			if "conflicto" in texto.lower():
+			if "conflict" in texto.lower():  # Ver ejecutar_git.
 				mostrar_mensaje(self, texto + "\n\n" + _("Resuélvalos en la sección Conflictos."), _("Hay conflictos"), wx.ICON_WARNING)
 				self.ir_a_seccion("conflictos")
 				return
@@ -814,7 +816,8 @@ class VentanaGit(wx.Frame):
 				"Se borrarán para siempre estos {n} archivos y carpetas sin seguimiento (no van a la papelera):\n\n{l}\n\n¿Continuar?"
 			).format(n=len(rutas), l="\n".join(rutas)), _("Limpiar")):
 				return
-			self.ejecutar_git(lambda: self.repo.limpiar(simular=False), exito=_("{n} elementos borrados.").format(n=len(rutas)))
+			self.ejecutar_git(lambda: self.repo.limpiar(simular=False), exito=ngettext(
+				"{n} elemento borrado.", "{n} elementos borrados.", len(rutas)).format(n=len(rutas)))
 
 		en_segundo_plano(self, self.ctx, lambda: self.repo.limpiar(simular=True), al_terminar=self._vivo(listo), sonido="",
 			inicio=_("Buscando archivos sin seguimiento…"))

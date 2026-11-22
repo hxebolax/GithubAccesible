@@ -6,6 +6,8 @@ configuración real.
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
 from app.core import documentacion as doc
@@ -98,6 +100,35 @@ def test_componer_novedades():
 	texto = doc.componer_novedades(doc.leer_changelog(CHANGELOG)[:2], "Novedades de la versión 1.10.0")
 	assert texto.startswith("# Novedades de la versión 1.10.0\n\n## Versión 1.10.0 - 2026-12-01")
 	assert "### Correcciones" in texto
+
+
+def test_documento_en_el_idioma_de_la_interfaz(datos):
+	(datos / "docs" / "en").mkdir(parents=True)
+	(datos / "docs" / "doc_idioma.md").write_text("# Manual\n", encoding="utf-8")
+	(datos / "docs" / "en" / "doc_idioma.md").write_text("# User guide\n", encoding="utf-8")
+	(datos / "docs" / "solo_es.md").write_text("# Solo\n", encoding="utf-8")
+	assert doc.ruta_documento("doc_idioma.md", "es") == datos / "docs" / "doc_idioma.md"
+	assert doc.ruta_documento("doc_idioma.md", "en") == datos / "docs" / "en" / "doc_idioma.md"
+	# Sin versión inglesa, el español.
+	assert doc.ruta_documento("solo_es.md", "en") == datos / "docs" / "solo_es.md"
+
+
+def test_documentos_del_proyecto_en_los_dos_idiomas():
+	"""Manual, teclas y registro de cambios existen en español y en inglés, con las mismas versiones."""
+	raiz = Path(__file__).resolve().parent.parent / "docs"
+	for nombre in (doc.MANUAL, doc.TECLAS, doc.CHANGELOG):
+		assert (raiz / nombre).is_file()
+		assert (raiz / "en" / nombre).is_file(), nombre
+	versiones_es = [v.numero for v in doc.leer_changelog((raiz / doc.CHANGELOG).read_text(encoding="utf-8"))]
+	versiones_en = [v.numero for v in doc.leer_changelog((raiz / "en" / doc.CHANGELOG).read_text(encoding="utf-8"))]
+	assert versiones_es == versiones_en
+	# Misma estructura: el lector de pantalla navega por encabezados y deben corresponderse.
+	for nombre in (doc.MANUAL, doc.TECLAS):
+		niveles = [
+			[linea.split(" ", 1)[0] for linea in ruta.read_text(encoding="utf-8").splitlines() if linea.startswith("#")]
+			for ruta in (raiz / nombre, raiz / "en" / nombre)
+		]
+		assert niveles[0] == niveles[1], nombre
 
 
 def test_ruta_documento_prefiere_data_docs(datos, tmp_path):

@@ -303,16 +303,16 @@ def _ejecutar_con_progreso(orden, cwd, entorno, tiempo, al_linea, cancelado, arg
 # ════════════════════════════════════════════════════════════════════════════
 
 ESTADOS = {
-	".": "",
-	"M": "modificado",
-	"T": "cambio de tipo",
-	"A": "añadido",
-	"D": "eliminado",
-	"R": "renombrado",
-	"C": "copiado",
-	"U": "en conflicto",
-	"?": "sin seguimiento",
-	"!": "ignorado",
+	".": "",  # sin cambio: nunca se muestra (y _("") daría la cabecera del catálogo)
+	"M": N_("modificado"),
+	"T": N_("cambio de tipo"),
+	"A": N_("añadido"),
+	"D": N_("eliminado"),
+	"R": N_("renombrado"),
+	"C": N_("copiado"),
+	"U": N_("en conflicto"),
+	"?": N_("sin seguimiento"),
+	"!": N_("ignorado"),
 }
 
 

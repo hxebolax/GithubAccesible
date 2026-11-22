@@ -295,13 +295,13 @@ class DialogoEditor(wx.Dialog):
 
 	def _adjuntar_texto(self, nombre: str, texto: str, octetos: int) -> None:
 		"""Pregunta cómo adjuntar un archivo ya leído y lo hace."""
-		from app.services.formato import ngettext_, tamano
+		from app.services.formato import tamano
 
 		bloque = adjuntos.bloque_plegado(nombre, texto, tamano(octetos))
 		cabe = adjuntos.cabe_en_cuerpo(self.campo_cuerpo.GetValue(), bloque)
 		lineas = texto.count("\n") + (0 if texto.endswith("\n") else 1)
 		descripcion = _("«{n}»: {t}, {l}.").format(n=nombre, t=tamano(octetos),
-			l=ngettext_("{n} línea", "{n} líneas", lineas).format(n=lineas))
+			l=ngettext("{n} línea", "{n} líneas", lineas).format(n=lineas))
 		aviso = _(
 			"Antes, revise que no lleve contraseñas, tokens ni datos personales: lo leerá cualquiera que vea el texto. "
 			"Un gist secreto no sale en los listados, pero lo abre cualquiera que tenga el enlace."

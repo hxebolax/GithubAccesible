@@ -489,7 +489,8 @@ class PanelLista(wx.Panel):
 			if accion.separador_antes and not primero:
 				menu.AppendSeparator()
 			if accion.atajo:
-				etiqueta = accion.etiqueta + (f" ({accion.atajo})" if en_barra else f"\t{accion.atajo}")
+				atajo = atajo_visible(accion.atajo)
+				etiqueta = accion.etiqueta + (f" ({atajo})" if en_barra else f"\t{atajo}")
 			else:
 				etiqueta = accion.etiqueta
 			item = menu.Append(wx.ID_ANY, etiqueta, accion.ayuda)
@@ -627,6 +628,20 @@ def texto_tecla(evento: wx.KeyEvent) -> str:
 		partes.append("Shift")
 	partes.append(nombre)
 	return "+".join(partes)
+
+
+def atajo_visible(atajo: str) -> str:
+	"""El atajo en el idioma de la interfaz para enseñarlo («Supr» → «Del» en inglés).
+
+	Los atajos de las acciones se escriben en español («Supr», «Intro») porque así
+	se comparan con las pulsaciones (``texto_tecla``); solo se traducen al mostrarlos.
+	"""
+	nombres = {
+		"Supr": pgettext("tecla", "Supr"), "Intro": pgettext("tecla", "Intro"),
+		"Retroceso": pgettext("tecla", "Retroceso"), "Espacio": pgettext("tecla", "Espacio"),
+		"Inicio": pgettext("tecla", "Inicio"), "Fin": pgettext("tecla", "Fin"), "Mayús": pgettext("tecla", "Mayús"),
+	}
+	return "+".join(nombres.get(parte, parte) for parte in (atajo or "").split("+")) if atajo else ""
 
 
 def normalizar_atajo(atajo: str) -> str:

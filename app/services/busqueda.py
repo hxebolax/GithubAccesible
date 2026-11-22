@@ -24,7 +24,6 @@ Lo dudoso de la investigación (dependencias y sub-issues, ``reason:reopened``,
 
 from __future__ import annotations
 
-import builtins
 import logging
 import math
 import re
@@ -37,14 +36,10 @@ from html.parser import HTMLParser
 from typing import Any
 from urllib.parse import quote, urlencode
 
+from app.core import i18n  # noqa: F401 - instala _ y N_ en builtins aunque se importe suelto (pruebas)
 from app.services.github.cliente import ErrorGitHub, LimiteAlcanzado
 
 log = logging.getLogger(__name__)
-
-
-def _(texto: str) -> str:
-	traducir = getattr(builtins, "_", None)
-	return traducir(texto) if callable(traducir) else texto
 
 
 # ════════════════════════════════════════════════════════════════════════════
@@ -53,97 +48,97 @@ def _(texto: str) -> str:
 
 #: Tipos en el orden del desplegable «Buscar». Los siete primeros son de REST.
 TIPOS: dict[str, str] = {
-	"repositories": "Repositorios",
-	"code": "Código",
-	"issues": "Issues y pull requests",
-	"users": "Usuarios y organizaciones",
-	"commits": "Commits",
-	"topics": "Temas",
-	"labels": "Etiquetas",
-	"discussions": "Discusiones",
-	"trending": "Tendencias",
+	"repositories": N_("Repositorios"),
+	"code": N_("Código"),
+	"issues": N_("Issues y pull requests"),
+	"users": N_("Usuarios y organizaciones"),
+	"commits": N_("Commits"),
+	"topics": N_("Temas"),
+	"labels": N_("Etiquetas"),
+	"discussions": N_("Discusiones"),
+	"trending": N_("Tendencias"),
 }
 
 TIPOS_REST = ("repositories", "code", "issues", "users", "commits", "topics", "labels")
 
 #: Órdenes válidos de la API REST (verificados). Sin orden = «Mejor coincidencia».
 ORDENES: dict[str, list[tuple[str, str]]] = {
-	"repositories": [("", "Mejor coincidencia"), ("stars", "Estrellas"), ("forks", "Bifurcaciones"),
-		("help-wanted-issues", "Issues que piden ayuda"), ("updated", "Actualizados recientemente")],
-	"code": [("", "Mejor coincidencia")],
-	"issues": [("", "Mejor coincidencia"), ("created", "Fecha de creación"), ("updated", "Última actualización"),
-		("comments", "Comentarios"), ("reactions", "Reacciones (todas)"), ("interactions", "Interacciones (reacciones y comentarios)"),
-		("reactions-+1", "Reacciones de pulgar arriba"), ("reactions--1", "Reacciones de pulgar abajo"),
-		("reactions-smile", "Reacciones de sonrisa"), ("reactions-thinking_face", "Reacciones de cara pensativa"),
-		("reactions-heart", "Reacciones de corazón"), ("reactions-tada", "Reacciones de celebración")],
-	"users": [("", "Mejor coincidencia"), ("followers", "Seguidores"), ("repositories", "Repositorios"), ("joined", "Fecha de alta")],
-	"commits": [("", "Mejor coincidencia"), ("author-date", "Fecha del autor"), ("committer-date", "Fecha del commit")],
-	"topics": [("", "Mejor coincidencia")],
-	"labels": [("", "Mejor coincidencia"), ("created", "Fecha de creación"), ("updated", "Última actualización")],
-	"discussions": [("", "Mejor coincidencia")],
-	"trending": [("", "El de la fuente elegida")],
+	"repositories": [("", N_("Mejor coincidencia")), ("stars", N_("Estrellas")), ("forks", N_("Bifurcaciones")),
+		("help-wanted-issues", N_("Issues que piden ayuda")), ("updated", N_("Actualizados recientemente"))],
+	"code": [("", N_("Mejor coincidencia"))],
+	"issues": [("", N_("Mejor coincidencia")), ("created", N_("Fecha de creación")), ("updated", N_("Última actualización")),
+		("comments", N_("Comentarios")), ("reactions", N_("Reacciones (todas)")), ("interactions", N_("Interacciones (reacciones y comentarios)")),
+		("reactions-+1", N_("Reacciones de pulgar arriba")), ("reactions--1", N_("Reacciones de pulgar abajo")),
+		("reactions-smile", N_("Reacciones de sonrisa")), ("reactions-thinking_face", N_("Reacciones de cara pensativa")),
+		("reactions-heart", N_("Reacciones de corazón")), ("reactions-tada", N_("Reacciones de celebración"))],
+	"users": [("", N_("Mejor coincidencia")), ("followers", N_("Seguidores")), ("repositories", N_("Repositorios")), ("joined", N_("Fecha de alta"))],
+	"commits": [("", N_("Mejor coincidencia")), ("author-date", N_("Fecha del autor")), ("committer-date", N_("Fecha del commit"))],
+	"topics": [("", N_("Mejor coincidencia"))],
+	"labels": [("", N_("Mejor coincidencia")), ("created", N_("Fecha de creación")), ("updated", N_("Última actualización"))],
+	"discussions": [("", N_("Mejor coincidencia"))],
+	"trending": [("", N_("El de la fuente elegida"))],
 }
 
 LENGUAJES: list[tuple[str, str]] = [
-	("", "Todos los lenguajes"), ("python", "Python"), ("javascript", "JavaScript"), ("typescript", "TypeScript"), ("html", "HTML"),
+	("", N_("Todos los lenguajes")), ("python", "Python"), ("javascript", "JavaScript"), ("typescript", "TypeScript"), ("html", "HTML"),
 	("css", "CSS"), ("c", "C"), ("c++", "C++"), ("c#", "C#"), ("java", "Java"), ("php", "PHP"), ("ruby", "Ruby"), ("swift", "Swift"),
 	("kotlin", "Kotlin"), ("go", "Go"), ("rust", "Rust"), ("shell", "Shell / Bash"), ("powershell", "PowerShell"), ("batchfile", "Batch"),
 	("scala", "Scala"), ("lua", "Lua"), ("dart", "Dart"), ("r", "R"), ("julia", "Julia"), ("zig", "Zig"), ("pascal", "Pascal / Delphi"),
 	("vim-script", "Vim Script"), ("markdown", "Markdown"), ("objective-c", "Objective-C"), ("perl", "Perl"), ("haskell", "Haskell"),
 	("elixir", "Elixir"), ("erlang", "Erlang"), ("clojure", "Clojure"), ("f#", "F#"), ("ocaml", "OCaml"), ("groovy", "Groovy"),
-	("assembly", "Ensamblador"), ("fortran", "Fortran"), ("cobol", "COBOL"), ("matlab", "MATLAB"), ("jupyter-notebook", "Jupyter Notebook"),
+	("assembly", N_("Ensamblador")), ("fortran", "Fortran"), ("cobol", "COBOL"), ("matlab", "MATLAB"), ("jupyter-notebook", "Jupyter Notebook"),
 	("dockerfile", "Dockerfile"), ("makefile", "Makefile"), ("nix", "Nix"), ("solidity", "Solidity"), ("vue", "Vue"), ("svelte", "Svelte"),
 	("autohotkey", "AutoHotkey"), ("nsis", "NSIS"),
 ]
 
 #: Claves de licencia del formulario de búsqueda avanzada de GitHub (las de choosealicense).
 LICENCIAS: list[tuple[str, str]] = [
-	("", "Cualquier licencia"), ("mit", "MIT"), ("apache-2.0", "Apache 2.0"), ("gpl-3.0", "GNU GPL v3"), ("gpl-2.0", "GNU GPL v2"),
-	("agpl-3.0", "GNU AGPL v3"), ("lgpl-3.0", "GNU LGPL v3"), ("lgpl-2.1", "GNU LGPL v2.1"), ("bsd-3-clause", "BSD de 3 cláusulas"),
-	("bsd-2-clause", "BSD de 2 cláusulas"), ("bsd-3-clause-clear", "BSD de 3 cláusulas «Clear»"), ("bsd-4-clause", "BSD de 4 cláusulas"),
-	("0bsd", "BSD de cero cláusulas"), ("bsd-2-clause-patent", "BSD con patentes (BSD+Patent)"), ("mpl-2.0", "Mozilla 2.0"),
-	("epl-1.0", "Eclipse 1.0"), ("epl-2.0", "Eclipse 2.0"), ("eupl-1.1", "Unión Europea (EUPL) 1.1"), ("eupl-1.2", "Unión Europea (EUPL) 1.2"),
-	("isc", "ISC"), ("unlicense", "The Unlicense"), ("cc0-1.0", "Creative Commons Zero 1.0"), ("cc-by-4.0", "Creative Commons Atribución 4.0"),
-	("cc-by-sa-4.0", "Creative Commons Atribución-CompartirIgual 4.0"), ("wtfpl", "WTFPL"), ("zlib", "zlib"), ("bsl-1.0", "Boost 1.0"),
+	("", N_("Cualquier licencia")), ("mit", "MIT"), ("apache-2.0", "Apache 2.0"), ("gpl-3.0", "GNU GPL v3"), ("gpl-2.0", "GNU GPL v2"),
+	("agpl-3.0", "GNU AGPL v3"), ("lgpl-3.0", "GNU LGPL v3"), ("lgpl-2.1", "GNU LGPL v2.1"), ("bsd-3-clause", N_("BSD de 3 cláusulas")),
+	("bsd-2-clause", N_("BSD de 2 cláusulas")), ("bsd-3-clause-clear", N_("BSD de 3 cláusulas «Clear»")), ("bsd-4-clause", N_("BSD de 4 cláusulas")),
+	("0bsd", N_("BSD de cero cláusulas")), ("bsd-2-clause-patent", N_("BSD con patentes (BSD+Patent)")), ("mpl-2.0", "Mozilla 2.0"),
+	("epl-1.0", "Eclipse 1.0"), ("epl-2.0", "Eclipse 2.0"), ("eupl-1.1", N_("Unión Europea (EUPL) 1.1")), ("eupl-1.2", N_("Unión Europea (EUPL) 1.2")),
+	("isc", "ISC"), ("unlicense", "The Unlicense"), ("cc0-1.0", "Creative Commons Zero 1.0"), ("cc-by-4.0", N_("Creative Commons Atribución 4.0")),
+	("cc-by-sa-4.0", N_("Creative Commons Atribución-CompartirIgual 4.0")), ("wtfpl", "WTFPL"), ("zlib", "zlib"), ("bsl-1.0", "Boost 1.0"),
 	("artistic-2.0", "Artistic 2.0"), ("afl-3.0", "Academic Free 3.0"), ("ofl-1.1", "SIL Open Font 1.1"), ("osl-3.0", "Open Software 3.0"),
-	("postgresql", "PostgreSQL"), ("upl-1.0", "Universal Permissive 1.0"), ("vim", "Vim"), ("mit-0", "MIT sin atribución (MIT-0)"),
-	("ms-pl", "Microsoft Public"), ("ms-rl", "Microsoft Reciprocal"), ("ncsa", "Universidad de Illinois / NCSA"),
+	("postgresql", "PostgreSQL"), ("upl-1.0", "Universal Permissive 1.0"), ("vim", "Vim"), ("mit-0", N_("MIT sin atribución (MIT-0)")),
+	("ms-pl", "Microsoft Public"), ("ms-rl", "Microsoft Reciprocal"), ("ncsa", N_("Universidad de Illinois / NCSA")),
 	("odbl-1.0", "Open Database 1.0"), ("lppl-1.3c", "LaTeX Project 1.3c"), ("gfdl-1.3", "GNU FDL 1.3"),
 	("ecl-2.0", "Educational Community 2.0"), ("cecill-2.1", "CeCILL 2.1"), ("mulanpsl-2.0", "Mulan PSL 2.0"),
-	("blueoak-1.0.0", "Blue Oak 1.0.0"), ("cern-ohl-p-2.0", "CERN OHL permisiva 2.0"),
-	("cern-ohl-s-2.0", "CERN OHL fuertemente recíproca 2.0"), ("cern-ohl-w-2.0", "CERN OHL débilmente recíproca 2.0"),
-	("cc", "Familia Creative Commons (todas)"), ("gpl", "Familia GNU GPL (todas)"), ("lgpl", "Familia GNU LGPL (todas)"),
+	("blueoak-1.0.0", "Blue Oak 1.0.0"), ("cern-ohl-p-2.0", N_("CERN OHL permisiva 2.0")),
+	("cern-ohl-s-2.0", N_("CERN OHL fuertemente recíproca 2.0")), ("cern-ohl-w-2.0", N_("CERN OHL débilmente recíproca 2.0")),
+	("cc", N_("Familia Creative Commons (todas)")), ("gpl", N_("Familia GNU GPL (todas)")), ("lgpl", N_("Familia GNU LGPL (todas)")),
 ]
 
 #: Idioma hablado de la página de tendencias (código ISO 639-1).
 IDIOMAS_HABLADOS: list[tuple[str, str]] = [
-	("", "Cualquier idioma"), ("es", "Español"), ("en", "Inglés"), ("pt", "Portugués"), ("fr", "Francés"), ("de", "Alemán"),
-	("it", "Italiano"), ("ca", "Catalán"), ("gl", "Gallego"), ("eu", "Euskera"), ("zh", "Chino"), ("ja", "Japonés"),
-	("ko", "Coreano"), ("ru", "Ruso"), ("ar", "Árabe"), ("hi", "Hindi"), ("nl", "Neerlandés"), ("pl", "Polaco"),
-	("tr", "Turco"), ("uk", "Ucraniano"),
+	("", N_("Cualquier idioma")), ("es", N_("Español")), ("en", N_("Inglés")), ("pt", N_("Portugués")), ("fr", N_("Francés")), ("de", N_("Alemán")),
+	("it", N_("Italiano")), ("ca", N_("Catalán")), ("gl", N_("Gallego")), ("eu", N_("Euskera")), ("zh", N_("Chino")), ("ja", N_("Japonés")),
+	("ko", N_("Coreano")), ("ru", N_("Ruso")), ("ar", N_("Árabe")), ("hi", N_("Hindi")), ("nl", N_("Neerlandés")), ("pl", N_("Polaco")),
+	("tr", N_("Turco")), ("uk", N_("Ucraniano")),
 ]
 
-PERIODOS: list[tuple[str, str]] = [("daily", "Hoy"), ("weekly", "Esta semana"), ("monthly", "Este mes")]
+PERIODOS: list[tuple[str, str]] = [("daily", N_("Hoy")), ("weekly", N_("Esta semana")), ("monthly", N_("Este mes"))]
 DIAS_PERIODO = {"daily": 1, "weekly": 7, "monthly": 30}
 
 FUENTES_TENDENCIAS: list[tuple[str, str]] = [
-	("api", "Nuevos y populares (API oficial de GitHub)"),
-	("web_repos", "Página de tendencias: repositorios (sin API oficial)"),
-	("web_devs", "Página de tendencias: desarrolladores (sin API oficial)"),
+	("api", N_("Nuevos y populares (API oficial de GitHub)")),
+	("web_repos", N_("Página de tendencias: repositorios (sin API oficial)")),
+	("web_devs", N_("Página de tendencias: desarrolladores (sin API oficial)")),
 ]
 
 TIPOS_BUSQUEDA_ISSUES: list[tuple[str, str]] = [
-	("", "Léxica (la de siempre)"),
-	("semantic", "Semántica (por significado)"),
-	("hybrid", "Híbrida (significado y palabras)"),
+	("", N_("Léxica (la de siempre)")),
+	("semantic", N_("Semántica (por significado)")),
+	("hybrid", N_("Híbrida (significado y palabras)")),
 ]
 
 PAGINAS: dict[str, str] = {
-	"basico": "Básico",
-	"personas": "Personas",
-	"pr": "Pull requests",
-	"fechas": "Fechas y números",
-	"avanzado": "Avanzado",
+	"basico": N_("Básico"),
+	"personas": N_("Personas"),
+	"pr": N_("Pull requests"),
+	"fechas": N_("Fechas y números"),
+	"avanzado": N_("Avanzado"),
 }
 
 MAXIMO_RESULTADOS = 1000
@@ -218,213 +213,221 @@ def _c(clave: str, etiqueta: str, fragmento: str, ayuda: str, pagina: str = "ava
 
 
 def _en(opciones: Iterable[tuple[str, str]], ayuda: str) -> Filtro:
-	return Filtro("en", "Buscar el texto en", EN, "in", tuple(opciones), ayuda)
+	return Filtro("en", N_("Buscar el texto en"), EN, "in", tuple(opciones), ayuda)
 
 
 def _excluir(pagina: str = "avanzado") -> Filtro:
-	return Filtro("excluir", "Excluir las palabras", EXCLUIR, ayuda=(
-		"Palabras que NO deben aparecer, separadas por espacios. Cada una se añade con NOT y cuenta para el "
-		"máximo de cinco operadores. NOT solo sirve para palabras, no para números ni fechas."), pagina=pagina)
+	return Filtro("excluir", N_("Excluir las palabras"), EXCLUIR, ayuda=(
+		N_("Palabras que NO deben aparecer, separadas por espacios. Cada una se añade con NOT y cuenta para el "
+		"máximo de cinco operadores. NOT solo sirve para palabras, no para números ni fechas.")), pagina=pagina)
 
 
-_AYUDA_PERSONA = "Nombre de usuario. Admite @me (usted) y @copilot. Varios, separados por comas; con un guion delante se excluye."
-_AYUDA_REPOS = ("Repositorios con la forma dueño/nombre. Varios, separados por comas, se buscan en cualquiera de ellos. "
-	"Con un guion delante (-dueño/nombre) se excluye.")
-_AYUDA_DUENO = ("Usuario u organización dueña. Varios, separados por comas, valen cualquiera de ellos. Con un guion delante se excluye.")
-_AYUDA_FECHA = "Fecha con la forma AAAA-MM-DD (por ejemplo 2026-01-31). Puede rellenar solo «desde», solo «hasta» o las dos."
-_AYUDA_NUMERO = "Número entero. Puede rellenar solo el mínimo, solo el máximo o los dos (rango inclusivo)."
-_LENGUAJE = _d("lenguaje", "Lenguaje", LENGUAJES, "Lenguaje de programación principal.", cal="language")
-_VISIBILIDAD = _d("visibilidad", "Visibilidad", [("", "Cualquiera"), ("is:public", "Públicos"), ("is:private", "Privados a los que tiene acceso")],
-	"Públicos o privados (los privados solo si la cuenta tiene acceso).", pagina="avanzado")
+_AYUDA_PERSONA = N_("Nombre de usuario. Admite @me (usted) y @copilot. Varios, separados por comas; con un guion delante se excluye.")
+_AYUDA_REPOS = (N_("Repositorios con la forma dueño/nombre. Varios, separados por comas, se buscan en cualquiera de ellos. "
+	"Con un guion delante (-dueño/nombre) se excluye."))
+_AYUDA_DUENO = (N_("Usuario u organización dueña. Varios, separados por comas, valen cualquiera de ellos. Con un guion delante se excluye."))
+_AYUDA_FECHA = N_("Fecha con la forma AAAA-MM-DD (por ejemplo 2026-01-31). Puede rellenar solo «desde», solo «hasta» o las dos.")
+_AYUDA_NUMERO = N_("Número entero. Puede rellenar solo el mínimo, solo el máximo o los dos (rango inclusivo).")
+_LENGUAJE = _d("lenguaje", N_("Lenguaje"), LENGUAJES, N_("Lenguaje de programación principal."), cal="language")
+_VISIBILIDAD = _d("visibilidad", N_("Visibilidad"), [("", N_("Cualquiera")), ("is:public", N_("Públicos")), ("is:private", N_("Privados a los que tiene acceso"))],
+	N_("Públicos o privados (los privados solo si la cuenta tiene acceso)."), pagina="avanzado")
 _EXCLUIR_BASICO = _excluir("basico")
 
 FILTROS: dict[str, list[Filtro]] = {
 	"repositories": [
-		_d("categoria", "Categoría (atajo)", [], "Atajos de la búsqueda guiada: al elegir uno se rellenan los filtros "
-			"(estrellas, fecha de envío, temas...). Después puede cambiarlos a su gusto.", parametro="atajo"),
-		_en([("name", "Nombre"), ("description", "Descripción"), ("topics", "Temas"), ("readme", "README")],
-			"Dónde buscar el texto libre. Sin marcar nada, GitHub busca en el nombre, la descripción y los temas, no en el README."),
-		_t("propietario", "Usuario u organización dueña", "user", _AYUDA_DUENO, agrupar_o=True),
-		_t("repos", "Repositorio concreto (dueño/nombre)", "repo", _AYUDA_REPOS, agrupar_o=True),
+		_d("categoria", N_("Categoría (atajo)"), [], N_("Atajos de la búsqueda guiada: al elegir uno se rellenan los filtros "
+			"(estrellas, fecha de envío, temas...). Después puede cambiarlos a su gusto."), parametro="atajo"),
+		_en([("name", N_("Nombre")), ("description", N_("Descripción")), ("topics", N_("Temas")), ("readme", "README")],
+			N_("Dónde buscar el texto libre. Sin marcar nada, GitHub busca en el nombre, la descripción y los temas, no en el README.")),
+		_t("propietario", N_("Usuario u organización dueña"), "user", _AYUDA_DUENO, agrupar_o=True),
+		_t("repos", N_("Repositorio concreto (dueño/nombre)"), "repo", _AYUDA_REPOS, agrupar_o=True),
 		_LENGUAJE,
-		_t("temas", "Temas (separados por comas)", "topic", "Cada tema añadido es una condición más: el repositorio debe tenerlos todos."),
-		_d("licencia", "Licencia", LICENCIAS, "Licencia del repositorio. Las claves de las licencias menos comunes salen del "
-			"formulario de búsqueda avanzada de GitHub; si alguna no da resultados, compruébela abriendo la búsqueda en el navegador.",
+		_t("temas", N_("Temas (separados por comas)"), "topic", N_("Cada tema añadido es una condición más: el repositorio debe tenerlos todos.")),
+		_d("licencia", N_("Licencia"), LICENCIAS, N_("Licencia del repositorio. Las claves de las licencias menos comunes salen del "
+			"formulario de búsqueda avanzada de GitHub; si alguna no da resultados, compruébela abriendo la búsqueda en el navegador."),
 			cal="license"),
-		_n("estrellas", "Estrellas", "stars", _AYUDA_NUMERO, pagina="basico"),
-		_n("bifurcaciones", "Bifurcaciones", "forks", _AYUDA_NUMERO),
-		_f("envio", "Último envío", "pushed", "Fecha del último envío a cualquier rama. " + _AYUDA_FECHA),
-		_f("creado", "Fecha de creación", "created", _AYUDA_FECHA),
-		_n("tamano", "Tamaño en kilobytes", "size", _AYUDA_NUMERO),
-		_n("seguidores", "Seguidores", "followers", "Personas que vigilan el repositorio. " + _AYUDA_NUMERO),
-		_n("numero_temas", "Número de temas", "topics", _AYUDA_NUMERO),
-		Filtro("buenas_primeras", "Más de N issues para principiantes", MAYOR_QUE, "good-first-issues",
-			ayuda="Repositorios con más de ese número de issues etiquetadas «good first issue». Escriba 0 para «al menos una».", pagina="avanzado"),
-		Filtro("piden_ayuda", "Más de N issues que piden ayuda", MAYOR_QUE, "help-wanted-issues",
-			ayuda="Repositorios con más de ese número de issues etiquetadas «help wanted». Escriba 0 para «al menos una».", pagina="avanzado"),
-		_d("visibilidad", "Visibilidad", [("", "Cualquiera"), ("is:public", "Públicos"), ("is:private", "Privados a los que tiene acceso"),
-			("is:internal", "Internos (solo empresas)")], "Visibilidad del repositorio.", pagina="avanzado"),
-		_d("archivados", "Archivados", [("", "Incluidos"), ("archived:false", "Sin archivar"), ("archived:true", "Solo archivados")],
-			"Repositorios archivados (de solo lectura).", pagina="avanzado"),
-		_d("bifurcados", "Bifurcaciones en los resultados", [("", "Excluidas (como hace GitHub)"), ("fork:true", "Incluidas"),
-			("fork:only", "Solo bifurcaciones")], "Por defecto GitHub no muestra bifurcaciones.", pagina="avanzado"),
-		_d("plantillas", "Plantillas", [("", "Indiferente"), ("template:true", "Solo plantillas"), ("template:false", "Sin plantillas")],
-			"Repositorios marcados como plantilla.", pagina="avanzado"),
-		_d("replicas", "Réplicas (mirrors)", [("", "Indiferente"), ("mirror:true", "Solo réplicas"), ("mirror:false", "Sin réplicas")],
-			"Repositorios que son réplica de otro alojado fuera de GitHub.", pagina="avanzado"),
-		_c("patrocinable", "Dueño con perfil de GitHub Sponsors", "is:sponsorable", "Solo repositorios cuyo dueño acepta patrocinios."),
-		_c("financiacion", "Con archivo de financiación (FUNDING.yml)", "has:funding-file", "Solo repositorios con FUNDING.yml."),
+		_n("estrellas", N_("Estrellas"), "stars", _AYUDA_NUMERO, pagina="basico"),
+		_n("bifurcaciones", N_("Bifurcaciones"), "forks", _AYUDA_NUMERO),
+		_f("envio", N_("Último envío"), "pushed", N_("Fecha del último envío a cualquier rama. "
+			"Fecha con la forma AAAA-MM-DD (por ejemplo 2026-01-31). Puede rellenar solo «desde», solo «hasta» o las dos.")),
+		_f("creado", N_("Fecha de creación"), "created", _AYUDA_FECHA),
+		_n("tamano", N_("Tamaño en kilobytes"), "size", _AYUDA_NUMERO),
+		_n("seguidores", N_("Seguidores"), "followers", N_("Personas que vigilan el repositorio. "
+			"Número entero. Puede rellenar solo el mínimo, solo el máximo o los dos (rango inclusivo).")),
+		_n("numero_temas", N_("Número de temas"), "topics", _AYUDA_NUMERO),
+		Filtro("buenas_primeras", N_("Más de N issues para principiantes"), MAYOR_QUE, "good-first-issues",
+			ayuda=N_("Repositorios con más de ese número de issues etiquetadas «good first issue». Escriba 0 para «al menos una»."), pagina="avanzado"),
+		Filtro("piden_ayuda", N_("Más de N issues que piden ayuda"), MAYOR_QUE, "help-wanted-issues",
+			ayuda=N_("Repositorios con más de ese número de issues etiquetadas «help wanted». Escriba 0 para «al menos una»."), pagina="avanzado"),
+		_d("visibilidad", N_("Visibilidad"), [("", N_("Cualquiera")), ("is:public", N_("Públicos")), ("is:private", N_("Privados a los que tiene acceso")),
+			("is:internal", N_("Internos (solo empresas)"))], N_("Visibilidad del repositorio."), pagina="avanzado"),
+		_d("archivados", N_("Archivados"), [("", N_("Incluidos")), ("archived:false", N_("Sin archivar")), ("archived:true", N_("Solo archivados"))],
+			N_("Repositorios archivados (de solo lectura)."), pagina="avanzado"),
+		_d("bifurcados", N_("Bifurcaciones en los resultados"), [("", N_("Excluidas (como hace GitHub)")), ("fork:true", N_("Incluidas")),
+			("fork:only", N_("Solo bifurcaciones"))], N_("Por defecto GitHub no muestra bifurcaciones."), pagina="avanzado"),
+		_d("plantillas", N_("Plantillas"), [("", N_("Indiferente")), ("template:true", N_("Solo plantillas")), ("template:false", N_("Sin plantillas"))],
+			N_("Repositorios marcados como plantilla."), pagina="avanzado"),
+		_d("replicas", N_("Réplicas (mirrors)"), [("", N_("Indiferente")), ("mirror:true", N_("Solo réplicas")), ("mirror:false", N_("Sin réplicas"))],
+			N_("Repositorios que son réplica de otro alojado fuera de GitHub."), pagina="avanzado"),
+		_c("patrocinable", N_("Dueño con perfil de GitHub Sponsors"), "is:sponsorable", N_("Solo repositorios cuyo dueño acepta patrocinios.")),
+		_c("financiacion", N_("Con archivo de financiación (FUNDING.yml)"), "has:funding-file", N_("Solo repositorios con FUNDING.yml.")),
 		_excluir(),
 	],
 	"code": [
-		_en([("file", "Contenido del archivo"), ("path", "Ruta")], "Dónde buscar el texto. Sin marcar nada, en el contenido."),
-		_t("repos", "Repositorio (dueño/nombre)", "repo", _AYUDA_REPOS, agrupar_o=True),
-		_t("propietario", "Usuario u organización dueña", "user", _AYUDA_DUENO, agrupar_o=True),
-		_t("ruta", "Ruta o carpeta", "path", "Carpeta donde está el archivo, por ejemplo app/ui. Una barra sola (/) es la raíz."),
-		_t("archivo", "Nombre de archivo", "filename", "Nombre del archivo, por ejemplo setup.py. Con este filtro no hace falta escribir texto."),
-		_t("extension", "Extensión", "extension", "Extensión sin punto, por ejemplo py."),
+		_en([("file", N_("Contenido del archivo")), ("path", N_("Ruta"))], N_("Dónde buscar el texto. Sin marcar nada, en el contenido.")),
+		_t("repos", N_("Repositorio (dueño/nombre)"), "repo", _AYUDA_REPOS, agrupar_o=True),
+		_t("propietario", N_("Usuario u organización dueña"), "user", _AYUDA_DUENO, agrupar_o=True),
+		_t("ruta", N_("Ruta o carpeta"), "path", N_("Carpeta donde está el archivo, por ejemplo app/ui. Una barra sola (/) es la raíz.")),
+		_t("archivo", N_("Nombre de archivo"), "filename", N_("Nombre del archivo, por ejemplo setup.py. Con este filtro no hace falta escribir texto.")),
+		_t("extension", N_("Extensión"), "extension", N_("Extensión sin punto, por ejemplo py.")),
 		_LENGUAJE,
-		_n("tamano", "Tamaño del archivo", "size", "La documentación no aclara si es en bytes o en kilobytes. " + _AYUDA_NUMERO, pagina="basico"),
-		_d("bifurcados", "Bifurcaciones", [("", "Excluidas"), ("fork:true", "Incluidas"), ("fork:only", "Solo bifurcaciones")],
-			"Las bifurcaciones solo se indexan si tienen más estrellas que el original.", pagina="basico"),
+		_n("tamano", N_("Tamaño del archivo"), "size", N_("La documentación no aclara si es en bytes o en kilobytes. "
+			"Número entero. Puede rellenar solo el mínimo, solo el máximo o los dos (rango inclusivo)."), pagina="basico"),
+		_d("bifurcados", N_("Bifurcaciones"), [("", N_("Excluidas")), ("fork:true", N_("Incluidas")), ("fork:only", N_("Solo bifurcaciones"))],
+			N_("Las bifurcaciones solo se indexan si tienen más estrellas que el original."), pagina="basico"),
 	],
 	"issues": [
-		_d("tipo", "Tipo", [("", "Issues y pull requests"), ("is:issue", "Solo issues"), ("is:pr", "Solo pull requests")],
-			"Qué se busca. La búsqueda semántica o híbrida exige «Solo issues»."),
-		_d("estado", "Estado", [("", "Cualquiera"), ("is:open", "Abiertas"), ("is:closed", "Cerradas")], "Abiertas o cerradas."),
-		_d("motivo", "Motivo de cierre", [("", "Cualquiera"), ("reason:completed", "Completadas"), ('reason:"not planned"', "No planificadas")],
-			"Por qué se cerró la issue."),
-		_en([("title", "Título"), ("body", "Cuerpo"), ("comments", "Comentarios")], "Dónde buscar el texto libre."),
-		_t("repos", "Repositorios (dueño/nombre)", "repo", _AYUDA_REPOS, agrupar_o=True),
-		_t("propietario", "Usuario u organización dueña", "user", _AYUDA_DUENO, agrupar_o=True),
-		_t("etiquetas", "Etiquetas (separadas por comas)", "label",
-			"Cada etiqueta es una condición más (debe tenerlas todas). Con un guion delante se excluye: -wontfix."),
+		_d("tipo", N_("Tipo"), [("", N_("Issues y pull requests")), ("is:issue", N_("Solo issues")), ("is:pr", N_("Solo pull requests"))],
+			N_("Qué se busca. La búsqueda semántica o híbrida exige «Solo issues».")),
+		_d("estado", N_("Estado"), [("", N_("Cualquiera")), ("is:open", N_("Abiertas")), ("is:closed", N_("Cerradas"))], N_("Abiertas o cerradas.")),
+		_d("motivo", N_("Motivo de cierre"), [("", N_("Cualquiera")), ("reason:completed", N_("Completadas")), ('reason:"not planned"', N_("No planificadas"))],
+			N_("Por qué se cerró la issue.")),
+		_en([("title", N_("Título")), ("body", N_("Cuerpo")), ("comments", N_("Comentarios"))], N_("Dónde buscar el texto libre.")),
+		_t("repos", N_("Repositorios (dueño/nombre)"), "repo", _AYUDA_REPOS, agrupar_o=True),
+		_t("propietario", N_("Usuario u organización dueña"), "user", _AYUDA_DUENO, agrupar_o=True),
+		_t("etiquetas", N_("Etiquetas (separadas por comas)"), "label",
+			N_("Cada etiqueta es una condición más (debe tenerlas todas). Con un guion delante se excluye: -wontfix.")),
 		_LENGUAJE,
-		_d("search_type", "Tipo de búsqueda", TIPOS_BUSQUEDA_ISSUES,
-			"Semántica busca por significado; híbrida combina significado y palabras. Solo issues (no pull requests), solo en el "
+		_d("search_type", N_("Tipo de búsqueda"), TIPOS_BUSQUEDA_ISSUES,
+			N_("Semántica busca por significado; híbrida combina significado y palabras. Solo issues (no pull requests), solo en el "
 			"título y el cuerpo, exige sesión iniciada, sin orden, una sola página de resultados y como mucho 10 búsquedas por minuto. "
-			"Si la consulta solo tiene filtros o frases entre comillas, GitHub hace una búsqueda léxica.", parametro="search_type"),
-		_t("autor", "Autor", "author", _AYUDA_PERSONA + " Para una aplicación: app/NOMBRE.", pagina="personas"),
-		_t("asignado", "Asignado a", "assignee", _AYUDA_PERSONA, pagina="personas"),
-		_t("menciona", "Menciona a", "mentions", _AYUDA_PERSONA, pagina="personas"),
-		_t("comentarista", "Comentada por", "commenter", _AYUDA_PERSONA, pagina="personas"),
-		_t("implicado", "Persona implicada", "involves", "Autor, asignado, mencionado o comentarista. " + _AYUDA_PERSONA, pagina="personas"),
-		_t("equipo", "Equipo mencionado (org/equipo)", "team", "Equipo con la forma organización/equipo.", pagina="personas"),
-		_t("revisado", "Revisada por", "reviewed-by", _AYUDA_PERSONA, pagina="pr"),
-		_t("revision_pedida", "Revisión pedida a", "review-requested", _AYUDA_PERSONA + " Deja de aparecer cuando ya ha revisado.", pagina="pr"),
-		_t("revision_equipo", "Revisión pedida al equipo (org/equipo)", "team-review-requested", "Equipo con la forma organización/equipo.",
+			"Si la consulta solo tiene filtros o frases entre comillas, GitHub hace una búsqueda léxica."), parametro="search_type"),
+		_t("autor", N_("Autor"), "author", N_("Nombre de usuario. Admite @me (usted) y @copilot. Varios, separados por comas; con un guion delante se excluye."
+			" Para una aplicación: app/NOMBRE."), pagina="personas"),
+		_t("asignado", N_("Asignado a"), "assignee", _AYUDA_PERSONA, pagina="personas"),
+		_t("menciona", N_("Menciona a"), "mentions", _AYUDA_PERSONA, pagina="personas"),
+		_t("comentarista", N_("Comentada por"), "commenter", _AYUDA_PERSONA, pagina="personas"),
+		_t("implicado", N_("Persona implicada"), "involves", N_("Autor, asignado, mencionado o comentarista. "
+			"Nombre de usuario. Admite @me (usted) y @copilot. Varios, separados por comas; con un guion delante se excluye."), pagina="personas"),
+		_t("equipo", N_("Equipo mencionado (org/equipo)"), "team", N_("Equipo con la forma organización/equipo."), pagina="personas"),
+		_t("revisado", N_("Revisada por"), "reviewed-by", _AYUDA_PERSONA, pagina="pr"),
+		_t("revision_pedida", N_("Revisión pedida a"), "review-requested", N_("Nombre de usuario. Admite @me (usted) y @copilot. Varios, separados por comas; con un guion delante se excluye."
+			" Deja de aparecer cuando ya ha revisado."), pagina="pr"),
+		_t("revision_equipo", N_("Revisión pedida al equipo (org/equipo)"), "team-review-requested", N_("Equipo con la forma organización/equipo."),
 			pagina="pr"),
-		_d("revision", "Estado de la revisión", [("", "Cualquiera"), ("review:none", "Sin revisar"), ("review:required", "Revisión obligatoria"),
-			("review:approved", "Aprobadas"), ("review:changes_requested", "Con cambios pedidos")], "Estado de revisión de la pull request.", pagina="pr"),
-		_d("comprobaciones", "Comprobaciones", [("", "Cualquiera"), ("status:pending", "Pendientes"), ("status:success", "Correctas"),
-			("status:failure", "Fallidas")], "Resultado de las comprobaciones (Actions y otras).", pagina="pr"),
-		_d("fusion", "Fusión", [("", "Cualquiera"), ("is:merged", "Fusionadas"), ("is:unmerged", "Sin fusionar")], "Solo pull requests.", pagina="pr"),
-		_d("borrador", "Borrador", [("", "Cualquiera"), ("draft:true", "Solo borradores"), ("draft:false", "Sin borradores")],
-			"Pull requests en borrador.", pagina="pr"),
-		_t("rama_origen", "Rama de origen", "head", "Rama desde la que se propone la pull request.", pagina="pr"),
-		_t("rama_destino", "Rama de destino", "base", "Rama en la que se quiere fusionar.", pagina="pr"),
-		_n("comentarios", "Comentarios", "comments", _AYUDA_NUMERO),
-		_n("reacciones", "Reacciones", "reactions", _AYUDA_NUMERO),
-		_n("interacciones", "Interacciones", "interactions", "Reacciones más comentarios. " + _AYUDA_NUMERO),
-		_f("creada", "Fecha de creación", "created", _AYUDA_FECHA),
-		_f("actualizada", "Última actualización", "updated", _AYUDA_FECHA),
-		_f("cerrada", "Fecha de cierre", "closed", _AYUDA_FECHA),
-		_f("fusionada", "Fecha de fusión", "merged", "Solo pull requests. " + _AYUDA_FECHA),
-		_t("hito", "Hito", "milestone", "Nombre del hito.", pagina="avanzado"),
-		_t("proyecto", "Proyecto (dueño/número)", "project", "Proyecto con la forma dueño/número, por ejemplo github/57.", pagina="avanzado"),
-		_t("tipo_issue", "Tipo de issue de la organización", "type", "Por ejemplo Bug, Feature o Task. Los nombres dependen de cada organización.",
+		_d("revision", N_("Estado de la revisión"), [("", N_("Cualquiera")), ("review:none", N_("Sin revisar")), ("review:required", N_("Revisión obligatoria")),
+			("review:approved", N_("Aprobadas")), ("review:changes_requested", N_("Con cambios pedidos"))], N_("Estado de revisión de la pull request."), pagina="pr"),
+		_d("comprobaciones", N_("Comprobaciones"), [("", N_("Cualquiera")), ("status:pending", N_("Pendientes")), ("status:success", N_("Correctas")),
+			("status:failure", N_("Fallidas"))], N_("Resultado de las comprobaciones (Actions y otras)."), pagina="pr"),
+		_d("fusion", N_("Fusión"), [("", N_("Cualquiera")), ("is:merged", N_("Fusionadas")), ("is:unmerged", N_("Sin fusionar"))], N_("Solo pull requests."), pagina="pr"),
+		_d("borrador", N_("Borrador"), [("", N_("Cualquiera")), ("draft:true", N_("Solo borradores")), ("draft:false", N_("Sin borradores"))],
+			N_("Pull requests en borrador."), pagina="pr"),
+		_t("rama_origen", N_("Rama de origen"), "head", N_("Rama desde la que se propone la pull request."), pagina="pr"),
+		_t("rama_destino", N_("Rama de destino"), "base", N_("Rama en la que se quiere fusionar."), pagina="pr"),
+		_n("comentarios", N_("Comentarios"), "comments", _AYUDA_NUMERO),
+		_n("reacciones", N_("Reacciones"), "reactions", _AYUDA_NUMERO),
+		_n("interacciones", N_("Interacciones"), "interactions", N_("Reacciones más comentarios. "
+			"Número entero. Puede rellenar solo el mínimo, solo el máximo o los dos (rango inclusivo).")),
+		_f("creada", N_("Fecha de creación"), "created", _AYUDA_FECHA),
+		_f("actualizada", N_("Última actualización"), "updated", _AYUDA_FECHA),
+		_f("cerrada", N_("Fecha de cierre"), "closed", _AYUDA_FECHA),
+		_f("fusionada", N_("Fecha de fusión"), "merged", N_("Solo pull requests. "
+			"Fecha con la forma AAAA-MM-DD (por ejemplo 2026-01-31). Puede rellenar solo «desde», solo «hasta» o las dos.")),
+		_t("hito", N_("Hito"), "milestone", N_("Nombre del hito."), pagina="avanzado"),
+		_t("proyecto", N_("Proyecto (dueño/número)"), "project", N_("Proyecto con la forma dueño/número, por ejemplo github/57."), pagina="avanzado"),
+		_t("tipo_issue", N_("Tipo de issue de la organización"), "type", N_("Por ejemplo Bug, Feature o Task. Los nombres dependen de cada organización."),
 			pagina="avanzado"),
-		_d("enlazada", "Enlaces", [("", "Indiferente"), ("linked:pr", "Issues enlazadas a una pull request"),
-			("-linked:pr", "Issues sin pull request enlazada"), ("linked:issue", "Pull requests enlazadas a una issue"),
-			("-linked:issue", "Pull requests sin issue enlazada")], "Relación entre issues y pull requests.", pagina="avanzado"),
-		_d("tiene", "Tiene", [("", "Indiferente"), ("has:label", "Alguna etiqueta"), ("has:assignee", "Alguna persona asignada")],
-			"Exige que tenga ese dato.", pagina="avanzado"),
-		_d("falta", "Le falta", [("", "Indiferente"), ("no:label", "Etiquetas"), ("no:milestone", "Hito"), ("no:assignee", "Persona asignada"),
-			("no:project", "Proyecto")], "Exige que NO tenga ese dato.", pagina="avanzado"),
-		_d("bloqueo", "Conversación bloqueada", [("", "Indiferente"), ("is:locked", "Bloqueadas"), ("is:unlocked", "Sin bloquear")],
-			"Conversaciones bloqueadas.", pagina="avanzado"),
+		_d("enlazada", N_("Enlaces"), [("", N_("Indiferente")), ("linked:pr", N_("Issues enlazadas a una pull request")),
+			("-linked:pr", N_("Issues sin pull request enlazada")), ("linked:issue", N_("Pull requests enlazadas a una issue")),
+			("-linked:issue", N_("Pull requests sin issue enlazada"))], N_("Relación entre issues y pull requests."), pagina="avanzado"),
+		_d("tiene", N_("Tiene"), [("", N_("Indiferente")), ("has:label", N_("Alguna etiqueta")), ("has:assignee", N_("Alguna persona asignada"))],
+			N_("Exige que tenga ese dato."), pagina="avanzado"),
+		_d("falta", N_("Le falta"), [("", N_("Indiferente")), ("no:label", N_("Etiquetas")), ("no:milestone", N_("Hito")), ("no:assignee", N_("Persona asignada")),
+			("no:project", N_("Proyecto"))], N_("Exige que NO tenga ese dato."), pagina="avanzado"),
+		_d("bloqueo", N_("Conversación bloqueada"), [("", N_("Indiferente")), ("is:locked", N_("Bloqueadas")), ("is:unlocked", N_("Sin bloquear"))],
+			N_("Conversaciones bloqueadas."), pagina="avanzado"),
 		_VISIBILIDAD,
-		_d("repo_archivado", "Repositorio archivado", [("", "Indiferente"), ("archived:false", "Sin archivar"), ("archived:true", "Archivado")],
-			"Si el repositorio está archivado.", pagina="avanzado"),
-		_c("cola", "En la cola de fusión", "is:queued", "Pull requests en la cola de fusión."),
-		_c("pr_archivadas", "Pull requests archivadas (requiere permiso de triaje)", "is:archived", "Pull requests archivadas."),
+		_d("repo_archivado", N_("Repositorio archivado"), [("", N_("Indiferente")), ("archived:false", N_("Sin archivar")), ("archived:true", N_("Archivado"))],
+			N_("Si el repositorio está archivado."), pagina="avanzado"),
+		_c("cola", N_("En la cola de fusión"), "is:queued", N_("Pull requests en la cola de fusión.")),
+		_c("pr_archivadas", N_("Pull requests archivadas (requiere permiso de triaje)"), "is:archived", N_("Pull requests archivadas.")),
 		_excluir(),
 	],
 	"users": [
-		_d("tipo", "Tipo de cuenta", [("", "Personas y organizaciones"), ("type:user", "Solo personas"), ("type:org", "Solo organizaciones")],
-			"Qué cuentas buscar."),
-		_en([("login", "Nombre de usuario"), ("name", "Nombre"), ("email", "Correo público")],
-			"Dónde buscar el texto. Sin marcar nada, en el nombre de usuario y el correo. No se puede buscar por dominio de correo."),
-		_t("nombre_completo", "Nombre completo", "fullname", "Nombre y apellidos tal como aparecen en el perfil."),
-		_t("ubicacion", "Ubicación", "location", "Lugar indicado en el perfil, por ejemplo Madrid."),
+		_d("tipo", N_("Tipo de cuenta"), [("", N_("Personas y organizaciones")), ("type:user", N_("Solo personas")), ("type:org", N_("Solo organizaciones"))],
+			N_("Qué cuentas buscar.")),
+		_en([("login", N_("Nombre de usuario")), ("name", N_("Nombre")), ("email", N_("Correo público"))],
+			N_("Dónde buscar el texto. Sin marcar nada, en el nombre de usuario y el correo. No se puede buscar por dominio de correo.")),
+		_t("nombre_completo", N_("Nombre completo"), "fullname", N_("Nombre y apellidos tal como aparecen en el perfil.")),
+		_t("ubicacion", N_("Ubicación"), "location", N_("Lugar indicado en el perfil, por ejemplo Madrid.")),
 		_LENGUAJE,
-		_n("repositorios", "Repositorios", "repos", _AYUDA_NUMERO, pagina="basico"),
-		_n("seguidores", "Seguidores", "followers", _AYUDA_NUMERO, pagina="basico"),
-		_f("alta", "Fecha de alta", "created", _AYUDA_FECHA, pagina="basico"),
-		_c("patrocinable", "Con perfil de GitHub Sponsors", "is:sponsorable", "Cuentas que aceptan patrocinios.", pagina="basico"),
+		_n("repositorios", N_("Repositorios"), "repos", _AYUDA_NUMERO, pagina="basico"),
+		_n("seguidores", N_("Seguidores"), "followers", _AYUDA_NUMERO, pagina="basico"),
+		_f("alta", N_("Fecha de alta"), "created", _AYUDA_FECHA, pagina="basico"),
+		_c("patrocinable", N_("Con perfil de GitHub Sponsors"), "is:sponsorable", N_("Cuentas que aceptan patrocinios."), pagina="basico"),
 	],
 	"commits": [
-		_t("repos", "Repositorios (dueño/nombre)", "repo", _AYUDA_REPOS, agrupar_o=True),
-		_t("propietario", "Usuario u organización dueña", "user", _AYUDA_DUENO, agrupar_o=True),
-		_t("autor", "Autor (usuario)", "author", "Usuario de GitHub del autor."),
-		_t("confirmador", "Quien hizo el commit (usuario)", "committer", "Usuario de GitHub de quien hizo el commit."),
-		_d("fusion", "Commits de fusión", [("", "Incluidos"), ("merge:true", "Solo fusiones"), ("merge:false", "Sin fusiones")],
-			"Commits de fusión (merge)."),
-		_f("fecha_autor", "Fecha del autor", "author-date", _AYUDA_FECHA, pagina="basico"),
-		_f("fecha_commit", "Fecha del commit", "committer-date", _AYUDA_FECHA, pagina="basico"),
-		_t("nombre_autor", "Nombre del autor", "author-name", "Nombre tal como aparece en el commit.", pagina="avanzado"),
-		_t("correo_autor", "Correo del autor", "author-email", "Correo completo.", pagina="avanzado"),
-		_t("nombre_confirmador", "Nombre de quien hizo el commit", "committer-name", "Nombre tal como aparece en el commit.", pagina="avanzado"),
-		_t("correo_confirmador", "Correo de quien hizo el commit", "committer-email", "Correo completo.", pagina="avanzado"),
-		_t("hash", "Hash del commit", "hash", "SHA completo o abreviado.", pagina="avanzado"),
-		_t("padre", "Hijos del commit (hash del padre)", "parent", "Commits cuyo padre es ese SHA.", pagina="avanzado"),
-		_t("arbol", "Árbol (hash)", "tree", "SHA del árbol.", pagina="avanzado"),
+		_t("repos", N_("Repositorios (dueño/nombre)"), "repo", _AYUDA_REPOS, agrupar_o=True),
+		_t("propietario", N_("Usuario u organización dueña"), "user", _AYUDA_DUENO, agrupar_o=True),
+		_t("autor", N_("Autor (usuario)"), "author", N_("Usuario de GitHub del autor.")),
+		_t("confirmador", N_("Quien hizo el commit (usuario)"), "committer", N_("Usuario de GitHub de quien hizo el commit.")),
+		_d("fusion", N_("Commits de fusión"), [("", N_("Incluidos")), ("merge:true", N_("Solo fusiones")), ("merge:false", N_("Sin fusiones"))],
+			N_("Commits de fusión (merge).")),
+		_f("fecha_autor", N_("Fecha del autor"), "author-date", _AYUDA_FECHA, pagina="basico"),
+		_f("fecha_commit", N_("Fecha del commit"), "committer-date", _AYUDA_FECHA, pagina="basico"),
+		_t("nombre_autor", N_("Nombre del autor"), "author-name", N_("Nombre tal como aparece en el commit."), pagina="avanzado"),
+		_t("correo_autor", N_("Correo del autor"), "author-email", N_("Correo completo."), pagina="avanzado"),
+		_t("nombre_confirmador", N_("Nombre de quien hizo el commit"), "committer-name", N_("Nombre tal como aparece en el commit."), pagina="avanzado"),
+		_t("correo_confirmador", N_("Correo de quien hizo el commit"), "committer-email", N_("Correo completo."), pagina="avanzado"),
+		_t("hash", N_("Hash del commit"), "hash", N_("SHA completo o abreviado."), pagina="avanzado"),
+		_t("padre", N_("Hijos del commit (hash del padre)"), "parent", N_("Commits cuyo padre es ese SHA."), pagina="avanzado"),
+		_t("arbol", N_("Árbol (hash)"), "tree", N_("SHA del árbol."), pagina="avanzado"),
 		_VISIBILIDAD,
 		_excluir(),
 	],
 	"topics": [
-		_d("destacados", "Destacados", [("", "Indiferente"), ("is:featured", "Destacados"), ("is:not-featured", "No destacados")],
-			"Temas destacados en GitHub."),
-		_d("seleccionados", "Seleccionados", [("", "Indiferente"), ("is:curated", "Con información seleccionada"),
-			("is:not-curated", "Sin información seleccionada")], "Temas con información añadida por GitHub."),
-		_n("repositorios", "Repositorios con el tema", "repositories", _AYUDA_NUMERO, pagina="basico"),
-		_f("creado", "Fecha de creación", "created", _AYUDA_FECHA, pagina="basico"),
+		_d("destacados", N_("Destacados"), [("", N_("Indiferente")), ("is:featured", N_("Destacados")), ("is:not-featured", N_("No destacados"))],
+			N_("Temas destacados en GitHub.")),
+		_d("seleccionados", N_("Seleccionados"), [("", N_("Indiferente")), ("is:curated", N_("Con información seleccionada")),
+			("is:not-curated", N_("Sin información seleccionada"))], N_("Temas con información añadida por GitHub.")),
+		_n("repositorios", N_("Repositorios con el tema"), "repositories", _AYUDA_NUMERO, pagina="basico"),
+		_f("creado", N_("Fecha de creación"), "created", _AYUDA_FECHA, pagina="basico"),
 		_EXCLUIR_BASICO,
 	],
 	"labels": [
-		Filtro("repositorio", "Repositorio (dueño/nombre, obligatorio)", TEXTO, ayuda=(
-			"GitHub solo busca etiquetas dentro de un repositorio. Escriba dueño/nombre; la aplicación averigua su número. "
-			"El texto libre solo admite palabras, no calificadores."), parametro="repositorio"),
+		Filtro("repositorio", N_("Repositorio (dueño/nombre, obligatorio)"), TEXTO, ayuda=(
+			N_("GitHub solo busca etiquetas dentro de un repositorio. Escriba dueño/nombre; la aplicación averigua su número. "
+			"El texto libre solo admite palabras, no calificadores.")), parametro="repositorio"),
 	],
 	"discussions": [
-		_en([("title", "Título"), ("body", "Cuerpo"), ("comments", "Comentarios")], "Dónde buscar el texto libre."),
-		_t("repos", "Repositorios (dueño/nombre)", "repo", _AYUDA_REPOS, agrupar_o=True),
-		_t("propietario", "Usuario u organización dueña", "user", _AYUDA_DUENO, agrupar_o=True),
-		_d("respuesta", "Respuesta", [("", "Indiferente"), ("is:answered", "Respondidas"), ("is:unanswered", "Sin responder")],
-			"Discusiones con una respuesta marcada."),
-		_d("estado", "Estado", [("", "Cualquiera"), ("is:open", "Abiertas"), ("is:closed", "Cerradas")], "Abiertas o cerradas."),
-		_t("categoria", "Categoría", "category", "Nombre de la categoría, por ejemplo Ideas."),
-		_t("etiquetas", "Etiquetas (separadas por comas)", "label", "Cada etiqueta es una condición más. Con un guion delante se excluye."),
-		_t("autor", "Autor", "author", _AYUDA_PERSONA, pagina="personas"),
-		_t("comentarista", "Comentada por", "commenter", _AYUDA_PERSONA, pagina="personas"),
-		_t("implicado", "Persona implicada", "involves", _AYUDA_PERSONA, pagina="personas"),
-		_t("respondida_por", "Respondida por", "answered-by", _AYUDA_PERSONA, pagina="personas"),
-		_n("comentarios", "Comentarios", "comments", _AYUDA_NUMERO),
-		_f("creada", "Fecha de creación", "created", _AYUDA_FECHA),
-		_f("actualizada", "Última actualización", "updated", _AYUDA_FECHA),
-		_d("bloqueo", "Conversación bloqueada", [("", "Indiferente"), ("is:locked", "Bloqueadas"), ("is:unlocked", "Sin bloquear")],
-			"Conversaciones bloqueadas.", pagina="avanzado"),
+		_en([("title", N_("Título")), ("body", N_("Cuerpo")), ("comments", N_("Comentarios"))], N_("Dónde buscar el texto libre.")),
+		_t("repos", N_("Repositorios (dueño/nombre)"), "repo", _AYUDA_REPOS, agrupar_o=True),
+		_t("propietario", N_("Usuario u organización dueña"), "user", _AYUDA_DUENO, agrupar_o=True),
+		_d("respuesta", N_("Respuesta"), [("", N_("Indiferente")), ("is:answered", N_("Respondidas")), ("is:unanswered", N_("Sin responder"))],
+			N_("Discusiones con una respuesta marcada.")),
+		_d("estado", N_("Estado"), [("", N_("Cualquiera")), ("is:open", N_("Abiertas")), ("is:closed", N_("Cerradas"))], N_("Abiertas o cerradas.")),
+		_t("categoria", N_("Categoría"), "category", N_("Nombre de la categoría, por ejemplo Ideas.")),
+		_t("etiquetas", N_("Etiquetas (separadas por comas)"), "label", N_("Cada etiqueta es una condición más. Con un guion delante se excluye.")),
+		_t("autor", N_("Autor"), "author", _AYUDA_PERSONA, pagina="personas"),
+		_t("comentarista", N_("Comentada por"), "commenter", _AYUDA_PERSONA, pagina="personas"),
+		_t("implicado", N_("Persona implicada"), "involves", _AYUDA_PERSONA, pagina="personas"),
+		_t("respondida_por", N_("Respondida por"), "answered-by", _AYUDA_PERSONA, pagina="personas"),
+		_n("comentarios", N_("Comentarios"), "comments", _AYUDA_NUMERO),
+		_f("creada", N_("Fecha de creación"), "created", _AYUDA_FECHA),
+		_f("actualizada", N_("Última actualización"), "updated", _AYUDA_FECHA),
+		_d("bloqueo", N_("Conversación bloqueada"), [("", N_("Indiferente")), ("is:locked", N_("Bloqueadas")), ("is:unlocked", N_("Sin bloquear"))],
+			N_("Conversaciones bloqueadas."), pagina="avanzado"),
 		_VISIBILIDAD,
 		_excluir(),
 	],
 	"trending": [
-		_d("fuente", "Fuente", FUENTES_TENDENCIAS, "GitHub no tiene API de tendencias. «Nuevos y populares» usa la API oficial: repositorios "
+		_d("fuente", N_("Fuente"), FUENTES_TENDENCIAS, N_("GitHub no tiene API de tendencias. «Nuevos y populares» usa la API oficial: repositorios "
 			"creados en el periodo ordenados por estrellas (no mide las estrellas ganadas). Las otras dos leen la página "
 			"github.com/trending una vez por consulta (se guarda una hora): no tiene API oficial y puede dejar de funcionar si GitHub "
-			"cambia la página.", parametro="fuente"),
-		_d("periodo", "Periodo", PERIODOS, "Hoy, esta semana o este mes.", parametro="periodo"),
-		_d("lenguaje", "Lenguaje", LENGUAJES, "Lenguaje de programación.", cal="language"),
-		_d("idioma", "Idioma hablado", IDIOMAS_HABLADOS, "Solo para la página de tendencias de repositorios: idioma de la descripción.",
+			"cambia la página."), parametro="fuente"),
+		_d("periodo", N_("Periodo"), PERIODOS, N_("Hoy, esta semana o este mes."), parametro="periodo"),
+		_d("lenguaje", N_("Lenguaje"), LENGUAJES, N_("Lenguaje de programación."), cal="language"),
+		_d("idioma", N_("Idioma hablado"), IDIOMAS_HABLADOS, N_("Solo para la página de tendencias de repositorios: idioma de la descripción."),
 			parametro="idioma"),
 	],
 }
@@ -434,26 +437,26 @@ TIPOS_AVANZADOS = ("issues",)
 
 # Atajos de la búsqueda guiada de repositorios: (clave, nombre, valores que rellenan).
 ATAJOS_REPOSITORIOS: list[tuple[str, str, dict[str, Any]]] = [
-	("", "Ninguno (búsqueda libre)", {}),
-	("populares", "Populares: muchas estrellas", {"estrellas": ["1000", ""], "_orden": "stars"}),
-	("bifurcados", "Más bifurcados", {"bifurcaciones": ["100", ""], "_orden": "forks"}),
-	("recientes", "Actualizados en el último mes", {"envio": ["-30", ""]}),
-	("desactualizados", "Sin actualizar desde hace un año", {"envio": ["", "-365"]}),
-	("buenas_primeras", "Con issues para empezar a colaborar", {"buenas_primeras": "0"}),
-	("ayuda", "Que piden ayuda", {"piden_ayuda": "0"}),
-	("awesome", "Listas Awesome", {"_texto": "awesome", "en": ["name", "description"]}),
-	("nvda", "Complementos y programas para NVDA", {"_texto": "nvda"}),
+	("", N_("Ninguno (búsqueda libre)"), {}),
+	("populares", N_("Populares: muchas estrellas"), {"estrellas": ["1000", ""], "_orden": "stars"}),
+	("bifurcados", N_("Más bifurcados"), {"bifurcaciones": ["100", ""], "_orden": "forks"}),
+	("recientes", N_("Actualizados en el último mes"), {"envio": ["-30", ""]}),
+	("desactualizados", N_("Sin actualizar desde hace un año"), {"envio": ["", "-365"]}),
+	("buenas_primeras", N_("Con issues para empezar a colaborar"), {"buenas_primeras": "0"}),
+	("ayuda", N_("Que piden ayuda"), {"piden_ayuda": "0"}),
+	("awesome", N_("Listas Awesome"), {"_texto": "awesome", "en": ["name", "description"]}),
+	("nvda", N_("Complementos y programas para NVDA"), {"_texto": "nvda"}),
 ] + [(clave, nombre, {"temas": tema}) for clave, nombre, tema in (
-	("accesibilidad", "Accesibilidad", "accessibility"), ("lector", "Lector de pantalla", "screen-reader"), ("a11y", "A11y", "a11y"),
-	("seguridad", "Seguridad", "security"), ("ciberseguridad", "Ciberseguridad", "cybersecurity"),
-	("ia", "Inteligencia artificial", "artificial-intelligence"), ("ml", "Aprendizaje automático", "machine-learning"),
-	("datos", "Ciencia de datos", "data-science"), ("web", "Desarrollo web", "web-development"), ("frontend", "Front-end", "frontend"),
-	("backend", "Back-end", "backend"), ("movil", "Desarrollo móvil", "mobile"), ("android", "Android", "android"),
-	("devops", "DevOps", "devops"), ("nube", "Nube", "cloud"), ("docker", "Docker", "docker"), ("linux", "Linux", "linux"),
-	("windows", "Windows", "windows"), ("cli", "Línea de órdenes", "cli"), ("bot", "Bots", "bot"), ("juegos", "Videojuegos", "game"),
-	("audio", "Audio", "audio"), ("multimedia", "Multimedia", "multimedia"), ("iot", "Internet de las cosas", "iot"),
-	("arduino", "Arduino", "arduino"), ("raspberry", "Raspberry Pi", "raspberry-pi"), ("robotica", "Robótica", "robotics"),
-	("drivers", "Controladores (drivers)", "drivers"), ("nas", "NAS", "nas"), ("synology", "Synology NAS", "synology"),
+	("accesibilidad", N_("Accesibilidad"), "accessibility"), ("lector", N_("Lector de pantalla"), "screen-reader"), ("a11y", "A11y", "a11y"),
+	("seguridad", N_("Seguridad"), "security"), ("ciberseguridad", N_("Ciberseguridad"), "cybersecurity"),
+	("ia", N_("Inteligencia artificial"), "artificial-intelligence"), ("ml", N_("Aprendizaje automático"), "machine-learning"),
+	("datos", N_("Ciencia de datos"), "data-science"), ("web", N_("Desarrollo web"), "web-development"), ("frontend", "Front-end", "frontend"),
+	("backend", "Back-end", "backend"), ("movil", N_("Desarrollo móvil"), "mobile"), ("android", "Android", "android"),
+	("devops", "DevOps", "devops"), ("nube", N_("Nube"), "cloud"), ("docker", "Docker", "docker"), ("linux", "Linux", "linux"),
+	("windows", "Windows", "windows"), ("cli", N_("Línea de órdenes"), "cli"), ("bot", N_("Bots"), "bot"), ("juegos", N_("Videojuegos"), "game"),
+	("audio", "Audio", "audio"), ("multimedia", "Multimedia", "multimedia"), ("iot", N_("Internet de las cosas"), "iot"),
+	("arduino", "Arduino", "arduino"), ("raspberry", "Raspberry Pi", "raspberry-pi"), ("robotica", N_("Robótica"), "robotics"),
+	("drivers", N_("Controladores (drivers)"), "drivers"), ("nas", "NAS", "nas"), ("synology", "Synology NAS", "synology"),
 	("blockchain", "Blockchain", "blockchain"), ("hacktoberfest", "Hacktoberfest", "hacktoberfest"),
 )]
 
@@ -615,12 +618,18 @@ def _nombre_opcion(opciones: Iterable[tuple[str, str]], valor: str) -> str:
 
 def descripcion_tendencias(fuente: str, periodo: str, lenguaje: str = "", idioma: str = "") -> str:
 	"""Texto legible de una consulta de la página de tendencias («desarrolladores en tendencia esta semana, Python»)."""
-	que = _("desarrolladores en tendencia") if fuente == "web_devs" else _("repositorios en tendencia")
-	partes = [f"{que} {_(_nombre_opcion(PERIODOS, periodo)).lower()}"]
+	# Frases enteras (no «que» + periodo pegados) para que la traducción pueda reordenarlas.
+	cuando = _(_nombre_opcion(PERIODOS, periodo)).lower()
+	if fuente == "web_devs":
+		partes = [_("desarrolladores en tendencia {periodo}").format(periodo=cuando)]
+	else:
+		partes = [_("repositorios en tendencia {periodo}").format(periodo=cuando)]
 	if lenguaje:
-		partes.append(_nombre_opcion(LENGUAJES, lenguaje))
+		partes.append(_(_nombre_opcion(LENGUAJES, lenguaje)))
 	if idioma and fuente == "web_repos":
-		partes.append(_("en {i}").format(i=_(_nombre_opcion(IDIOMAS_HABLADOS, idioma)).lower()))
+		nombre_idioma = _(_nombre_opcion(IDIOMAS_HABLADOS, idioma))
+		# En español los idiomas van en minúscula dentro de la frase; en inglés, con mayúscula («in Spanish»).
+		partes.append(_("en {i}").format(i=nombre_idioma.lower() if i18n.idioma_corto() == "es" else nombre_idioma))
 	return ", ".join(partes)
 
 
@@ -822,27 +831,27 @@ def url_navegador(tipo: str, consulta: str, host: str = HOST_GITHUB, orden: str 
 
 _ERRORES_422: list[tuple[str, str]] = [
 	(r"cannot be searched either because the resources do not exist or you do not have permission",
-		"Alguno de los usuarios, organizaciones o repositorios indicados no existe o la cuenta no tiene permiso para verlo."),
+		N_("Alguno de los usuarios, organizaciones o repositorios indicados no existe o la cuenta no tiene permiso para verlo.")),
 	(r"only the first 1000 search results",
-		"GitHub solo devuelve los 1000 primeros resultados de una búsqueda. Acote la consulta (por ejemplo con fechas) o use «Traer todos»."),
+		N_("GitHub solo devuelve los 1000 primeros resultados de una búsqueda. Acote la consulta (por ejemplo con fechas) o use «Traer todos».")),
 	(r"must include at least one user, organization, or repository",
-		"Esta búsqueda necesita al menos un usuario, una organización o un repositorio."),
+		N_("Esta búsqueda necesita al menos un usuario, una organización o un repositorio.")),
 	(r"only logical operators|without any search terms",
-		"La consulta solo tiene operadores (AND, OR, NOT) y ninguna palabra que buscar."),
+		N_("La consulta solo tiene operadores (AND, OR, NOT) y ninguna palabra que buscar.")),
 	(r"more than (five|5) .*operators|too many .*operators",
-		"La consulta tiene más de cinco operadores AND, OR o NOT."),
+		N_("La consulta tiene más de cinco operadores AND, OR o NOT.")),
 	(r"(longer than|less than|more than) 256 characters|query is too long",
-		"La consulta es demasiado larga: el texto no puede pasar de 256 caracteres."),
+		N_("La consulta es demasiado larga: el texto no puede pasar de 256 caracteres.")),
 	(r"none of the search qualifiers apply",
-		"Ninguno de los calificadores sirve para este tipo de búsqueda."),
+		N_("Ninguno de los calificadores sirve para este tipo de búsqueda.")),
 	(r"repository_id",
-		"Para buscar etiquetas hace falta el repositorio."),
+		N_("Para buscar etiquetas hace falta el repositorio.")),
 	(r"semantic|hybrid|search_type",
-		"GitHub no ha aceptado la búsqueda semántica o híbrida: recuerde que exige sesión iniciada y solo busca issues."),
+		N_("GitHub no ha aceptado la búsqueda semántica o híbrida: recuerde que exige sesión iniciada y solo busca issues.")),
 	(r"is:issue|is:pull-request|is:pr",
-		"Indique si busca issues o pull requests (filtro «Tipo»)."),
+		N_("Indique si busca issues o pull requests (filtro «Tipo»).")),
 	(r"invalid.*date|date.*invalid",
-		"Alguna fecha no es válida: use la forma AAAA-MM-DD."),
+		N_("Alguna fecha no es válida: use la forma AAAA-MM-DD.")),
 ]
 
 
@@ -866,10 +875,10 @@ def traducir_error_busqueda(error: BaseException) -> str:
 # ════════════════════════════════════════════════════════════════════════════
 
 PROPIEDADES = {
-	"body": "el cuerpo", "title": "el título", "content": "el contenido", "path": "la ruta", "name": "el nombre",
-	"description": "la descripción", "message": "el mensaje", "login": "el usuario", "email": "el correo",
-	"short_description": "la descripción breve", "display_name": "el nombre visible", "comments": "los comentarios",
-	"full_name": "el nombre", "fullname": "el nombre", "aliases": "los alias", "readme": "el README",
+	"body": N_("el cuerpo"), "title": N_("el título"), "content": N_("el contenido"), "path": N_("la ruta"), "name": N_("el nombre"),
+	"description": N_("la descripción"), "message": N_("el mensaje"), "login": N_("el usuario"), "email": N_("el correo"),
+	"short_description": N_("la descripción breve"), "display_name": N_("el nombre visible"), "comments": N_("los comentarios"),
+	"full_name": N_("el nombre"), "fullname": N_("el nombre"), "aliases": N_("los alias"), "readme": N_("el README"),
 }
 
 
@@ -1241,8 +1250,8 @@ class _AnalizadorTendencias(HTMLParser):
 		})
 
 
-_MENSAJE_FORMATO = ("No se ha podido leer la página de tendencias de GitHub: su formato ha cambiado. "
-	"Use la fuente «Nuevos y populares (API oficial de GitHub)» o abra las tendencias en el navegador.")
+_MENSAJE_FORMATO = (N_("No se ha podido leer la página de tendencias de GitHub: su formato ha cambiado. "
+	"Use la fuente «Nuevos y populares (API oficial de GitHub)» o abra las tendencias en el navegador."))
 
 
 def analizar_tendencias(html: str, que: str = "repositorios") -> list[dict]:

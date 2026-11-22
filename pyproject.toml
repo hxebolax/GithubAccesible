@@ -3,14 +3,14 @@
 [project]
 name = "github-accesible"
 # Debe coincidir con APP_VERSION de app/core/version.py (lo comprueba una prueba).
-version = "1.0.6"
+version = "1.0.7"
 description = "Aplicación de escritorio accesible para Windows hecha con wxPython."
 # Versión mínima de Python del proyecto: ajústela a la elegida al crearlo.
 requires-python = ">=3.15"
 
 [tool.ruff]
-# La función de traducción _ puede instalarla gettext como builtin global.
-builtins = ["_"]
+# app/core/i18n.py instala en builtins _ , N_, ngettext, n_, pgettext y npgettext.
+builtins = ["_", "N_", "ngettext", "n_", "pgettext", "npgettext"]
 line-length = 140
 # Debe coincidir con la versión mínima de requires-python.
 target-version = "py315"

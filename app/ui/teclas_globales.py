@@ -70,7 +70,9 @@ class Combinacion:
 
 	@property
 	def texto(self) -> str:
-		partes = [nombre for valor, nombre in _NOMBRES_MOD if self.modificadores & valor]
+		# En el idioma de la interfaz («Mayúsculas» / «Shift»): analizar() acepta los dos.
+		partes = [pgettext("tecla", "Mayúsculas") if valor == MOD_MAYUS else nombre
+			for valor, nombre in _NOMBRES_MOD if self.modificadores & valor]
 		return "+".join([*partes, nombre_tecla(self.tecla_virtual)])
 
 
