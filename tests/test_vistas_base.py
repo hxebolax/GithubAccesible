@@ -167,3 +167,113 @@ def test_casillas_configurables():
 	assert componer_casilla("Etiqueta", True, 2, 10) == "Etiqueta, marcada"
 	assert componer_casilla("Etiqueta", False, 2, 10, estado_primero=True, decir_posicion=True) == "no marcada, Etiqueta, 3 de 10"
 	assert componer_casilla("Etiqueta", True, 0, 1, decir_estado=False) == "Etiqueta"
+
+
+def _definicion_orden(elementos):
+	from app.services import formato as f
+
+	return DefinicionVista(
+		"orden", "Orden",
+		[
+			Columna("titulo", "Título", lambda e, c: e["titulo"]),
+			Columna("fecha", "Fecha", lambda e, c: f.fecha(e.get("fecha"), True)),
+			Columna("estrellas", "Estrellas", lambda e, c: f.numero(e.get("estrellas"))),
+		],
+		lambda api, n, p: list(elementos),
+	)
+
+
+def _titulos(panel):
+	return [panel.lista.texto_celda(i, 0) for i in range(panel.lista.numero_filas())]
+
+
+ELEMENTOS_ORDEN = [
+	{"titulo": "Issue 10", "fecha": "2026-11-20T10:00:00Z", "estrellas": 1500},
+	{"titulo": "issue 2", "fecha": "2026-11-22T09:00:00Z", "estrellas": 999},
+	{"titulo": "Sin fecha", "fecha": None, "estrellas": None},
+	{"titulo": "Issue 1", "fecha": "2025-01-01T00:00:00Z", "estrellas": 20},
+]
+
+
+def test_ordenar_por_columnas_con_valores_reales(app_wx, marco):
+	"""Ordena por el valor (no por «hace 3 días» ni «1.500»), con orden natural y los vacíos al final."""
+	ctx, _api, anuncios = crear_contexto()
+	panel = PanelLista(marco, ctx, _definicion_orden(ELEMENTOS_ORDEN))
+	panel.cargar()
+	assert _titulos(panel) == ["Issue 10", "issue 2", "Sin fecha", "Issue 1"], "sin orden, el de GitHub"
+	panel.ordenar_por("titulo")
+	assert _titulos(panel) == ["Issue 1", "issue 2", "Issue 10", "Sin fecha"]
+	assert anuncios[-1] == "Ordenada por Título, ascendente."
+	panel.ordenar_por("fecha", descendente=True)
+	assert _titulos(panel) == ["issue 2", "Issue 10", "Issue 1", "Sin fecha"], "la más reciente primero; sin fecha, al final"
+	panel.ordenar_por("estrellas")
+	assert _titulos(panel) == ["Issue 1", "issue 2", "Issue 10", "Sin fecha"], "999 antes que 1.500"
+	assert "ordenada por Estrellas, ascendente" in panel.estado.GetLabel()
+	panel.ordenar_por(None)
+	assert _titulos(panel) == ["Issue 10", "issue 2", "Sin fecha", "Issue 1"]
+
+
+def test_ordenar_conserva_el_elemento_y_se_recuerda(app_wx, marco):
+	ctx, _api, _a = crear_contexto()
+	panel = PanelLista(marco, ctx, _definicion_orden(ELEMENTOS_ORDEN))
+	panel.cargar()
+	panel.lista.enfocar_fila(3, anunciar=False)
+	panel.ordenar_por("titulo")
+	assert panel.elemento["titulo"] == "Issue 1" and panel.lista.fila_actual() == 0, "el foco sigue al elemento"
+	assert ctx.config.obtener("listas.orden") == {"orden": ["titulo", False]}
+	otro = PanelLista(marco, ctx, _definicion_orden(ELEMENTOS_ORDEN))
+	otro.cargar()
+	assert _titulos(otro) == ["Issue 1", "issue 2", "Issue 10", "Sin fecha"], "una lista nueva usa el orden guardado"
+
+
+def test_control_j_y_cabecera_alternan_el_orden(app_wx, marco):
+	ctx, _api, anuncios = crear_contexto()
+	panel = PanelLista(marco, ctx, _definicion_orden(ELEMENTOS_ORDEN))
+	panel.cargar()
+	evento = wx.KeyEvent(wx.wxEVT_KEY_DOWN)
+	evento.SetKeyCode(ord("J"))
+	evento.SetControlDown(True)
+	for esperado in ("Ordenada por Título, ascendente.", "Ordenada por Título, descendente.", "Orden original, el que da GitHub."):
+		panel.lista.GetEventHandler().ProcessEvent(evento)
+		assert anuncios[-1] == esperado
+	cabecera = wx.ListEvent(wx.wxEVT_LIST_COL_CLICK, panel.lista.GetId())
+	cabecera.SetColumn(2)
+	panel._al_pulsar_cabecera(cabecera)
+	assert panel.orden == ("estrellas", False)
+	etiquetas = [a.etiqueta for a in panel.acciones_disponibles()]
+	assert "Ordenar por columna &y sentido…" in etiquetas
+
+
+def test_ordenar_mantiene_el_orden_al_cargar_mas(app_wx, marco):
+	ctx, _api, _a = crear_contexto()
+	paginas = {1: Pagina([{"titulo": "b"}, {"titulo": "d"}], siguiente="x"), 2: Pagina([{"titulo": "a"}, {"titulo": "c"}])}
+	definicion = _definicion_orden([])
+	definicion.cargar = lambda api, n, p: paginas[n]
+	panel = PanelLista(marco, ctx, definicion)
+	panel.cargar()
+	panel.ordenar_por("titulo", descendente=True)
+	panel.cargar_mas()
+	assert _titulos(panel) == ["d", "c", "b", "a"]
+
+
+def test_elegir_el_orden_en_un_dialogo(app_wx, marco, dialogo_modal):
+	ctx, _api, _a = crear_contexto()
+	panel = PanelLista(marco, ctx, _definicion_orden(ELEMENTOS_ORDEN))
+	panel.cargar()
+
+	def elegir(dialogo):
+		# 0 original, 1 título asc, 2 título desc, 3 fecha asc...
+		dialogo.lista.SetSelection(4)
+		return wx.ID_OK
+
+	dialogo_modal.responder(elegir)
+	panel.pedir_orden()
+	assert panel.orden == ("fecha", True)
+
+
+def test_marcar_todas_las_notificaciones_tiene_atajo():
+	"""Incidencia 3: «Marcar todas como leídas» con Control+Mayúsculas+A, sin elegir ninguna."""
+	from app.ui.vistas import principales
+
+	accion = next(a for a in principales.vista_notificaciones().acciones if "todas como leídas" in a.etiqueta)
+	assert accion.atajo == "Ctrl+Shift+A" and not accion.requiere_elemento

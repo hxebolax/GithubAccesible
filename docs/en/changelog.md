@@ -2,6 +2,13 @@
 
 Each version has its own section, from the newest to the oldest. Within each version, changes are grouped into New, Improvements and Fixes, described from the point of view of the person using the application.
 
+## Version 1.0.8 - 2026-11-23
+
+### New
+
+- **Sort lists by column**, in every list in the application. Ctrl+J sorts by the column being read: ascending, then descending, then back to the original order. Ctrl+Shift+J (or Actions, “Sort the list”) chooses the column and the direction; with the mouse, click the column header. Dates, numbers and sizes are sorted by their real value, numbers inside text too (“issue 2” before “issue 10”), and items without a value go to the end. Each list remembers its sort order.
+- **Mark all notifications as read with Ctrl+Shift+A** in the Notifications section.
+
 ## Version 1.0.7 - 2026-11-22
 
 ### New

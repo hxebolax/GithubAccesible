@@ -63,6 +63,8 @@ Ctrl+U (view a profile) suggests the person in the selected row, already typed i
 
 The application checks notifications on its own (every minute, or as often as GitHub asks). When a new one arrives, it announces it with speech and a sound, which is different if you are mentioned or asked for a review. The number of unread notifications appears next to the section. You can configure this in Preferences, Notifications (including a Windows notification and the system tray).
 
+In the Notifications section, Ctrl+L marks the selected notification as read and Ctrl+Shift+A marks all of them as read. To hear the unread ones from any program, use the global hotkey Ctrl+Alt+Shift+N (see “Global hotkeys”).
+
 ### The system tray
 
 The application can keep running with its window hidden, with an icon next to the clock (Windows+B takes you to the system tray; the arrow keys, to the icon). File, “Hide to system tray”, hides it. In Preferences, General, you can choose:
@@ -97,6 +99,7 @@ All lists in the application work the same way:
 - F5 refreshes. When you reach the end, more items load on their own; Ctrl+M requests them manually.
 - Ctrl+F filters the list by a text and Ctrl+Shift+F removes the filter.
 - Ctrl+C copies the row, Ctrl+Shift+C copies the link, Ctrl+B opens the item in the browser and Ctrl+I shows all its details in a text you can read at your own pace.
+- Ctrl+J sorts the list by the column being read: the first time in ascending order, the second time in descending order and the third time back to the original order, the one GitHub returns. Ctrl+Shift+J (or Actions, “Sort the list”) chooses the column and the direction. With the mouse, just click the column header. Dates, numbers and sizes are sorted by their value, not by their text (in ascending order, “3 days ago” comes before “5 minutes ago”), numbers inside text too (“issue 2” before “issue 10”), and items without a value go to the end. Each list remembers its sort order. Only the items already loaded are sorted: if the list has more pages, load them first with Ctrl+M.
 
 In Preferences, Accessibility, you choose what is spoken when you move through the columns (row number, column name and content). In Preferences, “List columns”, you choose for each list which columns are shown and in what order: this decides what the screen reader reads as you move through the rows, and in what order.
 

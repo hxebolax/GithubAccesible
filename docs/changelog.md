@@ -2,6 +2,13 @@
 
 Cada versión tiene su apartado, de la más reciente a la más antigua. Dentro de cada versión, los cambios se agrupan en Novedades, Mejoras y Correcciones, contados con palabras de quien usa la aplicación.
 
+## Versión 1.0.8 - 2026-11-23
+
+### Novedades
+
+- **Ordenar las listas por columnas**, en todas las listas de la aplicación. Control+J ordena por la columna que se está leyendo: ascendente, después descendente y después el orden original. Control+Mayúsculas+J (o Acciones, «Ordenar por columna y sentido») elige columna y sentido; con el ratón, la cabecera de la columna. Las fechas, los números y los tamaños se ordenan por su valor real, los números dentro del texto también («issue 2» antes que «issue 10») y lo que no tiene valor va al final. Cada lista recuerda su orden.
+- **Marcar todas las notificaciones como leídas con Control+Mayúsculas+A** en la sección Notificaciones.
+
 ## Versión 1.0.7 - 2026-11-22
 
 ### Novedades

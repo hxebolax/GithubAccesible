@@ -136,6 +136,8 @@ VALORES_POR_DEFECTO: dict[str, dict[str, Any]] = {
 	"listas": {
 		# Vista → lista ordenada de identificadores de columna visibles.
 		"columnas": {},
+		# Vista → [columna, descendente] con el orden elegido (Control+J, Control+Mayúsculas+J).
+		"orden": {},
 		"por_pagina": 50,
 		"fechas_relativas": True,
 	},

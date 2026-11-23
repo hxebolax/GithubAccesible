@@ -41,10 +41,11 @@ Se cambian en Preferencias, Teclas globales.
 - Control+F: filtrar la lista. Control+Mayúsculas+F: quitar el filtro.
 - Control+C: copiar la fila. Control+Mayúsculas+C: copiar el enlace.
 - Control+B: abrir en el navegador. Control+I: todos los detalles.
+- Control+J: ordenar por la columna que se está leyendo (ascendente, descendente y vuelta al orden original). Control+Mayúsculas+J: elegir la columna y el sentido. También vale pulsar la cabecera de la columna.
 
 ## Secciones de la ventana principal
 
-- Notificaciones: Control+L marcar como leída, Suprimir marcar como hecha, Control+Mayúsculas+S silenciar la conversación, Control+Mayúsculas+R ir al repositorio, F4 cambiar el filtro.
+- Notificaciones: Control+L marcar como leída, Control+Mayúsculas+A marcar todas como leídas, Suprimir marcar como hecha, Control+Mayúsculas+S silenciar la conversación, Control+Mayúsculas+R ir al repositorio, F4 cambiar el filtro.
 - Repositorios: Control+K clonar, Control+S estrella, Control+N nuevo repositorio, Suprimir borrar, F4 cambiar el filtro.
 - Mis issues y Mis pull requests: F4 cambiar el filtro, Control+Mayúsculas+R ir al repositorio.
 - Gists: Control+N nuevo, Suprimir borrar, F4 cambiar entre míos, con estrella y públicos.

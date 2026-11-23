@@ -7,11 +7,49 @@ breve y fácil de escuchar.
 
 from __future__ import annotations
 
+from collections.abc import Iterator
+from contextlib import contextmanager
 from datetime import UTC, datetime
 from typing import Any
 
 from app.core import i18n  # noqa: F401 - instala _, N_ y ngettext en builtins aunque se importe suelto (pruebas)
 from app.services.github.cliente import fecha_iso
+
+
+# ── Modo orden ───────────────────────────────────────────────────────────────
+# Al ordenar una lista por una columna, el texto que se ve no sirve de clave: «hace 3 días»
+# va antes que «hace 5 minutos» por orden alfabético y «1.234» antes que «999». Dentro de
+# ``modo_orden()`` las funciones de este módulo devuelven, en lugar del texto, una forma
+# que se ordena bien como texto (fecha ISO en UTC, números con ceros a la izquierda). Así
+# cualquier columna que use ``fecha``, ``numero``, ``tamano`` o ``duracion`` se ordena por
+# su valor real sin tener que declarar nada en cada vista. Solo se usa en el hilo de la interfaz.
+_modo_orden = False
+_ANCHO_ORDEN = 20
+
+
+@contextmanager
+def modo_orden() -> Iterator[None]:
+	"""Mientras dura, fechas, números, tamaños y duraciones salen como claves de orden."""
+	global _modo_orden
+	anterior, _modo_orden = _modo_orden, True
+	try:
+		yield
+	finally:
+		_modo_orden = anterior
+
+
+def _clave_fecha(texto_o_fecha: str | datetime | None) -> str:
+	fecha = texto_o_fecha if isinstance(texto_o_fecha, datetime) else fecha_iso(texto_o_fecha)
+	if fecha is None:
+		return ""
+	if fecha.tzinfo is None:
+		fecha = fecha.replace(tzinfo=UTC)
+	return fecha.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%S")
+
+
+def _clave_numero(valor: float) -> str:
+	# Negativos poco probables, pero así siguen antes que los positivos.
+	return ("-" if valor < 0 else "+") + f"{abs(float(valor)):0{_ANCHO_ORDEN + 4}.3f}"
 
 
 def ngettext_(singular: str, plural: str, n: int) -> str:
@@ -21,6 +59,8 @@ def ngettext_(singular: str, plural: str, n: int) -> str:
 
 def fecha_relativa(texto_o_fecha: str | datetime | None, ahora: datetime | None = None) -> str:
 	"""«hace 5 minutos», «ayer», «hace 3 días», «el 12/03/2023»."""
+	if _modo_orden:
+		return _clave_fecha(texto_o_fecha)
 	fecha = texto_o_fecha if isinstance(texto_o_fecha, datetime) else fecha_iso(texto_o_fecha)
 	if fecha is None:
 		return ""
@@ -52,6 +92,8 @@ def fecha_relativa(texto_o_fecha: str | datetime | None, ahora: datetime | None 
 
 
 def fecha_completa(texto_o_fecha: str | datetime | None) -> str:
+	if _modo_orden:
+		return _clave_fecha(texto_o_fecha)
 	fecha = texto_o_fecha if isinstance(texto_o_fecha, datetime) else fecha_iso(texto_o_fecha)
 	if fecha is None:
 		return ""
@@ -97,6 +139,8 @@ def fecha(texto: str | None, relativa: bool = True) -> str:
 def tamano(octetos: int | float | None) -> str:
 	if octetos is None:
 		return ""
+	if _modo_orden:
+		return _clave_numero(octetos)
 	valor = float(octetos)
 	for unidad in ("bytes", "KB", "MB", "GB", "TB"):
 		if valor < 1024 or unidad == "TB":
@@ -110,6 +154,8 @@ def tamano(octetos: int | float | None) -> str:
 def numero(valor: int | None) -> str:
 	if valor is None:
 		return ""
+	if _modo_orden:
+		return _clave_numero(valor)
 	# El inglés agrupa los miles con coma (1,234); el español, con punto (1.234).
 	return f"{int(valor):,}".replace(",", _SEPARADORES()[1])
 
@@ -117,6 +163,8 @@ def numero(valor: int | None) -> str:
 def duracion(segundos: float | None) -> str:
 	if segundos is None:
 		return ""
+	if _modo_orden:
+		return _clave_numero(segundos)
 	segundos = int(segundos)
 	if segundos < 60:
 		return ngettext("{n} segundo", "{n} segundos", segundos).format(n=segundos)

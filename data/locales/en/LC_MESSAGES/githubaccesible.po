@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: githubaccesible 1.0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-22 22:09+0100\n"
+"POT-Creation-Date: 2026-11-23 01:08+0100\n"
 "PO-Revision-Date: 2026-11-22 21:50+0100\n"
 "Last-Translator: GitHub Accesible\n"
 "Language-Team: English\n"
@@ -33,44 +33,44 @@ msgstr "The database is locked by another program (antivirus, backup or another 
 msgid "La base de datos es de la versión {actual} y esta aplicación solo conoce hasta la {total}. Se creó con una versión más nueva de la aplicación; actualízala para abrirla."
 msgstr "The database is version {actual} and this application only supports up to version {total}. It was created with a newer version of the application; update the application to open it."
 
-#: app/core/configuracion.py:381
+#: app/core/configuracion.py:383
 #, python-brace-format
 msgid "«{clave}» espera {esperado} y recibió {recibido}."
 msgstr "“{clave}” expects {esperado} but received {recibido}."
 
-#: app/core/configuracion.py:388
+#: app/core/configuracion.py:390
 #, python-brace-format
 msgid "«{clave}» solo admite: {opciones}."
 msgstr "“{clave}” only accepts: {opciones}."
 
-#: app/core/configuracion.py:392
+#: app/core/configuracion.py:394
 #, python-brace-format
 msgid "«{clave}» debe ser como mínimo {minimo}."
 msgstr "“{clave}” must be at least {minimo}."
 
-#: app/core/configuracion.py:394
+#: app/core/configuracion.py:396
 #, python-brace-format
 msgid "«{clave}» debe ser como máximo {maximo}."
 msgstr "“{clave}” must be at most {maximo}."
 
-#: app/core/configuracion.py:396
+#: app/core/configuracion.py:398
 #, python-brace-format
 msgid "«{clave}» admite como máximo {n} caracteres."
 msgstr "“{clave}” accepts at most {n} characters."
 
-#: app/core/configuracion.py:533
+#: app/core/configuracion.py:535
 msgid "La configuración estaba dañada y se ha recuperado la copia anterior."
 msgstr "The settings were damaged and the previous copy has been restored."
 
-#: app/core/configuracion.py:537
+#: app/core/configuracion.py:539
 msgid "La configuración estaba dañada y se han restablecido los valores de fábrica."
 msgstr "The settings were damaged and the defaults have been restored."
 
-#: app/core/configuracion.py:543
+#: app/core/configuracion.py:545
 msgid "No se pudo leer la configuración; se usan valores de fábrica sin guardar."
 msgstr "Could not read the settings; using defaults, which will not be saved."
 
-#: app/core/configuracion.py:796
+#: app/core/configuracion.py:798
 #, python-brace-format
 msgid "No se pudo guardar la configuración: {error}"
 msgstr "Could not save the settings: {error}"
@@ -266,7 +266,7 @@ msgstr "That operation is already in progress."
 msgid "La aplicación se está cerrando"
 msgstr "The application is closing"
 
-#: app/core/tareas.py:880 app/services/formato.py:143
+#: app/core/tareas.py:880 app/services/formato.py:191
 msgid "Cancelada"
 msgstr "Canceled"
 
@@ -275,7 +275,7 @@ msgstr "Canceled"
 msgid "La operación «{nombre}» superó el tiempo máximo de {segundos:g} s."
 msgstr "The operation “{nombre}” exceeded the maximum time of {segundos:g} s."
 
-#: app/core/tareas.py:988 app/services/formato.py:146
+#: app/core/tareas.py:988 app/services/formato.py:194
 msgid "Tiempo agotado"
 msgstr "Timed out"
 
@@ -1334,7 +1334,7 @@ msgstr "Merged"
 msgid "Sin fusionar"
 msgstr "Not merged"
 
-#: app/services/busqueda.py:323 app/services/formato.py:134 app/services/formato.py:198 app/ui/detalle/conversacion.py:238 app/ui/detalle/proyectos.py:38 app/ui/repositorio/vistas.py:1081
+#: app/services/busqueda.py:323 app/services/formato.py:182 app/services/formato.py:246 app/ui/detalle/conversacion.py:238 app/ui/detalle/proyectos.py:38 app/ui/repositorio/vistas.py:1081
 msgid "Borrador"
 msgstr "Draft"
 
@@ -2238,7 +2238,7 @@ msgstr "Hunk"
 msgid "Archivo"
 msgstr "File"
 
-#: app/services/diferencias.py:72 app/services/formato.py:183 app/services/sonidos.py:50 app/ui/detalle/acciones.py:399
+#: app/services/diferencias.py:72 app/services/formato.py:231 app/services/sonidos.py:50 app/ui/detalle/acciones.py:399
 msgid "Aviso"
 msgstr "Warning"
 
@@ -2560,478 +2560,478 @@ msgstr "Removed line {n}: {t}"
 msgid "Añadida la línea {n}: {t}"
 msgstr "Added line {n}: {t}"
 
-#: app/services/formato.py:34
+#: app/services/formato.py:74
 msgid "ahora mismo"
 msgstr "just now"
 
-#: app/services/formato.py:39
+#: app/services/formato.py:79
 #, python-brace-format
 msgid "{n} minuto"
 msgid_plural "{n} minutos"
 msgstr[0] "{n} minute"
 msgstr[1] "{n} minutes"
 
-#: app/services/formato.py:41
+#: app/services/formato.py:81
 #, python-brace-format
 msgid "{n} hora"
 msgid_plural "{n} horas"
 msgstr[0] "{n} hour"
 msgstr[1] "{n} hours"
 
-#: app/services/formato.py:43
+#: app/services/formato.py:83
 msgid "ayer"
 msgstr "yesterday"
 
-#: app/services/formato.py:45
+#: app/services/formato.py:85
 #, python-brace-format
 msgid "{n} día"
 msgid_plural "{n} días"
 msgstr[0] "{n} day"
 msgstr[1] "{n} days"
 
-#: app/services/formato.py:48
+#: app/services/formato.py:88
 #, python-brace-format
 msgid "{n} mes"
 msgid_plural "{n} meses"
 msgstr[0] "{n} month"
 msgstr[1] "{n} months"
 
-#: app/services/formato.py:50
+#: app/services/formato.py:90
 #, python-brace-format
 msgid "el {fecha}"
 msgstr "on {fecha}"
 
-#: app/services/formato.py:51
+#: app/services/formato.py:91
 #, python-brace-format
 msgid "dentro de {c}"
 msgstr "in {c}"
 
-#: app/services/formato.py:51
+#: app/services/formato.py:91
 #, python-brace-format
 msgid "hace {c}"
 msgstr "{c} ago"
 
-#: app/services/formato.py:104
+#: app/services/formato.py:148
 #, python-brace-format
 msgid "{n} byte"
 msgid_plural "{n} bytes"
 msgstr[0] "{n} byte"
 msgstr[1] "{n} bytes"
 
-#: app/services/formato.py:122
+#: app/services/formato.py:170
 #, python-brace-format
 msgid "{n} segundo"
 msgid_plural "{n} segundos"
 msgstr[0] "{n} second"
 msgstr[1] "{n} seconds"
 
-#: app/services/formato.py:125
+#: app/services/formato.py:173
 #, python-brace-format
 msgid "{m} min {s} s"
 msgstr "{m} min {s} s"
 
-#: app/services/formato.py:127
+#: app/services/formato.py:175
 #, python-brace-format
 msgid "{h} h {m} min"
 msgstr "{h} h {m} min"
 
-#: app/services/formato.py:131 app/ui/detalle/discusiones.py:74 app/ui/repositorio/vistas.py:844
+#: app/services/formato.py:179 app/ui/detalle/discusiones.py:74 app/ui/repositorio/vistas.py:844
 msgid "Abierta"
 msgstr "Open"
 
-#: app/services/formato.py:132 app/ui/detalle/conversacion.py:194 app/ui/detalle/discusiones.py:74 app/ui/repositorio/vistas.py:841
+#: app/services/formato.py:180 app/ui/detalle/conversacion.py:194 app/ui/detalle/discusiones.py:74 app/ui/repositorio/vistas.py:841
 msgid "Cerrada"
 msgstr "Closed"
 
-#: app/services/formato.py:133
+#: app/services/formato.py:181
 msgid "Fusionada"
 msgstr "Merged"
 
-#: app/services/formato.py:135
+#: app/services/formato.py:183
 msgid "En cola"
 msgstr "Queued"
 
-#: app/services/formato.py:136
+#: app/services/formato.py:184
 msgid "En curso"
 msgstr "In progress"
 
-#: app/services/formato.py:137
+#: app/services/formato.py:185
 msgid "Terminada"
 msgstr "Completed"
 
-#: app/services/formato.py:138
+#: app/services/formato.py:186
 msgid "Esperando"
 msgstr "Waiting"
 
-#: app/services/formato.py:139
+#: app/services/formato.py:187
 msgid "Pedida"
 msgstr "Requested"
 
-#: app/services/formato.py:140 app/services/formato.py:161
+#: app/services/formato.py:188 app/services/formato.py:209
 msgid "Pendiente"
 msgstr "Pending"
 
-#: app/services/formato.py:141
+#: app/services/formato.py:189
 msgid "Correcto"
 msgstr "Success"
 
-#: app/services/formato.py:142
+#: app/services/formato.py:190
 msgid "Fallo"
 msgstr "Failure"
 
-#: app/services/formato.py:144
+#: app/services/formato.py:192
 msgid "Omitida"
 msgstr "Skipped"
 
-#: app/services/formato.py:145
+#: app/services/formato.py:193
 msgid "Neutral"
 msgstr "Neutral"
 
-#: app/services/formato.py:147
+#: app/services/formato.py:195
 msgid "Requiere acción"
 msgstr "Action required"
 
-#: app/services/formato.py:148 app/ui/detalle/discusiones.py:30
+#: app/services/formato.py:196 app/ui/detalle/discusiones.py:30
 msgid "Obsoleta"
 msgstr "Stale"
 
-#: app/services/formato.py:149
+#: app/services/formato.py:197
 msgid "Fallo al arrancar"
 msgstr "Startup failure"
 
-#: app/services/formato.py:150 app/services/sonidos.py:49 app/ui/accesibilidad/dialogos.py:255 app/ui/detalle/acciones.py:399 app/ui/detalle/comun_detalle.py:255 app/ui/detalle/conversacion.py:394 app/ui/dialogo_preferencias.py:433 app/ui/dialogo_texto.py:56 app/ui/git/dialogos.py:221 app/ui/git/dialogos.py:259 app/ui/git/ventana_git.py:458 app/ui/git/ventana_git.py:768 app/ui/git/ventana_git.py:775 app/ui/herramientas/claves.py:189 app/ui/herramientas/claves.py:264 app/ui/repositorio/paneles.py:100 app/ui/vistas/base.py:476 app/ui/vistas/base.py:580
+#: app/services/formato.py:198 app/services/sonidos.py:49 app/ui/accesibilidad/dialogos.py:255 app/ui/detalle/acciones.py:399 app/ui/detalle/comun_detalle.py:255 app/ui/detalle/conversacion.py:394 app/ui/dialogo_preferencias.py:433 app/ui/dialogo_texto.py:56 app/ui/git/dialogos.py:221 app/ui/git/dialogos.py:259 app/ui/git/ventana_git.py:458 app/ui/git/ventana_git.py:768 app/ui/git/ventana_git.py:775 app/ui/herramientas/claves.py:189 app/ui/herramientas/claves.py:264 app/ui/repositorio/paneles.py:100 app/ui/vistas/base.py:620 app/ui/vistas/base.py:729
 msgid "Error"
 msgstr "Error"
 
-#: app/services/formato.py:151 app/ui/repositorio/vistas.py:2114 app/ui/sesion.py:318
+#: app/services/formato.py:199 app/ui/repositorio/vistas.py:2114 app/ui/sesion.py:318
 msgid "Activa"
 msgstr "Active"
 
-#: app/services/formato.py:152
+#: app/services/formato.py:200
 msgid "Inactiva"
 msgstr "Inactive"
 
-#: app/services/formato.py:153 app/services/formato.py:160
+#: app/services/formato.py:201 app/services/formato.py:208
 msgid "Descartada"
 msgstr "Dismissed"
 
-#: app/services/formato.py:154
+#: app/services/formato.py:202
 msgid "Corregida"
 msgstr "Fixed"
 
-#: app/services/formato.py:155 app/ui/detalle/discusiones.py:30 app/ui/detalle/issue.py:53
+#: app/services/formato.py:203 app/ui/detalle/discusiones.py:30 app/ui/detalle/issue.py:53
 msgid "Resuelta"
 msgstr "Resolved"
 
-#: app/services/formato.py:156
+#: app/services/formato.py:204
 msgid "Descartada automáticamente"
 msgstr "Auto-dismissed"
 
-#: app/services/formato.py:157
+#: app/services/formato.py:205
 msgid "Aprobada"
 msgstr "Approved"
 
-#: app/services/formato.py:158
+#: app/services/formato.py:206
 msgid "Cambios pedidos"
 msgstr "Changes requested"
 
-#: app/services/formato.py:159 app/ui/detalle/conversacion.py:279
+#: app/services/formato.py:207 app/ui/detalle/conversacion.py:279
 msgid "Comentada"
 msgstr "Commented"
 
-#: app/services/formato.py:162 app/ui/detalle/acciones.py:744
+#: app/services/formato.py:210 app/ui/detalle/acciones.py:744
 msgid "Disponible"
 msgstr "Available"
 
-#: app/services/formato.py:163
+#: app/services/formato.py:211
 msgid "Apagado"
 msgstr "Shut down"
 
-#: app/services/formato.py:164
+#: app/services/formato.py:212
 msgid "Arrancando"
 msgstr "Starting"
 
-#: app/services/formato.py:165 app/ui/detalle/gist.py:59 app/ui/detalle/gist.py:466 app/ui/detalle/usuario.py:149 app/ui/repositorio/dialogos.py:184 app/ui/vistas/principales.py:484
+#: app/services/formato.py:213 app/ui/detalle/gist.py:59 app/ui/detalle/gist.py:466 app/ui/detalle/usuario.py:149 app/ui/repositorio/dialogos.py:184 app/ui/vistas/principales.py:484
 msgid "Público"
 msgstr "Public"
 
-#: app/services/formato.py:166 app/ui/repositorio/dialogos.py:184
+#: app/services/formato.py:214 app/ui/repositorio/dialogos.py:184
 msgid "Privado"
 msgstr "Private"
 
-#: app/services/formato.py:167
+#: app/services/formato.py:215
 msgid "Interno"
 msgstr "Internal"
 
-#: app/services/formato.py:168 app/ui/detalle/organizacion.py:55 app/ui/repositorio/vistas.py:1604
+#: app/services/formato.py:216 app/ui/detalle/organizacion.py:55 app/ui/repositorio/vistas.py:1604
 msgid "Administración"
 msgstr "Admin"
 
-#: app/services/formato.py:169 app/ui/detalle/organizacion.py:54 app/ui/repositorio/vistas.py:1603
+#: app/services/formato.py:217 app/ui/detalle/organizacion.py:54 app/ui/repositorio/vistas.py:1603
 msgid "Mantenimiento"
 msgstr "Maintain"
 
-#: app/services/formato.py:170 app/services/formato.py:173 app/ui/detalle/organizacion.py:54 app/ui/repositorio/vistas.py:1603
+#: app/services/formato.py:218 app/services/formato.py:221 app/ui/detalle/organizacion.py:54 app/ui/repositorio/vistas.py:1603
 msgid "Escritura"
 msgstr "Write"
 
-#: app/services/formato.py:171 app/ui/detalle/organizacion.py:54 app/ui/repositorio/vistas.py:1603
+#: app/services/formato.py:219 app/ui/detalle/organizacion.py:54 app/ui/repositorio/vistas.py:1603
 msgid "Clasificación"
 msgstr "Triage"
 
-#: app/services/formato.py:172 app/services/formato.py:174 app/ui/detalle/organizacion.py:54 app/ui/repositorio/vistas.py:1603
+#: app/services/formato.py:220 app/services/formato.py:222 app/ui/detalle/organizacion.py:54 app/ui/repositorio/vistas.py:1603
 msgid "Lectura"
 msgstr "Read"
 
-#: app/services/formato.py:175 app/ui/detalle/organizacion.py:51 app/ui/detalle/organizacion.py:52 app/ui/detalle/organizacion.py:115 app/ui/detalle/organizacion.py:178
+#: app/services/formato.py:223 app/ui/detalle/organizacion.py:51 app/ui/detalle/organizacion.py:52 app/ui/detalle/organizacion.py:115 app/ui/detalle/organizacion.py:178
 msgid "Miembro"
 msgstr "Member"
 
-#: app/services/formato.py:176 app/ui/detalle/organizacion.py:178
+#: app/services/formato.py:224 app/ui/detalle/organizacion.py:178
 msgid "Mantenedor"
 msgstr "Maintainer"
 
-#: app/services/formato.py:177
+#: app/services/formato.py:225
 msgid "Crítica"
 msgstr "Critical"
 
-#: app/services/formato.py:178
+#: app/services/formato.py:226
 msgid "Alta"
 msgstr "High"
 
-#: app/services/formato.py:179
+#: app/services/formato.py:227
 msgid "Media"
 msgstr "Medium"
 
-#: app/services/formato.py:180
+#: app/services/formato.py:228
 msgid "Moderada"
 msgstr "Moderate"
 
-#: app/services/formato.py:181
+#: app/services/formato.py:229
 msgid "Baja"
 msgstr "Low"
 
-#: app/services/formato.py:182 app/ui/detalle/acciones.py:399
+#: app/services/formato.py:230 app/ui/detalle/acciones.py:399
 msgid "Nota"
 msgstr "Note"
 
-#: app/services/formato.py:196 app/services/formato.py:200 app/ui/detalle/conversacion.py:218 app/ui/detalle/proyectos.py:114
+#: app/services/formato.py:244 app/services/formato.py:248 app/ui/detalle/conversacion.py:218 app/ui/detalle/proyectos.py:114
 msgid "Fusionado"
 msgstr "Merged"
 
-#: app/services/formato.py:204
+#: app/services/formato.py:252
 msgid "(no planificada)"
 msgstr "(not planned)"
 
-#: app/services/formato.py:217 app/ui/detalle/conversacion.py:354 app/ui/detalle/conversacion.py:978
+#: app/services/formato.py:265 app/ui/detalle/conversacion.py:354 app/ui/detalle/conversacion.py:978
 msgid "(desconocido)"
 msgstr "(unknown)"
 
-#: app/services/formato.py:220
+#: app/services/formato.py:268
 msgid "(bot)"
 msgstr "(bot)"
 
-#: app/services/formato.py:240
+#: app/services/formato.py:288
 msgid "me gusta"
 msgstr "thumbs up"
 
-#: app/services/formato.py:240
+#: app/services/formato.py:288
 msgid "no me gusta"
 msgstr "thumbs down"
 
-#: app/services/formato.py:240
+#: app/services/formato.py:288
 msgid "risa"
 msgstr "laugh"
 
-#: app/services/formato.py:240
+#: app/services/formato.py:288
 msgid "celebración"
 msgstr "hooray"
 
-#: app/services/formato.py:241
+#: app/services/formato.py:289
 msgid "confusión"
 msgstr "confused"
 
-#: app/services/formato.py:241
+#: app/services/formato.py:289
 msgid "corazón"
 msgstr "heart"
 
-#: app/services/formato.py:241
+#: app/services/formato.py:289
 msgid "cohete"
 msgstr "rocket"
 
-#: app/services/formato.py:241
+#: app/services/formato.py:289
 msgid "ojos"
 msgstr "eyes"
 
-#: app/services/formato.py:248 app/ui/repositorio/vistas.py:1259 app/ui/sesion.py:344
+#: app/services/formato.py:296 app/ui/repositorio/vistas.py:1259 app/ui/sesion.py:344
 msgid "Sí"
 msgstr "Yes"
 
-#: app/services/formato.py:248 app/ui/sesion.py:344
+#: app/services/formato.py:296 app/ui/sesion.py:344
 msgid "No"
 msgstr "No"
 
-#: app/services/formato.py:269
+#: app/services/formato.py:317
 #, python-brace-format
 msgid "{a} envió commits a {r}"
 msgstr "{a} pushed commits to {r}"
 
-#: app/services/formato.py:270
+#: app/services/formato.py:318
 #, python-brace-format
 msgid "{a} creó {r}"
 msgstr "{a} created {r}"
 
-#: app/services/formato.py:271
+#: app/services/formato.py:319
 #, python-brace-format
 msgid "{a} borró {r}"
 msgstr "{a} deleted {r}"
 
-#: app/services/formato.py:272 app/services/formato.py:324
+#: app/services/formato.py:320 app/services/formato.py:372
 #, python-brace-format
 msgid "{a} bifurcó {r}"
 msgstr "{a} forked {r}"
 
-#: app/services/formato.py:273 app/services/formato.py:322
+#: app/services/formato.py:321 app/services/formato.py:370
 #, python-brace-format
 msgid "{a} puso estrella a {r}"
 msgstr "{a} starred {r}"
 
-#: app/services/formato.py:274
+#: app/services/formato.py:322
 #, python-brace-format
 msgid "{a} issue en {r}"
 msgstr "{a}: issue activity in {r}"
 
-#: app/services/formato.py:275
+#: app/services/formato.py:323
 #, python-brace-format
 msgid "{a} comentó en {r}"
 msgstr "{a} commented in {r}"
 
-#: app/services/formato.py:276
+#: app/services/formato.py:324
 #, python-brace-format
 msgid "{a} pull request en {r}"
 msgstr "{a}: pull request activity in {r}"
 
-#: app/services/formato.py:277
+#: app/services/formato.py:325
 #, python-brace-format
 msgid "{a} revisó un pull request en {r}"
 msgstr "{a} reviewed a pull request in {r}"
 
-#: app/services/formato.py:278
+#: app/services/formato.py:326
 #, python-brace-format
 msgid "{a} comentó una revisión en {r}"
 msgstr "{a} commented on a review in {r}"
 
-#: app/services/formato.py:279
+#: app/services/formato.py:327
 #, python-brace-format
 msgid "{a} publicó una release en {r}"
 msgstr "{a} published a release in {r}"
 
-#: app/services/formato.py:280
+#: app/services/formato.py:328
 #, python-brace-format
 msgid "{a} hizo público {r}"
 msgstr "{a} made {r} public"
 
-#: app/services/formato.py:281
+#: app/services/formato.py:329
 #, python-brace-format
 msgid "{a} añadió un colaborador a {r}"
 msgstr "{a} added a collaborator to {r}"
 
-#: app/services/formato.py:282
+#: app/services/formato.py:330
 #, python-brace-format
 msgid "{a} editó la wiki de {r}"
 msgstr "{a} edited the wiki of {r}"
 
-#: app/services/formato.py:283
+#: app/services/formato.py:331
 #, python-brace-format
 msgid "{a} comentó un commit en {r}"
 msgstr "{a} commented on a commit in {r}"
 
-#: app/services/formato.py:284
+#: app/services/formato.py:332
 #, python-brace-format
 msgid "{a} discusión en {r}"
 msgstr "{a}: discussion activity in {r}"
 
-#: app/services/formato.py:285
+#: app/services/formato.py:333
 #, python-brace-format
 msgid "{a} patrocinio {r}"
 msgstr "{a}: sponsorship activity in {r}"
 
-#: app/services/formato.py:296
+#: app/services/formato.py:344
 msgid "abrió"
 msgstr "opened"
 
-#: app/services/formato.py:296 app/ui/detalle/conversacion.py:191
+#: app/services/formato.py:344 app/ui/detalle/conversacion.py:191
 msgid "cerró"
 msgstr "closed"
 
-#: app/services/formato.py:296 app/ui/detalle/conversacion.py:196
+#: app/services/formato.py:344 app/ui/detalle/conversacion.py:196
 msgid "reabrió"
 msgstr "reopened"
 
-#: app/services/formato.py:296
+#: app/services/formato.py:344
 msgid "creó"
 msgstr "created"
 
-#: app/services/formato.py:297
+#: app/services/formato.py:345
 msgid "publicó"
 msgstr "published"
 
-#: app/services/formato.py:297 app/ui/detalle/conversacion.py:218
+#: app/services/formato.py:345 app/ui/detalle/conversacion.py:218
 msgid "fusionó"
 msgstr "merged"
 
-#: app/services/formato.py:297
+#: app/services/formato.py:345
 msgid "envió"
 msgstr "submitted"
 
-#: app/services/formato.py:297
+#: app/services/formato.py:345
 msgid "editó"
 msgstr "edited"
 
-#: app/services/formato.py:301
+#: app/services/formato.py:349
 #, python-brace-format
 msgid "{a} envió {n} commit a {r} (rama {b})"
 msgid_plural "{a} envió {n} commits a {r} (rama {b})"
 msgstr[0] "{a} pushed {n} commit to {r} (branch {b})"
 msgstr[1] "{a} pushed {n} commits to {r} (branch {b})"
 
-#: app/services/formato.py:307
+#: app/services/formato.py:355
 #, python-brace-format
 msgid "{a} creó el repositorio {r}"
 msgstr "{a} created the repository {r}"
 
-#: app/services/formato.py:308
+#: app/services/formato.py:356
 msgid "la rama"
 msgstr "branch"
 
-#: app/services/formato.py:308
+#: app/services/formato.py:356
 msgid "la etiqueta"
 msgstr "tag"
 
-#: app/services/formato.py:309
+#: app/services/formato.py:357
 #, python-brace-format
 msgid "{a} creó {t} {nombre} en {r}"
 msgstr "{a} created {t} {nombre} in {r}"
 
-#: app/services/formato.py:312 app/ui/detalle/conversacion.py:213
+#: app/services/formato.py:360 app/ui/detalle/conversacion.py:213
 msgid "la issue"
 msgstr "issue"
 
-#: app/services/formato.py:312 app/ui/detalle/conversacion.py:213
+#: app/services/formato.py:360 app/ui/detalle/conversacion.py:213
 msgid "el pull request"
 msgstr "pull request"
 
-#: app/services/formato.py:313
+#: app/services/formato.py:361
 #, python-brace-format
 msgid "{a} {acc} {que} #{n} en {r}: {t}"
 msgstr "{a} {acc} {que} #{n} in {r}: {t}"
 
-#: app/services/formato.py:317
+#: app/services/formato.py:365
 #, python-brace-format
 msgid "{a} comentó en #{n} de {r}: {t}"
 msgstr "{a} commented on #{n} in {r}: {t}"
 
-#: app/services/formato.py:320
+#: app/services/formato.py:368
 #, python-brace-format
 msgid "{a} publicó la release {t} de {r}"
 msgstr "{a} published the release {t} of {r}"
@@ -4205,15 +4205,15 @@ msgstr "Help"
 msgid "Control+A marca todas; Control+Mayúsculas+A las desmarca."
 msgstr "Control+A checks all; Control+Shift+A unchecks them."
 
-#: app/ui/accesibilidad/casillas.py:165 app/ui/accesibilidad/lista.py:413
+#: app/ui/accesibilidad/casillas.py:165 app/ui/accesibilidad/lista.py:417
 msgid "Todas marcadas"
 msgstr "All checked"
 
-#: app/ui/accesibilidad/casillas.py:165 app/ui/accesibilidad/lista.py:413
+#: app/ui/accesibilidad/casillas.py:165 app/ui/accesibilidad/lista.py:417
 msgid "Todas desmarcadas"
 msgstr "All unchecked"
 
-#: app/ui/accesibilidad/composicion.py:85 app/ui/accesibilidad/lista.py:393
+#: app/ui/accesibilidad/composicion.py:85 app/ui/accesibilidad/lista.py:397
 #, python-brace-format
 msgid "Fila {numero}"
 msgstr "Row {numero}"
@@ -4308,15 +4308,15 @@ msgstr "Information"
 msgid "Confirmación"
 msgstr "Confirmation"
 
-#: app/ui/accesibilidad/lista.py:321 app/ui/accesibilidad/lista.py:363
+#: app/ui/accesibilidad/lista.py:321 app/ui/accesibilidad/lista.py:367
 msgid "Lista vacía"
 msgstr "Empty list"
 
-#: app/ui/accesibilidad/lista.py:363
+#: app/ui/accesibilidad/lista.py:367
 msgid "Ningún elemento seleccionado"
 msgstr "No item selected"
 
-#: app/ui/accesibilidad/lista.py:368
+#: app/ui/accesibilidad/lista.py:372
 #, python-brace-format
 msgid "No existe la columna {numero}"
 msgstr "Column {numero} does not exist"
@@ -4453,7 +4453,7 @@ msgstr "Resu&lting query:"
 msgid "B&uscar"
 msgstr "&Search"
 
-#: app/ui/busqueda.py:45 app/ui/busqueda.py:216 app/ui/detalle/usuario.py:234 app/ui/repositorio/ventana.py:153 app/ui/vistas/base.py:441
+#: app/ui/busqueda.py:45 app/ui/busqueda.py:216 app/ui/detalle/usuario.py:234 app/ui/repositorio/ventana.py:153 app/ui/vistas/base.py:585
 msgid "Abrir en el &navegador"
 msgstr "Open in &browser"
 
@@ -4791,7 +4791,7 @@ msgstr "Search “{n}” deleted."
 msgid "No se pudo completar"
 msgstr "Could not complete"
 
-#: app/ui/comunes.py:106 app/ui/vistas/base.py:538
+#: app/ui/comunes.py:106 app/ui/vistas/base.py:682
 msgid "Copiado."
 msgstr "Copied."
 
@@ -5462,7 +5462,7 @@ msgstr "Logs deleted."
 msgid "los registros"
 msgstr "the logs"
 
-#: app/ui/detalle/acciones.py:1147 app/ui/detalle/discusiones.py:276 app/ui/detalle/gist.py:331 app/ui/detalle/issue.py:356 app/ui/detalle/proyectos.py:621 app/ui/detalle/pull_request.py:925 app/ui/detalle/releases.py:423 app/ui/vistas/base.py:544
+#: app/ui/detalle/acciones.py:1147 app/ui/detalle/discusiones.py:276 app/ui/detalle/gist.py:331 app/ui/detalle/issue.py:356 app/ui/detalle/proyectos.py:621 app/ui/detalle/pull_request.py:925 app/ui/detalle/releases.py:423 app/ui/vistas/base.py:688
 msgid "Enlace copiado."
 msgstr "Link copied."
 
@@ -5859,11 +5859,11 @@ msgstr "Closes this window (also Control+W)."
 msgid "Contenido del archivo (solo lectura). Control+G va a una línea; Control+F busca; F3 repite la búsqueda; Control+L dice la línea actual."
 msgstr "File contents (read-only). Control+G goes to a line; Control+F finds; F3 repeats the search; Control+L says the current line."
 
-#: app/ui/detalle/archivos.py:345 app/ui/git/ventana_git.py:161 app/ui/repositorio/paneles.py:62 app/ui/vistas/base.py:286
+#: app/ui/detalle/archivos.py:345 app/ui/git/ventana_git.py:161 app/ui/repositorio/paneles.py:62 app/ui/vistas/base.py:416
 msgid "Cargando…"
 msgstr "Loading…"
 
-#: app/ui/detalle/archivos.py:352 app/ui/detalle/conversacion.py:825 app/ui/repositorio/paneles.py:144 app/ui/vistas/base.py:333
+#: app/ui/detalle/archivos.py:352 app/ui/detalle/conversacion.py:825 app/ui/repositorio/paneles.py:144 app/ui/vistas/base.py:467
 #, python-brace-format
 msgid "No se pudo cargar: {m}"
 msgstr "Could not load: {m}"
@@ -6445,7 +6445,7 @@ msgstr "The list is empty."
 msgid "{n} elementos."
 msgstr "{n} items."
 
-#: app/ui/detalle/conversacion.py:608 app/ui/detalle/conversacion.py:884 app/ui/vistas/base.py:468
+#: app/ui/detalle/conversacion.py:608 app/ui/detalle/conversacion.py:884 app/ui/vistas/base.py:612
 msgid "No hay ningún elemento elegido."
 msgstr "No item is selected."
 
@@ -6629,7 +6629,7 @@ msgstr "Reaction “{r}” added."
 msgid "{t} de {a} en #{n}"
 msgstr "{t} by {a} in #{n}"
 
-#: app/ui/detalle/conversacion.py:992 app/ui/vistas/base.py:546 app/ui/vistas/base.py:553
+#: app/ui/detalle/conversacion.py:992 app/ui/vistas/base.py:690 app/ui/vistas/base.py:697
 msgid "Este elemento no tiene enlace."
 msgstr "This item has no link."
 
@@ -8689,7 +8689,7 @@ msgstr "Co&py item link\tCtrl+Shift+C"
 msgid "Cargando el proyecto…"
 msgstr "Loading project…"
 
-#: app/ui/detalle/proyectos.py:301 app/ui/vistas/base.py:291
+#: app/ui/detalle/proyectos.py:301 app/ui/vistas/base.py:421
 #, python-brace-format
 msgid "{n} elementos"
 msgstr "{n} items"
@@ -8923,7 +8923,7 @@ msgstr "&Text that {c} must contain (empty: no value):"
 msgid "No hay ningún filtro."
 msgstr "There is no filter."
 
-#: app/ui/detalle/proyectos.py:599 app/ui/vistas/base.py:529
+#: app/ui/detalle/proyectos.py:599 app/ui/vistas/base.py:673
 msgid "Filtro quitado. "
 msgstr "Filter removed. "
 
@@ -15096,7 +15096,7 @@ msgstr "Type the environment name."
 msgid "Texto de solo lectura: recórralo con las flechas. Aplicaciones abre las acciones."
 msgstr "Read-only text: move through it with the arrow keys. The Applications key opens the actions."
 
-#: app/ui/repositorio/paneles.py:81 app/ui/repositorio/paneles.py:446 app/ui/vistas/base.py:430
+#: app/ui/repositorio/paneles.py:81 app/ui/repositorio/paneles.py:446 app/ui/vistas/base.py:571
 msgid "&Actualizar"
 msgstr "&Refresh"
 
@@ -15108,7 +15108,7 @@ msgstr "&Copy all text"
 msgid "Texto copiado."
 msgstr "Text copied."
 
-#: app/ui/repositorio/paneles.py:145 app/ui/vistas/base.py:335
+#: app/ui/repositorio/paneles.py:145 app/ui/vistas/base.py:469
 #, python-brace-format
 msgid "Error al cargar {t}: {m}"
 msgstr "Error loading {t}: {m}"
@@ -18936,118 +18936,173 @@ msgstr "Application keyboard shortcuts"
 msgid "Novedades de la versión {version}"
 msgstr "What's new in version {version}"
 
-#: app/ui/vistas/base.py:136
+#: app/ui/vistas/base.py:155
 #, python-brace-format
 msgid "&Lista de {t}"
 msgstr "&List of {t}"
 
-#: app/ui/vistas/base.py:209
+#: app/ui/vistas/base.py:231
 #, python-brace-format
-msgid "{titulo}. Intro abre; Aplicaciones o Mayúsculas+F10 muestra las acciones; F5 actualiza; Control+F filtra; Control+C copia la fila; Control+Mayúsculas+C copia el enlace; Control+B abre en el navegador; Control+I muestra todos los detalles. Izquierda y derecha leen las columnas."
-msgstr "{titulo}. Enter opens; the Applications key or Shift+F10 shows the actions; F5 refreshes; Control+F filters; Control+C copies the row; Control+Shift+C copies the link; Control+B opens in the browser; Control+I shows all the details. Left and right arrows read the columns."
+msgid "{titulo}. Intro abre; Aplicaciones o Mayúsculas+F10 muestra las acciones; F5 actualiza; Control+F filtra; Control+C copia la fila; Control+Mayúsculas+C copia el enlace; Control+B abre en el navegador; Control+I muestra todos los detalles. Izquierda y derecha leen las columnas; Control+J ordena por la columna que se está leyendo y Control+Mayúsculas+J elige el orden."
+msgstr "{titulo}. Enter opens; the Applications key or Shift+F10 shows the actions; F5 refreshes; Control+F filters; Control+C copies the row; Control+Shift+C copies the link; Control+B opens in the browser; Control+I shows all the details. Left and right arrows read the columns; Control+J sorts by the column being read and Control+Shift+J chooses the sort order."
 
-#: app/ui/vistas/base.py:289
+#: app/ui/vistas/base.py:345
+msgid "Orden original, el que da GitHub."
+msgstr "Original order, as returned by GitHub."
+
+#: app/ui/vistas/base.py:347
+#, python-brace-format
+msgid "Ordenada por {c}, descendente."
+msgstr "Sorted by {c}, descending."
+
+#: app/ui/vistas/base.py:348
+#, python-brace-format
+msgid "Ordenada por {c}, ascendente."
+msgstr "Sorted by {c}, ascending."
+
+#: app/ui/vistas/base.py:380
+msgid "Orden original, el que da GitHub"
+msgstr "Original order, as returned by GitHub"
+
+#: app/ui/vistas/base.py:384
+#, python-brace-format
+msgid "{c}, descendente"
+msgstr "{c}, descending"
+
+#: app/ui/vistas/base.py:384
+#, python-brace-format
+msgid "{c}, ascendente"
+msgstr "{c}, ascending"
+
+#: app/ui/vistas/base.py:387
+msgid "Ordenar la lista"
+msgstr "Sort the list"
+
+#: app/ui/vistas/base.py:387
+msgctxt "lista"
+msgid "&Ordenar por:"
+msgstr "&Sort by:"
+
+#: app/ui/vistas/base.py:388
+msgid "Ordena los elementos ya cargados. Si hay más páginas, cárguelas antes con Control+M para ordenarlo todo. Las fechas, los números y los tamaños se ordenan por su valor."
+msgstr "Sorts the items already loaded. If there are more pages, load them first with Control+M to sort everything. Dates, numbers and sizes are sorted by their value."
+
+#: app/ui/vistas/base.py:419
 #, python-brace-format
 msgid "{n} de {t} elementos con el filtro «{f}»"
 msgstr "{n} of {t} items with the filter “{f}”"
 
-#: app/ui/vistas/base.py:293
+#: app/ui/vistas/base.py:424
+#, python-brace-format
+msgid "ordenada por {c}, descendente"
+msgstr "sorted by {c}, descending"
+
+#: app/ui/vistas/base.py:424
+#, python-brace-format
+msgid "ordenada por {c}, ascendente"
+msgstr "sorted by {c}, ascending"
+
+#: app/ui/vistas/base.py:427
 #, python-brace-format
 msgid "de {t} en total"
 msgstr "of {t} in total"
 
-#: app/ui/vistas/base.py:295
+#: app/ui/vistas/base.py:429
 msgid "hay más: se cargan al llegar al final o con Control+M"
 msgstr "there are more: they load when you reach the end or with Control+M"
 
-#: app/ui/vistas/base.py:313
+#: app/ui/vistas/base.py:447
 msgid "Necesita iniciar sesión para ver esta sección. Use Archivo, Iniciar sesión (Control+Mayúsculas+L)."
 msgstr "You need to sign in to view this section. Use File, Sign in (Control+Shift+L)."
 
-#: app/ui/vistas/base.py:376
+#: app/ui/vistas/base.py:517
 msgid "No hay elementos."
 msgstr "There are no items."
 
-#: app/ui/vistas/base.py:385
+#: app/ui/vistas/base.py:526
 #, python-brace-format
 msgid "{n} elementos más cargados."
 msgstr "{n} more items loaded."
 
-#: app/ui/vistas/base.py:391
+#: app/ui/vistas/base.py:532
 msgid "No hay más elementos."
 msgstr "There are no more items."
 
-#: app/ui/vistas/base.py:431
+#: app/ui/vistas/base.py:572
 msgid "Cargar &más"
 msgstr "Load &more"
 
-#: app/ui/vistas/base.py:433
+#: app/ui/vistas/base.py:574
 msgid "&Filtrar la lista…"
 msgstr "F&ilter list…"
 
-#: app/ui/vistas/base.py:434
+#: app/ui/vistas/base.py:575
 msgid "&Quitar el filtro"
 msgstr "Cle&ar filter"
 
-#: app/ui/vistas/base.py:436
+#: app/ui/vistas/base.py:577
 msgid "C&opiar la fila"
 msgstr "Cop&y row"
 
-#: app/ui/vistas/base.py:440
+#: app/ui/vistas/base.py:580
+msgid "Ordenar por columna &y sentido…"
+msgstr "S&ort the list…"
+
+#: app/ui/vistas/base.py:584
 msgid "Copiar el &enlace"
 msgstr "Copy lin&k"
 
-#: app/ui/vistas/base.py:443
+#: app/ui/vistas/base.py:587
 msgid "&Detalles completos…"
 msgstr "Full &details…"
 
-#: app/ui/vistas/base.py:516
+#: app/ui/vistas/base.py:660
 msgid "&Texto que deben contener los elementos:"
 msgstr "&Text the items must contain:"
 
-#: app/ui/vistas/base.py:516
+#: app/ui/vistas/base.py:660
 msgid "Filtrar la lista"
 msgstr "Filter list"
 
-#: app/ui/vistas/base.py:565
+#: app/ui/vistas/base.py:709
 msgid "Detalles"
 msgstr "Details"
 
-#: app/ui/vistas/base.py:565
+#: app/ui/vistas/base.py:709
 msgid "&Detalles:"
 msgstr "&Details:"
 
-#: app/ui/vistas/base.py:640
+#: app/ui/vistas/base.py:792
 msgctxt "tecla"
 msgid "Supr"
 msgstr "Del"
 
-#: app/ui/vistas/base.py:640
+#: app/ui/vistas/base.py:792
 msgctxt "tecla"
 msgid "Intro"
 msgstr "Enter"
 
-#: app/ui/vistas/base.py:641
+#: app/ui/vistas/base.py:793
 msgctxt "tecla"
 msgid "Retroceso"
 msgstr "Back"
 
-#: app/ui/vistas/base.py:641
+#: app/ui/vistas/base.py:793
 msgctxt "tecla"
 msgid "Espacio"
 msgstr "Space"
 
-#: app/ui/vistas/base.py:642
+#: app/ui/vistas/base.py:794
 msgctxt "tecla"
 msgid "Inicio"
 msgstr "Home"
 
-#: app/ui/vistas/base.py:642
+#: app/ui/vistas/base.py:794
 msgctxt "tecla"
 msgid "Fin"
 msgstr "End"
 
-#: app/ui/vistas/base.py:642
+#: app/ui/vistas/base.py:794
 msgctxt "tecla"
 msgid "Mayús"
 msgstr "Shift"

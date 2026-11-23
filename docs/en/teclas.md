@@ -41,10 +41,11 @@ You can change them in Preferences, Global hotkeys.
 - Ctrl+F: filter the list. Ctrl+Shift+F: clear the filter.
 - Ctrl+C: copy the row. Ctrl+Shift+C: copy the link.
 - Ctrl+B: open in the browser. Ctrl+I: all the details.
+- Ctrl+J: sort by the column being read (ascending, descending and back to the original order). Ctrl+Shift+J: choose the column and the direction. Clicking the column header also works.
 
 ## Main window sections
 
-- Notifications: Ctrl+L mark as read, Delete mark as done, Ctrl+Shift+S mute the conversation, Ctrl+Shift+R go to the repository, F4 change the filter.
+- Notifications: Ctrl+L mark as read, Ctrl+Shift+A mark all as read, Delete mark as done, Ctrl+Shift+S mute the conversation, Ctrl+Shift+R go to the repository, F4 change the filter.
 - Repositories: Ctrl+K clone, Ctrl+S star, Ctrl+N new repository, Delete delete, F4 change the filter.
 - My issues and My pull requests: F4 change the filter, Ctrl+Shift+R go to the repository.
 - Gists: Ctrl+N new, Delete delete, F4 switch between mine, starred and public.

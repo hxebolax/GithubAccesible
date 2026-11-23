@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import builtins
 import logging
+import re
 import webbrowser
 from collections.abc import Callable
 from dataclasses import dataclass, field
@@ -55,6 +56,10 @@ class Columna:
 	:param valor: función ``(elemento, contexto) -> str``.
 	:param ancho: ancho inicial en píxeles (se escala con el DPI).
 	:param visible: si se muestra cuando la persona no ha configurado nada.
+	:param orden: ``(elemento) -> valor`` para ordenar por esta columna. Casi nunca hace
+		falta: por defecto se ordena por el texto de la columna calculado en
+		``formato.modo_orden()`` (fechas, números y tamaños por su valor real) y con
+		orden natural (2 antes que 10).
 	"""
 
 	id: str
@@ -62,6 +67,7 @@ class Columna:
 	valor: Callable[[Any, Any], str]
 	ancho: int = 150
 	visible: bool = True
+	orden: Callable[[Any], Any] | None = None
 
 
 @dataclass
@@ -130,6 +136,19 @@ class DefinicionVista:
 		return [c for c in self.columnas if c.visible] or self.columnas[:1]
 
 
+_RE_NUMEROS = re.compile(r"(\d+)")
+
+
+def clave_natural(texto: str) -> tuple:
+	"""Clave de orden «natural»: sin distinguir mayúsculas y con los números por su valor
+	(«issue 2» antes que «issue 10»). Vacía si el texto está vacío."""
+	partes = []
+	for trozo in _RE_NUMEROS.split((texto or "").strip().casefold()):
+		if trozo:
+			partes.append((0, int(trozo), "") if trozo.isdigit() else (1, 0, trozo))
+	return tuple(partes)
+
+
 def etiqueta_lista(titulo: str, detalle: str = "") -> str:
 	"""Etiqueta de la lista de una vista: «&Lista de notificaciones (no leídas):»."""
 	texto = titulo[:1].lower() + titulo[1:] if titulo[:2] != titulo[:2].upper() else titulo
@@ -183,6 +202,8 @@ class PanelLista(wx.Panel):
 		self.cargado = False
 		self._tarea = None
 		self._version_carga = 0
+		# (columna, descendente) o None (el orden en que llegan de GitHub). Se recuerda por vista.
+		self.orden: tuple[str, bool] | None = self._orden_guardado()
 
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		# Etiqueta ANTES que la lista: el lector la toma como nombre de la lista.
@@ -202,6 +223,7 @@ class PanelLista(wx.Panel):
 		sizer.Add(self.estado, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM, 4)
 		self.SetSizer(sizer)
 
+		self.lista.Bind(wx.EVT_LIST_COL_CLICK, self._al_pulsar_cabecera)
 		self.lista.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self._al_activar)
 		self.lista.Bind(wx.EVT_LIST_ITEM_FOCUSED, self._al_enfocar)
 		self.lista.Bind(wx.EVT_KEY_DOWN, self._al_pulsar)
@@ -210,7 +232,8 @@ class PanelLista(wx.Panel):
 			"{titulo}. Intro abre; Aplicaciones o Mayúsculas+F10 muestra las acciones; F5 actualiza; "
 			"Control+F filtra; Control+C copia la fila; Control+Mayúsculas+C copia el enlace; "
 			"Control+B abre en el navegador; Control+I muestra todos los detalles. Izquierda y derecha "
-			"leen las columnas."
+			"leen las columnas; Control+J ordena por la columna que se está leyendo y Control+Mayúsculas+J "
+			"elige el orden."
 		).format(titulo=definicion.titulo))
 		# Las columnas elegidas en Preferencias se aplican sin reiniciar. La configuración
 		# guarda los métodos con referencia débil: un panel cerrado no recibe avisos.
@@ -260,6 +283,113 @@ class PanelLista(wx.Panel):
 			self.visibles = [e for e in self.elementos if buscado in self._texto_busqueda(e).casefold()]
 		else:
 			self.visibles = list(self.elementos)
+		self._ordenar_visibles()
+
+	# ── Orden ─────────────────────────────────────────────────────────────────
+
+	def _orden_guardado(self) -> tuple[str, bool] | None:
+		guardado = (self.ctx.config.obtener("listas.orden", {}) or {}).get(self.definicion.id) if self.ctx.config else None
+		if isinstance(guardado, list) and len(guardado) == 2 and any(c.id == guardado[0] for c in self.definicion.columnas):
+			return str(guardado[0]), bool(guardado[1])
+		return None
+
+	def _guardar_orden(self) -> None:
+		if not self.ctx.config:
+			return
+		ordenes = dict(self.ctx.config.obtener("listas.orden", {}) or {})
+		if self.orden:
+			ordenes[self.definicion.id] = [self.orden[0], self.orden[1]]
+		else:
+			ordenes.pop(self.definicion.id, None)
+		try:
+			self.ctx.config.establecer("listas.orden", ordenes)
+		except Exception:  # noqa: BLE001 - no recordar el orden no impide ordenar
+			log.warning("No se pudo guardar el orden de la lista %s", self.definicion.id, exc_info=True)
+
+	def columna_de_orden(self) -> Columna | None:
+		if not self.orden:
+			return None
+		return next((c for c in self.definicion.columnas if c.id == self.orden[0]), None)
+
+	def clave_orden(self, columna: Columna, elemento: Any) -> Any:
+		"""Valor por el que se ordena ``elemento`` en ``columna`` (``()`` o ``None`` si no tiene)."""
+		if columna.orden is not None:
+			try:
+				return columna.orden(elemento)
+			except Exception:  # noqa: BLE001 - un dato raro va al final, no rompe la lista
+				log.debug("Clave de orden de %s falló", columna.id, exc_info=True)
+				return None
+		from app.services import formato
+
+		with formato.modo_orden():
+			return clave_natural(_valor_seguro(columna, elemento, self.ctx))
+
+	def _ordenar_visibles(self) -> None:
+		columna = self.columna_de_orden()
+		if columna is None:
+			return
+		claves = [(self.clave_orden(columna, e), e) for e in self.visibles]
+		# Los que no tienen valor van siempre al final, en el orden en que llegaron.
+		con_valor = [par for par in claves if par[0] not in (None, (), "")]
+		sin_valor = [e for clave, e in claves if clave in (None, (), "")]
+		try:
+			con_valor.sort(key=lambda par: par[0], reverse=self.orden[1])
+		except TypeError:
+			# Claves de tipos que no se comparan (orden propio mal declarado): se usa el texto.
+			con_valor.sort(key=lambda par: clave_natural(str(par[0])), reverse=self.orden[1])
+		self.visibles = [e for _clave, e in con_valor] + sin_valor
+
+	def descripcion_orden(self) -> str:
+		columna = self.columna_de_orden()
+		if columna is None:
+			return _("Orden original, el que da GitHub.")
+		if self.orden[1]:
+			return _("Ordenada por {c}, descendente.").format(c=columna.titulo)
+		return _("Ordenada por {c}, ascendente.").format(c=columna.titulo)
+
+	def ordenar_por(self, columna_id: str | None, descendente: bool = False, anunciar: bool = True) -> None:
+		"""Ordena lo cargado por una columna (``None``: el orden original) sin perder el elemento enfocado."""
+		elemento = self.elemento
+		self.orden = (columna_id, descendente) if columna_id else None
+		self._guardar_orden()
+		self.refrescar_filas()
+		if elemento is not None and elemento in self.visibles:
+			self.lista.enfocar_fila(self.visibles.index(elemento), anunciar=False)
+		if anunciar:
+			self.ctx.avisar(self.descripcion_orden())
+
+	def alternar_orden(self, columna: Columna) -> None:
+		"""Primera vez ascendente, después descendente y después el orden original."""
+		if not self.orden or self.orden[0] != columna.id:
+			self.ordenar_por(columna.id, False)
+		elif not self.orden[1]:
+			self.ordenar_por(columna.id, True)
+		else:
+			self.ordenar_por(None)
+
+	def ordenar_columna_actual(self) -> None:
+		indice = self.lista.columna_actual()
+		if self.columnas:
+			self.alternar_orden(self.columnas[indice if 0 <= indice < len(self.columnas) else 0])
+
+	def pedir_orden(self) -> None:
+		"""Diálogo con todas las columnas en los dos sentidos y el orden original."""
+		from app.ui.comunes import elegir_uno
+
+		opciones: list[tuple[str | None, bool]] = [(None, False)]
+		textos = [_("Orden original, el que da GitHub")]
+		for columna in self.columnas:
+			for descendente in (False, True):
+				opciones.append((columna.id, descendente))
+				plantilla = _("{c}, descendente") if descendente else _("{c}, ascendente")
+				textos.append(plantilla.format(c=columna.titulo))
+		actual = opciones.index(self.orden) if self.orden in opciones else 0
+		eleccion = elegir_uno(self, _("Ordenar la lista"), pgettext("lista", "&Ordenar por:"), textos, actual,
+			ayuda=_("Ordena los elementos ya cargados. Si hay más páginas, cárguelas antes con Control+M para "
+				"ordenarlo todo. Las fechas, los números y los tamaños se ordenan por su valor."))
+		if eleccion is not None:
+			columna_id, descendente = opciones[eleccion]
+			self.ordenar_por(columna_id, descendente)
 
 	def refrescar_filas(self, conservar_foco: bool = True) -> None:
 		"""Vuelve a pintar la lista con los datos actuales (sin pedir nada a la red)."""
@@ -289,6 +419,10 @@ class PanelLista(wx.Panel):
 			partes.append(_("{n} de {t} elementos con el filtro «{f}»").format(n=cantidad, t=len(self.elementos), f=self.filtro))
 		else:
 			partes.append(_("{n} elementos").format(n=cantidad))
+		columna = self.columna_de_orden()
+		if columna is not None:
+			plantilla = _("ordenada por {c}, descendente") if self.orden[1] else _("ordenada por {c}, ascendente")
+			partes.append(plantilla.format(c=columna.titulo))
 		if self.total is not None and self.total > len(self.elementos):
 			partes.append(_("de {t} en total").format(t=self.total))
 		if self.hay_mas:
@@ -361,9 +495,16 @@ class PanelLista(wx.Panel):
 		else:
 			self.elementos.extend(nuevos)
 			anteriores = len(self.visibles)
+			enfocado = self.elemento
 			self._aplicar_filtro()
-			for elemento in self.visibles[anteriores:]:
-				self.lista.agregar_fila(self.fila_de(elemento))
+			if self.columna_de_orden() is not None:
+				# Con la lista ordenada lo nuevo se reparte entre lo que ya había: se repinta entera.
+				self.lista.reemplazar_filas([self.fila_de(e) for e in self.visibles], conservar_foco=True)
+				if enfocado is not None and enfocado in self.visibles:
+					self.lista.enfocar_fila(self.visibles.index(enfocado), anunciar=False)
+			else:
+				for elemento in self.visibles[anteriores:]:
+					self.lista.agregar_fila(self.fila_de(elemento))
 		self._actualizar_estado()
 		self._avisar_cambio()
 		if self.lista.numero_filas() and self.lista.fila_actual() == wx.NOT_FOUND:
@@ -434,6 +575,9 @@ class PanelLista(wx.Panel):
 			Accion(_("&Quitar el filtro"), lambda p, e: p.quitar_filtro(), "Ctrl+Shift+F", requiere_elemento=False,
 				disponible=lambda p, e: bool(p.filtro)),
 			Accion(_("C&opiar la fila"), lambda p, e: p.copiar_fila(), "Ctrl+C"),
+			# Una sola entrada en el menú: la «y» es la única letra libre en todas las listas.
+			# Control+J (la columna que se está leyendo) se atiende en _al_pulsar.
+			Accion(_("Ordenar por columna &y sentido…"), lambda p, e: p.pedir_orden(), "Ctrl+Shift+J", requiere_elemento=False),
 		]
 		if self.definicion.url:
 			comunes += [
@@ -568,6 +712,11 @@ class PanelLista(wx.Panel):
 
 	# ── Eventos ───────────────────────────────────────────────────────────────
 
+	def _al_pulsar_cabecera(self, evento: wx.ListEvent) -> None:
+		indice = evento.GetColumn()
+		if 0 <= indice < len(self.columnas):
+			self.alternar_orden(self.columnas[indice])
+
 	def _al_activar(self, evento: wx.ListEvent) -> None:
 		elemento = self.elemento
 		if elemento is not None and self.definicion.activar:
@@ -586,6 +735,9 @@ class PanelLista(wx.Panel):
 			self.cargar(reiniciar=False)
 
 	def _al_pulsar(self, evento: wx.KeyEvent) -> None:
+		if texto_tecla(evento) == "Ctrl+J":
+			self.ordenar_columna_actual()
+			return
 		accion = self.atajo_de(evento)
 		if accion is not None:
 			self.ejecutar(accion)

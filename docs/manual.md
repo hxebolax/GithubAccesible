@@ -63,6 +63,8 @@ Control+U (ver un perfil) propone ya escrita la persona de la fila elegida: quie
 
 La aplicación comprueba sola las notificaciones (cada minuto o lo que pida GitHub). Cuando llega alguna nueva la anuncia por voz y con un sonido, distinto si le mencionan o le piden una revisión. El número de no leídas aparece junto a la sección. Se configura en Preferencias, Notificaciones (también un aviso de Windows y la bandeja del sistema).
 
+En la sección Notificaciones, Control+L marca como leída la elegida y Control+Mayúsculas+A marca todas como leídas. Para oír las que hay sin leer desde cualquier programa, use la tecla global Control+Alt+Mayúsculas+N (ver «Teclas globales»).
+
 ### La bandeja del sistema
 
 La aplicación puede seguir funcionando con la ventana oculta, con un icono junto al reloj (Windows+B lleva a la bandeja; las flechas, al icono). Archivo, «Ocultar en la bandeja del sistema», la oculta. En Preferencias, General, se elige:
@@ -97,6 +99,7 @@ Todas las listas de la aplicación funcionan igual:
 - F5 actualiza. Al llegar al final se cargan más elementos solos; Control+M los pide a mano.
 - Control+F filtra la lista por un texto y Control+Mayúsculas+F quita el filtro.
 - Control+C copia la fila, Control+Mayúsculas+C copia el enlace, Control+B abre el elemento en el navegador y Control+I muestra todos sus detalles en un texto que se puede leer con calma.
+- Control+J ordena la lista por la columna que se está leyendo: la primera vez de forma ascendente, la segunda descendente y la tercera vuelve al orden original, el que da GitHub. Control+Mayúsculas+J (o Acciones, «Ordenar por columna y sentido») elige la columna y el sentido de una lista. Con el ratón, basta pulsar la cabecera de la columna. Las fechas, los números y los tamaños se ordenan por su valor, no por el texto (en orden ascendente, «hace 3 días» va antes que «hace 5 minutos»), los números dentro del texto también («issue 2» antes que «issue 10») y lo que no tiene valor queda al final. El orden de cada lista se recuerda. Se ordena lo que ya está cargado: si la lista tiene más páginas, cárguelas antes con Control+M.
 
 En Preferencias, Accesibilidad, se elige qué se dice al recorrer las columnas (número de fila, nombre de la columna y contenido). En Preferencias, «Columnas de las listas», se elige para cada lista qué columnas se ven y en qué orden: así decide qué lee el lector al moverse por las filas y en qué orden.
 

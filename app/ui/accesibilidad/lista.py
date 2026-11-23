@@ -332,6 +332,10 @@ class ListaAccesible(wx.ListCtrl):
 		)
 		voz.hablar(texto, canal=voz.NAVEGACION)
 
+	def columna_actual(self) -> int:
+		"""Columna que se está leyendo con izquierda y derecha (índice de la columna de la lista)."""
+		return self._columna
+
 	def reiniciar_columna(self) -> None:
 		"""Vuelve a la primera columna (por ejemplo, al recargar la lista)."""
 		self._columna = 0

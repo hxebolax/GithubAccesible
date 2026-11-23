@@ -312,7 +312,7 @@ def vista_notificaciones() -> DefinicionVista:
 			Accion(_("Marcar como &hecha (quitar de la bandeja)"), marcar_hecha, "Supr"),
 			Accion(_("&Silenciar esta conversación"), silenciar, "Ctrl+Shift+S"),
 			Accion(_("Marcar como leídas las de este &repositorio"), marcar_repo),
-			Accion(_("Marcar &todas como leídas"), marcar_todas, requiere_elemento=False, separador_antes=True),
+			Accion(_("Marcar &todas como leídas"), marcar_todas, "Ctrl+Shift+A", requiere_elemento=False, separador_antes=True),
 			Accion(_("Cambiar el f&iltro…"), cambiar_filtro, "F4", requiere_elemento=False),
 			Accion(_("Ir al re&positorio"), lambda p, n: abrir.repositorio(p.ctx, (n.get("repository") or {}).get("full_name", "")), "Ctrl+Shift+R"),
 		],
