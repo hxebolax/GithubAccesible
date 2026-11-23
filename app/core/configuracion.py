@@ -149,6 +149,12 @@ VALORES_POR_DEFECTO: dict[str, dict[str, Any]] = {
 		"sonido": True,
 		"notificacion_windows": False,
 		"marcar_leida_al_abrir": True,
+		# Quién dice los avisos en segundo plano (notificaciones nuevas, Actions vigiladas):
+		# «lector» o «sapi5», una voz propia que no se corta al pulsar teclas (incidencia #5).
+		"lectura": "lector",
+		"sapi_voz": "",
+		"sapi_velocidad": 0,
+		"sapi_volumen": 100,
 	},
 	"git": {
 		"ruta": "",
@@ -197,6 +203,9 @@ VALORES_POR_DEFECTO: dict[str, dict[str, Any]] = {
 		"vista_previa_html": True,
 		"confirmar_descartar": True,
 		"firma": "",
+		# Tabulador en el texto Markdown: False = pasa al control siguiente (lo normal en Windows
+		# y en la web de GitHub); True = escribe una tabulación y Control+Tabulador pasa de control.
+		"tabulador_escribe": False,
 	},
 	"red": {
 		"proxy": "sistema",
@@ -244,6 +253,9 @@ REGLAS: dict[str, Regla] = {
 	"sonidos.volumen": Regla(minimo=0, maximo=100),
 	"listas.por_pagina": Regla(minimo=10, maximo=100),
 	"notificaciones.intervalo_s": Regla(minimo=30, maximo=86400),
+	"notificaciones.lectura": Regla(opciones=("lector", "sapi5")),
+	"notificaciones.sapi_velocidad": Regla(minimo=-10, maximo=10),
+	"notificaciones.sapi_volumen": Regla(minimo=0, maximo=100),
 	"acciones.intervalo_vigilancia_s": Regla(minimo=15, maximo=3600),
 	"red.proxy": Regla(longitud_maxima=500),
 	"red.tiempo_espera_s": Regla(minimo=5, maximo=600),

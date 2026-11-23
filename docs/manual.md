@@ -42,6 +42,7 @@ El foco solo cambia cuando usted lo pide: al abrir algo (Intro, una tecla de una
 A la izquierda está la lista de **secciones**; a la derecha, la lista con el contenido de la sección elegida.
 
 - Al moverse por las secciones con las flechas, la sección se muestra a la derecha, pero el foco **se queda en la lista de secciones**. Para entrar en el contenido pulse Tabulador, Intro o F6.
+- Desde la lista de secciones también funcionan las teclas de la sección que no necesitan un elemento elegido: por ejemplo, Control+Mayúsculas+A marca todas las notificaciones como leídas y Control+N crea una issue nueva. Las que actúan sobre un elemento (Suprimir, F2…) solo funcionan dentro de la lista, donde se ve cuál está elegido; si se pulsan en las secciones, la aplicación lo explica.
 - F6 alterna entre las secciones y el contenido.
 - Alt+1 a Alt+9 y Alt+0 van directamente a las diez primeras secciones (y ponen el foco en su contenido).
 - En Preferencias, **Secciones**, se ocultan las que no use y se ordenan como quiera, en esta ventana y en la de los repositorios; Alt más un número sigue ese orden.
@@ -64,6 +65,8 @@ Control+U (ver un perfil) propone ya escrita la persona de la fila elegida: quie
 La aplicación comprueba sola las notificaciones (cada minuto o lo que pida GitHub). Cuando llega alguna nueva la anuncia por voz y con un sonido, distinto si le mencionan o le piden una revisión. El número de no leídas aparece junto a la sección. Se configura en Preferencias, Notificaciones (también un aviso de Windows y la bandeja del sistema).
 
 En la sección Notificaciones, Control+L marca como leída la elegida y Control+Mayúsculas+A marca todas como leídas. Para oír las que hay sin leer desde cualquier programa, use la tecla global Control+Alt+Mayúsculas+N (ver «Teclas globales»).
+
+Los avisos que llegan solos (notificaciones nuevas y el final de las ejecuciones de Actions vigiladas) los dice el lector de pantalla, que los corta en cuanto se pulsa una tecla. Si prefiere oírlos enteros mientras escribe, en Preferencias, Notificaciones, «Leer los avisos en segundo plano con», elija «Una voz SAPI 5 propia» y, si quiere, la voz, la velocidad y el volumen; «Probar la voz SAPI 5» le deja oírla antes de aceptar. Esa voz puede sonar a la vez que el lector. Lo que pide con el teclado (columnas, Control+H, Control+Alt+Mayúsculas+N) lo sigue diciendo el lector.
 
 ### La bandeja del sistema
 
@@ -126,7 +129,7 @@ Las issues, comentarios, descripciones de pull requests, revisiones y notas de r
 - El texto es Markdown. F7 muestra la vista previa con formato.
 - Control+Intro envía. Si el envío falla, el editor no se cierra y el texto sigue ahí.
 - Si cierra el editor sin enviar, le pregunta si quiere guardar lo escrito como **borrador**; al volver a escribir en el mismo sitio se lo ofrece.
-- Tabulador escribe una tabulación en el texto; para pasar al siguiente control use Control+Tabulador.
+- Tabulador y Mayúsculas+Tabulador pasan al control siguiente o al anterior, como en el resto de Windows. Si prefiere que Tabulador escriba una tabulación en el texto, actívelo en Preferencias, Editor, «El tabulador escribe una tabulación en el texto Markdown»; entonces se pasa de control con Control+Tabulador.
 - **Adjuntar archivo** (Alt+J), en issues, pull requests, discusiones y comentarios, añade archivos de texto, como un registro `.log` para enseñárselo a quien desarrolla. Se pueden elegir varios a la vez. Para cada uno pregunta cómo adjuntarlo:
   - **Dentro del texto, plegado**: el contenido va en un bloque de código que en GitHub se ve como el nombre del archivo y se despliega al pulsarlo. Se puede revisar y cambiar en el editor antes de enviar.
   - **Como gist secreto, con su enlace**: el archivo se sube a un gist que no sale en los listados y el texto lleva solo su enlace. Es la única opción si el archivo no cabe en el texto (GitHub admite 65 536 caracteres). Necesita el permiso «gist», que ya pide el inicio de sesión con el navegador.
@@ -253,7 +256,7 @@ Herramientas, Preferencias (Control+P). Los cambios se aplican al momento en las
   - **Explicaciones**: cada control tiene una explicación, la misma que dice Control+H. El lector de pantalla también puede leerla sola al llegar al control. «Explicaciones: leerlas al llegar a botones y casillas» (activada de fábrica) la lee en botones y casillas sueltas. «Explicaciones: leerlas también en cada fila de las listas de casillas» (desactivada de fábrica) la repite en cada fila de una lista de casillas, como «Buscar el texto en» de la búsqueda. Si la desactiva, al moverse por la lista solo oye cada fila y si está marcada. Control+H sigue diciendo la explicación siempre.
 - **Sonidos**: activar, silenciar, volumen, paquete y una lista con cada evento para activar o desactivar su sonido, con un botón para probarlo.
 - **Listas**: elementos por página y fechas relativas o completas.
-- **Notificaciones**, **Teclas globales** (ver arriba), **Actions** (vigilancia de ejecuciones y hora en los registros), **Git**, **Editor**, **Red y registro**.
+- **Notificaciones** (también quién lee los avisos en segundo plano: el lector o una voz SAPI 5 con su voz, velocidad y volumen), **Teclas globales** (ver arriba), **Actions** (vigilancia de ejecuciones y hora en los registros), **Git**, **Editor** (confirmar al descartar, firma y si el tabulador escribe tabulaciones), **Red y registro**.
 - **Columnas de las listas**: columnas visibles y su orden en cada lista.
 - **Secciones**: para la ventana principal y para la de un repositorio, qué secciones se ven (casillas) y en qué orden (Subir y Bajar). «Resultados de la búsqueda» y «Resumen» no se pueden ocultar. Si abre una sección oculta desde otro sitio, se dice que está oculta.
 

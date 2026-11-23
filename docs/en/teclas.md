@@ -6,6 +6,7 @@ Throughout the application, choosing something (a section, an option in a drop-d
 
 - F6: switch between the section list and its content.
 - Enter or Tab in the section list: go to the content. Moving through the sections does not change the focus.
+- The section's keys that don't need a selected item also work in the section list (Ctrl+Shift+A, Ctrl+N, Ctrl+F, Ctrl+Shift+J...).
 - Alt+1 to Alt+9 and Alt+0: go to each of the first ten sections.
 - F5: refresh the section.
 - Ctrl+O: open a repository by name or link.
@@ -164,5 +165,5 @@ You can change them in Preferences, Global hotkeys.
 - Ctrl+Enter: send.
 - F7: formatted preview.
 - Alt+F: attach text files, such as logs (in issues, pull requests, discussions and comments).
-- Tab: types a tab character; Ctrl+Tab moves to the next control.
+- Tab and Shift+Tab: next and previous control. If Preferences, Editor, “The Tab key types a tab character” is on, Tab types a tab character and Ctrl+Tab moves between controls.
 - Escape: close (offers to save a draft).

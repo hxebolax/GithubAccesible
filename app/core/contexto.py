@@ -73,5 +73,20 @@ class Contexto:
 		if self.config.obtener("accesibilidad.avisos_voz", True):
 			self.anunciar(texto, interrumpir=interrumpir)
 
+	def avisar_en_segundo_plano(self, texto: str) -> None:
+		"""Aviso que llega solo (notificación nueva, ejecución de Actions terminada).
+
+		Con «notificaciones.lectura» en «sapi5» lo dice una voz SAPI 5 propia, que no se
+		corta al pulsar teclas como el lector (incidencia #5); si SAPI no está, el lector.
+		"""
+		if self.config.obtener("notificaciones.lectura", "lector") == "sapi5":
+			from app.ui.accesibilidad import sapi
+
+			if sapi.hablar(texto, str(self.config.obtener("notificaciones.sapi_voz", "") or ""),
+					int(self.config.obtener("notificaciones.sapi_velocidad", 0)),
+					int(self.config.obtener("notificaciones.sapi_volumen", 100))):
+				return
+		self.avisar(texto, interrumpir=False)
+
 	def relativas(self) -> bool:
 		return bool(self.config.obtener("listas.fechas_relativas", True))

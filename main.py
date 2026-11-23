@@ -213,6 +213,9 @@ def _principal(argumentos: list[str]) -> int:
 	aplicacion.MainLoop()
 
 	vigilante_ui.detener()
+	from app.ui.accesibilidad import sapi
+
+	sapi.detener()
 	contexto.tareas.apagar(espera=3.0)
 	if contexto.sonidos is not None:
 		contexto.sonidos.detener()

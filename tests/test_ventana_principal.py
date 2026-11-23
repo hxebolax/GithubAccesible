@@ -230,3 +230,32 @@ def test_busqueda_guiada_como_el_buscador_html():
 	assert construir_consulta("lector", "repositories", "lector") == "lector topic:screen-reader"
 	assert construir_consulta("x", "repositories", "populares", "") == "x", "sin valor no se añade el calificador"
 	assert construir_consulta("bug", "issues", "populares", "5", "rust", "mit") == "bug language:rust", "categoría y licencia solo en repositorios"
+
+
+def _tecla(codigo, control=False, mayusculas=False):
+	evento = wx.KeyEvent(wx.wxEVT_KEY_DOWN)
+	evento.SetKeyCode(codigo)
+	evento.SetControlDown(control)
+	evento.SetShiftDown(mayusculas)
+	return evento
+
+
+def test_atajos_de_la_seccion_desde_la_lista_de_secciones(app_wx):
+	"""Incidencia #6: Control+Mayúsculas+A (marcar todas) funciona con el foco en las secciones;
+	las órdenes sobre un elemento (Suprimir) no se ejecutan a ciegas, se explica qué hacer."""
+	ctx, api, anuncios = crear_contexto()
+	api.notificaciones.return_value = [{"id": "1", "unread": True, "subject": {"title": "Hola", "type": "Issue"},
+		"repository": {"full_name": "ana/repo"}, "reason": "mention", "updated_at": "2026-11-22T10:00:00Z"}]
+	ventana = _ventana(ctx)
+	try:
+		ventana.ir_a_seccion("notificaciones", enfocar=False)
+		panel = ventana.panel_actual
+		panel.cargar()
+		ventana.secciones.GetEventHandler().ProcessEvent(_tecla(ord("A"), control=True, mayusculas=True))
+		assert api.marcar_todas_leidas.called
+		api.marcar_hecha.reset_mock()
+		ventana.secciones.GetEventHandler().ProcessEvent(_tecla(wx.WXK_DELETE))
+		assert not api.marcar_hecha.called
+		assert "actúa sobre un elemento" in anuncios[-1]
+	finally:
+		ventana.Destroy()

@@ -2,6 +2,17 @@
 
 Each version has its own section, from the newest to the oldest. Within each version, changes are grouped into New, Improvements and Fixes, described from the point of view of the person using the application.
 
+## Version 1.0.9 - 2026-11-23
+
+### New
+
+- **Messages with a separate SAPI 5 voice** (Preferences, Notifications, “Read background messages with”). New notifications and the end of watched Actions runs can be read by a separate Windows voice, which is not cut off when you press keys the way the screen reader is. You choose the voice, rate and volume, and you can test them before clicking OK. By default the screen reader still reads them.
+- **Each section's keys also work from the section list**, in the main window and in a repository window: for example, Ctrl+Shift+A marks all notifications as read and Ctrl+N creates a new issue without going into the list first. Keys that act on an item (Delete, F2…) still work only inside the list, so nothing is changed blindly.
+
+### Improvements
+
+- In the Markdown text of issues, pull requests and comments, **Tab and Shift+Tab move between controls**, as everywhere else in Windows. If you prefer Tab to type a tab character, turn it on in Preferences, Editor.
+
 ## Version 1.0.8 - 2026-11-23
 
 ### New

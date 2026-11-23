@@ -118,11 +118,16 @@ class DialogoEditor(wx.Dialog):
 			raiz.Add(self.selector_plantilla, 0, wx.EXPAND | wx.ALL, 6)
 
 		raiz.Add(wx.StaticText(self, label=etiqueta_cuerpo or _("Te&xto (Markdown):")), 0, wx.LEFT | wx.TOP, 6)
-		self.campo_cuerpo = wx.TextCtrl(self, value=cuerpo, style=wx.TE_MULTILINE | wx.TE_RICH2 | wx.TE_PROCESS_TAB)
-		self.campo_cuerpo.SetHelpText(_(
-			"Texto en Markdown. Control+Intro envía; F7 muestra la vista previa. "
-			"Tabulador escribe una tabulación; Control+Tabulador pasa al control siguiente."
-		))
+		# Por defecto el tabulador pasa de control, como en el resto de Windows (incidencia #7).
+		# Quien quiera escribir tabulaciones lo elige en Preferencias, Editor.
+		tabulador_escribe = bool(contexto.config.obtener("editor.tabulador_escribe", False)) if contexto else False
+		estilo = wx.TE_MULTILINE | wx.TE_RICH2 | (wx.TE_PROCESS_TAB if tabulador_escribe else 0)
+		self.campo_cuerpo = wx.TextCtrl(self, value=cuerpo, style=estilo)
+		if tabulador_escribe:
+			ayuda_tabulador = _("Tabulador escribe una tabulación; Control+Tabulador pasa al control siguiente.")
+		else:
+			ayuda_tabulador = _("Tabulador y Mayúsculas+Tabulador pasan de control (en Preferencias, Editor, se puede hacer que escriba una tabulación).")
+		self.campo_cuerpo.SetHelpText(_("Texto en Markdown. Control+Intro envía; F7 muestra la vista previa.") + " " + ayuda_tabulador)
 		raiz.Add(self.campo_cuerpo, 1, wx.EXPAND | wx.ALL, 6)
 
 		for extra in extras or []:

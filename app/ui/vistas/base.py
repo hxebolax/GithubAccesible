@@ -652,6 +652,27 @@ class PanelLista(wx.Panel):
 				return accion
 		return None
 
+	def atender_desde_secciones(self, evento: wx.KeyEvent) -> bool:
+		"""Atajo de esta lista pulsado en la lista de secciones (incidencia #6). ``True`` si se atendió.
+
+		Se ejecutan las órdenes que no necesitan un elemento elegido (marcar todas como leídas,
+		nueva issue, actualizar, filtrar, ordenar...). Las que actúan sobre un elemento no: desde
+		las secciones no se ve cuál es y Suprimir podría borrar algo a ciegas; se explica cómo hacerlo.
+		"""
+		texto = texto_tecla(evento)
+		if not texto:
+			return False
+		for accion in self.acciones_disponibles():
+			if not accion.atajo or normalizar_atajo(accion.atajo) != texto:
+				continue
+			if accion.requiere_elemento:
+				self.ctx.avisar(_("«{a}» actúa sobre un elemento: entre en la lista con Tabulador o Intro y elíjalo.").format(
+					a=accion.etiqueta.replace("&", "")))
+			else:
+				self.ejecutar(accion)
+			return True
+		return False
+
 	# ── Acciones comunes ──────────────────────────────────────────────────────
 
 	def pedir_filtro(self) -> None:

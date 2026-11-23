@@ -351,6 +351,10 @@ class VentanaPrincipal(wx.Frame):
 		if evento.GetKeyCode() in (wx.WXK_RETURN, wx.WXK_NUMPAD_ENTER):
 			self.enfocar_contenido()
 			return
+		# Los atajos de la sección también funcionan desde aquí (incidencia #6).
+		panel = self.panel_actual
+		if panel is not None and panel.atender_desde_secciones(evento):
+			return
 		evento.Skip()
 
 	def enfocar_contenido(self) -> None:
@@ -773,7 +777,7 @@ class VentanaPrincipal(wx.Frame):
 				if nuevas:
 					self._avisar_nuevas(nuevas)
 				elif sin_leer:
-					self.ctx.avisar(_("Tiene {n} notificaciones sin leer.").format(n=sin_leer), interrumpir=False)
+					self.ctx.avisar_en_segundo_plano(_("Tiene {n} notificaciones sin leer.").format(n=sin_leer))
 				return
 			if nuevas:
 				self._avisar_nuevas(nuevas)
@@ -871,7 +875,7 @@ class VentanaPrincipal(wx.Frame):
 
 	def _avisar_ejecucion(self, aviso: Any) -> None:
 		self.ctx.sonar("accion_exito" if aviso.correcta else "accion_fallo")
-		self.ctx.avisar(aviso.texto, interrumpir=False)
+		self.ctx.avisar_en_segundo_plano(aviso.texto)
 		if self.ctx.config.obtener("acciones.notificacion_windows", True):
 			try:
 				import wx.adv
@@ -958,7 +962,7 @@ class VentanaPrincipal(wx.Frame):
 		else:
 			texto = _("{n} notificaciones nuevas. La última: {t}").format(n=len(nuevas), t=(nuevas[0].get("subject") or {}).get("title", ""))
 		if self.ctx.config.obtener("notificaciones.voz", True):
-			self.ctx.avisar(texto, interrumpir=False)
+			self.ctx.avisar_en_segundo_plano(texto)
 		if self.ctx.config.obtener("notificaciones.notificacion_windows", False):
 			try:
 				import wx.adv

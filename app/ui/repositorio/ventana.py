@@ -304,6 +304,11 @@ class VentanaRepositorio(wx.Frame):
 			if 0 <= indice < len(self.ids):
 				self.mostrar_seccion(self.ids[indice], enfocar=True)
 			return
+		# Los atajos de la sección también funcionan desde aquí (incidencia #6).
+		panel = self.panel_actual()
+		atender = getattr(panel, "atender_desde_secciones", None)
+		if callable(atender) and atender(evento):
+			return
 		evento.Skip()
 
 	def _al_pulsar(self, evento: wx.KeyEvent) -> None:

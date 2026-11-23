@@ -150,3 +150,20 @@ def test_no_se_envia_mientras_se_sube_un_adjunto(app_wx, marco):
 	dialogo._al_aceptar(None)
 	assert not dialogo._enviando and dialogo.resultado is None
 	assert anuncios[-1] == "Espere a que termine de subirse el adjunto."
+
+
+def test_tabulador_del_texto_markdown_pasa_de_control_salvo_que_se_pida(app_wx, marco):
+	"""Incidencia #7: de fábrica el tabulador no escribe tabulaciones en el texto Markdown."""
+	import wx
+
+	dialogo, _api, _a = _editor(marco)
+	assert not dialogo.campo_cuerpo.HasFlag(wx.TE_PROCESS_TAB)
+	assert "pasan de control" in dialogo.campo_cuerpo.GetHelpText()
+	from app.ui.editor import DialogoEditor
+	from tests.apoyo_app import crear_contexto
+
+	ctx, _api, _a = crear_contexto()
+	ctx.config.establecer("editor.tabulador_escribe", True)
+	otro = DialogoEditor(marco, ctx, "Comentar", lambda valores: valores)
+	assert otro.campo_cuerpo.HasFlag(wx.TE_PROCESS_TAB)
+	assert "escribe una tabulación" in otro.campo_cuerpo.GetHelpText()

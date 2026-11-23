@@ -6,6 +6,7 @@ En toda la aplicación, elegir algo (una sección, una opción de un desplegable
 
 - F6: alternar entre la lista de secciones y su contenido.
 - Intro o Tabulador en la lista de secciones: entrar en el contenido. Moverse por las secciones no cambia el foco.
+- En la lista de secciones funcionan también las teclas de la sección que no necesitan un elemento elegido (Control+Mayúsculas+A, Control+N, Control+F, Control+Mayúsculas+J...).
 - Alt+1 a Alt+9 y Alt+0: ir a cada una de las diez primeras secciones.
 - F5: actualizar la sección.
 - Control+O: abrir un repositorio por nombre o enlace.
@@ -164,5 +165,5 @@ Se cambian en Preferencias, Teclas globales.
 - Control+Intro: enviar.
 - F7: vista previa con formato.
 - Alt+J: adjuntar archivos de texto, como registros (en issues, pull requests, discusiones y comentarios).
-- Tabulador: escribe una tabulación; Control+Tabulador pasa al siguiente control.
+- Tabulador y Mayúsculas+Tabulador: control siguiente y anterior. Si en Preferencias, Editor, se activa «El tabulador escribe una tabulación», Tabulador escribe una tabulación y Control+Tabulador pasa de control.
 - Escape: cerrar (ofrece guardar un borrador).

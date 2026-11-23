@@ -2,6 +2,17 @@
 
 Cada versión tiene su apartado, de la más reciente a la más antigua. Dentro de cada versión, los cambios se agrupan en Novedades, Mejoras y Correcciones, contados con palabras de quien usa la aplicación.
 
+## Versión 1.0.9 - 2026-11-23
+
+### Novedades
+
+- **Avisos con una voz SAPI 5 propia** (Preferencias, Notificaciones, «Leer los avisos en segundo plano con»). Las notificaciones nuevas y el final de las ejecuciones de Actions vigiladas los puede decir una voz de Windows aparte, que no se corta al pulsar teclas como el lector de pantalla. Se eligen la voz, la velocidad y el volumen, y se prueban antes de aceptar. De fábrica sigue diciéndolos el lector.
+- **Las teclas de cada sección funcionan también desde la lista de secciones**, en la ventana principal y en la de un repositorio: por ejemplo, Control+Mayúsculas+A marca todas las notificaciones como leídas y Control+N crea una issue nueva sin entrar antes en la lista. Las que actúan sobre un elemento (Suprimir, F2…) siguen funcionando solo dentro de la lista, para no cambiar nada a ciegas.
+
+### Mejoras
+
+- En el texto Markdown de issues, pull requests y comentarios, **Tabulador y Mayúsculas+Tabulador pasan de control**, como en el resto de Windows. Quien prefiera que Tabulador escriba una tabulación lo activa en Preferencias, Editor.
+
 ## Versión 1.0.8 - 2026-11-23
 
 ### Novedades

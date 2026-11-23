@@ -50,6 +50,7 @@ def N_(texto: str) -> str:  # noqa: N802
 NOMBRES_IDIOMA = {"es", "en"}
 
 TITULO_SONIDOS = N_("Sonidos")
+TITULO_NOTIFICACIONES = N_("Notificaciones")
 TITULO_COLUMNAS = N_("Columnas de las listas")
 TITULO_SECCIONES = N_("Secciones")
 
@@ -65,7 +66,7 @@ def secciones_de(ventana: str) -> list[tuple[str, str]]:
 	return [(s.id, _(s.titulo)) for s in SECCIONES]
 
 
-def paginas(paquetes: list[str]) -> tuple[Pagina, ...]:
+def paginas(paquetes: list[str], voces_sapi: list[str] | None = None) -> tuple[Pagina, ...]:
 	"""Páginas declarativas. Las letras de acceso no repiten dentro de cada página ni usan
 	A, C, P ni R (botones Aceptar, Cancelar, Aplicar y Restablecer)."""
 	return (
@@ -164,7 +165,7 @@ def paginas(paquetes: list[str]) -> tuple[Pagina, ...]:
 			Opcion("listas.fechas_relativas", N_("&Fechas relativas («hace 3 días»)"), BOOL,
 				N_("Desactivado muestra la fecha y la hora completas.")),
 		)),
-		Pagina(N_("Notificaciones"), (
+		Pagina(TITULO_NOTIFICACIONES, (
 			Opcion("notificaciones.comprobar", N_("C&omprobar notificaciones nuevas en segundo plano"), BOOL,
 				N_("Mira cada cierto tiempo si hay notificaciones nuevas y avisa.")),
 			Opcion("notificaciones.intervalo_s", N_("&Intervalo en segundos (mínimo 30):"), ENTERO,
@@ -177,6 +178,19 @@ def paginas(paquetes: list[str]) -> tuple[Pagina, ...]:
 				N_("Aviso emergente del sistema, útil con la aplicación en la bandeja.")),
 			Opcion("notificaciones.marcar_leida_al_abrir", N_("&Marcar como leída al abrir una notificación"), BOOL,
 				N_("Al pulsar Intro sobre una notificación, se marca como leída en GitHub.")),
+			Opcion("notificaciones.lectura", N_("&Leer los avisos en segundo plano con:"), OPCION,
+				N_("Quién dice las notificaciones nuevas y el final de las ejecuciones de Actions vigiladas. El lector de "
+					"pantalla corta el aviso en cuanto se pulsa una tecla; una voz SAPI 5 propia lo dice entero aunque siga "
+					"escribiendo (puede sonar a la vez que el lector). Lo que se pide con el teclado sigue diciéndolo el lector."),
+				opciones=(("lector", N_("El lector de pantalla")), ("sapi5", N_("Una voz SAPI 5 propia (no se corta al pulsar teclas)")))),
+			Opcion("notificaciones.sapi_voz", N_("Vo&z SAPI 5:"), OPCION,
+				N_("Voz de Windows que dice los avisos cuando se elige la voz SAPI 5."),
+				# Los nombres de las voces se enseñan tal cual los da Windows.
+				opciones=(("", N_("La predeterminada de Windows")), *((v, v) for v in (voces_sapi or [])))),
+			Opcion("notificaciones.sapi_velocidad", N_("Velocida&d de la voz SAPI 5 (-10 a 10):"), ENTERO,
+				N_("0 es la velocidad normal; los negativos, más despacio, y los positivos, más deprisa.")),
+			Opcion("notificaciones.sapi_volumen", N_("Vol&umen de la voz SAPI 5 (0 a 100):"), ENTERO,
+				N_("Volumen de la voz SAPI 5, independiente del lector de pantalla.")),
 		)),
 		Pagina(N_("Teclas globales"), (
 			Opcion("teclas_globales.activadas", N_("Acti&var las teclas globales"), BOOL,
@@ -220,6 +234,10 @@ def paginas(paquetes: list[str]) -> tuple[Pagina, ...]:
 				N_("Al cerrar el editor con texto sin enviar, pregunta antes de perderlo.")),
 			Opcion("editor.firma", N_("&Firma que se añade al final de los comentarios:"), TEXTO,
 				N_("Opcional. Se añade al final de cada comentario nuevo.")),
+			Opcion("editor.tabulador_escribe", N_("El &tabulador escribe una tabulación en el texto Markdown"), BOOL,
+				N_("Desactivada (de fábrica), Tabulador y Mayúsculas+Tabulador pasan al control siguiente o al anterior, "
+					"como en el resto de Windows. Activada, Tabulador escribe una tabulación y Control+Tabulador pasa de control. "
+					"Se aplica a los editores que se abran después.")),
 		)),
 		Pagina(N_("Red y registro"), (
 			Opcion("red.proxy", N_("Pro&xy («sistema», «ninguno» o una dirección):"), TEXTO,
@@ -242,7 +260,10 @@ class DialogoPreferenciasGitHub(DialogoPreferencias):
 		paquetes = self._sonidos.paquetes() if self._sonidos is not None and hasattr(self._sonidos, "paquetes") else [sonidos_servicio.PAQUETE_PREDETERMINADO]
 		self._eventos = list(sonidos_servicio.EVENTOS)
 		self._columnas_elegidas: dict[str, list[str]] = dict(ctx.config.obtener("listas.columnas", {}) or {})
-		super().__init__(padre, ctx.config, paginas(paquetes), secretos=None, anunciar=lambda t: ctx.avisar(t))
+		from app.ui.accesibilidad import sapi
+
+		self._voces_sapi = sapi.voces()
+		super().__init__(padre, ctx.config, paginas(paquetes, self._voces_sapi), secretos=None, anunciar=lambda t: ctx.avisar(t))
 		self._nombres_idioma_propios()
 		self._crear_pagina_columnas()
 		self._crear_pagina_secciones()
@@ -273,6 +294,12 @@ class DialogoPreferenciasGitHub(DialogoPreferencias):
 
 	def _crear_pagina(self, pagina: Pagina, indice: int) -> wx.Window:
 		panel = super()._crear_pagina(pagina, indice)
+		if pagina.titulo == TITULO_NOTIFICACIONES:
+			self.boton_probar_voz = wx.Button(panel, label=_("Pro&bar la voz SAPI 5"))
+			self.boton_probar_voz.SetHelpText(_("Dice una frase de ejemplo con la voz, la velocidad y el volumen elegidos, sin guardarlos."))
+			self.boton_probar_voz.Bind(wx.EVT_BUTTON, self._al_probar_voz)
+			panel.GetSizer().Add(self.boton_probar_voz, 0, wx.ALL, 6)
+			panel.Layout()
 		if pagina.titulo == TITULO_SONIDOS:
 			sizer = panel.GetSizer()
 			sizer.Add(wx.StaticText(panel, label=_("&Eventos con sonido (marcados = suenan):")), 0, wx.LEFT | wx.TOP, 6)
@@ -289,6 +316,18 @@ class DialogoPreferenciasGitHub(DialogoPreferencias):
 			sizer.Add(self.boton_probar, 0, wx.ALL, 6)
 			panel.Layout()
 		return panel
+
+	def _al_probar_voz(self, _evento: wx.CommandEvent) -> None:
+		from app.ui.accesibilidad import sapi
+
+		valores = {}
+		for clave in ("notificaciones.sapi_voz", "notificaciones.sapi_velocidad", "notificaciones.sapi_volumen"):
+			opcion, control, _pagina = self._controles[clave]
+			valores[clave] = self._leer_control(opcion, control)
+		texto = _("Notificación nueva de ana/proyecto: así sonarán los avisos.")
+		if not sapi.hablar(texto, valores["notificaciones.sapi_voz"] or "", valores["notificaciones.sapi_velocidad"],
+				valores["notificaciones.sapi_volumen"]):
+			self.ctx.avisar(_("La voz SAPI 5 no está disponible en este equipo."))
 
 	def _al_probar(self, _evento: wx.CommandEvent) -> None:
 		indice = self.lista_eventos.GetSelection()

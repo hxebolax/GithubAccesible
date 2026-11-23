@@ -42,6 +42,7 @@ The focus only changes when you ask for it: when you open something (Enter, a se
 On the left is the list of **sections**; on the right, the list with the content of the chosen section.
 
 - When you move through the sections with the arrow keys, the section is shown on the right, but the focus **stays in the section list**. To go into the content, press Tab, Enter or F6.
+- The section's keys that don't need a selected item also work from the section list: for example, Ctrl+Shift+A marks all notifications as read and Ctrl+N creates a new issue. Keys that act on an item (Delete, F2…) only work inside the list, where you can tell which one is selected; if you press them in the section list, the application explains this.
 - F6 switches between the sections and the content.
 - Alt+1 to Alt+9 and Alt+0 go straight to the first ten sections (and put the focus on their content).
 - In Preferences, **Sections**, you can hide the ones you do not use and arrange them as you like, in this window and in repository windows; Alt plus a number follows that order.
@@ -64,6 +65,8 @@ Ctrl+U (view a profile) suggests the person in the selected row, already typed i
 The application checks notifications on its own (every minute, or as often as GitHub asks). When a new one arrives, it announces it with speech and a sound, which is different if you are mentioned or asked for a review. The number of unread notifications appears next to the section. You can configure this in Preferences, Notifications (including a Windows notification and the system tray).
 
 In the Notifications section, Ctrl+L marks the selected notification as read and Ctrl+Shift+A marks all of them as read. To hear the unread ones from any program, use the global hotkey Ctrl+Alt+Shift+N (see “Global hotkeys”).
+
+Messages that arrive on their own (new notifications and the end of watched Actions runs) are read by the screen reader, which cuts them off as soon as you press a key. If you prefer to hear them in full while you type, go to Preferences, Notifications, “Read background messages with”, choose “A separate SAPI 5 voice” and, if you like, the voice, rate and volume; “Test the SAPI 5 voice” lets you hear it before you click OK. That voice may speak at the same time as the screen reader. Whatever you ask for with the keyboard (columns, Ctrl+H, Ctrl+Alt+Shift+N) is still read by the screen reader.
 
 ### The system tray
 
@@ -126,7 +129,7 @@ Issues, comments, pull request descriptions, reviews and release notes are all w
 - The text is Markdown. F7 shows the formatted preview.
 - Ctrl+Enter sends. If sending fails, the editor does not close and your text is still there.
 - If you close the editor without sending, it asks whether you want to save what you wrote as a **draft**; when you write in the same place again, it offers it to you.
-- Tab types a tab character in the text; to move to the next control, use Ctrl+Tab.
+- Tab and Shift+Tab move to the next or previous control, as everywhere else in Windows. If you prefer Tab to type a tab character in the text, turn on Preferences, Editor, “The Tab key types a tab character in Markdown text”; you then move between controls with Ctrl+Tab.
 - **Attach file** (Alt+F), in issues, pull requests, discussions and comments, adds text files, such as a `.log` file to show to the developer. You can choose several at once. For each one, it asks how to attach it:
   - **Inside the text, collapsed**: the content goes into a code block that GitHub shows as the file name and expands when clicked. You can review and change it in the editor before sending.
   - **As a secret gist, with its link**: the file is uploaded to a gist that does not appear in listings, and the text only contains its link. It is the only option if the file does not fit in the text (GitHub allows 65,536 characters). It needs the “gist” permission, which signing in with the browser already requests.
@@ -253,7 +256,7 @@ Tools, Preferences (Ctrl+P). Changes are applied immediately in the open windows
   - **Help**: every control has a help text, the same one that Ctrl+H reads. The screen reader can also read it automatically when you reach the control. “Help: read it when focus reaches buttons and checkboxes” (on by default) reads it on buttons and standalone checkboxes. “Help: also read it on every row of checkbox lists” (off by default) repeats it on each row of a checkbox list, such as “Search text in” in the search window. If you turn it off, when you move through the list you only hear each row and whether it is checked. Ctrl+H always reads the help.
 - **Sounds**: enable, mute, volume, sound pack and a list of every event to turn its sound on or off, with a button to test it.
 - **Lists**: items per page and relative or full dates.
-- **Notifications**, **Global hotkeys** (see above), **Actions** (watching runs and timestamps in logs), **Git**, **Editor**, **Network and logging**.
+- **Notifications** (including who reads background messages: the screen reader or a SAPI 5 voice with its voice, rate and volume), **Global hotkeys** (see above), **Actions** (watching runs and timestamps in logs), **Git**, **Editor** (confirm before discarding, signature and whether Tab types tab characters), **Network and logging**.
 - **List columns**: visible columns and their order in each list.
 - **Sections**: for the main window and for the repository window, which sections are shown (checkboxes) and in what order (Move up and Move down). “Search results” and “Overview” cannot be hidden. If you open a hidden section from somewhere else, you are told that it is hidden.
 
