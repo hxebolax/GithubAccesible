@@ -2,6 +2,15 @@
 
 Each version has its own section, from the newest to the oldest. Within each version, changes are grouped into New, Improvements and Fixes, described from the point of view of the person using the application.
 
+## Version 1.0.10 - 2026-11-23
+
+### New
+
+- **General settings for the message when an Actions run finishes** (Preferences, Actions), which apply to everything that is watched at once: “Notify me when it finishes”, each repository's “Notify when each Actions run finishes” and the runs triggered by a push.
+  - Sound when it finishes, on or off.
+  - Result by voice, on or off (by the screen reader or the SAPI 5 voice).
+  - Which runs to report: all of them, only the ones that fail or only the ones that succeed.
+
 ## Version 1.0.9 - 2026-11-23
 
 ### New

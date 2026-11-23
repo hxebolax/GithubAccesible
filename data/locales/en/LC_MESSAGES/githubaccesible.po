@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: githubaccesible 1.0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-23 11:47+0100\n"
+"POT-Creation-Date: 2026-11-23 12:34+0100\n"
 "PO-Revision-Date: 2026-11-22 21:50+0100\n"
 "Last-Translator: GitHub Accesible\n"
 "Language-Team: English\n"
@@ -33,44 +33,44 @@ msgstr "The database is locked by another program (antivirus, backup or another 
 msgid "La base de datos es de la versión {actual} y esta aplicación solo conoce hasta la {total}. Se creó con una versión más nueva de la aplicación; actualízala para abrirla."
 msgstr "The database is version {actual} and this application only supports up to version {total}. It was created with a newer version of the application; update the application to open it."
 
-#: app/core/configuracion.py:395
+#: app/core/configuracion.py:401
 #, python-brace-format
 msgid "«{clave}» espera {esperado} y recibió {recibido}."
 msgstr "“{clave}” expects {esperado} but received {recibido}."
 
-#: app/core/configuracion.py:402
+#: app/core/configuracion.py:408
 #, python-brace-format
 msgid "«{clave}» solo admite: {opciones}."
 msgstr "“{clave}” only accepts: {opciones}."
 
-#: app/core/configuracion.py:406
+#: app/core/configuracion.py:412
 #, python-brace-format
 msgid "«{clave}» debe ser como mínimo {minimo}."
 msgstr "“{clave}” must be at least {minimo}."
 
-#: app/core/configuracion.py:408
+#: app/core/configuracion.py:414
 #, python-brace-format
 msgid "«{clave}» debe ser como máximo {maximo}."
 msgstr "“{clave}” must be at most {maximo}."
 
-#: app/core/configuracion.py:410
+#: app/core/configuracion.py:416
 #, python-brace-format
 msgid "«{clave}» admite como máximo {n} caracteres."
 msgstr "“{clave}” accepts at most {n} characters."
 
-#: app/core/configuracion.py:547
+#: app/core/configuracion.py:553
 msgid "La configuración estaba dañada y se ha recuperado la copia anterior."
 msgstr "The settings were damaged and the previous copy has been restored."
 
-#: app/core/configuracion.py:551
+#: app/core/configuracion.py:557
 msgid "La configuración estaba dañada y se han restablecido los valores de fábrica."
 msgstr "The settings were damaged and the defaults have been restored."
 
-#: app/core/configuracion.py:557
+#: app/core/configuracion.py:563
 msgid "No se pudo leer la configuración; se usan valores de fábrica sin guardar."
 msgstr "Could not read the settings; using defaults, which will not be saved."
 
-#: app/core/configuracion.py:810
+#: app/core/configuracion.py:816
 #, python-brace-format
 msgid "No se pudo guardar la configuración: {error}"
 msgstr "Could not save the settings: {error}"
@@ -3925,21 +3925,21 @@ msgstr " on {r}"
 msgid "Actions de {repo}: «{n}»{rama} ha terminado: {res}."
 msgstr "Actions in {repo}: “{n}”{rama} has finished: {res}."
 
-#: app/services/vigilancia_actions.py:92
+#: app/services/vigilancia_actions.py:101
 msgid "flujo"
 msgstr "workflow"
 
-#: app/services/vigilancia_actions.py:121
+#: app/services/vigilancia_actions.py:130
 #, python-brace-format
 msgid "Ejecución «{n}» de {r}"
 msgstr "Run “{n}” of {r}"
 
-#: app/services/vigilancia_actions.py:123
+#: app/services/vigilancia_actions.py:132
 #, python-brace-format
 msgid "Ejecuciones del commit {s} de {r}"
 msgstr "Runs for commit {s} of {r}"
 
-#: app/services/vigilancia_actions.py:124
+#: app/services/vigilancia_actions.py:133
 #, python-brace-format
 msgid "Todas las ejecuciones de {r}"
 msgstr "All runs of {r}"
@@ -14020,287 +14020,324 @@ msgid "Después de un push a GitHub desde la ventana de git, vigila las ejecucio
 msgstr "After a push to GitHub from the git window, watches the Actions runs triggered by that commit and says whether they succeeded or failed. If the repository has no Actions, it says nothing."
 
 #: app/ui/preferencias.py:216
+msgid "Avisar de las ejecuciones vigiladas que &terminan:"
+msgstr "Report watched runs that &finish:"
+
+#: app/ui/preferencias.py:217
+#| msgid "Vale para todo lo vigilado: «Avisarme cuando termine», «Vigilar todas las ejecuciones» de un repositorio y lo que lanza un push. Si elige solo las que fallan, de las que van bien no se dice nada."
+msgid "Vale para todo lo vigilado: «Avisarme cuando termine», «Avisar al terminar cada ejecución de Actions» de un repositorio y lo que lanza un push. Si elige solo las que fallan, de las que van bien no se dice nada."
+msgstr "Applies to everything that is watched: “Notify me when it finishes”, a repository's “Notify when each Actions run finishes” and the runs triggered by a push. If you choose only the ones that fail, nothing is said about the ones that succeed."
+
+#: app/ui/preferencias.py:219
+msgid "Todas, vayan bien o mal"
+msgstr "All of them, whether they succeed or fail"
+
+#: app/ui/preferencias.py:219
+msgid "Solo las que fallan, se cancelan o no terminan bien"
+msgstr "Only the ones that fail, are canceled or don't finish successfully"
+
+#: app/ui/preferencias.py:220
+msgid "Solo las que van bien"
+msgstr "Only the ones that succeed"
+
+#: app/ui/preferencias.py:221
+msgid "&Sonido al terminar una ejecución vigilada"
+msgstr "Play a sou&nd when a watched run finishes"
+
+#: app/ui/preferencias.py:222
+msgid "Un sonido de éxito o de fallo según el resultado. Cada sonido se puede quitar también en Preferencias, Sonidos."
+msgstr "A success or failure sound depending on the result. Each sound can also be turned off in Preferences, Sounds."
+
+#: app/ui/preferencias.py:223
+msgid "Decir por vo&z el resultado de una ejecución vigilada"
+msgstr "Announce the result of a watched run by &voice"
+
+#: app/ui/preferencias.py:224
+msgid "Dice el repositorio, el flujo, la rama y el resultado. Lo dice el lector o la voz SAPI 5, según Preferencias, Notificaciones, «Leer los avisos en segundo plano con»."
+msgstr "Says the repository, the workflow, the branch and the result. It is read by the screen reader or by the SAPI 5 voice, depending on Preferences, Notifications, “Read background messages with”."
+
+#: app/ui/preferencias.py:226
 msgid "Notificación de &Windows al terminar una ejecución vigilada"
 msgstr "&Windows notification when a watched run finishes"
 
-#: app/ui/preferencias.py:217
-msgid "Además del sonido y el aviso por voz, muestra un aviso del sistema."
-msgstr "In addition to the sound and the voice announcement, shows a system notification."
+#: app/ui/preferencias.py:227
+msgid "Además del sonido y el aviso por voz, si están activados, muestra un aviso del sistema."
+msgstr "In addition to the sound and the voice announcement, if they are on, shows a system notification."
 
-#: app/ui/preferencias.py:218
+#: app/ui/preferencias.py:228
 msgid "&Mostrar la hora en cada línea de los registros"
 msgstr "&Show the time on each log line"
 
-#: app/ui/preferencias.py:219
+#: app/ui/preferencias.py:229
 msgid "En la ventana de una ejecución, pone al principio de cada línea del registro la hora en que se escribió."
 msgstr "In a run's window, adds at the start of each log line the time it was written."
 
-#: app/ui/preferencias.py:221
+#: app/ui/preferencias.py:231
 msgid "Git"
 msgstr "Git"
 
-#: app/ui/preferencias.py:222
+#: app/ui/preferencias.py:232
 msgid "Ruta de &git.exe (vacío: detectar):"
 msgstr "Path to &git.exe (empty: detect):"
 
-#: app/ui/preferencias.py:223
+#: app/ui/preferencias.py:233
 msgid "Normalmente se encuentra solo. Indíquela si instaló Git en un sitio poco habitual."
 msgstr "It is usually found automatically. Specify it if you installed Git in an unusual location."
 
-#: app/ui/preferencias.py:224
+#: app/ui/preferencias.py:234
 msgid "Usar el &token de la cuenta para clonar, traer y enviar por HTTPS"
 msgstr "Use the account &token to clone, fetch and push over HTTPS"
 
-#: app/ui/preferencias.py:225
+#: app/ui/preferencias.py:235
 msgid "El token se pasa a git solo durante la operación, sin guardarlo en disco. Desactívelo para usar sus propias credenciales de Git."
 msgstr "The token is passed to git only during the operation, without saving it to disk. Turn it off to use your own Git credentials."
 
-#: app/ui/preferencias.py:226
+#: app/ui/preferencias.py:236
 msgid "Carpeta para c&lonar repositorios:"
 msgstr "Fo&lder for cloning repositories:"
 
-#: app/ui/preferencias.py:227
+#: app/ui/preferencias.py:237
 msgid "Carpeta donde se proponen los clones nuevos."
 msgstr "Folder suggested for new clones."
 
-#: app/ui/preferencias.py:228
+#: app/ui/preferencias.py:238
 msgid "Al traer cambios (pull), r&eorganizar en lugar de fusionar"
 msgstr "When pulling, r&ebase instead of merging"
 
-#: app/ui/preferencias.py:229
+#: app/ui/preferencias.py:239
 msgid "Equivale a git pull --rebase."
 msgstr "Equivalent to git pull --rebase."
 
-#: app/ui/preferencias.py:230
+#: app/ui/preferencias.py:240
 msgid "&Firmar los commits"
 msgstr "&Sign commits"
 
-#: app/ui/preferencias.py:230
+#: app/ui/preferencias.py:240
 msgid "Equivale a git commit -S. Requiere tener configurada una clave GPG o SSH de firma."
 msgstr "Equivalent to git commit -S. Requires a GPG or SSH signing key to be configured."
 
-#: app/ui/preferencias.py:232
+#: app/ui/preferencias.py:242
 msgid "Editor"
 msgstr "Editor"
 
-#: app/ui/preferencias.py:233
+#: app/ui/preferencias.py:243
 msgid "Confirmar antes de &descartar un texto escrito"
 msgstr "Confirm before &discarding written text"
 
-#: app/ui/preferencias.py:234
+#: app/ui/preferencias.py:244
 msgid "Al cerrar el editor con texto sin enviar, pregunta antes de perderlo."
 msgstr "When closing the editor with unsent text, asks before losing it."
 
-#: app/ui/preferencias.py:235
+#: app/ui/preferencias.py:245
 msgid "&Firma que se añade al final de los comentarios:"
 msgstr "&Signature added at the end of comments:"
 
-#: app/ui/preferencias.py:236
+#: app/ui/preferencias.py:246
 msgid "Opcional. Se añade al final de cada comentario nuevo."
 msgstr "Optional. Added at the end of every new comment."
 
-#: app/ui/preferencias.py:237
+#: app/ui/preferencias.py:247
 msgid "El &tabulador escribe una tabulación en el texto Markdown"
 msgstr "The &Tab key types a tab character in Markdown text"
 
-#: app/ui/preferencias.py:238
+#: app/ui/preferencias.py:248
 msgid "Desactivada (de fábrica), Tabulador y Mayúsculas+Tabulador pasan al control siguiente o al anterior, como en el resto de Windows. Activada, Tabulador escribe una tabulación y Control+Tabulador pasa de control. Se aplica a los editores que se abran después."
 msgstr "Off (the default): Tab and Shift+Tab move to the next or previous control, as everywhere else in Windows. On: Tab types a tab character and Control+Tab moves between controls. It applies to editors opened afterwards."
 
-#: app/ui/preferencias.py:242
+#: app/ui/preferencias.py:252
 msgid "Red y registro"
 msgstr "Network and logging"
 
-#: app/ui/preferencias.py:243
+#: app/ui/preferencias.py:253
 msgid "Pro&xy («sistema», «ninguno» o una dirección):"
 msgstr "Pro&xy (\"system\", \"none\" or an address):"
 
-#: app/ui/preferencias.py:244
+#: app/ui/preferencias.py:254
 msgid "«sistema» usa la configuración de Windows; «ninguno» conecta directamente; o escriba http://servidor:puerto."
 msgstr "\"system\" uses the Windows settings; \"none\" connects directly; or type http://server:port."
 
-#: app/ui/preferencias.py:245
+#: app/ui/preferencias.py:255
 msgid "&Tiempo máximo de espera (segundos):"
 msgstr "&Timeout (seconds):"
 
-#: app/ui/preferencias.py:245
+#: app/ui/preferencias.py:255
 msgid "Tiempo de espera de las peticiones a GitHub."
 msgstr "Timeout for requests to GitHub."
 
-#: app/ui/preferencias.py:246
+#: app/ui/preferencias.py:256
 msgid "&Nivel del registro de errores:"
 msgstr "Error &log level:"
 
-#: app/ui/preferencias.py:247
+#: app/ui/preferencias.py:257
 msgid "DEBUG guarda mucho detalle para diagnosticar problemas."
 msgstr "DEBUG saves a lot of detail to diagnose problems."
 
-#: app/ui/preferencias.py:248
+#: app/ui/preferencias.py:258
 msgid "Normal"
 msgstr "Normal"
 
-#: app/ui/preferencias.py:248
+#: app/ui/preferencias.py:258
 msgid "Detallado (depuración)"
 msgstr "Detailed (debugging)"
 
-#: app/ui/preferencias.py:248
+#: app/ui/preferencias.py:258
 msgid "Solo avisos"
 msgstr "Warnings only"
 
-#: app/ui/preferencias.py:248
+#: app/ui/preferencias.py:258
 msgid "Solo errores"
 msgstr "Errors only"
 
-#: app/ui/preferencias.py:298
+#: app/ui/preferencias.py:308
 msgid "Pro&bar la voz SAPI 5"
 msgstr "Test the SAPI 5 voic&e"
 
-#: app/ui/preferencias.py:299
+#: app/ui/preferencias.py:309
 msgid "Dice una frase de ejemplo con la voz, la velocidad y el volumen elegidos, sin guardarlos."
 msgstr "Says a sample sentence with the chosen voice, rate and volume, without saving them."
 
-#: app/ui/preferencias.py:305
+#: app/ui/preferencias.py:315
 msgid "&Eventos con sonido (marcados = suenan):"
 msgstr "&Events with sound (checked ones play):"
 
-#: app/ui/preferencias.py:306
+#: app/ui/preferencias.py:316
 msgid "Eventos con sonido"
 msgstr "Events with sound"
 
-#: app/ui/preferencias.py:313
+#: app/ui/preferencias.py:323
 msgid "Pro&bar el sonido elegido"
 msgstr "&Test the selected sound"
 
-#: app/ui/preferencias.py:314
+#: app/ui/preferencias.py:324
 msgid "Reproduce el sonido del evento elegido en la lista, aunque esté desmarcado."
 msgstr "Plays the sound of the event selected in the list, even if it is unchecked."
 
-#: app/ui/preferencias.py:327
+#: app/ui/preferencias.py:337
 msgid "Notificación nueva de ana/proyecto: así sonarán los avisos."
 msgstr "New notification from ana/project: this is how messages will sound."
 
-#: app/ui/preferencias.py:330
+#: app/ui/preferencias.py:340
 msgid "La voz SAPI 5 no está disponible en este equipo."
 msgstr "The SAPI 5 voice is not available on this computer."
 
-#: app/ui/preferencias.py:344
+#: app/ui/preferencias.py:354
 msgid "Elija una lista y marque las columnas que quiere ver. El orden de arriba abajo es el orden de las columnas (el lector lee la fila en ese orden)."
 msgstr "Choose a list and check the columns you want to see. The top-to-bottom order is the column order (the screen reader reads the row in that order)."
 
-#: app/ui/preferencias.py:349
+#: app/ui/preferencias.py:359
 msgid "&Lista:"
 msgstr "&List:"
 
-#: app/ui/preferencias.py:351
+#: app/ui/preferencias.py:361
 msgid "Lista de la aplicación cuyas columnas quiere configurar."
 msgstr "Application list whose columns you want to configure."
 
-#: app/ui/preferencias.py:354
+#: app/ui/preferencias.py:364
 msgid "Columnas &visibles y su orden:"
 msgstr "&Visible columns and their order:"
 
-#: app/ui/preferencias.py:355
+#: app/ui/preferencias.py:365
 msgid "Columnas visibles y su orden"
 msgstr "Visible columns and their order"
 
-#: app/ui/preferencias.py:360 app/ui/preferencias.py:454
+#: app/ui/preferencias.py:370 app/ui/preferencias.py:464
 msgid "S&ubir"
 msgstr "Move &up"
 
-#: app/ui/preferencias.py:360
+#: app/ui/preferencias.py:370
 msgid "Sube la columna elegida un puesto."
 msgstr "Moves the selected column up one position."
 
-#: app/ui/preferencias.py:361 app/ui/preferencias.py:455
+#: app/ui/preferencias.py:371 app/ui/preferencias.py:465
 msgid "Ba&jar"
 msgstr "Move dow&n"
 
-#: app/ui/preferencias.py:361
+#: app/ui/preferencias.py:371
 msgid "Baja la columna elegida un puesto."
 msgstr "Moves the selected column down one position."
 
-#: app/ui/preferencias.py:362
+#: app/ui/preferencias.py:372
 msgid "&Original de esta lista"
 msgstr "&Defaults for this list"
 
-#: app/ui/preferencias.py:362
+#: app/ui/preferencias.py:372
 msgid "Vuelve a las columnas de fábrica de esta lista."
 msgstr "Restores the default columns for this list."
 
-#: app/ui/preferencias.py:404 app/ui/preferencias.py:510
+#: app/ui/preferencias.py:414 app/ui/preferencias.py:520
 msgid "No se puede mover más."
 msgstr "Cannot move any further."
 
-#: app/ui/preferencias.py:411 app/ui/preferencias.py:515
+#: app/ui/preferencias.py:421 app/ui/preferencias.py:525
 #, python-brace-format
 msgid "{c}, posición {p}"
 msgstr "{c}, position {p}"
 
-#: app/ui/preferencias.py:416
+#: app/ui/preferencias.py:426
 msgid "Columnas de fábrica."
 msgstr "Default columns."
 
-#: app/ui/preferencias.py:420
+#: app/ui/preferencias.py:430
 msgid "Ventana principal"
 msgstr "Main window"
 
-#: app/ui/preferencias.py:420
+#: app/ui/preferencias.py:430
 msgid "Ventana de un repositorio"
 msgstr "Repository window"
 
-#: app/ui/preferencias.py:437
+#: app/ui/preferencias.py:447
 msgid "Elija una ventana y marque las secciones que quiere ver. El orden de arriba abajo es el de la lista de secciones; Alt+1 a Alt+9 siguen ese orden. «Resultados de la búsqueda» y «Resumen» no se pueden ocultar."
 msgstr "Choose a window and check the sections you want to see. The top-to-bottom order is the order of the section list; Alt+1 to Alt+9 follow that order. “Search results” and “Overview” cannot be hidden."
 
-#: app/ui/preferencias.py:442
+#: app/ui/preferencias.py:452
 msgid "&Ventana:"
 msgstr "&Window:"
 
-#: app/ui/preferencias.py:444
+#: app/ui/preferencias.py:454
 msgid "Ventana cuyas secciones quiere ordenar u ocultar. La del repositorio se aplica a las ventanas de repositorio que se abran a partir de ahora."
 msgstr "Window whose sections you want to reorder or hide. The repository one applies to repository windows opened from now on."
 
-#: app/ui/preferencias.py:448
+#: app/ui/preferencias.py:458
 msgid "&Secciones visibles y su orden:"
 msgstr "Visible &sections and their order:"
 
-#: app/ui/preferencias.py:449
+#: app/ui/preferencias.py:459
 msgid "Secciones visibles y su orden"
 msgstr "Visible sections and their order"
 
-#: app/ui/preferencias.py:454
+#: app/ui/preferencias.py:464
 msgid "Sube la sección elegida un puesto."
 msgstr "Moves the selected section up one position."
 
-#: app/ui/preferencias.py:455
+#: app/ui/preferencias.py:465
 msgid "Baja la sección elegida un puesto."
 msgstr "Moves the selected section down one position."
 
-#: app/ui/preferencias.py:456
+#: app/ui/preferencias.py:466
 msgid "&Orden de fábrica"
 msgstr "&Default order"
 
-#: app/ui/preferencias.py:456
+#: app/ui/preferencias.py:466
 msgid "Muestra todas las secciones de esta ventana en su orden original."
 msgstr "Shows all the sections of this window in their original order."
 
-#: app/ui/preferencias.py:497
+#: app/ui/preferencias.py:507
 msgid "Esta sección no se puede ocultar."
 msgstr "This section cannot be hidden."
 
-#: app/ui/preferencias.py:521
+#: app/ui/preferencias.py:531
 msgid "Secciones de fábrica."
 msgstr "Default sections."
 
-#: app/ui/preferencias.py:558
+#: app/ui/preferencias.py:568
 msgid "Esa combinación ya la tiene otra tecla global. Elija otra o quítela con Retroceso."
 msgstr "That key combination is already used by another global hotkey. Choose a different one or remove it with Backspace."
 
-#: app/ui/preferencias.py:608
+#: app/ui/preferencias.py:618
 msgid "El idioma nuevo se aplicará al reiniciar la aplicación. ¿Quiere reiniciarla ahora?"
 msgstr "The new language will take effect when the application restarts. Do you want to restart it now?"
 
-#: app/ui/preferencias.py:609
+#: app/ui/preferencias.py:619
 msgid "Cambiar el idioma"
 msgstr "Change language"
 
@@ -18838,7 +18875,7 @@ msgstr ""
 msgid "No se pudo abrir la carpeta"
 msgstr "Could not open the folder"
 
-#: app/ui/ventana_principal.py:741 app/ui/ventana_principal.py:943
+#: app/ui/ventana_principal.py:741 app/ui/ventana_principal.py:952
 msgid "No hay ninguna sesión iniciada."
 msgstr "You are not signed in."
 
@@ -18862,100 +18899,101 @@ msgstr "Already watching: {d}."
 msgid "Vigilando: {d}. Se avisará al terminar."
 msgstr "Watching: {d}. You will be notified when it finishes."
 
-#: app/ui/ventana_principal.py:894
-msgid "No se está vigilando ninguna ejecución. Para vigilar una, use «Avisarme cuando termine» en la sección Actions de un repositorio, o «Vigilar todas las ejecuciones» en su menú Repositorio."
-msgstr "No runs are being watched. To watch one, use “Notify me when it finishes” in the Actions section of a repository, or “Watch all runs” in its Repository menu."
+#: app/ui/ventana_principal.py:903
+#| msgid "No se está vigilando ninguna ejecución. Para vigilar una, use «Avisarme cuando termine» en la sección Actions de un repositorio, o «Vigilar todas las ejecuciones» en su menú Repositorio."
+msgid "No se está vigilando ninguna ejecución. Para vigilar una, use «Avisarme cuando termine» en la sección Actions de un repositorio, o «Avisar al terminar cada ejecución de Actions» en su menú Repositorio."
+msgstr "No runs are being watched. To watch one, use “Notify me when it finishes” in the Actions section of a repository, or “Notify when each Actions run finishes” in its Repository menu."
 
-#: app/ui/ventana_principal.py:896 app/ui/ventana_principal.py:898 app/ui/ventana_principal.py:903
+#: app/ui/ventana_principal.py:905 app/ui/ventana_principal.py:907 app/ui/ventana_principal.py:912
 msgid "Ejecuciones vigiladas"
 msgstr "Watched runs"
 
-#: app/ui/ventana_principal.py:898
+#: app/ui/ventana_principal.py:907
 msgid "&Vigiladas (Intro deja de vigilar la elegida):"
 msgstr "&Watched runs (Enter stops watching the selected one):"
 
-#: app/ui/ventana_principal.py:903
+#: app/ui/ventana_principal.py:912
 #, python-brace-format
 msgid "¿Dejar de vigilar: {d}?"
 msgstr "Stop watching: {d}?"
 
-#: app/ui/ventana_principal.py:905
+#: app/ui/ventana_principal.py:914
 #, python-brace-format
 msgid "Ya no se vigila: {d}."
 msgstr "No longer watching: {d}."
 
-#: app/ui/ventana_principal.py:925
+#: app/ui/ventana_principal.py:934
 msgid "No hay notificaciones sin leer."
 msgstr "There are no unread notifications."
 
-#: app/ui/ventana_principal.py:926
+#: app/ui/ventana_principal.py:935
 msgid "1 notificación sin leer."
 msgstr "1 unread notification."
 
-#: app/ui/ventana_principal.py:926
+#: app/ui/ventana_principal.py:935
 #, python-brace-format
 msgid "{n} notificaciones sin leer."
 msgstr "{n} unread notifications."
 
-#: app/ui/ventana_principal.py:927
+#: app/ui/ventana_principal.py:936
 #, python-brace-format
 msgid "{r}: {t}"
 msgstr "{r}: {t}"
 
-#: app/ui/ventana_principal.py:961
+#: app/ui/ventana_principal.py:970
 #, python-brace-format
 msgid "Notificación nueva de {r}: {t}"
 msgstr "New notification from {r}: {t}"
 
-#: app/ui/ventana_principal.py:963
+#: app/ui/ventana_principal.py:972
 #, python-brace-format
 msgid "{n} notificaciones nuevas. La última: {t}"
 msgstr "{n} new notifications. The latest: {t}"
 
-#: app/ui/ventana_principal.py:985
+#: app/ui/ventana_principal.py:994
 #, python-brace-format
 msgid "{a}: {n} notificaciones sin leer"
 msgstr "{a}: {n} unread notifications"
 
-#: app/ui/ventana_principal.py:990
+#: app/ui/ventana_principal.py:999
 msgid "&Notificaciones"
 msgstr "&Notifications"
 
-#: app/ui/ventana_principal.py:990
+#: app/ui/ventana_principal.py:999
 #, python-brace-format
 msgid "&Notificaciones ({n} sin leer)"
 msgstr "&Notifications ({n} unread)"
 
-#: app/ui/ventana_principal.py:993
+#: app/ui/ventana_principal.py:1002
 msgid "&Ocultar en la bandeja"
 msgstr "&Hide to system tray"
 
-#: app/ui/ventana_principal.py:996
+#: app/ui/ventana_principal.py:1005
 msgid "&Decir las notificaciones sin leer"
 msgstr "&Announce unread notifications"
 
-#: app/ui/ventana_principal.py:997
+#: app/ui/ventana_principal.py:1006
 msgid "&Comprobar notificaciones ahora"
 msgstr "&Check notifications now"
 
-#: app/ui/ventana_principal.py:999
+#: app/ui/ventana_principal.py:1008
 msgid "&Buscar en GitHub…"
 msgstr "&Search GitHub…"
 
-#: app/ui/ventana_principal.py:1000
+#: app/ui/ventana_principal.py:1009
 msgid "&Preferencias…"
 msgstr "&Preferences…"
 
-#: app/ui/ventana_principal.py:1033
+#: app/ui/ventana_principal.py:1042
 #, python-brace-format
 msgid "{nombre} sigue en la bandeja del sistema."
 msgstr "{nombre} is still running in the system tray."
 
-#: app/ui/ventana_principal.py:1101
+#: app/ui/ventana_principal.py:1110
 msgid "Salir"
 msgstr "Exit"
 
-#: app/ui/ventana_principal.py:1101
+#: app/ui/ventana_principal.py:1110
 #, python-brace-format
 msgid "¿Salir de {n}?"
 msgstr "Exit {n}?"

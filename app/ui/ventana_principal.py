@@ -874,9 +874,18 @@ class VentanaPrincipal(wx.Frame):
 			clave_unica="actions:vigilancia", nombre="actions:vigilancia")
 
 	def _avisar_ejecucion(self, aviso: Any) -> None:
-		self.ctx.sonar("accion_exito" if aviso.correcta else "accion_fallo")
-		self.ctx.avisar_en_segundo_plano(aviso.texto)
-		if self.ctx.config.obtener("acciones.notificacion_windows", True):
+		"""Avisa de una ejecución vigilada que ha terminado, como diga Preferencias, Actions (incidencia #8)."""
+		from app.services import vigilancia_actions as va
+
+		config = self.ctx.config
+		if not va.hay_que_avisar(aviso, str(config.obtener("acciones.avisar_resultados", "todas"))):
+			log.info("Ejecución terminada sin aviso por las preferencias: %s", aviso.texto)
+			return
+		if config.obtener("acciones.sonido_al_terminar", True):
+			self.ctx.sonar("accion_exito" if aviso.correcta else "accion_fallo")
+		if config.obtener("acciones.voz_al_terminar", True):
+			self.ctx.avisar_en_segundo_plano(aviso.texto)
+		if config.obtener("acciones.notificacion_windows", True):
 			try:
 				import wx.adv
 
@@ -892,7 +901,7 @@ class VentanaPrincipal(wx.Frame):
 		vigiladas = self.vigiladas
 		if not vigiladas:
 			mostrar_mensaje(self, _("No se está vigilando ninguna ejecución. Para vigilar una, use «Avisarme cuando termine» en la "
-				"sección Actions de un repositorio, o «Vigilar todas las ejecuciones» en su menú Repositorio."),
+				"sección Actions de un repositorio, o «Avisar al terminar cada ejecución de Actions» en su menú Repositorio."),
 				_("Ejecuciones vigiladas"))
 			return
 		eleccion = elegir_uno(self, _("Ejecuciones vigiladas"), _("&Vigiladas (Intro deja de vigilar la elegida):"),

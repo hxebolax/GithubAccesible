@@ -2,6 +2,15 @@
 
 Cada versión tiene su apartado, de la más reciente a la más antigua. Dentro de cada versión, los cambios se agrupan en Novedades, Mejoras y Correcciones, contados con palabras de quien usa la aplicación.
 
+## Versión 1.0.10 - 2026-11-23
+
+### Novedades
+
+- **Opciones generales para el aviso al terminar una ejecución de Actions** (Preferencias, Actions), que valen para todo lo vigilado a la vez: «Avisarme cuando termine», «Avisar al terminar cada ejecución de Actions» de cada repositorio y lo que lanza un push.
+  - Sonido al terminar, sí o no.
+  - Resultado por voz, sí o no (con el lector o con la voz SAPI 5).
+  - De qué ejecuciones avisar: de todas, solo de las que fallan o solo de las que van bien.
+
 ## Versión 1.0.9 - 2026-11-23
 
 ### Novedades

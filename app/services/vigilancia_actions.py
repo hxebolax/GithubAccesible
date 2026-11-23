@@ -75,6 +75,15 @@ class Aviso:
 			res=resultado)
 
 
+def hay_que_avisar(aviso: Aviso, resultados: str = "todas") -> bool:
+	"""Si se avisa de ``aviso`` según Preferencias, Actions: «todas», «fallidas» o «correctas»."""
+	if resultados == "fallidas":
+		return not aviso.correcta
+	if resultados == "correctas":
+		return aviso.correcta
+	return True
+
+
 def _ahora() -> datetime:
 	return datetime.now(UTC)
 

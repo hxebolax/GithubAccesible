@@ -173,6 +173,11 @@ VALORES_POR_DEFECTO: dict[str, dict[str, Any]] = {
 		# Tras enviar (push) a GitHub, avisar del resultado de las ejecuciones que lance el commit.
 		"vigilar_tras_enviar": True,
 		"notificacion_windows": True,
+		# Cómo se avisa al terminar una ejecución vigilada, para todas a la vez (incidencia #8).
+		"sonido_al_terminar": True,
+		"voz_al_terminar": True,
+		# «todas», «fallidas» (falla, se cancela, caduca...) o «correctas».
+		"avisar_resultados": "todas",
 	},
 	"teclas_globales": {
 		# Combinaciones que funcionan desde cualquier programa (vacío: sin tecla).
@@ -254,6 +259,7 @@ REGLAS: dict[str, Regla] = {
 	"listas.por_pagina": Regla(minimo=10, maximo=100),
 	"notificaciones.intervalo_s": Regla(minimo=30, maximo=86400),
 	"notificaciones.lectura": Regla(opciones=("lector", "sapi5")),
+	"acciones.avisar_resultados": Regla(opciones=("todas", "fallidas", "correctas")),
 	"notificaciones.sapi_velocidad": Regla(minimo=-10, maximo=10),
 	"notificaciones.sapi_volumen": Regla(minimo=0, maximo=100),
 	"acciones.intervalo_vigilancia_s": Regla(minimo=15, maximo=3600),

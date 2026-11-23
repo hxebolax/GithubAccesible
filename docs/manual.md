@@ -219,7 +219,13 @@ La aplicación puede avisarle cuando termine una ejecución aunque no tenga ning
 - Al enviar cambios (push) a GitHub desde la ventana de git, se vigilan solas las ejecuciones que lance ese commit y se dice cómo han ido. Si el repositorio no tiene Actions, no se dice nada.
 - Herramientas, «Ejecuciones de Actions vigiladas», muestra lo que se vigila y permite dejar de vigilarlo.
 
-Lo vigilado se recuerda al cerrar la aplicación. El intervalo, la notificación de Windows y la vigilancia tras enviar se eligen en Preferencias, Actions.
+Lo vigilado se recuerda al cerrar la aplicación. En Preferencias, Actions, se elige para todo lo vigilado a la vez:
+
+- De qué ejecuciones avisar: de todas, solo de las que fallan (también las canceladas o las que no terminan bien) o solo de las que van bien.
+- Si suena el sonido de éxito o de fallo.
+- Si se dice el resultado por voz (con el lector o con la voz SAPI 5, según Preferencias, Notificaciones).
+- Si se muestra además una notificación de Windows.
+- El intervalo con el que se pregunta a GitHub y si se vigila lo que lanza cada push.
 
 ## Releases, gists, discusiones y proyectos
 
@@ -256,7 +262,7 @@ Herramientas, Preferencias (Control+P). Los cambios se aplican al momento en las
   - **Explicaciones**: cada control tiene una explicación, la misma que dice Control+H. El lector de pantalla también puede leerla sola al llegar al control. «Explicaciones: leerlas al llegar a botones y casillas» (activada de fábrica) la lee en botones y casillas sueltas. «Explicaciones: leerlas también en cada fila de las listas de casillas» (desactivada de fábrica) la repite en cada fila de una lista de casillas, como «Buscar el texto en» de la búsqueda. Si la desactiva, al moverse por la lista solo oye cada fila y si está marcada. Control+H sigue diciendo la explicación siempre.
 - **Sonidos**: activar, silenciar, volumen, paquete y una lista con cada evento para activar o desactivar su sonido, con un botón para probarlo.
 - **Listas**: elementos por página y fechas relativas o completas.
-- **Notificaciones** (también quién lee los avisos en segundo plano: el lector o una voz SAPI 5 con su voz, velocidad y volumen), **Teclas globales** (ver arriba), **Actions** (vigilancia de ejecuciones y hora en los registros), **Git**, **Editor** (confirmar al descartar, firma y si el tabulador escribe tabulaciones), **Red y registro**.
+- **Notificaciones** (también quién lee los avisos en segundo plano: el lector o una voz SAPI 5 con su voz, velocidad y volumen), **Teclas globales** (ver arriba), **Actions** (vigilancia de ejecuciones: de qué resultados avisar, sonido, voz y notificación de Windows; y hora en los registros), **Git**, **Editor** (confirmar al descartar, firma y si el tabulador escribe tabulaciones), **Red y registro**.
 - **Columnas de las listas**: columnas visibles y su orden en cada lista.
 - **Secciones**: para la ventana principal y para la de un repositorio, qué secciones se ven (casillas) y en qué orden (Subir y Bajar). «Resultados de la búsqueda» y «Resumen» no se pueden ocultar. Si abre una sección oculta desde otro sitio, se dice que está oculta.
 

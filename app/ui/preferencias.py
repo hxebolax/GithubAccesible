@@ -213,8 +213,18 @@ def paginas(paquetes: list[str], voces_sapi: list[str] | None = None) -> tuple[P
 			Opcion("acciones.vigilar_tras_enviar", N_("Tras en&viar cambios con git, avisar del resultado de sus ejecuciones"), BOOL,
 				N_("Después de un push a GitHub desde la ventana de git, vigila las ejecuciones de Actions que lance ese commit "
 					"y dice si han ido bien o mal. Si el repositorio no tiene Actions, no dice nada.")),
+			Opcion("acciones.avisar_resultados", N_("Avisar de las ejecuciones vigiladas que &terminan:"), OPCION,
+				N_("Vale para todo lo vigilado: «Avisarme cuando termine», «Avisar al terminar cada ejecución de Actions» de un repositorio "
+					"y lo que lanza un push. Si elige solo las que fallan, de las que van bien no se dice nada."),
+				opciones=(("todas", N_("Todas, vayan bien o mal")), ("fallidas", N_("Solo las que fallan, se cancelan o no terminan bien")),
+					("correctas", N_("Solo las que van bien")))),
+			Opcion("acciones.sonido_al_terminar", N_("&Sonido al terminar una ejecución vigilada"), BOOL,
+				N_("Un sonido de éxito o de fallo según el resultado. Cada sonido se puede quitar también en Preferencias, Sonidos.")),
+			Opcion("acciones.voz_al_terminar", N_("Decir por vo&z el resultado de una ejecución vigilada"), BOOL,
+				N_("Dice el repositorio, el flujo, la rama y el resultado. Lo dice el lector o la voz SAPI 5, según "
+					"Preferencias, Notificaciones, «Leer los avisos en segundo plano con».")),
 			Opcion("acciones.notificacion_windows", N_("Notificación de &Windows al terminar una ejecución vigilada"), BOOL,
-				N_("Además del sonido y el aviso por voz, muestra un aviso del sistema.")),
+				N_("Además del sonido y el aviso por voz, si están activados, muestra un aviso del sistema.")),
 			Opcion("acciones.mostrar_horas", N_("&Mostrar la hora en cada línea de los registros"), BOOL,
 				N_("En la ventana de una ejecución, pone al principio de cada línea del registro la hora en que se escribió.")),
 		)),

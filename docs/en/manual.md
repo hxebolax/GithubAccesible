@@ -219,7 +219,13 @@ The application can notify you when a run finishes even if you have no window op
 - When you push changes to GitHub from the git window, the runs triggered by that commit are watched automatically and you are told how they went. If the repository has no Actions, nothing is said.
 - Tools, “Watched Actions runs”, shows what is being watched and lets you stop watching it.
 
-What is being watched is remembered when you close the application. The interval, the Windows notification and watching after a push are chosen in Preferences, Actions.
+What is being watched is remembered when you close the application. In Preferences, Actions, you choose for everything that is watched at once:
+
+- Which runs to report: all of them, only the ones that fail (including canceled runs or runs that don't finish successfully) or only the ones that succeed.
+- Whether the success or failure sound plays.
+- Whether the result is announced by voice (by the screen reader or the SAPI 5 voice, depending on Preferences, Notifications).
+- Whether a Windows notification is also shown.
+- How often GitHub is checked and whether the runs triggered by each push are watched.
 
 ## Releases, gists, discussions and projects
 
@@ -256,7 +262,7 @@ Tools, Preferences (Ctrl+P). Changes are applied immediately in the open windows
   - **Help**: every control has a help text, the same one that Ctrl+H reads. The screen reader can also read it automatically when you reach the control. “Help: read it when focus reaches buttons and checkboxes” (on by default) reads it on buttons and standalone checkboxes. “Help: also read it on every row of checkbox lists” (off by default) repeats it on each row of a checkbox list, such as “Search text in” in the search window. If you turn it off, when you move through the list you only hear each row and whether it is checked. Ctrl+H always reads the help.
 - **Sounds**: enable, mute, volume, sound pack and a list of every event to turn its sound on or off, with a button to test it.
 - **Lists**: items per page and relative or full dates.
-- **Notifications** (including who reads background messages: the screen reader or a SAPI 5 voice with its voice, rate and volume), **Global hotkeys** (see above), **Actions** (watching runs and timestamps in logs), **Git**, **Editor** (confirm before discarding, signature and whether Tab types tab characters), **Network and logging**.
+- **Notifications** (including who reads background messages: the screen reader or a SAPI 5 voice with its voice, rate and volume), **Global hotkeys** (see above), **Actions** (watching runs: which results to report, sound, voice and Windows notification; and timestamps in logs), **Git**, **Editor** (confirm before discarding, signature and whether Tab types tab characters), **Network and logging**.
 - **List columns**: visible columns and their order in each list.
 - **Sections**: for the main window and for the repository window, which sections are shown (checkboxes) and in what order (Move up and Move down). “Search results” and “Overview” cannot be hidden. If you open a hidden section from somewhere else, you are told that it is hidden.
 

@@ -19,6 +19,9 @@ def _ejecutar_main(datos, *argumentos):
 		[sys.executable, str(RAIZ / "main.py"), "--comprobar-arranque", *argumentos],
 		capture_output=True,
 		text=True,
+		# La salida de wx y de Windows puede venir en la página de códigos ANSI: sin errors="replace"
+		# el hilo lector falla con UnicodeDecodeError (aviso de pytest) aunque la prueba pase.
+		errors="replace",
 		timeout=120,
 		env=entorno,
 		cwd=str(RAIZ),
