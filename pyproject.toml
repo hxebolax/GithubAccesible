@@ -3,7 +3,7 @@
 [project]
 name = "github-accesible"
 # Debe coincidir con APP_VERSION de app/core/version.py (lo comprueba una prueba).
-version = "1.0.13"
+version = "1.0.14"
 description = "Aplicación de escritorio accesible para Windows hecha con wxPython."
 # Versión mínima de Python del proyecto: ajústela a la elegida al crearlo.
 requires-python = ">=3.15"

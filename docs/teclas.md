@@ -19,6 +19,7 @@ En toda la aplicación, elegir algo (una sección, una opción de un desplegable
 - Control+Mayúsculas+U: cambiar de cuenta.
 - Control+P: Preferencias.
 - Control+Mayúsculas+H: historial de avisos de voz.
+- Control+Mayúsculas+Y: Traductor.
 - Control+Mayúsculas+O: paleta de órdenes (también en las demás ventanas).
 - F1: manual. Mayúsculas+F1: lista de teclas.
 - Control+Q: salir.
@@ -70,7 +71,7 @@ Se cambian en Preferencias, Teclas globales.
 
 ## Issue
 
-- En la conversación: Intro ver en HTML, Control+N comentar, Control+R responder citando, F2 editar, Suprimir borrar, Control+E reaccionar, Control+C copiar, Control+B navegador, F5 actualizar.
+- En la conversación: Intro ver en HTML, Control+N comentar, Control+R responder citando, F2 editar, Suprimir borrar, Control+E reaccionar, Control+C copiar, Control+T traducir el elemento, Control+Mayúsculas+T traducir toda la conversación, Control+B navegador, F5 actualizar. Igual en la pestaña Conversación de un pull request.
 - Control+Mayúsculas+E editar título y descripción, Control+Mayúsculas+L etiquetas, Control+Mayúsculas+A asignados, Control+Mayúsculas+M hito, Control+Mayúsculas+B navegador, Control+Mayúsculas+C enlace.
 - Control+W cerrar.
 
@@ -126,6 +127,7 @@ Se cambian en Preferencias, Teclas globales.
 ## Discusión
 
 - Control+N comentar, Control+R responder, Control+M marcar como respuesta, Control+U votar, F7 ver con formato.
+- Control+T traducir el elemento elegido, Control+Mayúsculas+T traducir toda la discusión.
 - F5, Control+B, Control+Mayúsculas+C y Control+W.
 
 ## Proyecto
@@ -170,10 +172,19 @@ Se cambian en Preferencias, Teclas globales.
 - Control+D: decir el estado de la descarga elegida.
 - Escape: cerrar la ventana (las descargas siguen).
 
+## Traductor
+
+- Control+Mayúsculas+Y: abrir la ventana «Traductor» (Herramientas, «Traductor»).
+- Control+Intro: traducir.
+- Alt+I: intercambiar los idiomas.
+- Alt+C: copiar la traducción. Alt+V: verla formateada.
+- Escape: cerrar.
+
 ## Editor de textos
 
 - Control+Intro: enviar.
 - F7: vista previa con formato.
 - Alt+J: adjuntar archivos de texto, como registros (en issues, pull requests, discusiones y comentarios).
+- Alt+D: «Traducir al enviar a», el idioma en que se enviará lo escrito (también en «Nueva issue»).
 - Tabulador y Mayúsculas+Tabulador: control siguiente y anterior. Si en Preferencias, Editor, se activa «El tabulador escribe una tabulación», Tabulador escribe una tabulación y Control+Tabulador pasa de control.
 - Escape: cerrar (ofrece guardar un borrador).

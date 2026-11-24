@@ -733,7 +733,8 @@ class PanelConversacion(wx.Panel):
 			ayuda=_(
 				"Descripción, comentarios, revisiones y eventos en orden. Intro: ver formateado. Control+N: comentar. "
 				"Control+R: responder citando. F2: editar mi comentario. Suprimir: borrar mi comentario. "
-				"Control+E: reaccionar. Control+C: copiar. Control+B: abrir en el navegador. F5: actualizar. "
+				"Control+E: reaccionar. Control+C: copiar. Control+T: traducir el elemento; Control+Mayúsculas+T: toda la "
+				"conversación. Control+B: abrir en el navegador. F5: actualizar. "
 				"Izquierda y derecha leen las columnas; el texto completo está en el campo Texto."
 			))
 		self.texto = crear_texto(self, _("&Texto:"), raiz, alto=160, proporcion=1,
@@ -762,6 +763,10 @@ class PanelConversacion(wx.Panel):
 			(_("Reacciona&r…\tCtrl+E"), self.reaccionar, _("Añade una reacción (me gusta, corazón, cohete...) al elemento elegido.")),
 			(_("Ver en &HTML\tIntro"), self.ver_html, _("Muestra el elemento formateado, con encabezados y enlaces navegables.")),
 			(_("Co&piar\tCtrl+C"), self.copiar, _("Copia el texto completo del elemento elegido.")),
+			(_("Tra&ducir…\tCtrl+T"), self.traducir,
+				_("Abre el traductor con el texto del elemento elegido ya traducido al idioma de lectura (Preferencias, Traducción).")),
+			(_("Traducir toda la conver&sación…\tCtrl+Shift+T"), self.traducir_conversacion,
+				_("Traduce de una vez la descripción y todos los comentarios, cada uno con su autor.")),
 			(_("Abrir en el &navegador\tCtrl+B"), self.abrir_navegador, _("Abre el elemento elegido en el navegador web.")),
 			(_("Act&ualizar\tF5"), self.cargar, _("Vuelve a pedir la conversación a GitHub.")),
 		]
@@ -782,6 +787,8 @@ class PanelConversacion(wx.Panel):
 			(wx.MOD_NONE, wx.WXK_DELETE): self.borrar_mio,
 			(wx.MOD_CONTROL, ord("E")): self.reaccionar,
 			(wx.MOD_CONTROL, ord("C")): self.copiar,
+			(wx.MOD_CONTROL, ord("T")): self.traducir,
+			(wx.MOD_CONTROL | wx.MOD_SHIFT, ord("T")): self.traducir_conversacion,
 			(wx.MOD_CONTROL, ord("B")): self.abrir_navegador,
 			(wx.MOD_NONE, wx.WXK_F5): self.cargar,
 		}
@@ -977,6 +984,26 @@ class PanelConversacion(wx.Panel):
 		markdown = elemento.texto if elemento.tiene_texto else elemento.resumen
 		titulo = _("{t} de {a} en #{n}").format(t=elemento.tipo, a=elemento.autor or _("(desconocido)"), n=self.numero)
 		visor_ayuda.mostrar_documento(self, titulo, f"# {titulo}\n\n{markdown}")
+
+	def traducir(self) -> None:
+		"""El elemento elegido, traducido en la ventana «Traductor» (incidencia #13)."""
+		elemento = self._requiere(lambda e: e.tiene_texto, _("Este elemento no tiene texto que traducir."))
+		if elemento is None:
+			return
+		from app.ui.traductor import abrir_traductor
+
+		abrir_traductor(self.ctx, self, elemento.texto, _("{a}, {t}").format(a=elemento.autor, t=elemento.tipo), traducir_ya=True)
+
+	def traducir_conversacion(self) -> None:
+		"""Descripción y comentarios, cada uno con su autor como encabezado, traducidos de una vez."""
+		partes = [f"### {e.autor} ({e.tipo}, {e.fecha})\n\n{e.texto.strip()}" for e in self.elementos if e.tiene_texto]
+		if not partes:
+			self.ctx.avisar(_("La conversación no tiene texto que traducir."))
+			return
+		from app.ui.traductor import abrir_traductor
+
+		titulo = (self.issue or {}).get("title", "")
+		abrir_traductor(self.ctx, self, "\n\n".join(partes), titulo or _("Conversación"), traducir_ya=True)
 
 	def copiar(self) -> None:
 		elemento = self.elemento

@@ -19,6 +19,7 @@ Throughout the application, choosing something (a section, an option in a drop-d
 - Ctrl+Shift+U: switch account.
 - Ctrl+P: Preferences.
 - Ctrl+Shift+H: history of spoken messages.
+- Ctrl+Shift+Y: Translator.
 - Ctrl+Shift+O: command palette (also in the other windows).
 - F1: user guide. Shift+F1: keyboard shortcuts.
 - Ctrl+Q: exit.
@@ -70,7 +71,7 @@ You can change them in Preferences, Global hotkeys.
 
 ## Issue
 
-- In the conversation: Enter view as HTML, Ctrl+N comment, Ctrl+R quote reply, F2 edit, Delete delete, Ctrl+E react, Ctrl+C copy, Ctrl+B browser, F5 refresh.
+- In the conversation: Enter view as HTML, Ctrl+N comment, Ctrl+R quote reply, F2 edit, Delete delete, Ctrl+E react, Ctrl+C copy, Ctrl+T translate the item, Ctrl+Shift+T translate the whole conversation, Ctrl+B browser, F5 refresh. The same in the Conversation tab of a pull request.
 - Ctrl+Shift+E edit title and description, Ctrl+Shift+L labels, Ctrl+Shift+A assignees, Ctrl+Shift+M milestone, Ctrl+Shift+B browser, Ctrl+Shift+C link.
 - Ctrl+W close.
 
@@ -126,6 +127,7 @@ You can change them in Preferences, Global hotkeys.
 ## Discussion
 
 - Ctrl+N comment, Ctrl+R reply, Ctrl+M mark as answer, Ctrl+U upvote, F7 view formatted.
+- Ctrl+T translate the selected item, Ctrl+Shift+T translate the whole discussion.
 - F5, Ctrl+B, Ctrl+Shift+C and Ctrl+W.
 
 ## Project
@@ -170,10 +172,19 @@ You can change them in Preferences, Global hotkeys.
 - Ctrl+D: say the status of the selected download.
 - Escape: close the window (the downloads continue).
 
+## Translator
+
+- Ctrl+Shift+Y: open the “Translator” window (Tools, “Translator”).
+- Ctrl+Enter: translate.
+- Alt+S: swap languages.
+- Alt+C: copy the translation. Alt+V: view it formatted.
+- Escape: close.
+
 ## Text editor
 
 - Ctrl+Enter: send.
 - F7: formatted preview.
 - Alt+F: attach text files, such as logs (in issues, pull requests, discussions and comments).
+- Alt+W: “Translate when sending into”, the language what you write will be sent in (also in “New issue”).
 - Tab and Shift+Tab: next and previous control. If Preferences, Editor, “The Tab key types a tab character” is on, Tab types a tab character and Ctrl+Tab moves between controls.
 - Escape: close (offers to save a draft).

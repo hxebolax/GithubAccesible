@@ -136,6 +136,7 @@ Issues, comments, pull request descriptions, reviews and release notes are all w
   - **As a secret gist, with its link**: the file is uploaded to a gist that does not appear in listings, and the text only contains its link. It is the only option if the file does not fit in the text (GitHub allows 65,536 characters). It needs the “gist” permission, which signing in with the browser already requests.
 
   Before attaching a log, check that it does not contain passwords, tokens or personal data: anyone who can see the issue will read it, and a secret gist can be opened by anyone who has the link. GitHub does not allow uploading images or other binary files from applications, only from its website: send the text and then open it in the browser (Ctrl+B) to drag the file there.
+- **Translate when sending into** (in the editor and in “New issue”): write in your language and send in another, reviewing the translation first. See “Translator”.
 
 ## The diff viewer
 
@@ -260,8 +261,27 @@ Everything the application downloads (release assets, Actions artifacts and logs
 
 In Preferences, **Downloads**, you choose how many download at the same time (3 by default; the rest wait in the queue), whether unfinished downloads continue when the application opens, and whether the “Downloads” window opens every time one starts. The folder where they are saved is in Preferences, General.
 
+## Translator
+
+To read what other people write in another language, and to write in yours and send in another. Only what you ask for is translated (never the interface), always in the background.
+
+- **Reading translated**: in the conversation of an issue or pull request, **Ctrl+T** translates the selected item and **Ctrl+Shift+T** the whole conversation at once, each part with its author. The same works in a discussion (also from the context menu). The “Translator” window opens with the text already translated into your reading language (by default, the interface language).
+- **The “Translator” window** (Tools, “Translator”, Ctrl+Shift+Y): original text, source language (“Detect language” or a specific one), target language, engine and the translated text. Ctrl+Enter translates; “Swap languages” turns everything around so you can reply; “Copy translation” and “View formatted” (as a page, with headings and links); Escape closes it.
+- **Writing in another language**: the editor and the “New issue” form have **“Translate when sending into”**. Write in your language, choose the language it will be sent in (more than a hundred) and press Send: the title and text are translated and shown to you in “Review the translation before sending”, where you can correct them. Nothing is sent until you press “Send the translation”; “Go back and edit” sends nothing. You can add the original, collapsed, at the end in case the translation is unclear. The last language you chose is remembered.
+- Code blocks (```), links, @mentions and #references are not translated.
+
+**Engines** (Preferences, Translation):
+
+- **Google Translate**, the default: free and without a key. It is not an official API: after many translations in a row, Google may stop responding for a while; the application politely waits and retries and, if that fails, explains it.
+- **MyMemory**: free and without a key, with a daily limit (about 5,000 characters; 50,000 if you enter an email in Preferences, Translation keys).
+- **LibreTranslate**: open source; on your own server or on libretranslate.com with a key.
+- With your own key: **Google Translate (Google Cloud Translation, official)**, **Microsoft Translator**, **DeepL** (the free key works), and the AI models **Gemini** (has a free tier), **ChatGPT** (OpenAI or any compatible service), **DeepSeek** and **Claude**, which translate more naturally. The cheapest model of each is used by default, and you can change it.
+
+If the chosen engine fails, the free ones are tried (Google, then MyMemory), unless you turn this off. Keys are entered in Preferences, “Translation keys”, and are stored encrypted with your Windows user account. “Test the chosen engine” checks right away whether an engine and its key work, without saving them.
+
 ## Tools
 
+- **Translator** (Ctrl+Shift+Y): see “Translator”.
 - **SSH and GPG keys**: the account's keys (add from a file or by pasting them, delete) and generate a new SSH key and upload it.
 - **Git settings**: name, email, default branch, line endings, rebase when pulling, and signing.
 - **API rate limit**, **GitHub status**, **Spoken message history**, log folder and diagnostic package.
@@ -279,6 +299,7 @@ Tools, Preferences (Ctrl+P). Changes are applied immediately in the open windows
 - **Lists**: items per page, relative or full dates, and whether a profile's activity continues with earlier years (see “Profiles”).
 - **Downloads**: how many at a time, continuing unfinished downloads when the application opens, and opening the “Downloads” window when one starts.
 - **Notifications** (including who reads background messages: the screen reader or a SAPI 5 voice with its voice, rate and volume), **Global hotkeys** (see above), **Actions** (watching runs: which results to report, sound, voice and Windows notification; and timestamps in logs), **Git**, **Editor** (confirm before discarding, signature and whether Tab types tab characters), **Network and logging**.
+- **Translation**: engine, the language to translate what you read into and from, the language to translate what you send into, adding the collapsed original, trying the free engines if the chosen one fails, and “Test the chosen engine”. **Translation keys**: the email for MyMemory, the LibreTranslate server, and the keys and models of the engines that need them (see “Translator”).
 - **List columns**: visible columns and their order in each list.
 - **Sections**: for the main window and for the repository window, which sections are shown (checkboxes) and in what order (Move up and Move down). “Search results” and “Overview” cannot be hidden. If you open a hidden section from somewhere else, you are told that it is hidden.
 

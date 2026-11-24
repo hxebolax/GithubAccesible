@@ -201,6 +201,8 @@ class VentanaPrincipal(wx.Frame):
 		self._item(herramientas, _("Des&cargas…\tCtrl+Shift+D"),
 			_("Gestor de descargas: progreso, pausar, reanudar, cancelar y errores de todas las descargas."),
 			self.abrir_descargas, "descargas")
+		self._item(herramientas, _("Traduct&or…	Ctrl+Shift+Y"),
+			_("Traduce el texto que escriba o pegue, con el motor y los idiomas que elija."), self.abrir_traductor, "traductor")
 		herramientas.AppendSeparator()
 		self._item(herramientas, _("&Límite de uso de la API"), _("Cuántas peticiones quedan y cuándo se renuevan."), self.limite_uso)
 		self._item(herramientas, _("&Estado de GitHub"), _("Si GitHub tiene incidencias en este momento."), self.estado_github)
@@ -997,6 +999,12 @@ class VentanaPrincipal(wx.Frame):
 		if self._sin_leer:
 			return _("{a}: {n} notificaciones sin leer").format(a=NOMBRE_APLICACION, n=self._sin_leer)
 		return NOMBRE_APLICACION
+
+	def abrir_traductor(self) -> None:
+		"""Ventana «Traductor» vacía, para traducir cualquier texto (incidencia #13)."""
+		from app.ui.traductor import abrir_traductor
+
+		abrir_traductor(self.ctx, self)
 
 	def abrir_descargas(self) -> None:
 		"""Ventana «Descargas» (el gestor). Desde la bandeja o una tecla global también."""

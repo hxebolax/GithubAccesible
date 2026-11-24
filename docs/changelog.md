@@ -2,6 +2,17 @@
 
 Cada versión tiene su apartado, de la más reciente a la más antigua. Dentro de cada versión, los cambios se agrupan en Novedades, Mejoras y Correcciones, contados con palabras de quien usa la aplicación.
 
+## Versión 1.0.14 - 2026-11-24
+
+### Novedades
+
+- **Traductor** (incidencia #13), para leer lo que se escribe en otros idiomas y para escribir en el suyo y enviar en otro:
+  - En la conversación de una issue, un pull request o una discusión, **Control+T** traduce el elemento elegido y **Control+Mayúsculas+T** toda la conversación, cada parte con su autor.
+  - Ventana **«Traductor»** (Herramientas, Control+Mayúsculas+Y): más de cien idiomas de origen y destino, detección del idioma, intercambiar los idiomas, copiar y ver la traducción formateada.
+  - **«Traducir al enviar a»** en el editor y en «Nueva issue»: escriba en español, elija por ejemplo inglés y, al enviar, revise y corrija la traducción del título y del texto antes de que se envíe. Puede añadir el original plegado al final.
+  - Motores a elegir: Google Translate (de fábrica, gratis y sin clave), MyMemory (gratis) y LibreTranslate; y, con su propia clave, Google Translate oficial (Cloud Translation), Microsoft Translator, DeepL y las inteligencias artificiales Gemini, ChatGPT, DeepSeek y Claude, con el modelo más barato de cada una. Si el elegido falla, se traduce con los gratuitos.
+  - Preferencias, «Traducción» y «Claves de traducción» (cifradas), con un botón para probar el motor. Los bloques de código, enlaces, @menciones y #referencias no se traducen.
+
 ## Versión 1.0.13 - 2026-11-24
 
 ### Novedades

@@ -49,7 +49,7 @@ LETRAS_FIJAS = "tcvn"
 
 def letras_fijas() -> set[str]:
 	"""Las de ``LETRAS_FIJAS`` en el idioma de la interfaz (en inglés «&Title», «&Preview»...)."""
-	textos = (_("&Título:"), _("&Vista previa"), _("&Crear la issue"), _("Ca&ncelar"))
+	textos = (_("&Título:"), _("&Vista previa"), _("&Crear la issue"), _("Ca&ncelar"), _("Tra&ducir al enviar a:"))
 	return {t[t.index("&") + 1].lower() for t in textos if "&" in t[:-1]}
 
 
@@ -116,6 +116,16 @@ class DialogoFormularioIssue(wx.Dialog):
 		self.panel.SetSizer(cuerpo)
 		self.panel.SetupScrolling(scroll_x=False)
 		raiz.Add(self.panel, 1, wx.EXPAND)
+
+		# Escribir en un idioma y crear la issue en otro (incidencia #13).
+		from app.ui.traductor import crear_selector_idioma
+
+		self.selector_traduccion, self._codigos_traduccion = crear_selector_idioma(
+			self, raiz, _("Tra&ducir al enviar a:"), str(contexto.config.obtener("traduccion.destino_envio", "") or ""),
+			con_ninguno=_("No traducir"))
+		self.selector_traduccion.SetHelpText(_(
+			"Escriba en su idioma y elija aquí en cuál se creará la issue: se traducen el título y el texto, se le "
+			"enseñan para revisarlos y solo entonces se crea."))
 
 		fila = wx.BoxSizer(wx.HORIZONTAL)
 		self.boton_vista = wx.Button(self, label=_("&Vista previa"))
@@ -274,6 +284,33 @@ class DialogoFormularioIssue(wx.Dialog):
 			foco_ui.enfocar(self.control_de(faltas[0]))
 			return
 		valores = {"titulo": titulo, "cuerpo": self.cuerpo()}
+		destino = self.idioma_envio
+		self.ctx.config.establecer("traduccion.destino_envio", destino)
+		if destino:
+			# Escribir en un idioma y crear la issue en otro (incidencia #13): se revisa antes de enviar.
+			from app.ui.traductor import revisar_y_enviar
+
+			self._enviando = True
+			self.boton_crear.Disable()
+
+			def con_traduccion(titulo_traducido: str | None, cuerpo: str) -> None:
+				self._enviando = False
+				self._crear({"titulo": titulo_traducido or titulo, "cuerpo": cuerpo})
+
+			def volver() -> None:
+				self._enviando = False
+				if self:
+					self.boton_crear.Enable()
+
+			revisar_y_enviar(self, self.ctx, titulo, valores["cuerpo"], destino, con_traduccion, volver)
+			return
+		self._crear(valores)
+
+	@property
+	def idioma_envio(self) -> str:
+		return self._codigos_traduccion[max(0, self.selector_traduccion.GetSelection())]
+
+	def _crear(self, valores: dict) -> None:
 		self._enviando = True
 		self.boton_crear.Disable()
 		self.estado.SetLabel(_("Creando la issue…"))

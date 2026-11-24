@@ -136,6 +136,7 @@ Las issues, comentarios, descripciones de pull requests, revisiones y notas de r
   - **Como gist secreto, con su enlace**: el archivo se sube a un gist que no sale en los listados y el texto lleva solo su enlace. Es la única opción si el archivo no cabe en el texto (GitHub admite 65 536 caracteres). Necesita el permiso «gist», que ya pide el inicio de sesión con el navegador.
 
   Antes de adjuntar un registro, revise que no lleve contraseñas, tokens ni datos personales: lo leerá cualquiera que vea la issue, y un gist secreto lo abre cualquiera que tenga el enlace. GitHub no deja subir imágenes ni otros archivos binarios desde aplicaciones, solo desde su web: envíe el texto y ábralo después en el navegador (Control+B) para arrastrar el archivo.
+- **Traducir al enviar a** (en el editor y en «Nueva issue»): escriba en su idioma y envíe en otro, revisando antes la traducción. Ver «Traductor».
 
 ## El visor de diferencias
 
@@ -260,8 +261,27 @@ Todo lo que descarga la aplicación (recursos de una release, artefactos y regis
 
 En Preferencias, **Descargas**, se eligen cuántas se bajan a la vez (de fábrica, 3; las demás esperan en cola), si al abrir la aplicación siguen las que quedaron a medias y si se abre la ventana «Descargas» cada vez que empieza una. La carpeta donde se guardan está en Preferencias, General.
 
+## Traductor
+
+Para leer lo que otras personas escriben en otro idioma y para escribir en el suyo y enviar en otro. Solo se traduce lo que usted pide (nunca la interfaz) y siempre en segundo plano.
+
+- **Leer traducido**: en la conversación de una issue o un pull request, **Control+T** traduce el elemento elegido y **Control+Mayúsculas+T** toda la conversación de una vez, cada parte con su autor. En una discusión, igual (también en el menú contextual). Se abre la ventana «Traductor» con el texto ya traducido al idioma de lectura (de fábrica, el de la interfaz).
+- **La ventana «Traductor»** (Herramientas, «Traductor», Control+Mayúsculas+Y): texto original, idioma de origen («Detectar el idioma» o uno concreto), idioma de destino, motor y el texto traducido. Control+Intro traduce; «Intercambiar los idiomas» da la vuelta a todo para contestar; «Copiar la traducción» y «Ver formateada» (como página, con encabezados y enlaces); Escape la cierra.
+- **Escribir en otro idioma**: el editor y el formulario de «Nueva issue» tienen **«Traducir al enviar a»**. Escriba en su idioma, elija en cuál se enviará (más de cien) y pulse Enviar: se traducen el título y el texto y se le enseñan en «Revisar la traducción antes de enviar», donde puede corregirlos. Solo se envía al pulsar «Enviar la traducción»; «Volver a editar» no envía nada. Puede añadir el original plegado al final, por si la traducción no se entiende bien. Se recuerda el último idioma elegido.
+- Los bloques de código (```), los enlaces, las @menciones y las #referencias no se traducen.
+
+**Motores** (Preferencias, Traducción):
+
+- **Google Translate**, de fábrica: gratis y sin clave. No es una API oficial: si se hacen muchas traducciones seguidas, Google puede dejar de atender un rato; la aplicación espera y reintenta con educación y, si no, lo explica.
+- **MyMemory**: gratis y sin clave, con un límite diario (unos 5.000 caracteres; 50.000 si escribe un correo en Preferencias, Claves de traducción).
+- **LibreTranslate**: libre; en su propio servidor o en libretranslate.com con clave.
+- Con su propia clave: **Google Translate (Google Cloud Translation, oficial)**, **Microsoft Translator**, **DeepL** (la clave gratuita sirve), y las inteligencias artificiales **Gemini** (tiene plan gratuito), **ChatGPT** (OpenAI o cualquier servicio compatible), **DeepSeek** y **Claude**, que traducen de forma más natural. De fábrica se usa el modelo más barato de cada una, y se puede cambiar.
+
+Si el motor elegido falla, se prueban los gratuitos (Google y luego MyMemory), salvo que lo desactive. Las claves se escriben en Preferencias, «Claves de traducción», y se guardan cifradas con su usuario de Windows. «Probar el motor elegido» comprueba al momento si un motor y su clave funcionan, sin guardarlos.
+
 ## Herramientas
 
+- **Traductor** (Control+Mayúsculas+Y): ver «Traductor».
 - **Claves SSH y GPG**: claves de la cuenta (añadir desde un archivo o pegándolas, borrar) y generar una clave SSH nueva y subirla.
 - **Configuración de git**: nombre, correo, rama por defecto, fin de línea, reorganizar al tirar y firma.
 - **Límite de uso de la API**, **Estado de GitHub**, **Historial de avisos de voz**, carpeta de registros y paquete de diagnóstico.
@@ -279,6 +299,7 @@ Herramientas, Preferencias (Control+P). Los cambios se aplican al momento en las
 - **Listas**: elementos por página, fechas relativas o completas y si la actividad de un perfil sigue con los años anteriores (ver «Perfiles»).
 - **Descargas**: cuántas a la vez, seguir al abrir la aplicación con las que quedaron a medias y abrir la ventana «Descargas» al empezar una.
 - **Notificaciones** (también quién lee los avisos en segundo plano: el lector o una voz SAPI 5 con su voz, velocidad y volumen), **Teclas globales** (ver arriba), **Actions** (vigilancia de ejecuciones: de qué resultados avisar, sonido, voz y notificación de Windows; y hora en los registros), **Git**, **Editor** (confirmar al descartar, firma y si el tabulador escribe tabulaciones), **Red y registro**.
+- **Traducción**: motor, idioma al que se traduce lo que lee y de cuál, idioma al que se traduce lo que envía, añadir el original plegado, probar con los motores gratuitos si falla el elegido, y «Probar el motor elegido». **Claves de traducción**: el correo para MyMemory, el servidor de LibreTranslate y las claves y modelos de los motores que las piden (ver «Traductor»).
 - **Columnas de las listas**: columnas visibles y su orden en cada lista.
 - **Secciones**: para la ventana principal y para la de un repositorio, qué secciones se ven (casillas) y en qué orden (Subir y Bajar). «Resultados de la búsqueda» y «Resumen» no se pueden ocultar. Si abre una sección oculta desde otro sitio, se dice que está oculta.
 

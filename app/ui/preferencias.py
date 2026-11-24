@@ -27,11 +27,13 @@ from app.ui.dialogo_preferencias import (
 	CARPETA,
 	ENTERO,
 	OPCION,
+	SECRETO,
 	TECLA,
 	TEXTO,
 	DialogoPreferencias,
 	Opcion,
 	Pagina,
+	mostrar_aviso,
 )
 
 log = logging.getLogger(__name__)
@@ -53,6 +55,86 @@ TITULO_SONIDOS = N_("Sonidos")
 TITULO_NOTIFICACIONES = N_("Notificaciones")
 TITULO_COLUMNAS = N_("Columnas de las listas")
 TITULO_SECCIONES = N_("Secciones")
+TITULO_TRADUCCION = N_("Traducción")
+TITULO_CLAVES_TRADUCCION = N_("Claves de traducción")
+
+
+def _idiomas_para_preferencias() -> tuple[tuple[str, str], ...]:
+	"""(código, nombre sin traducir) de los idiomas del traductor, en el orden alfabético del idioma de la interfaz."""
+	from app.services import traduccion as tr
+
+	return tuple((codigo, nombre) for codigo, nombre, _ingles in sorted(tr.IDIOMAS, key=lambda i: _(i[1]).casefold()))
+
+
+def _paginas_traduccion() -> tuple[Pagina, ...]:
+	"""Traducción (incidencia #13). Letras sin A, C, P ni R (botones del diálogo)."""
+	from app.services import traduccion as tr
+
+	idiomas = _idiomas_para_preferencias()
+	return (
+		Pagina(TITULO_TRADUCCION, (
+			Opcion("traduccion.motor", N_("&Motor de traducción:"), OPCION,
+				N_("Servicio que traduce. Google Translate gratis funciona sin clave, pero no es una API oficial y a veces "
+					"rechaza peticiones durante un rato. MyMemory también es gratis y sin clave, con un límite diario. "
+					"LibreTranslate es libre: un servidor propio o el público con clave. Los demás piden una clave "
+					"propia: Google Cloud, Microsoft y DeepL "
+					"traducen al momento; Gemini, ChatGPT, DeepSeek y Claude son inteligencias artificiales que traducen "
+					"de forma más natural. Gemini y DeepL tienen plan gratuito."),
+				opciones=tuple((motor, nombre) for motor, nombre, _clave in tr.MOTORES)),
+			Opcion("traduccion.destino_lectura", N_("Idioma al que se &traduce lo que lee:"), OPCION,
+				N_("Al pulsar Control+T en una conversación, el texto se traduce a este idioma."),
+				opciones=(("", N_("El idioma de la interfaz")), *idiomas)),
+			Opcion("traduccion.origen_lectura", N_("Idioma de &origen de lo que lee:"), OPCION,
+				N_("Normalmente, detectarlo: cada persona escribe en el suyo."),
+				opciones=((tr.AUTO, N_("Detectar el idioma")), *idiomas)),
+			Opcion("traduccion.destino_envio", N_("Idioma al que se traduce lo que &envía:"), OPCION,
+				N_("El que aparece elegido en «Traducir al enviar a» del editor y del formulario de issue. También se "
+					"guarda el último que elija allí."),
+				opciones=(("", N_("No traducir")), *idiomas)),
+			Opcion("traduccion.incluir_original", N_("&Incluir el texto original plegado al final de lo que se envía traducido"),
+				BOOL, N_("Añade al final un apartado plegable con el texto original, por si la traducción no se entiende bien.")),
+			Opcion("traduccion.respaldo", N_("Si el motor elegido falla, probar con los &gratuitos (Google y MyMemory)"), BOOL,
+				N_("Si el motor elegido no responde o da un error, se traduce con Google Translate gratis y, si tampoco "
+					"puede, con MyMemory, en vez de dar el error.")),
+		)),
+		Pagina(TITULO_CLAVES_TRADUCCION, (
+			Opcion("traduccion.correo_mymemory", N_("Correo electrónico para MyMemor&y (opcional):"), TEXTO,
+				N_("MyMemory traduce sin clave unos 5.000 caracteres al día; con un correo, 50.000. Solo se envía a MyMemory.")),
+			Opcion("traduccion.url_libretranslate", N_("Dirección del servidor Libre&Translate:"), TEXTO,
+				N_("La de su propio servidor (por ejemplo, http://localhost:5000) o https://libretranslate.com, que pide clave.")),
+			Opcion("traduccion.clave_libretranslate", N_("Clave de LibreTranslate (si el ser&vidor la pide):"), SECRETO,
+				N_("Solo si el servidor pide clave, como libretranslate.com. Se guarda cifrada.")),
+			Opcion("traduccion.clave_google_cloud", N_("Clave de &Google Translate (Google Cloud Translation):"), SECRETO,
+				N_("Clave de API de un proyecto de Google Cloud con «Cloud Translation API» activada (los primeros "
+					"500.000 caracteres de cada mes son gratis). Se guarda cifrada.")),
+			Opcion("traduccion.clave_microsoft", N_("Clave de &Microsoft Translator (Azure):"), SECRETO,
+				N_("Clave de un recurso «Translator» de Azure (el plan F0 traduce 2 millones de caracteres al mes gratis). "
+					"Se guarda cifrada.")),
+			Opcion("traduccion.region_microsoft", N_("Región del recurso de A&zure (vacío si es global):"), TEXTO,
+				N_("Por ejemplo, westeurope. Déjelo vacío si el recurso es global.")),
+			Opcion("traduccion.clave_deepl", N_("Clave de &DeepL:"), SECRETO,
+				N_("Clave de la API de DeepL. La gratuita (termina en «:fx») traduce 500.000 caracteres al mes. "
+					"Se guarda cifrada.")),
+			Opcion("traduccion.clave_gemini", N_("Clave de G&emini:"), SECRETO,
+				N_("Clave de Google AI Studio. Tiene plan gratuito con un límite de peticiones al día. Se guarda cifrada.")),
+			Opcion("traduccion.modelo_gemini", N_("Modelo de Gem&ini:"), TEXTO,
+				N_("De fábrica, el más barato de Gemini que traduce bien.")),
+			Opcion("traduccion.clave_openai", N_("Clave de &OpenAI (ChatGPT):"), SECRETO,
+				N_("Clave de la API de OpenAI (de pago por uso). Se guarda cifrada.")),
+			Opcion("traduccion.modelo_openai", N_("Modelo de Ope&nAI:"), TEXTO,
+				N_("De fábrica, el más barato de OpenAI.")),
+			Opcion("traduccion.url_openai", N_("Dirección (&URL) de la API de OpenAI:"), TEXTO,
+				N_("Cámbiela para usar otro servicio compatible con la API de OpenAI (OpenRouter, Ollama en este equipo...).")),
+			Opcion("traduccion.clave_deepseek", N_("Clave de Deep&Seek:"), SECRETO,
+				N_("Clave de la API de DeepSeek (de pago por uso, muy barata). Se guarda cifrada.")),
+			Opcion("traduccion.modelo_deepseek", N_("Modelo de DeepSee&k:"), TEXTO,
+				N_("De fábrica, el más barato de DeepSeek.")),
+			Opcion("traduccion.clave_claude", N_("Clave de Claude (Ant&hropic):"), SECRETO,
+				N_("Clave de la API de Anthropic (de pago por uso). Se guarda cifrada.")),
+			Opcion("traduccion.modelo_claude", N_("Modelo de C&laude:"), TEXTO,
+				N_("De fábrica, el más barato de Claude.")),
+		)),
+	)
 
 
 def secciones_de(ventana: str) -> list[tuple[str, str]]:
@@ -274,6 +356,7 @@ def paginas(paquetes: list[str], voces_sapi: list[str] | None = None) -> tuple[P
 				N_("DEBUG guarda mucho detalle para diagnosticar problemas."),
 				opciones=(("INFO", N_("Normal")), ("DEBUG", N_("Detallado (depuración)")), ("WARNING", N_("Solo avisos")), ("ERROR", N_("Solo errores")))),
 		)),
+		*_paginas_traduccion(),
 	)
 
 
@@ -290,7 +373,7 @@ class DialogoPreferenciasGitHub(DialogoPreferencias):
 		from app.ui.accesibilidad import sapi
 
 		self._voces_sapi = sapi.voces()
-		super().__init__(padre, ctx.config, paginas(paquetes, self._voces_sapi), secretos=None, anunciar=lambda t: ctx.avisar(t))
+		super().__init__(padre, ctx.config, paginas(paquetes, self._voces_sapi), secretos=getattr(ctx, "secretos", None), anunciar=lambda t: ctx.avisar(t))
 		self._nombres_idioma_propios()
 		self._crear_pagina_columnas()
 		self._crear_pagina_secciones()
@@ -327,6 +410,14 @@ class DialogoPreferenciasGitHub(DialogoPreferencias):
 			self.boton_probar_voz.Bind(wx.EVT_BUTTON, self._al_probar_voz)
 			panel.GetSizer().Add(self.boton_probar_voz, 0, wx.ALL, 6)
 			panel.Layout()
+		if pagina.titulo == TITULO_TRADUCCION:
+			self.boton_probar_traduccion = wx.Button(panel, label=_("Pro&bar el motor elegido"))
+			self.boton_probar_traduccion.SetHelpText(_(
+				"Traduce una frase de ejemplo con el motor y las claves que hay escritos ahora, sin guardarlos, y dice "
+				"si funciona."))
+			self.boton_probar_traduccion.Bind(wx.EVT_BUTTON, self._al_probar_traduccion)
+			panel.GetSizer().Add(self.boton_probar_traduccion, 0, wx.ALL, 6)
+			panel.Layout()
 		if pagina.titulo == TITULO_SONIDOS:
 			sizer = panel.GetSizer()
 			sizer.Add(wx.StaticText(panel, label=_("&Eventos con sonido (marcados = suenan):")), 0, wx.LEFT | wx.TOP, 6)
@@ -355,6 +446,54 @@ class DialogoPreferenciasGitHub(DialogoPreferencias):
 		if not sapi.hablar(texto, valores["notificaciones.sapi_voz"] or "", valores["notificaciones.sapi_velocidad"],
 				valores["notificaciones.sapi_volumen"]):
 			self.ctx.avisar(_("La voz SAPI 5 no está disponible en este equipo."))
+
+	def ajustes_traduccion(self) -> Any:
+		"""Ajustes del traductor con lo que hay escrito ahora en el diálogo (sin guardarlo)."""
+		from app.services import traduccion as tr
+
+		dialogo = self
+
+		class LoEscrito:
+			"""Lee del diálogo (o, si la opción no está en él, de la configuración); sirve de config y de secretos."""
+
+			def obtener(self, clave: str, por_defecto: Any = None) -> Any:
+				datos = dialogo._controles.get(clave)
+				if datos is None:
+					return dialogo.ctx.config.obtener(clave, por_defecto)
+				opcion, control, _pagina = datos
+				return dialogo._leer_control(opcion, control)
+
+		ajustes = tr.ajustes_desde(LoEscrito(), LoEscrito())
+		ajustes.respaldo = False  # se prueba el motor elegido, no el de respaldo
+		return ajustes
+
+	def _al_probar_traduccion(self, _evento: wx.CommandEvent) -> None:
+		"""Prueba el motor en segundo plano y dice el resultado (o el error, explicado)."""
+		from app.services import traduccion as tr
+
+		ajustes = self.ajustes_traduccion()
+		destino = "en" if tr.idioma_de_la_interfaz() == "es" else "es"
+		texto = _("Gracias por el aviso: lo reviso mañana y le cuento.")
+		nombre = tr.nombre_motor_corto(ajustes.motor)
+		self.boton_probar_traduccion.Disable()
+		self.ctx.avisar(_("Probando {m}…").format(m=nombre))
+
+		def listo(resultado: Any) -> None:
+			if not self:
+				return
+			self.boton_probar_traduccion.Enable()
+			mostrar_aviso(self, _("{m} funciona. «{t}» se traduce como:\n\n{r}").format(m=nombre, t=texto, r=resultado.texto),
+				_("Prueba del traductor"))
+
+		def fallo(error: BaseException) -> None:
+			if not self:
+				return
+			self.boton_probar_traduccion.Enable()
+			mensaje = getattr(error, "mensaje_usuario", "") or str(error)
+			mostrar_aviso(self, _("{m} no ha funcionado: {e}").format(m=nombre, e=mensaje), _("Prueba del traductor"))
+
+		self.ctx.tareas.enviar(lambda _tarea: tr.traducir(texto, destino, tr.AUTO, ajustes), al_terminar=listo, al_fallar=fallo,
+			nombre="probar_traduccion", duplicadas="permitir")
 
 	def _al_probar(self, _evento: wx.CommandEvent) -> None:
 		indice = self.lista_eventos.GetSelection()

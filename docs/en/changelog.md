@@ -2,6 +2,17 @@
 
 Each version has its own section, from the newest to the oldest. Within each version, changes are grouped into New, Improvements and Fixes, described from the point of view of the person using the application.
 
+## Version 1.0.14 - 2026-11-24
+
+### New
+
+- **Translator** (issue #13), to read what is written in other languages and to write in yours and send in another:
+  - In the conversation of an issue, pull request or discussion, **Ctrl+T** translates the selected item and **Ctrl+Shift+T** the whole conversation, each part with its author.
+  - **“Translator”** window (Tools, Ctrl+Shift+Y): more than a hundred source and target languages, language detection, swapping languages, copying and viewing the translation formatted.
+  - **“Translate when sending into”** in the editor and in “New issue”: write in Spanish, choose English, for example, and when you send, review and correct the translated title and text before it is sent. You can add the original, collapsed, at the end.
+  - Engines to choose from: Google Translate (the default, free and without a key), MyMemory (free) and LibreTranslate; and, with your own key, official Google Translate (Cloud Translation), Microsoft Translator, DeepL and the AI models Gemini, ChatGPT, DeepSeek and Claude, using the cheapest model of each. If the chosen one fails, the free ones are used.
+  - Preferences, “Translation” and “Translation keys” (encrypted), with a button to test the engine. Code blocks, links, @mentions and #references are not translated.
+
 ## Version 1.0.13 - 2026-11-24
 
 ### New

@@ -134,6 +134,19 @@ class DialogoEditor(wx.Dialog):
 			control = self._crear_extra(extra, raiz)
 			self.controles_extra[extra.clave] = control
 
+		# Escribir en un idioma y enviar en otro (incidencia #13): se recuerda el último elegido.
+		self.selector_traduccion: wx.Choice | None = None
+		self._codigos_traduccion: list[str] = []
+		if contexto is not None and getattr(contexto, "config", None) is not None:
+			from app.ui.traductor import crear_selector_idioma
+
+			self.selector_traduccion, self._codigos_traduccion = crear_selector_idioma(
+				self, raiz, _("Tra&ducir al enviar a:"), str(contexto.config.obtener("traduccion.destino_envio", "") or ""),
+				con_ninguno=_("No traducir"))
+			self.selector_traduccion.SetHelpText(_(
+				"Escriba en su idioma y elija aquí en cuál se enviará: al pulsar Enviar se traduce el título y el texto, "
+				"se le enseña la traducción para revisarla y corregirla, y solo entonces se envía."))
+
 		fila = wx.BoxSizer(wx.HORIZONTAL)
 		self.boton_vista = wx.Button(self, label=_("&Vista previa (F7)"))
 		self.boton_vista.Bind(wx.EVT_BUTTON, lambda _e: self.vista_previa())
@@ -398,6 +411,13 @@ class DialogoEditor(wx.Dialog):
 				return
 		evento.Skip()
 
+	@property
+	def idioma_envio(self) -> str:
+		"""Idioma al que se traduce antes de enviar (vacío: no se traduce)."""
+		if self.selector_traduccion is None:
+			return ""
+		return self._codigos_traduccion[max(0, self.selector_traduccion.GetSelection())]
+
 	def _al_aceptar(self, _evento: wx.CommandEvent | None) -> None:
 		if self._enviando:
 			return
@@ -409,6 +429,34 @@ class DialogoEditor(wx.Dialog):
 			mostrar_error(self, _("Escriba un título."), _("Falta el título"))
 			self.campo_titulo.SetFocus()
 			return
+		destino = self.idioma_envio
+		if self.selector_traduccion is not None:
+			self.ctx.config.establecer("traduccion.destino_envio", destino)
+		if destino and (valores.get("cuerpo", "").strip() or valores.get("titulo")):
+			from app.ui.traductor import revisar_y_enviar
+
+			self._enviando = True
+			self.boton_enviar.Disable()
+
+			def con_traduccion(titulo: str | None, cuerpo: str) -> None:
+				self._enviando = False
+				traducidos = dict(valores, cuerpo=cuerpo)
+				if titulo is not None:
+					traducidos["titulo"] = titulo
+				self._enviar_valores(traducidos)
+
+			def volver() -> None:
+				self._enviando = False
+				if self:
+					self.boton_enviar.Enable()
+					self.campo_cuerpo.SetFocus()
+
+			revisar_y_enviar(self, self.ctx, valores.get("titulo") if self.campo_titulo is not None else None,
+				valores.get("cuerpo", ""), destino, con_traduccion, volver)
+			return
+		self._enviar_valores(valores)
+
+	def _enviar_valores(self, valores: dict) -> None:
 		self._enviando = True
 		self.boton_enviar.Disable()
 		self.estado.SetLabel(_("Enviando…"))

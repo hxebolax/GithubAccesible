@@ -130,6 +130,7 @@ class VentanaDiscusion(VentanaDetalle):
 			(_("&Marcar o desmarcar como respuesta\tCtrl+M"), self.marcar_respuesta),
 			(_("&Votar o quitar el voto\tCtrl+U"), self.votar),
 			(_("&Copiar el texto"), self.copiar_texto),
+			(_("&Traducir…\tCtrl+T"), self.traducir),
 		])
 		self.poner_menus([(_("&Discusión"), [
 			(_("Nuevo c&omentario…\tCtrl+N"), self.comentar),
@@ -141,6 +142,8 @@ class VentanaDiscusion(VentanaDetalle):
 			(_("Reabrir la &discusión"), self.reabrir),
 			None,
 			(_("Ver formateada en &HTML\tF7"), self.ver_html),
+			(_("Traducir el &elemento elegido…\tCtrl+T"), self.traducir),
+			(_("Traducir toda la discu&sión…\tCtrl+Shift+T"), self.traducir_todo),
 			(_("Abrir en el &navegador\tCtrl+B"), self.abrir_navegador),
 			(_("Co&piar el enlace\tCtrl+Shift+C"), self.copiar_enlace),
 			(_("&Actualizar\tF5"), lambda: self.cargar()),
@@ -274,6 +277,33 @@ class VentanaDiscusion(VentanaDetalle):
 	def copiar_enlace(self) -> None:
 		url = self.discusion.get("url") or f"https://{self.ctx.host}/{self.nombre}/discussions/{self.numero}"
 		copiar(self.ctx, url, _("Enlace copiado."))
+
+	def traducir(self) -> None:
+		"""El elemento elegido, traducido en la ventana «Traductor» (incidencia #13)."""
+		elemento = self.elemento
+		texto = (elemento["nodo"].get("body") or "") if elemento else ""
+		if not texto.strip():
+			self.ctx.avisar(_("Este elemento no tiene texto que traducir."))
+			return
+		from app.ui.traductor import abrir_traductor
+
+		autor = ((elemento["nodo"].get("author") or {}).get("login") or "")
+		abrir_traductor(self.ctx, self, texto, autor, traducir_ya=True)
+
+	def traducir_todo(self) -> None:
+		"""La publicación y todos los comentarios y respuestas, cada uno con su autor, traducidos de una vez."""
+		partes = []
+		for elemento in self.elementos:
+			cuerpo = (elemento["nodo"].get("body") or "").strip()
+			if cuerpo:
+				autor = (elemento["nodo"].get("author") or {}).get("login") or ""
+				partes.append(f"### {autor}\n\n{cuerpo}")
+		if not partes:
+			self.ctx.avisar(_("La discusión no tiene texto que traducir."))
+			return
+		from app.ui.traductor import abrir_traductor
+
+		abrir_traductor(self.ctx, self, "\n\n".join(partes), self.discusion.get("title", ""), traducir_ya=True)
 
 	def copiar_texto(self) -> None:
 		elemento = self.elemento
