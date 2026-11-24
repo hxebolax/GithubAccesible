@@ -93,12 +93,12 @@ def _org(panel: Any) -> str:
 
 
 def _vista_repositorios() -> DefinicionVista:
-	from app.ui.vistas.principales import acciones_repositorio, columnas_repositorio, detalle_repositorio
+	from app.ui.vistas.principales import acciones_repositorio, columnas_repositorio, completar_repositorios, detalle_repositorio
 
 	return DefinicionVista("org_repositorios", _("Repositorios"), columnas_repositorio(),
 		lambda api, pagina, panel: api.repositorios_org(_org(panel), pagina),
 		lambda p, r: abrir.repositorio(p.ctx, r.get("full_name", "")), acciones_repositorio(),
-		_("La organización no tiene repositorios visibles."), url_html, detalle_repositorio)
+		_("La organización no tiene repositorios visibles."), url_html, detalle_repositorio, completar=completar_repositorios)
 
 
 def _vista_miembros() -> DefinicionVista:

@@ -2,6 +2,18 @@
 
 Each version has its own section, from the newest to the oldest. Within each version, changes are grouped into New, Improvements and Fixes, described from the point of view of the person using the application.
 
+## Version 1.0.11 - 2026-11-24
+
+### New
+
+- **Followers** and **Following** show public repositories, followers, how long each person has been on GitHub, their contributions in the last year and the link to their profile.
+- **More columns in repository lists** (Preferences, “List columns”): creation date, size, license, topics, website, link, clone with HTTPS and with SSH, watchers, latest release and your permission. “My repositories” shows the creation date by default. Ctrl+I also gives your permission and the latest release.
+
+### Fixes
+
+- **“My issues” was empty** for people who open issues in other people's repositories. Issues are now searched across all of GitHub and the list shows the ones you created by default; F4 switches to assigned, mentions, commented, all you are involved in or the ones in your repositories.
+- Ctrl+I on a repository gave the number of stars as the number of watchers.
+
 ## Version 1.0.10 - 2026-11-23
 
 ### New

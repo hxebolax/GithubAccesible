@@ -52,9 +52,10 @@ Sections:
 
 - **Home**: what the people and repositories you follow are doing.
 - **Notifications**: Enter opens what triggered the notification (issue, pull request, Actions, release…) and marks it as read. Ctrl+L marks it as read, Delete marks it as done, Ctrl+Shift+S mutes the conversation and F4 switches between showing only unread notifications or all of them.
-- **My repositories**, **Starred repositories** and **Watched repositories**: Enter opens the repository, Ctrl+K clones it, Ctrl+S stars or unstars it, Ctrl+N creates a repository and F4 changes the filter. Their actions also include “Download the code as zip”, “View wiki” and “View owner” (Ctrl+Shift+P).
-- **My issues** and **My pull requests**: F4 chooses what to show (assigned, created, mentions, review requested…) and their state.
-- **Gists**, **Organizations**, **Projects**, **Codespaces**, **Followers** and **Following**.
+- **My repositories**, **Starred repositories** and **Watched repositories**: Enter opens the repository, Ctrl+K clones it, Ctrl+S stars or unstars it, Ctrl+N creates a repository and F4 changes the filter. Their actions also include “Download the code as zip”, “View wiki” and “View owner” (Ctrl+Shift+P). They show the name, description, visibility, language, stars and last update (and, in “My repositories”, the creation date); in Preferences, “List columns”, you can also add forks, open issues, default branch, type, creation date, size, license, topics, website, link, the HTTPS and SSH clone addresses, watchers, latest release and your permission. Watchers and the latest release are requested from GitHub separately, once per page, only when those columns are shown. The same applies to the repositories of an organization or a profile and to forks.
+- **My issues** and **My pull requests**: F4 chooses what to show and their state. By default **My issues** shows the open issues **you created in any repository**, including other people's projects; F4 switches to the ones assigned to you, the ones that mention you, the ones you commented on, all the ones you are involved in or the ones in your repositories.
+- **Gists**, **Organizations**, **Projects** and **Codespaces**.
+- **Followers** and **Following**: besides the user name, they show their public repositories, their followers, how long they have been on GitHub, their contributions in the last year and the link to their profile; name and type can be added in Preferences, “List columns”. They load 30 at a time.
 - **Local repositories**: git folders on this computer. Ctrl+N adds a folder and Ctrl+K clones a repository.
 - **Search results**: the results of the last search (Ctrl+E).
 

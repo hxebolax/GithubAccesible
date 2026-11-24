@@ -92,7 +92,7 @@ def texto_perfil(usuario: dict, contribuciones: dict | None = None) -> str:
 
 
 def _vista_repositorios() -> DefinicionVista:
-	from app.ui.vistas.principales import acciones_repositorio, columnas_repositorio, detalle_repositorio
+	from app.ui.vistas.principales import acciones_repositorio, columnas_repositorio, completar_repositorios, detalle_repositorio
 
 	def cargar(api, pagina, panel):
 		login = panel.datos["login"]
@@ -102,16 +102,16 @@ def _vista_repositorios() -> DefinicionVista:
 
 	return DefinicionVista("perfil_repositorios", _("Repositorios"), columnas_repositorio(), cargar,
 		lambda p, r: abrir.repositorio(p.ctx, r.get("full_name", "")), acciones_repositorio(), _("No tiene repositorios públicos."),
-		url_html, detalle_repositorio)
+		url_html, detalle_repositorio, completar=completar_repositorios)
 
 
 def _vista_estrellas() -> DefinicionVista:
-	from app.ui.vistas.principales import acciones_repositorio, columnas_repositorio, detalle_repositorio
+	from app.ui.vistas.principales import acciones_repositorio, columnas_repositorio, completar_repositorios, detalle_repositorio
 
 	return DefinicionVista("perfil_estrellas", _("Con estrella"), columnas_repositorio(),
 		lambda api, pagina, panel: api.con_estrella(panel.datos["login"], pagina),
 		lambda p, r: abrir.repositorio(p.ctx, r.get("full_name", "")), acciones_repositorio(),
-		_("No ha dado estrella a ningún repositorio público."), url_html, detalle_repositorio)
+		_("No ha dado estrella a ningún repositorio público."), url_html, detalle_repositorio, completar=completar_repositorios)
 
 
 def _vista_actividad() -> DefinicionVista:

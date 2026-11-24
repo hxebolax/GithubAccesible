@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: githubaccesible 1.0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-23 12:34+0100\n"
+"POT-Creation-Date: 2026-11-24 08:47+0100\n"
 "PO-Revision-Date: 2026-11-22 21:50+0100\n"
 "Last-Translator: GitHub Accesible\n"
 "Language-Team: English\n"
@@ -526,11 +526,11 @@ msgstr "Users and organizations"
 msgid "Commits"
 msgstr "Commits"
 
-#: app/services/busqueda.py:56 app/services/busqueda.py:240 app/services/github/api_extra.py:556
+#: app/services/busqueda.py:56 app/services/busqueda.py:240 app/services/github/api_extra.py:556 app/ui/vistas/principales.py:104
 msgid "Temas"
 msgstr "Topics"
 
-#: app/services/busqueda.py:57 app/services/busqueda.py:345 app/services/github/api_extra.py:557 app/ui/git/ventana_git.py:1257 app/ui/repositorio/vistas.py:581 app/ui/repositorio/vistas.py:810 app/ui/vistas/principales.py:95 app/ui/vistas/principales.py:847
+#: app/services/busqueda.py:57 app/services/busqueda.py:345 app/services/github/api_extra.py:557 app/ui/git/ventana_git.py:1257 app/ui/repositorio/vistas.py:581 app/ui/repositorio/vistas.py:810 app/ui/vistas/principales.py:159 app/ui/vistas/principales.py:964
 msgid "Etiquetas"
 msgstr "Labels"
 
@@ -546,11 +546,11 @@ msgstr "Trending"
 msgid "Mejor coincidencia"
 msgstr "Best match"
 
-#: app/services/busqueda.py:66 app/services/busqueda.py:249 app/ui/busqueda.py:521 app/ui/detalle/usuario.py:243 app/ui/vistas/principales.py:50 app/ui/vistas/principales.py:852
+#: app/services/busqueda.py:66 app/services/busqueda.py:249 app/ui/busqueda.py:521 app/ui/detalle/usuario.py:243 app/ui/vistas/principales.py:94 app/ui/vistas/principales.py:969
 msgid "Estrellas"
 msgstr "Stars"
 
-#: app/services/busqueda.py:66 app/services/busqueda.py:250 app/services/busqueda.py:286 app/ui/repositorio/ventana.py:68 app/ui/vistas/principales.py:51 app/ui/vistas/principales.py:854
+#: app/services/busqueda.py:66 app/services/busqueda.py:250 app/services/busqueda.py:286 app/ui/repositorio/ventana.py:68 app/ui/vistas/principales.py:95 app/ui/vistas/principales.py:971
 msgid "Bifurcaciones"
 msgstr "Forks"
 
@@ -570,7 +570,7 @@ msgstr "Creation date"
 msgid "Última actualización"
 msgstr "Last updated"
 
-#: app/services/busqueda.py:70 app/services/busqueda.py:295 app/services/busqueda.py:327 app/services/busqueda.py:403 app/services/busqueda.py:415 app/ui/detalle/diferencias.py:94 app/ui/detalle/gist.py:362 app/ui/detalle/pull_request.py:361 app/ui/vistas/principales.py:94 app/ui/vistas/principales.py:486 app/ui/vistas/principales.py:846
+#: app/services/busqueda.py:70 app/services/busqueda.py:295 app/services/busqueda.py:327 app/services/busqueda.py:403 app/services/busqueda.py:415 app/ui/detalle/diferencias.py:94 app/ui/detalle/gist.py:362 app/ui/detalle/pull_request.py:361 app/ui/vistas/principales.py:158 app/ui/vistas/principales.py:560 app/ui/vistas/principales.py:963
 msgid "Comentarios"
 msgstr "Comments"
 
@@ -606,7 +606,7 @@ msgstr "Heart reactions"
 msgid "Reacciones de celebración"
 msgstr "Hooray reactions"
 
-#: app/services/busqueda.py:74 app/services/busqueda.py:255 app/services/busqueda.py:365 app/ui/detalle/usuario.py:134 app/ui/detalle/usuario.py:213 app/ui/vistas/principales.py:546
+#: app/services/busqueda.py:74 app/services/busqueda.py:255 app/services/busqueda.py:365 app/ui/detalle/usuario.py:134 app/ui/detalle/usuario.py:213 app/ui/vistas/principales.py:647 app/ui/vistas/principales.py:663
 msgid "Seguidores"
 msgstr "Followers"
 
@@ -878,7 +878,7 @@ msgstr "Date in the form YYYY-MM-DD (for example 2026-01-31). You can fill in on
 msgid "Número entero. Puede rellenar solo el mínimo, solo el máximo o los dos (rango inclusivo)."
 msgstr "Whole number. You can fill in only the minimum, only the maximum, or both (inclusive range)."
 
-#: app/services/busqueda.py:231 app/services/busqueda.py:429 app/ui/detalle/gist.py:98 app/ui/vistas/principales.py:49 app/ui/vistas/principales.py:851
+#: app/services/busqueda.py:231 app/services/busqueda.py:429 app/ui/detalle/gist.py:98 app/ui/vistas/principales.py:93 app/ui/vistas/principales.py:968
 msgid "Lenguaje"
 msgstr "Language"
 
@@ -886,7 +886,7 @@ msgstr "Language"
 msgid "Lenguaje de programación principal."
 msgstr "Main programming language."
 
-#: app/services/busqueda.py:232 app/services/busqueda.py:262 app/ui/detalle/usuario.py:149 app/ui/detalle/usuario.py:446 app/ui/vistas/principales.py:48 app/ui/vistas/principales.py:484
+#: app/services/busqueda.py:232 app/services/busqueda.py:262 app/ui/detalle/usuario.py:149 app/ui/detalle/usuario.py:446 app/ui/vistas/principales.py:92 app/ui/vistas/principales.py:558
 msgid "Visibilidad"
 msgstr "Visibility"
 
@@ -894,7 +894,7 @@ msgstr "Visibility"
 msgid "Cualquiera"
 msgstr "Any"
 
-#: app/services/busqueda.py:232 app/services/busqueda.py:262 app/ui/vistas/principales.py:327
+#: app/services/busqueda.py:232 app/services/busqueda.py:262 app/ui/vistas/principales.py:391
 msgid "Públicos"
 msgstr "Public"
 
@@ -914,11 +914,11 @@ msgstr "Category (preset)"
 msgid "Atajos de la búsqueda guiada: al elegir uno se rellenan los filtros (estrellas, fecha de envío, temas...). Después puede cambiarlos a su gusto."
 msgstr "Presets for the guided search: choosing one fills in the filters (stars, push date, topics...). You can then change them as you like."
 
-#: app/services/busqueda.py:240 app/services/busqueda.py:359 app/ui/detalle/acciones.py:552 app/ui/detalle/acciones.py:555 app/ui/detalle/acciones.py:581 app/ui/detalle/gist.py:98 app/ui/detalle/organizacion.py:392 app/ui/detalle/organizacion.py:437 app/ui/detalle/pull_request.py:347 app/ui/detalle/releases.py:197 app/ui/detalle/usuario.py:243 app/ui/herramientas/claves.py:110 app/ui/repositorio/vistas.py:442 app/ui/repositorio/vistas.py:1146 app/ui/repositorio/vistas.py:1258 app/ui/repositorio/vistas.py:1333 app/ui/repositorio/vistas.py:1583 app/ui/repositorio/vistas.py:1931 app/ui/repositorio/vistas.py:1989 app/ui/repositorio/vistas.py:2154 app/ui/vistas/principales.py:46 app/ui/vistas/principales.py:569 app/ui/vistas/principales.py:638 app/ui/vistas/principales.py:856
+#: app/services/busqueda.py:240 app/services/busqueda.py:359 app/ui/detalle/acciones.py:552 app/ui/detalle/acciones.py:555 app/ui/detalle/acciones.py:581 app/ui/detalle/gist.py:98 app/ui/detalle/organizacion.py:392 app/ui/detalle/organizacion.py:437 app/ui/detalle/pull_request.py:347 app/ui/detalle/releases.py:197 app/ui/detalle/usuario.py:243 app/ui/herramientas/claves.py:110 app/ui/repositorio/vistas.py:442 app/ui/repositorio/vistas.py:1146 app/ui/repositorio/vistas.py:1258 app/ui/repositorio/vistas.py:1333 app/ui/repositorio/vistas.py:1583 app/ui/repositorio/vistas.py:1931 app/ui/repositorio/vistas.py:1989 app/ui/repositorio/vistas.py:2154 app/ui/vistas/principales.py:90 app/ui/vistas/principales.py:645 app/ui/vistas/principales.py:686 app/ui/vistas/principales.py:755 app/ui/vistas/principales.py:973
 msgid "Nombre"
 msgstr "Name"
 
-#: app/services/busqueda.py:240 app/ui/detalle/conversacion.py:161 app/ui/detalle/organizacion.py:70 app/ui/detalle/organizacion.py:238 app/ui/detalle/usuario.py:147 app/ui/detalle/usuario.py:169 app/ui/detalle/usuario.py:243 app/ui/git/ventana_git.py:1392 app/ui/repositorio/vistas.py:1472 app/ui/repositorio/vistas.py:1533 app/ui/repositorio/vistas.py:1585 app/ui/repositorio/vistas.py:2208 app/ui/vistas/principales.py:47 app/ui/vistas/principales.py:482 app/ui/vistas/principales.py:505 app/ui/vistas/principales.py:529 app/ui/vistas/principales.py:841
+#: app/services/busqueda.py:240 app/ui/detalle/conversacion.py:161 app/ui/detalle/organizacion.py:70 app/ui/detalle/organizacion.py:238 app/ui/detalle/usuario.py:147 app/ui/detalle/usuario.py:169 app/ui/detalle/usuario.py:243 app/ui/git/ventana_git.py:1392 app/ui/repositorio/vistas.py:1472 app/ui/repositorio/vistas.py:1533 app/ui/repositorio/vistas.py:1585 app/ui/repositorio/vistas.py:2208 app/ui/vistas/principales.py:91 app/ui/vistas/principales.py:556 app/ui/vistas/principales.py:579 app/ui/vistas/principales.py:603 app/ui/vistas/principales.py:958
 msgid "Descripción"
 msgstr "Description"
 
@@ -942,7 +942,7 @@ msgstr "Topics (comma-separated)"
 msgid "Cada tema añadido es una condición más: el repositorio debe tenerlos todos."
 msgstr "Each topic you add is one more condition: the repository must have all of them."
 
-#: app/services/busqueda.py:246
+#: app/services/busqueda.py:246 app/ui/vistas/principales.py:103
 msgid "Licencia"
 msgstr "License"
 
@@ -1142,7 +1142,7 @@ msgstr "Excluded"
 msgid "Las bifurcaciones solo se indexan si tienen más estrellas que el original."
 msgstr "Forks are only indexed if they have more stars than the original."
 
-#: app/services/busqueda.py:290 app/ui/detalle/conversacion.py:732 app/ui/detalle/diferencias.py:89 app/ui/detalle/discusiones.py:123 app/ui/detalle/proyectos.py:182 app/ui/detalle/proyectos.py:269 app/ui/detalle/usuario.py:136 app/ui/git/ventana_git.py:1149 app/ui/repositorio/vistas.py:443 app/ui/repositorio/vistas.py:1148 app/ui/repositorio/vistas.py:1731 app/ui/repositorio/vistas.py:1870 app/ui/repositorio/vistas.py:1990 app/ui/repositorio/vistas.py:2155 app/ui/repositorio/wiki.py:325 app/ui/vistas/principales.py:55 app/ui/vistas/principales.py:304 app/ui/vistas/principales.py:547
+#: app/services/busqueda.py:290 app/ui/detalle/conversacion.py:732 app/ui/detalle/diferencias.py:89 app/ui/detalle/discusiones.py:123 app/ui/detalle/proyectos.py:182 app/ui/detalle/proyectos.py:269 app/ui/detalle/usuario.py:136 app/ui/git/ventana_git.py:1149 app/ui/repositorio/vistas.py:443 app/ui/repositorio/vistas.py:1148 app/ui/repositorio/vistas.py:1731 app/ui/repositorio/vistas.py:1870 app/ui/repositorio/vistas.py:1990 app/ui/repositorio/vistas.py:2155 app/ui/repositorio/wiki.py:325 app/ui/vistas/principales.py:99 app/ui/vistas/principales.py:368 app/ui/vistas/principales.py:651
 msgid "Tipo"
 msgstr "Type"
 
@@ -1158,7 +1158,7 @@ msgstr "Only pull requests"
 msgid "Qué se busca. La búsqueda semántica o híbrida exige «Solo issues»."
 msgstr "What to search for. Semantic or hybrid search requires “Only issues”."
 
-#: app/services/busqueda.py:292 app/services/busqueda.py:408 app/ui/accesibilidad/progreso.py:45 app/ui/detalle/acciones.py:552 app/ui/detalle/acciones.py:555 app/ui/detalle/acciones.py:581 app/ui/detalle/issue.py:340 app/ui/detalle/organizacion.py:302 app/ui/detalle/pull_request.py:333 app/ui/detalle/pull_request.py:347 app/ui/detalle/pull_request.py:361 app/ui/dialogo_actualizacion.py:171 app/ui/git/ventana_git.py:927 app/ui/git/ventana_git.py:1390 app/ui/repositorio/vistas.py:505 app/ui/repositorio/vistas.py:806 app/ui/repositorio/vistas.py:902 app/ui/repositorio/vistas.py:1048 app/ui/repositorio/vistas.py:1471 app/ui/repositorio/vistas.py:1528 app/ui/repositorio/vistas.py:1873 app/ui/vistas/principales.py:92 app/ui/vistas/principales.py:303 app/ui/vistas/principales.py:390 app/ui/vistas/principales.py:528 app/ui/vistas/principales.py:571 app/ui/vistas/principales.py:639 app/ui/vistas/principales.py:844
+#: app/services/busqueda.py:292 app/services/busqueda.py:408 app/ui/accesibilidad/progreso.py:45 app/ui/detalle/acciones.py:552 app/ui/detalle/acciones.py:555 app/ui/detalle/acciones.py:581 app/ui/detalle/issue.py:340 app/ui/detalle/organizacion.py:302 app/ui/detalle/pull_request.py:333 app/ui/detalle/pull_request.py:347 app/ui/detalle/pull_request.py:361 app/ui/dialogo_actualizacion.py:171 app/ui/git/ventana_git.py:927 app/ui/git/ventana_git.py:1390 app/ui/repositorio/vistas.py:505 app/ui/repositorio/vistas.py:806 app/ui/repositorio/vistas.py:902 app/ui/repositorio/vistas.py:1048 app/ui/repositorio/vistas.py:1471 app/ui/repositorio/vistas.py:1528 app/ui/repositorio/vistas.py:1873 app/ui/vistas/principales.py:156 app/ui/vistas/principales.py:367 app/ui/vistas/principales.py:460 app/ui/vistas/principales.py:602 app/ui/vistas/principales.py:688 app/ui/vistas/principales.py:756 app/ui/vistas/principales.py:961
 msgid "Estado"
 msgstr "State"
 
@@ -1166,11 +1166,11 @@ msgstr "State"
 msgid "Abiertas o cerradas."
 msgstr "Open or closed."
 
-#: app/services/busqueda.py:292 app/services/busqueda.py:408 app/ui/repositorio/vistas.py:1530 app/ui/vistas/principales.py:381
+#: app/services/busqueda.py:292 app/services/busqueda.py:408 app/ui/repositorio/vistas.py:1530 app/ui/vistas/principales.py:449
 msgid "Abiertas"
 msgstr "Open"
 
-#: app/services/busqueda.py:292 app/services/busqueda.py:408 app/ui/repositorio/vistas.py:1531 app/ui/vistas/principales.py:381
+#: app/services/busqueda.py:292 app/services/busqueda.py:408 app/ui/repositorio/vistas.py:1531 app/ui/vistas/principales.py:449
 msgid "Cerradas"
 msgstr "Closed"
 
@@ -1194,7 +1194,7 @@ msgstr "Why the issue was closed."
 msgid "Dónde buscar el texto libre."
 msgstr "Where to search the free text."
 
-#: app/services/busqueda.py:295 app/services/busqueda.py:403 app/ui/detalle/issue.py:340 app/ui/detalle/proyectos.py:182 app/ui/detalle/proyectos.py:269 app/ui/detalle/proyectos.py:303 app/ui/herramientas/claves.py:118 app/ui/repositorio/vistas.py:805 app/ui/repositorio/vistas.py:900 app/ui/repositorio/vistas.py:1047 app/ui/repositorio/vistas.py:1527 app/ui/repositorio/vistas.py:2097 app/ui/vistas/principales.py:87 app/ui/vistas/principales.py:302
+#: app/services/busqueda.py:295 app/services/busqueda.py:403 app/ui/detalle/issue.py:340 app/ui/detalle/proyectos.py:182 app/ui/detalle/proyectos.py:269 app/ui/detalle/proyectos.py:303 app/ui/herramientas/claves.py:118 app/ui/repositorio/vistas.py:805 app/ui/repositorio/vistas.py:900 app/ui/repositorio/vistas.py:1047 app/ui/repositorio/vistas.py:1527 app/ui/repositorio/vistas.py:2097 app/ui/vistas/principales.py:151 app/ui/vistas/principales.py:366
 msgid "Título"
 msgstr "Title"
 
@@ -1222,7 +1222,7 @@ msgstr "Search type"
 msgid "Semántica busca por significado; híbrida combina significado y palabras. Solo issues (no pull requests), solo en el título y el cuerpo, exige sesión iniciada, sin orden, una sola página de resultados y como mucho 10 búsquedas por minuto. Si la consulta solo tiene filtros o frases entre comillas, GitHub hace una búsqueda léxica."
 msgstr "Semantic search looks for meaning; hybrid combines meaning and words. It only searches issues (not pull requests), only in the title and body, requires you to be signed in, has no sorting, returns a single page of results and allows at most 10 searches per minute. If the query only has filters or quoted phrases, GitHub does a lexical search."
 
-#: app/services/busqueda.py:305 app/services/busqueda.py:411 app/ui/detalle/archivos.py:480 app/ui/detalle/archivos.py:510 app/ui/detalle/conversacion.py:732 app/ui/detalle/discusiones.py:123 app/ui/detalle/gist.py:362 app/ui/detalle/pull_request.py:321 app/ui/git/ventana_git.py:1042 app/ui/repositorio/vistas.py:809 app/ui/repositorio/vistas.py:903 app/ui/repositorio/vistas.py:1150 app/ui/repositorio/vistas.py:1435 app/ui/vistas/principales.py:93 app/ui/vistas/principales.py:485 app/ui/vistas/principales.py:845
+#: app/services/busqueda.py:305 app/services/busqueda.py:411 app/ui/detalle/archivos.py:480 app/ui/detalle/archivos.py:510 app/ui/detalle/conversacion.py:732 app/ui/detalle/discusiones.py:123 app/ui/detalle/gist.py:362 app/ui/detalle/pull_request.py:321 app/ui/git/ventana_git.py:1042 app/ui/repositorio/vistas.py:809 app/ui/repositorio/vistas.py:903 app/ui/repositorio/vistas.py:1150 app/ui/repositorio/vistas.py:1435 app/ui/vistas/principales.py:157 app/ui/vistas/principales.py:559 app/ui/vistas/principales.py:962
 msgid "Autor"
 msgstr "Author"
 
@@ -1390,7 +1390,7 @@ msgstr "Merged date"
 msgid "Solo pull requests. Fecha con la forma AAAA-MM-DD (por ejemplo 2026-01-31). Puede rellenar solo «desde», solo «hasta» o las dos."
 msgstr "Only pull requests. Date in the form YYYY-MM-DD (for example 2026-01-31). You can fill in only “from”, only “to”, or both."
 
-#: app/services/busqueda.py:336 app/services/busqueda.py:345 app/ui/detalle/conversacion.py:202 app/ui/vistas/principales.py:97
+#: app/services/busqueda.py:336 app/services/busqueda.py:345 app/ui/detalle/conversacion.py:202 app/ui/vistas/principales.py:161
 msgid "Hito"
 msgstr "Milestone"
 
@@ -1466,7 +1466,7 @@ msgstr "Assignee"
 msgid "Exige que NO tenga ese dato."
 msgstr "Requires it NOT to have this."
 
-#: app/services/busqueda.py:346 app/ui/detalle/conversacion.py:264 app/ui/detalle/organizacion.py:299 app/ui/repositorio/vistas.py:1468 app/ui/vistas/principales.py:525
+#: app/services/busqueda.py:346 app/ui/detalle/conversacion.py:264 app/ui/detalle/organizacion.py:299 app/ui/repositorio/vistas.py:1468 app/ui/vistas/principales.py:599
 msgid "Proyecto"
 msgstr "Project"
 
@@ -1514,7 +1514,7 @@ msgstr "Archived pull requests (requires triage permission)"
 msgid "Pull requests archivadas."
 msgstr "Archived pull requests."
 
-#: app/services/busqueda.py:357 app/ui/vistas/principales.py:858
+#: app/services/busqueda.py:357 app/ui/vistas/principales.py:975
 msgid "Tipo de cuenta"
 msgstr "Account type"
 
@@ -1706,7 +1706,7 @@ msgstr "Unanswered"
 msgid "Discusiones con una respuesta marcada."
 msgstr "Discussions with a marked answer."
 
-#: app/services/busqueda.py:409 app/ui/repositorio/vistas.py:901 app/ui/vistas/principales.py:849
+#: app/services/busqueda.py:409 app/ui/repositorio/vistas.py:901 app/ui/vistas/principales.py:966
 msgid "Categoría"
 msgstr "Category"
 
@@ -2699,7 +2699,7 @@ msgstr "Stale"
 msgid "Fallo al arrancar"
 msgstr "Startup failure"
 
-#: app/services/formato.py:198 app/services/sonidos.py:49 app/ui/accesibilidad/dialogos.py:255 app/ui/detalle/acciones.py:399 app/ui/detalle/comun_detalle.py:255 app/ui/detalle/conversacion.py:394 app/ui/dialogo_preferencias.py:433 app/ui/dialogo_texto.py:56 app/ui/git/dialogos.py:221 app/ui/git/dialogos.py:259 app/ui/git/ventana_git.py:458 app/ui/git/ventana_git.py:768 app/ui/git/ventana_git.py:775 app/ui/herramientas/claves.py:189 app/ui/herramientas/claves.py:264 app/ui/repositorio/paneles.py:100 app/ui/vistas/base.py:620 app/ui/vistas/base.py:750
+#: app/services/formato.py:198 app/services/sonidos.py:49 app/ui/accesibilidad/dialogos.py:255 app/ui/detalle/acciones.py:399 app/ui/detalle/comun_detalle.py:255 app/ui/detalle/conversacion.py:394 app/ui/dialogo_preferencias.py:433 app/ui/dialogo_texto.py:56 app/ui/git/dialogos.py:221 app/ui/git/dialogos.py:259 app/ui/git/ventana_git.py:458 app/ui/git/ventana_git.py:768 app/ui/git/ventana_git.py:775 app/ui/herramientas/claves.py:189 app/ui/herramientas/claves.py:264 app/ui/repositorio/paneles.py:100 app/ui/vistas/base.py:631 app/ui/vistas/base.py:761
 msgid "Error"
 msgstr "Error"
 
@@ -2751,7 +2751,7 @@ msgstr "Shut down"
 msgid "Arrancando"
 msgstr "Starting"
 
-#: app/services/formato.py:213 app/ui/detalle/gist.py:59 app/ui/detalle/gist.py:466 app/ui/detalle/usuario.py:149 app/ui/repositorio/dialogos.py:184 app/ui/vistas/principales.py:484
+#: app/services/formato.py:213 app/ui/detalle/gist.py:59 app/ui/detalle/gist.py:466 app/ui/detalle/usuario.py:149 app/ui/repositorio/dialogos.py:184 app/ui/vistas/principales.py:558
 msgid "Público"
 msgstr "Public"
 
@@ -2763,23 +2763,23 @@ msgstr "Private"
 msgid "Interno"
 msgstr "Internal"
 
-#: app/services/formato.py:216 app/ui/detalle/organizacion.py:55 app/ui/repositorio/vistas.py:1604
+#: app/services/formato.py:216 app/ui/detalle/organizacion.py:55 app/ui/repositorio/vistas.py:1604 app/ui/vistas/principales.py:45
 msgid "Administración"
 msgstr "Admin"
 
-#: app/services/formato.py:217 app/ui/detalle/organizacion.py:54 app/ui/repositorio/vistas.py:1603
+#: app/services/formato.py:217 app/ui/detalle/organizacion.py:54 app/ui/repositorio/vistas.py:1603 app/ui/vistas/principales.py:45
 msgid "Mantenimiento"
 msgstr "Maintain"
 
-#: app/services/formato.py:218 app/services/formato.py:221 app/ui/detalle/organizacion.py:54 app/ui/repositorio/vistas.py:1603
+#: app/services/formato.py:218 app/services/formato.py:221 app/ui/detalle/organizacion.py:54 app/ui/repositorio/vistas.py:1603 app/ui/vistas/principales.py:45
 msgid "Escritura"
 msgstr "Write"
 
-#: app/services/formato.py:219 app/ui/detalle/organizacion.py:54 app/ui/repositorio/vistas.py:1603
+#: app/services/formato.py:219 app/ui/detalle/organizacion.py:54 app/ui/repositorio/vistas.py:1603 app/ui/vistas/principales.py:46
 msgid "Clasificación"
 msgstr "Triage"
 
-#: app/services/formato.py:220 app/services/formato.py:222 app/ui/detalle/organizacion.py:54 app/ui/repositorio/vistas.py:1603
+#: app/services/formato.py:220 app/services/formato.py:222 app/ui/detalle/organizacion.py:54 app/ui/repositorio/vistas.py:1603 app/ui/vistas/principales.py:46
 msgid "Lectura"
 msgstr "Read"
 
@@ -3309,7 +3309,7 @@ msgstr "Issue"
 msgid "Pull request"
 msgstr "Pull request"
 
-#: app/services/github/api_extra.py:397 app/ui/detalle/archivos.py:480 app/ui/detalle/archivos.py:510 app/ui/detalle/conversacion.py:216 app/ui/detalle/pull_request.py:321 app/ui/git/ventana_git.py:883 app/ui/git/ventana_git.py:889 app/ui/git/ventana_git.py:892 app/ui/git/ventana_git.py:1040 app/ui/git/ventana_git.py:1260 app/ui/git/ventana_git.py:1391 app/ui/git/ventana_git.py:1409 app/ui/git/ventana_git.py:1445 app/ui/repositorio/vistas.py:1334 app/ui/repositorio/vistas.py:2205 app/ui/vistas/principales.py:859
+#: app/services/github/api_extra.py:397 app/ui/detalle/archivos.py:480 app/ui/detalle/archivos.py:510 app/ui/detalle/conversacion.py:216 app/ui/detalle/pull_request.py:321 app/ui/git/ventana_git.py:883 app/ui/git/ventana_git.py:889 app/ui/git/ventana_git.py:892 app/ui/git/ventana_git.py:1040 app/ui/git/ventana_git.py:1260 app/ui/git/ventana_git.py:1391 app/ui/git/ventana_git.py:1409 app/ui/git/ventana_git.py:1445 app/ui/repositorio/vistas.py:1334 app/ui/repositorio/vistas.py:2205 app/ui/vistas/principales.py:976
 msgid "Commit"
 msgstr "Commit"
 
@@ -4453,7 +4453,7 @@ msgstr "Resu&lting query:"
 msgid "B&uscar"
 msgstr "&Search"
 
-#: app/ui/busqueda.py:45 app/ui/busqueda.py:216 app/ui/detalle/usuario.py:234 app/ui/repositorio/ventana.py:153 app/ui/vistas/base.py:585
+#: app/ui/busqueda.py:45 app/ui/busqueda.py:216 app/ui/detalle/usuario.py:234 app/ui/repositorio/ventana.py:153 app/ui/vistas/base.py:596
 msgid "Abrir en el &navegador"
 msgstr "Open in &browser"
 
@@ -4791,7 +4791,7 @@ msgstr "Search “{n}” deleted."
 msgid "No se pudo completar"
 msgstr "Could not complete"
 
-#: app/ui/comunes.py:106 app/ui/vistas/base.py:703
+#: app/ui/comunes.py:106 app/ui/vistas/base.py:714
 msgid "Copiado."
 msgstr "Copied."
 
@@ -4904,7 +4904,7 @@ msgstr "Workflow: {n}"
 msgid "Título: {t}"
 msgstr "Title: {t}"
 
-#: app/ui/detalle/acciones.py:414 app/ui/detalle/conversacion.py:332 app/ui/detalle/discusiones.py:83 app/ui/detalle/releases.py:69 app/ui/git/ventana_git.py:944 app/ui/repositorio/paneles.py:395 app/ui/repositorio/vistas.py:1783 app/ui/vistas/principales.py:109 app/ui/vistas/principales.py:985
+#: app/ui/detalle/acciones.py:414 app/ui/detalle/conversacion.py:332 app/ui/detalle/discusiones.py:83 app/ui/detalle/releases.py:69 app/ui/git/ventana_git.py:944 app/ui/repositorio/paneles.py:395 app/ui/repositorio/vistas.py:1783 app/ui/vistas/principales.py:173 app/ui/vistas/principales.py:1102
 #, python-brace-format
 msgid "Estado: {e}"
 msgstr "Status: {e}"
@@ -4958,7 +4958,7 @@ msgstr "Duration: {d}"
 msgid "Archivo del flujo: {p}"
 msgstr "Workflow file: {p}"
 
-#: app/ui/detalle/acciones.py:423 app/ui/detalle/conversacion.py:348 app/ui/detalle/discusiones.py:87 app/ui/detalle/gist.py:63 app/ui/detalle/organizacion.py:82 app/ui/detalle/proyectos.py:118 app/ui/detalle/releases.py:75 app/ui/detalle/usuario.py:85 app/ui/repositorio/vistas.py:1362 app/ui/repositorio/vistas.py:1786 app/ui/repositorio/wiki.py:315 app/ui/vistas/principales.py:73 app/ui/vistas/principales.py:117 app/ui/vistas/principales.py:988
+#: app/ui/detalle/acciones.py:423 app/ui/detalle/conversacion.py:348 app/ui/detalle/discusiones.py:87 app/ui/detalle/gist.py:63 app/ui/detalle/organizacion.py:82 app/ui/detalle/proyectos.py:118 app/ui/detalle/releases.py:75 app/ui/detalle/usuario.py:85 app/ui/repositorio/vistas.py:1362 app/ui/repositorio/vistas.py:1786 app/ui/repositorio/wiki.py:315 app/ui/vistas/principales.py:133 app/ui/vistas/principales.py:181 app/ui/vistas/principales.py:1105
 #, python-brace-format
 msgid "Enlace: {u}"
 msgstr "Link: {u}"
@@ -5006,7 +5006,7 @@ msgstr "&Steps:"
 msgid "Pasos"
 msgstr "Steps"
 
-#: app/ui/detalle/acciones.py:555 app/ui/detalle/issue.py:340 app/ui/detalle/organizacion.py:300 app/ui/repositorio/vistas.py:804 app/ui/repositorio/vistas.py:899 app/ui/repositorio/vistas.py:1051 app/ui/repositorio/vistas.py:1469 app/ui/repositorio/vistas.py:1875 app/ui/vistas/principales.py:86 app/ui/vistas/principales.py:526 app/ui/vistas/principales.py:840
+#: app/ui/detalle/acciones.py:555 app/ui/detalle/issue.py:340 app/ui/detalle/organizacion.py:300 app/ui/repositorio/vistas.py:804 app/ui/repositorio/vistas.py:899 app/ui/repositorio/vistas.py:1051 app/ui/repositorio/vistas.py:1469 app/ui/repositorio/vistas.py:1875 app/ui/vistas/principales.py:150 app/ui/vistas/principales.py:600 app/ui/vistas/principales.py:957
 msgid "Número"
 msgstr "Number"
 
@@ -5066,7 +5066,7 @@ msgstr "Arti&facts:"
 msgid "Artefactos"
 msgstr "Artifacts"
 
-#: app/ui/detalle/acciones.py:581 app/ui/detalle/gist.py:98 app/ui/detalle/releases.py:197 app/ui/repositorio/vistas.py:444 app/ui/repositorio/wiki.py:327
+#: app/ui/detalle/acciones.py:581 app/ui/detalle/gist.py:98 app/ui/detalle/releases.py:197 app/ui/repositorio/vistas.py:444 app/ui/repositorio/wiki.py:327 app/ui/vistas/principales.py:101
 msgid "Tamaño"
 msgstr "Size"
 
@@ -5462,7 +5462,7 @@ msgstr "Logs deleted."
 msgid "los registros"
 msgstr "the logs"
 
-#: app/ui/detalle/acciones.py:1147 app/ui/detalle/discusiones.py:276 app/ui/detalle/gist.py:331 app/ui/detalle/issue.py:356 app/ui/detalle/proyectos.py:621 app/ui/detalle/pull_request.py:925 app/ui/detalle/releases.py:423 app/ui/vistas/base.py:709
+#: app/ui/detalle/acciones.py:1147 app/ui/detalle/discusiones.py:276 app/ui/detalle/gist.py:331 app/ui/detalle/issue.py:356 app/ui/detalle/proyectos.py:621 app/ui/detalle/pull_request.py:925 app/ui/detalle/releases.py:423 app/ui/vistas/base.py:720
 msgid "Enlace copiado."
 msgstr "Link copied."
 
@@ -5859,11 +5859,11 @@ msgstr "Closes this window (also Control+W)."
 msgid "Contenido del archivo (solo lectura). Control+G va a una línea; Control+F busca; F3 repite la búsqueda; Control+L dice la línea actual."
 msgstr "File contents (read-only). Control+G goes to a line; Control+F finds; F3 repeats the search; Control+L says the current line."
 
-#: app/ui/detalle/archivos.py:345 app/ui/git/ventana_git.py:161 app/ui/repositorio/paneles.py:62 app/ui/vistas/base.py:416
+#: app/ui/detalle/archivos.py:345 app/ui/git/ventana_git.py:161 app/ui/repositorio/paneles.py:62 app/ui/vistas/base.py:419
 msgid "Cargando…"
 msgstr "Loading…"
 
-#: app/ui/detalle/archivos.py:352 app/ui/detalle/conversacion.py:825 app/ui/repositorio/paneles.py:144 app/ui/vistas/base.py:467
+#: app/ui/detalle/archivos.py:352 app/ui/detalle/conversacion.py:825 app/ui/repositorio/paneles.py:144 app/ui/vistas/base.py:478
 #, python-brace-format
 msgid "No se pudo cargar: {m}"
 msgstr "Could not load: {m}"
@@ -5947,7 +5947,7 @@ msgstr "Blame of {r}"
 msgid "Líneas"
 msgstr "Lines"
 
-#: app/ui/detalle/archivos.py:480 app/ui/detalle/archivos.py:510 app/ui/detalle/conversacion.py:732 app/ui/detalle/discusiones.py:123 app/ui/detalle/gist.py:362 app/ui/detalle/organizacion.py:284 app/ui/detalle/organizacion.py:464 app/ui/detalle/pull_request.py:321 app/ui/detalle/releases.py:197 app/ui/git/ventana_git.py:1043 app/ui/git/ventana_git.py:1152 app/ui/git/ventana_git.py:1261 app/ui/git/ventana_git.py:1306 app/ui/repositorio/vistas.py:1053 app/ui/repositorio/vistas.py:1436 app/ui/repositorio/vistas.py:1876 app/ui/repositorio/vistas.py:2207 app/ui/vistas/principales.py:220 app/ui/vistas/principales.py:307 app/ui/vistas/principales.py:863
+#: app/ui/detalle/archivos.py:480 app/ui/detalle/archivos.py:510 app/ui/detalle/conversacion.py:732 app/ui/detalle/discusiones.py:123 app/ui/detalle/gist.py:362 app/ui/detalle/organizacion.py:284 app/ui/detalle/organizacion.py:464 app/ui/detalle/pull_request.py:321 app/ui/detalle/releases.py:197 app/ui/git/ventana_git.py:1043 app/ui/git/ventana_git.py:1152 app/ui/git/ventana_git.py:1261 app/ui/git/ventana_git.py:1306 app/ui/repositorio/vistas.py:1053 app/ui/repositorio/vistas.py:1436 app/ui/repositorio/vistas.py:1876 app/ui/repositorio/vistas.py:2207 app/ui/vistas/principales.py:284 app/ui/vistas/principales.py:371 app/ui/vistas/principales.py:980
 msgid "Fecha"
 msgstr "Date"
 
@@ -6071,7 +6071,7 @@ msgstr "spam"
 msgid "Descripción del pull request"
 msgstr "Pull request description"
 
-#: app/ui/detalle/conversacion.py:162 app/ui/detalle/gist.py:57 app/ui/detalle/usuario.py:147 app/ui/vistas/principales.py:62 app/ui/vistas/principales.py:119 app/ui/vistas/principales.py:482
+#: app/ui/detalle/conversacion.py:162 app/ui/detalle/gist.py:57 app/ui/detalle/usuario.py:147 app/ui/vistas/principales.py:118 app/ui/vistas/principales.py:183 app/ui/vistas/principales.py:556
 msgid "(sin descripción)"
 msgstr "(no description)"
 
@@ -6370,47 +6370,47 @@ msgstr "Review: {e}"
 msgid "(revisión sin texto)"
 msgstr "(review without text)"
 
-#: app/ui/detalle/conversacion.py:329 app/ui/vistas/principales.py:107
+#: app/ui/detalle/conversacion.py:329 app/ui/vistas/principales.py:171
 #, python-brace-format
 msgid "Pull request #{n}: {t}"
 msgstr "Pull request #{n}: {t}"
 
-#: app/ui/detalle/conversacion.py:329 app/ui/vistas/principales.py:107
+#: app/ui/detalle/conversacion.py:329 app/ui/vistas/principales.py:171
 #, python-brace-format
 msgid "Issue #{n}: {t}"
 msgstr "Issue #{n}: {t}"
 
-#: app/ui/detalle/conversacion.py:333 app/ui/detalle/discusiones.py:81 app/ui/detalle/gist.py:58 app/ui/detalle/releases.py:71 app/ui/vistas/principales.py:110 app/ui/vistas/principales.py:986
+#: app/ui/detalle/conversacion.py:333 app/ui/detalle/discusiones.py:81 app/ui/detalle/gist.py:58 app/ui/detalle/releases.py:71 app/ui/vistas/principales.py:174 app/ui/vistas/principales.py:1103
 #, python-brace-format
 msgid "Autor: {a}"
 msgstr "Author: {a}"
 
-#: app/ui/detalle/conversacion.py:334 app/ui/vistas/principales.py:111
+#: app/ui/detalle/conversacion.py:334 app/ui/vistas/principales.py:175
 #, python-brace-format
 msgid "Etiquetas: {e}"
 msgstr "Labels: {e}"
 
-#: app/ui/detalle/conversacion.py:335 app/ui/vistas/principales.py:112
+#: app/ui/detalle/conversacion.py:335 app/ui/vistas/principales.py:176
 #, python-brace-format
 msgid "Asignados: {a}"
 msgstr "Assignees: {a}"
 
-#: app/ui/detalle/conversacion.py:336 app/ui/vistas/principales.py:113
+#: app/ui/detalle/conversacion.py:336 app/ui/vistas/principales.py:177
 #, python-brace-format
 msgid "Hito: {h}"
 msgstr "Milestone: {h}"
 
-#: app/ui/detalle/conversacion.py:337 app/ui/detalle/conversacion.py:364 app/ui/vistas/principales.py:115
+#: app/ui/detalle/conversacion.py:337 app/ui/detalle/conversacion.py:364 app/ui/vistas/principales.py:179
 #, python-brace-format
 msgid "Reacciones: {r}"
 msgstr "Reactions: {r}"
 
-#: app/ui/detalle/conversacion.py:338 app/ui/detalle/discusiones.py:86 app/ui/detalle/gist.py:61 app/ui/vistas/principales.py:114
+#: app/ui/detalle/conversacion.py:338 app/ui/detalle/discusiones.py:86 app/ui/detalle/gist.py:61 app/ui/vistas/principales.py:178
 #, python-brace-format
 msgid "Comentarios: {c}"
 msgstr "Comments: {c}"
 
-#: app/ui/detalle/conversacion.py:343 app/ui/vistas/principales.py:116
+#: app/ui/detalle/conversacion.py:343 app/ui/vistas/principales.py:180
 #, python-brace-format
 msgid "Creada: {c}; actualizada: {a}"
 msgstr "Created: {c}; updated: {a}"
@@ -6436,7 +6436,7 @@ msgstr "Enter opens the item; Applications or Shift+F10 shows the actions."
 msgid "Cierra esta ventana (también Escape)."
 msgstr "Closes this window (also Escape)."
 
-#: app/ui/detalle/conversacion.py:595 app/ui/detalle/usuario.py:139 app/ui/vistas/principales.py:550
+#: app/ui/detalle/conversacion.py:595 app/ui/detalle/usuario.py:139 app/ui/vistas/principales.py:667
 msgid "La lista está vacía."
 msgstr "The list is empty."
 
@@ -6445,7 +6445,7 @@ msgstr "The list is empty."
 msgid "{n} elementos."
 msgstr "{n} items."
 
-#: app/ui/detalle/conversacion.py:608 app/ui/detalle/conversacion.py:884 app/ui/vistas/base.py:612
+#: app/ui/detalle/conversacion.py:608 app/ui/detalle/conversacion.py:884 app/ui/vistas/base.py:623
 msgid "No hay ningún elemento elegido."
 msgstr "No item is selected."
 
@@ -6629,7 +6629,7 @@ msgstr "Reaction “{r}” added."
 msgid "{t} de {a} en #{n}"
 msgstr "{t} by {a} in #{n}"
 
-#: app/ui/detalle/conversacion.py:992 app/ui/vistas/base.py:711 app/ui/vistas/base.py:718
+#: app/ui/detalle/conversacion.py:992 app/ui/vistas/base.py:722 app/ui/vistas/base.py:729
 msgid "Este elemento no tiene enlace."
 msgstr "This item has no link."
 
@@ -6814,12 +6814,12 @@ msgstr "Comment, marked as answer"
 msgid ", bloqueada"
 msgstr ", locked"
 
-#: app/ui/detalle/discusiones.py:79 app/ui/detalle/discusiones.py:167 app/ui/detalle/discusiones.py:267 app/ui/vistas/principales.py:982
+#: app/ui/detalle/discusiones.py:79 app/ui/detalle/discusiones.py:167 app/ui/detalle/discusiones.py:267 app/ui/vistas/principales.py:1099
 #, python-brace-format
 msgid "Discusión #{n}: {t}"
 msgstr "Discussion #{n}: {t}"
 
-#: app/ui/detalle/discusiones.py:80 app/ui/vistas/principales.py:984
+#: app/ui/detalle/discusiones.py:80 app/ui/vistas/principales.py:1101
 #, python-brace-format
 msgid "Categoría: {c}"
 msgstr "Category: {c}"
@@ -6857,7 +6857,7 @@ msgstr "&Comments and replies:"
 msgid "Comentarios y respuestas"
 msgstr "Comments and replies"
 
-#: app/ui/detalle/discusiones.py:123 app/ui/repositorio/vistas.py:905 app/ui/vistas/principales.py:850
+#: app/ui/detalle/discusiones.py:123 app/ui/repositorio/vistas.py:905 app/ui/vistas/principales.py:967
 msgid "Votos"
 msgstr "Upvotes"
 
@@ -7140,17 +7140,17 @@ msgstr "Issue &template:"
 msgid "Cargando las plantillas…"
 msgstr "Loading the templates…"
 
-#: app/ui/detalle/gist.py:57 app/ui/vistas/principales.py:62
+#: app/ui/detalle/gist.py:57 app/ui/vistas/principales.py:118
 #, python-brace-format
 msgid "Descripción: {d}"
 msgstr "Description: {d}"
 
-#: app/ui/detalle/gist.py:59 app/ui/vistas/principales.py:63
+#: app/ui/detalle/gist.py:59 app/ui/vistas/principales.py:119
 #, python-brace-format
 msgid "Visibilidad: {v}"
 msgstr "Visibility: {v}"
 
-#: app/ui/detalle/gist.py:59 app/ui/detalle/organizacion.py:239 app/ui/detalle/usuario.py:149 app/ui/repositorio/vistas.py:1990 app/ui/vistas/principales.py:484
+#: app/ui/detalle/gist.py:59 app/ui/detalle/organizacion.py:239 app/ui/detalle/usuario.py:149 app/ui/repositorio/vistas.py:1990 app/ui/vistas/principales.py:558
 msgid "Secreto"
 msgstr "Secret"
 
@@ -7188,7 +7188,7 @@ msgstr "Gist {i}"
 msgid "&Archivos:"
 msgstr "&Files:"
 
-#: app/ui/detalle/gist.py:98 app/ui/detalle/usuario.py:148 app/ui/repositorio/vistas.py:1149 app/ui/vistas/principales.py:483
+#: app/ui/detalle/gist.py:98 app/ui/detalle/usuario.py:148 app/ui/repositorio/vistas.py:1149 app/ui/vistas/principales.py:557
 msgid "Archivos"
 msgstr "Files"
 
@@ -7409,11 +7409,11 @@ msgstr "Clone URL copied: {u}"
 msgid "¿Borrar el gist «{d}» con todos sus archivos? No se puede deshacer."
 msgstr "Delete the gist “{d}” with all its files? This cannot be undone."
 
-#: app/ui/detalle/gist.py:346 app/ui/vistas/principales.py:474
+#: app/ui/detalle/gist.py:346 app/ui/vistas/principales.py:548
 msgid "Borrar gist"
 msgstr "Delete gist"
 
-#: app/ui/detalle/gist.py:349 app/ui/vistas/principales.py:476
+#: app/ui/detalle/gist.py:349 app/ui/vistas/principales.py:550
 msgid "Gist borrado."
 msgstr "Gist deleted."
 
@@ -7856,7 +7856,7 @@ msgstr "&Sub-issues:"
 msgid "Subissues de #{n}"
 msgstr "Sub-issues of #{n}"
 
-#: app/ui/detalle/issue.py:340 app/ui/repositorio/vistas.py:811 app/ui/vistas/principales.py:96
+#: app/ui/detalle/issue.py:340 app/ui/repositorio/vistas.py:811 app/ui/vistas/principales.py:160
 msgid "Asignados"
 msgstr "Assignees"
 
@@ -7971,7 +7971,7 @@ msgstr "Member removed."
 msgid "Miembros"
 msgstr "Members"
 
-#: app/ui/detalle/organizacion.py:138 app/ui/detalle/organizacion.py:191 app/ui/detalle/usuario.py:135 app/ui/repositorio/vistas.py:1686 app/ui/repositorio/vistas.py:1730 app/ui/vistas/principales.py:547
+#: app/ui/detalle/organizacion.py:138 app/ui/detalle/organizacion.py:191 app/ui/detalle/usuario.py:135 app/ui/repositorio/vistas.py:1686 app/ui/repositorio/vistas.py:1730 app/ui/vistas/principales.py:644
 msgid "Usuario"
 msgstr "User"
 
@@ -7979,7 +7979,7 @@ msgstr "User"
 msgid "Rol"
 msgstr "Role"
 
-#: app/ui/detalle/organizacion.py:141 app/ui/detalle/usuario.py:138 app/ui/vistas/principales.py:549
+#: app/ui/detalle/organizacion.py:141 app/ui/detalle/usuario.py:138 app/ui/vistas/principales.py:666
 msgid "&Ver perfil"
 msgstr "&View profile"
 
@@ -8120,7 +8120,7 @@ msgstr "Team &repositories:"
 msgid "Repositorios del equipo {e}"
 msgstr "Repositories of team {e}"
 
-#: app/ui/detalle/organizacion.py:226 app/ui/detalle/proyectos.py:182 app/ui/detalle/proyectos.py:269 app/ui/vistas/principales.py:90 app/ui/vistas/principales.py:222 app/ui/vistas/principales.py:305 app/ui/vistas/principales.py:570 app/ui/vistas/principales.py:843
+#: app/ui/detalle/organizacion.py:226 app/ui/detalle/proyectos.py:182 app/ui/detalle/proyectos.py:269 app/ui/vistas/principales.py:154 app/ui/vistas/principales.py:286 app/ui/vistas/principales.py:369 app/ui/vistas/principales.py:687 app/ui/vistas/principales.py:960
 msgid "Repositorio"
 msgstr "Repository"
 
@@ -8209,7 +8209,7 @@ msgstr "Invitation canceled."
 msgid "Invitaciones pendientes"
 msgstr "Pending invitations"
 
-#: app/ui/detalle/organizacion.py:281 app/ui/detalle/usuario.py:66 app/ui/detalle/usuario.py:136 app/ui/repositorio/vistas.py:1731 app/ui/vistas/principales.py:221 app/ui/vistas/principales.py:547 app/ui/vistas/principales.py:830
+#: app/ui/detalle/organizacion.py:281 app/ui/detalle/usuario.py:66 app/ui/detalle/usuario.py:136 app/ui/repositorio/vistas.py:1731 app/ui/vistas/principales.py:285 app/ui/vistas/principales.py:651 app/ui/vistas/principales.py:947
 msgid "Persona"
 msgstr "Person"
 
@@ -8229,23 +8229,23 @@ msgstr "&Cancel invitation…"
 msgid "No hay invitaciones pendientes."
 msgstr "There are no pending invitations."
 
-#: app/ui/detalle/organizacion.py:297 app/ui/repositorio/ventana.py:63 app/ui/repositorio/vistas.py:1466 app/ui/vistas/principales.py:523
+#: app/ui/detalle/organizacion.py:297 app/ui/repositorio/ventana.py:63 app/ui/repositorio/vistas.py:1466 app/ui/vistas/principales.py:597
 msgid "Proyectos"
 msgstr "Projects"
 
-#: app/ui/detalle/organizacion.py:301 app/ui/detalle/proyectos.py:182 app/ui/repositorio/vistas.py:1470 app/ui/vistas/principales.py:527
+#: app/ui/detalle/organizacion.py:301 app/ui/detalle/proyectos.py:182 app/ui/repositorio/vistas.py:1470 app/ui/vistas/principales.py:601
 msgid "Elementos"
 msgstr "Items"
 
-#: app/ui/detalle/organizacion.py:302 app/ui/detalle/proyectos.py:113 app/ui/repositorio/dialogos.py:956 app/ui/repositorio/vistas.py:1471 app/ui/repositorio/vistas.py:1528 app/ui/vistas/principales.py:528
+#: app/ui/detalle/organizacion.py:302 app/ui/detalle/proyectos.py:113 app/ui/repositorio/dialogos.py:956 app/ui/repositorio/vistas.py:1471 app/ui/repositorio/vistas.py:1528 app/ui/vistas/principales.py:602
 msgid "Cerrado"
 msgstr "Closed"
 
-#: app/ui/detalle/organizacion.py:302 app/ui/detalle/proyectos.py:113 app/ui/repositorio/dialogos.py:956 app/ui/repositorio/vistas.py:1471 app/ui/repositorio/vistas.py:1528 app/ui/vistas/principales.py:528
+#: app/ui/detalle/organizacion.py:302 app/ui/detalle/proyectos.py:113 app/ui/repositorio/dialogos.py:956 app/ui/repositorio/vistas.py:1471 app/ui/repositorio/vistas.py:1528 app/ui/vistas/principales.py:602
 msgid "Abierto"
 msgstr "Open"
 
-#: app/ui/detalle/organizacion.py:303 app/ui/detalle/organizacion.py:394 app/ui/detalle/usuario.py:150 app/ui/repositorio/vistas.py:812 app/ui/repositorio/vistas.py:1473 app/ui/repositorio/vistas.py:1935 app/ui/repositorio/vistas.py:1992 app/ui/vistas/principales.py:53 app/ui/vistas/principales.py:98 app/ui/vistas/principales.py:487 app/ui/vistas/principales.py:530
+#: app/ui/detalle/organizacion.py:303 app/ui/detalle/organizacion.py:394 app/ui/detalle/usuario.py:150 app/ui/repositorio/vistas.py:812 app/ui/repositorio/vistas.py:1473 app/ui/repositorio/vistas.py:1935 app/ui/repositorio/vistas.py:1992 app/ui/vistas/principales.py:97 app/ui/vistas/principales.py:162 app/ui/vistas/principales.py:561 app/ui/vistas/principales.py:604
 msgid "Actualizado"
 msgstr "Updated"
 
@@ -8593,7 +8593,7 @@ msgstr " (archived)"
 msgid "Tipo: {t}"
 msgstr "Type: {t}"
 
-#: app/ui/detalle/proyectos.py:109 app/ui/vistas/principales.py:108 app/ui/vistas/principales.py:983
+#: app/ui/detalle/proyectos.py:109 app/ui/vistas/principales.py:172 app/ui/vistas/principales.py:1100
 #, python-brace-format
 msgid "Repositorio: {r}"
 msgstr "Repository: {r}"
@@ -8689,7 +8689,7 @@ msgstr "Co&py item link\tCtrl+Shift+C"
 msgid "Cargando el proyecto…"
 msgstr "Loading project…"
 
-#: app/ui/detalle/proyectos.py:301 app/ui/vistas/base.py:421
+#: app/ui/detalle/proyectos.py:301 app/ui/vistas/base.py:424
 #, python-brace-format
 msgid "{n} elementos"
 msgstr "{n} items"
@@ -8923,7 +8923,7 @@ msgstr "&Text that {c} must contain (empty: no value):"
 msgid "No hay ningún filtro."
 msgstr "There is no filter."
 
-#: app/ui/detalle/proyectos.py:599 app/ui/vistas/base.py:694
+#: app/ui/detalle/proyectos.py:599 app/ui/vistas/base.py:705
 msgid "Filtro quitado. "
 msgstr "Filter removed. "
 
@@ -9998,7 +9998,7 @@ msgstr "Release created. Do you want to upload files to it now?"
 msgid "Preparando la nueva release…"
 msgstr "Preparing the new release…"
 
-#: app/ui/detalle/usuario.py:66 app/ui/detalle/usuario.py:136 app/ui/detalle/usuario.py:168 app/ui/repositorio/vistas.py:1731 app/ui/vistas/principales.py:504 app/ui/vistas/principales.py:547 app/ui/vistas/principales.py:830
+#: app/ui/detalle/usuario.py:66 app/ui/detalle/usuario.py:136 app/ui/detalle/usuario.py:168 app/ui/repositorio/vistas.py:1731 app/ui/vistas/principales.py:578 app/ui/vistas/principales.py:651 app/ui/vistas/principales.py:947
 msgid "Organización"
 msgstr "Organization"
 
@@ -10046,7 +10046,7 @@ msgstr "Starred"
 msgid "No ha dado estrella a ningún repositorio público."
 msgstr "This user has not starred any public repositories."
 
-#: app/ui/detalle/usuario.py:123 app/ui/detalle/usuario.py:212 app/ui/vistas/principales.py:219
+#: app/ui/detalle/usuario.py:123 app/ui/detalle/usuario.py:212 app/ui/vistas/principales.py:283
 msgid "Actividad"
 msgstr "Activity"
 
@@ -10058,7 +10058,7 @@ msgstr "There is no recent public activity."
 msgid "Seguidos"
 msgstr "Following"
 
-#: app/ui/detalle/usuario.py:145 app/ui/detalle/usuario.py:215 app/ui/vistas/principales.py:463 app/ui/vistas/principales.py:480
+#: app/ui/detalle/usuario.py:145 app/ui/detalle/usuario.py:215 app/ui/vistas/principales.py:537 app/ui/vistas/principales.py:554
 msgid "Gists"
 msgstr "Gists"
 
@@ -10066,7 +10066,7 @@ msgstr "Gists"
 msgid "No tiene gists públicos."
 msgstr "This user has no public gists."
 
-#: app/ui/detalle/usuario.py:167 app/ui/detalle/usuario.py:216 app/ui/vistas/principales.py:502
+#: app/ui/detalle/usuario.py:167 app/ui/detalle/usuario.py:216 app/ui/vistas/principales.py:576
 msgid "Organizaciones"
 msgstr "Organizations"
 
@@ -10199,12 +10199,12 @@ msgstr "Un&follow"
 msgid "Des&bloquear"
 msgstr "Un&block"
 
-#: app/ui/detalle/usuario.py:379 app/ui/vistas/principales.py:745
+#: app/ui/detalle/usuario.py:379 app/ui/vistas/principales.py:862
 #, python-brace-format
 msgid "Ha dejado de seguir a {l}."
 msgstr "You have unfollowed {l}."
 
-#: app/ui/detalle/usuario.py:379 app/ui/vistas/principales.py:745
+#: app/ui/detalle/usuario.py:379 app/ui/vistas/principales.py:862
 #, python-brace-format
 msgid "Ahora sigue a {l}."
 msgstr "You are now following {l}."
@@ -10373,7 +10373,7 @@ msgstr "What's new"
 msgid "Las novedades se mostrarán al abrirse la versión nueva, cuando termine la actualización."
 msgstr "What's new will be shown when the new version opens, after the update finishes."
 
-#: app/ui/dialogo_actualizacion.py:169 app/ui/git/ventana_git.py:134 app/ui/repositorio/dialogos.py:955 app/ui/sesion.py:115 app/ui/ventana_principal.py:620 app/ui/vistas/principales.py:390
+#: app/ui/dialogo_actualizacion.py:169 app/ui/git/ventana_git.py:134 app/ui/repositorio/dialogos.py:955 app/ui/sesion.py:115 app/ui/ventana_principal.py:620 app/ui/vistas/principales.py:460
 msgid "&Estado:"
 msgstr "Stat&e:"
 
@@ -12604,7 +12604,7 @@ msgstr "remote"
 msgid "local"
 msgstr "local"
 
-#: app/ui/git/ventana_git.py:1148 app/ui/git/ventana_git.py:1408 app/ui/repositorio/vistas.py:807 app/ui/repositorio/vistas.py:1012 app/ui/repositorio/vistas.py:1049 app/ui/repositorio/vistas.py:1396 app/ui/vistas/principales.py:572
+#: app/ui/git/ventana_git.py:1148 app/ui/git/ventana_git.py:1408 app/ui/repositorio/vistas.py:807 app/ui/repositorio/vistas.py:1012 app/ui/repositorio/vistas.py:1049 app/ui/repositorio/vistas.py:1396 app/ui/vistas/principales.py:689
 msgid "Rama"
 msgstr "Branch"
 
@@ -12969,7 +12969,7 @@ msgstr "Updating submodules…"
 msgid "Submódulos actualizados."
 msgstr "Submodules updated."
 
-#: app/ui/git/ventana_git.py:1407 app/ui/repositorio/vistas.py:265 app/ui/vistas/principales.py:640
+#: app/ui/git/ventana_git.py:1407 app/ui/repositorio/vistas.py:265 app/ui/vistas/principales.py:757
 msgid "Carpeta"
 msgstr "Folder"
 
@@ -13527,7 +13527,7 @@ msgstr "&Run"
 msgid "Sonidos"
 msgstr "Sounds"
 
-#: app/ui/preferencias.py:53 app/ui/preferencias.py:81 app/ui/vistas/principales.py:300
+#: app/ui/preferencias.py:53 app/ui/preferencias.py:81 app/ui/vistas/principales.py:364
 msgid "Notificaciones"
 msgstr "Notifications"
 
@@ -13563,19 +13563,19 @@ msgstr "Which section is shown when the application opens."
 msgid "Inicio"
 msgstr "Home"
 
-#: app/ui/preferencias.py:81 app/ui/vistas/principales.py:361
+#: app/ui/preferencias.py:81 app/ui/vistas/principales.py:425
 msgid "Mis repositorios"
 msgstr "My repositories"
 
-#: app/ui/preferencias.py:82 app/ui/vistas/principales.py:410
+#: app/ui/preferencias.py:82 app/ui/vistas/principales.py:484
 msgid "Mis issues"
 msgstr "My issues"
 
-#: app/ui/preferencias.py:82 app/ui/vistas/principales.py:441
+#: app/ui/preferencias.py:82 app/ui/vistas/principales.py:515
 msgid "Mis pull requests"
 msgstr "My pull requests"
 
-#: app/ui/preferencias.py:82 app/ui/vistas/principales.py:636
+#: app/ui/preferencias.py:82 app/ui/vistas/principales.py:753
 msgid "Repositorios locales"
 msgstr "Local repositories"
 
@@ -14024,7 +14024,6 @@ msgid "Avisar de las ejecuciones vigiladas que &terminan:"
 msgstr "Report watched runs that &finish:"
 
 #: app/ui/preferencias.py:217
-#| msgid "Vale para todo lo vigilado: «Avisarme cuando termine», «Vigilar todas las ejecuciones» de un repositorio y lo que lanza un push. Si elige solo las que fallan, de las que van bien no se dice nada."
 msgid "Vale para todo lo vigilado: «Avisarme cuando termine», «Avisar al terminar cada ejecución de Actions» de un repositorio y lo que lanza un push. Si elige solo las que fallan, de las que van bien no se dice nada."
 msgstr "Applies to everything that is watched: “Notify me when it finishes”, a repository's “Notify when each Actions run finishes” and the runs triggered by a push. If you choose only the ones that fail, nothing is said about the ones that succeed."
 
@@ -14746,7 +14745,7 @@ msgstr "transferred to {d}"
 msgid "Transferencia pedida. GitHub puede pedir a la otra cuenta que la acepte."
 msgstr "Transfer requested. GitHub may ask the other account to accept it."
 
-#: app/ui/repositorio/dialogos.py:589 app/ui/vistas/principales.py:348
+#: app/ui/repositorio/dialogos.py:589 app/ui/vistas/principales.py:412
 #, python-brace-format
 msgid "¿Borrar DEFINITIVAMENTE el repositorio {n}? Se perderá todo: código, issues, pull requests, wiki y releases. No se puede deshacer."
 msgstr "PERMANENTLY delete the repository {n}? Everything will be lost: code, issues, pull requests, wiki and releases. This cannot be undone."
@@ -14759,7 +14758,7 @@ msgstr "Delete repository"
 msgid "borrado"
 msgstr "deleted"
 
-#: app/ui/repositorio/dialogos.py:601 app/ui/vistas/principales.py:352
+#: app/ui/repositorio/dialogos.py:601 app/ui/vistas/principales.py:416
 #, python-brace-format
 msgid "Repositorio {n} borrado."
 msgstr "Repository {n} deleted."
@@ -15209,7 +15208,7 @@ msgstr "Type the environment name."
 msgid "Texto de solo lectura: recórralo con las flechas. Aplicaciones abre las acciones."
 msgstr "Read-only text: move through it with the arrow keys. The Applications key opens the actions."
 
-#: app/ui/repositorio/paneles.py:81 app/ui/repositorio/paneles.py:446 app/ui/vistas/base.py:571
+#: app/ui/repositorio/paneles.py:81 app/ui/repositorio/paneles.py:446 app/ui/vistas/base.py:582
 msgid "&Actualizar"
 msgstr "&Refresh"
 
@@ -15221,7 +15220,7 @@ msgstr "&Copy all text"
 msgid "Texto copiado."
 msgstr "Text copied."
 
-#: app/ui/repositorio/paneles.py:145 app/ui/vistas/base.py:469
+#: app/ui/repositorio/paneles.py:145 app/ui/vistas/base.py:480
 #, python-brace-format
 msgid "Error al cargar {t}: {m}"
 msgstr "Error loading {t}: {m}"
@@ -15268,7 +15267,7 @@ msgstr "Watchers: {n}"
 msgid "Última release: {n} ({t}), {f}"
 msgstr "Latest release: {n} ({t}), {f}"
 
-#: app/ui/repositorio/paneles.py:234
+#: app/ui/repositorio/paneles.py:234 app/ui/vistas/principales.py:138
 #, python-brace-format
 msgid "Su permiso: {p}"
 msgstr "Your permission: {p}"
@@ -15730,7 +15729,7 @@ msgstr "Copy clone &URL"
 msgid "Copia la dirección https para git clone."
 msgstr "Copies the HTTPS address for git clone."
 
-#: app/ui/repositorio/ventana.py:155 app/ui/vistas/principales.py:175 app/ui/vistas/principales.py:777
+#: app/ui/repositorio/ventana.py:155 app/ui/vistas/principales.py:239 app/ui/vistas/principales.py:894
 msgid "C&lonar…"
 msgstr "C&lone…"
 
@@ -15738,11 +15737,11 @@ msgstr "C&lone…"
 msgid "Descarga el repositorio a una carpeta del equipo con git."
 msgstr "Downloads the repository to a folder on this computer with git."
 
-#: app/ui/repositorio/ventana.py:156 app/ui/vistas/principales.py:179 app/ui/vistas/principales.py:782
+#: app/ui/repositorio/ventana.py:156 app/ui/vistas/principales.py:243 app/ui/vistas/principales.py:899
 msgid "Descargar el código en &zip…"
 msgstr "Download code as &ZIP…"
 
-#: app/ui/repositorio/ventana.py:157 app/ui/vistas/principales.py:180 app/ui/vistas/principales.py:783
+#: app/ui/repositorio/ventana.py:157 app/ui/vistas/principales.py:244 app/ui/vistas/principales.py:900
 msgid "Guarda el código de la rama principal en un archivo zip, sin necesidad de git."
 msgstr "Saves the code of the default branch to a ZIP file, without needing git."
 
@@ -15790,7 +15789,7 @@ msgstr "Only in a fork: brings the new changes from the original repository into
 msgid "Ver el &propietario\tCtrl+Shift+P"
 msgstr "View own&er\tCtrl+Shift+P"
 
-#: app/ui/repositorio/ventana.py:167 app/ui/vistas/principales.py:187
+#: app/ui/repositorio/ventana.py:167 app/ui/vistas/principales.py:251
 msgid "Abre el perfil de la persona u organización dueña del repositorio: sus repositorios y el botón Seguir."
 msgstr "Opens the profile of the person or organization that owns the repository: their repositories and the Follow button."
 
@@ -15903,12 +15902,12 @@ msgstr "Cloning is not available in this version yet. You can copy the clone URL
 msgid "Clonar"
 msgstr "Clone"
 
-#: app/ui/repositorio/ventana.py:467 app/ui/vistas/principales.py:151
+#: app/ui/repositorio/ventana.py:467 app/ui/vistas/principales.py:215
 #, python-brace-format
 msgid "Estrella puesta a {n}."
 msgstr "Starred {n}."
 
-#: app/ui/repositorio/ventana.py:467 app/ui/vistas/principales.py:151
+#: app/ui/repositorio/ventana.py:467 app/ui/vistas/principales.py:215
 #, python-brace-format
 msgid "Estrella quitada a {n}."
 msgstr "Unstarred {n}."
@@ -15953,7 +15952,7 @@ msgstr "Fork"
 msgid "¿Crear una bifurcación (fork) de {n} en su cuenta?"
 msgstr "Create a fork of {n} in your account?"
 
-#: app/ui/repositorio/ventana.py:538 app/ui/vistas/principales.py:156
+#: app/ui/repositorio/ventana.py:538 app/ui/vistas/principales.py:220
 msgid "Creando la bifurcación…"
 msgstr "Creating the fork…"
 
@@ -16001,7 +16000,7 @@ msgstr "closed"
 msgid "todas"
 msgstr "all"
 
-#: app/ui/repositorio/vistas.py:253 app/ui/vistas/principales.py:294 app/ui/vistas/principales.py:336 app/ui/vistas/principales.py:386 app/ui/vistas/principales.py:463
+#: app/ui/repositorio/vistas.py:253 app/ui/vistas/principales.py:358 app/ui/vistas/principales.py:400 app/ui/vistas/principales.py:456 app/ui/vistas/principales.py:537
 msgid "&Mostrar:"
 msgstr "&Show:"
 
@@ -16159,7 +16158,7 @@ msgstr "Searching the whole repository…"
 msgid "(carpeta superior)"
 msgstr "(parent folder)"
 
-#: app/ui/repositorio/vistas.py:449 app/ui/repositorio/vistas.py:679 app/ui/repositorio/vistas.py:816 app/ui/repositorio/vistas.py:910 app/ui/repositorio/vistas.py:1057 app/ui/repositorio/vistas.py:1155 app/ui/repositorio/vistas.py:1476 app/ui/repositorio/vistas.py:1713 app/ui/vistas/principales.py:174 app/ui/vistas/principales.py:412 app/ui/vistas/principales.py:443 app/ui/vistas/principales.py:491 app/ui/vistas/principales.py:509 app/ui/vistas/principales.py:534 app/ui/vistas/principales.py:644 app/ui/vistas/principales.py:1076
+#: app/ui/repositorio/vistas.py:449 app/ui/repositorio/vistas.py:679 app/ui/repositorio/vistas.py:816 app/ui/repositorio/vistas.py:910 app/ui/repositorio/vistas.py:1057 app/ui/repositorio/vistas.py:1155 app/ui/repositorio/vistas.py:1476 app/ui/repositorio/vistas.py:1713 app/ui/vistas/principales.py:238 app/ui/vistas/principales.py:486 app/ui/vistas/principales.py:517 app/ui/vistas/principales.py:565 app/ui/vistas/principales.py:583 app/ui/vistas/principales.py:608 app/ui/vistas/principales.py:761 app/ui/vistas/principales.py:1193
 msgid "A&brir"
 msgstr "Ope&n"
 
@@ -17115,7 +17114,7 @@ msgstr "Label saved."
 msgid "¿Borrar la etiqueta «{e}»? Se quitará de todas las issues y pull requests."
 msgstr "Delete the label “{e}”? It will be removed from all issues and pull requests."
 
-#: app/ui/repositorio/vistas.py:1584 app/ui/vistas/principales.py:862
+#: app/ui/repositorio/vistas.py:1584 app/ui/vistas/principales.py:979
 msgid "Color"
 msgstr "Color"
 
@@ -17502,7 +17501,7 @@ msgstr "(hidden)"
 msgid "Nuevo &secreto o variable…"
 msgstr "New &secret or variable…"
 
-#: app/ui/repositorio/vistas.py:1998 app/ui/vistas/principales.py:582
+#: app/ui/repositorio/vistas.py:1998 app/ui/vistas/principales.py:699
 msgid "&Borrar…"
 msgstr "Dele&te…"
 
@@ -17629,7 +17628,7 @@ msgstr "Read-only"
 msgid "Lectura y escritura"
 msgstr "Read and write"
 
-#: app/ui/repositorio/vistas.py:2100 app/ui/vistas/principales.py:574
+#: app/ui/repositorio/vistas.py:2100 app/ui/vistas/principales.py:691
 msgid "Último uso"
 msgstr "Last used"
 
@@ -18041,7 +18040,7 @@ msgstr "Page: {t}"
 msgid "Formato: {f}"
 msgstr "Format: {f}"
 
-#: app/ui/repositorio/wiki.py:313 app/ui/vistas/principales.py:68
+#: app/ui/repositorio/wiki.py:313 app/ui/vistas/principales.py:128
 #, python-brace-format
 msgid "Tamaño: {t}"
 msgstr "Size: {t}"
@@ -18793,11 +18792,11 @@ msgstr "Git not found"
 msgid "La carpeta no es un repositorio de git. ¿Crear uno (git init)?"
 msgstr "The folder is not a git repository. Do you want to create one (git init)?"
 
-#: app/ui/ventana_principal.py:517 app/ui/vistas/principales.py:618
+#: app/ui/ventana_principal.py:517 app/ui/vistas/principales.py:735
 msgid "Repositorio local"
 msgstr "Local repository"
 
-#: app/ui/ventana_principal.py:544 app/ui/vistas/principales.py:914 app/ui/vistas/principales.py:976
+#: app/ui/ventana_principal.py:544 app/ui/vistas/principales.py:1031 app/ui/vistas/principales.py:1093
 #, python-brace-format
 msgid "resultados de «{q}»"
 msgstr "results for “{q}”"
@@ -18900,7 +18899,6 @@ msgid "Vigilando: {d}. Se avisará al terminar."
 msgstr "Watching: {d}. You will be notified when it finishes."
 
 #: app/ui/ventana_principal.py:903
-#| msgid "No se está vigilando ninguna ejecución. Para vigilar una, use «Avisarme cuando termine» en la sección Actions de un repositorio, o «Vigilar todas las ejecuciones» en su menú Repositorio."
 msgid "No se está vigilando ninguna ejecución. Para vigilar una, use «Avisarme cuando termine» en la sección Actions de un repositorio, o «Avisar al terminar cada ejecución de Actions» en su menú Repositorio."
 msgstr "No runs are being watched. To watch one, use “Notify me when it finishes” in the Actions section of a repository, or “Notify when each Actions run finishes” in its Repository menu."
 
@@ -19050,735 +19048,785 @@ msgstr "Application keyboard shortcuts"
 msgid "Novedades de la versión {version}"
 msgstr "What's new in version {version}"
 
-#: app/ui/vistas/base.py:155
+#: app/ui/vistas/base.py:158
 #, python-brace-format
 msgid "&Lista de {t}"
 msgstr "&List of {t}"
 
-#: app/ui/vistas/base.py:231
+#: app/ui/vistas/base.py:234
 #, python-brace-format
 msgid "{titulo}. Intro abre; Aplicaciones o Mayúsculas+F10 muestra las acciones; F5 actualiza; Control+F filtra; Control+C copia la fila; Control+Mayúsculas+C copia el enlace; Control+B abre en el navegador; Control+I muestra todos los detalles. Izquierda y derecha leen las columnas; Control+J ordena por la columna que se está leyendo y Control+Mayúsculas+J elige el orden."
 msgstr "{titulo}. Enter opens; the Applications key or Shift+F10 shows the actions; F5 refreshes; Control+F filters; Control+C copies the row; Control+Shift+C copies the link; Control+B opens in the browser; Control+I shows all the details. Left and right arrows read the columns; Control+J sorts by the column being read and Control+Shift+J chooses the sort order."
 
-#: app/ui/vistas/base.py:345
+#: app/ui/vistas/base.py:348
 msgid "Orden original, el que da GitHub."
 msgstr "Original order, as returned by GitHub."
 
-#: app/ui/vistas/base.py:347
+#: app/ui/vistas/base.py:350
 #, python-brace-format
 msgid "Ordenada por {c}, descendente."
 msgstr "Sorted by {c}, descending."
 
-#: app/ui/vistas/base.py:348
+#: app/ui/vistas/base.py:351
 #, python-brace-format
 msgid "Ordenada por {c}, ascendente."
 msgstr "Sorted by {c}, ascending."
 
-#: app/ui/vistas/base.py:380
+#: app/ui/vistas/base.py:383
 msgid "Orden original, el que da GitHub"
 msgstr "Original order, as returned by GitHub"
 
-#: app/ui/vistas/base.py:384
+#: app/ui/vistas/base.py:387
 #, python-brace-format
 msgid "{c}, descendente"
 msgstr "{c}, descending"
 
-#: app/ui/vistas/base.py:384
+#: app/ui/vistas/base.py:387
 #, python-brace-format
 msgid "{c}, ascendente"
 msgstr "{c}, ascending"
 
-#: app/ui/vistas/base.py:387
+#: app/ui/vistas/base.py:390
 msgid "Ordenar la lista"
 msgstr "Sort the list"
 
-#: app/ui/vistas/base.py:387
+#: app/ui/vistas/base.py:390
 msgctxt "lista"
 msgid "&Ordenar por:"
 msgstr "&Sort by:"
 
-#: app/ui/vistas/base.py:388
+#: app/ui/vistas/base.py:391
 msgid "Ordena los elementos ya cargados. Si hay más páginas, cárguelas antes con Control+M para ordenarlo todo. Las fechas, los números y los tamaños se ordenan por su valor."
 msgstr "Sorts the items already loaded. If there are more pages, load them first with Control+M to sort everything. Dates, numbers and sizes are sorted by their value."
 
-#: app/ui/vistas/base.py:419
+#: app/ui/vistas/base.py:422
 #, python-brace-format
 msgid "{n} de {t} elementos con el filtro «{f}»"
 msgstr "{n} of {t} items with the filter “{f}”"
 
-#: app/ui/vistas/base.py:424
+#: app/ui/vistas/base.py:427
 #, python-brace-format
 msgid "ordenada por {c}, descendente"
 msgstr "sorted by {c}, descending"
 
-#: app/ui/vistas/base.py:424
+#: app/ui/vistas/base.py:427
 #, python-brace-format
 msgid "ordenada por {c}, ascendente"
 msgstr "sorted by {c}, ascending"
 
-#: app/ui/vistas/base.py:427
+#: app/ui/vistas/base.py:430
 #, python-brace-format
 msgid "de {t} en total"
 msgstr "of {t} in total"
 
-#: app/ui/vistas/base.py:429
+#: app/ui/vistas/base.py:432
 msgid "hay más: se cargan al llegar al final o con Control+M"
 msgstr "there are more: they load when you reach the end or with Control+M"
 
-#: app/ui/vistas/base.py:447
+#: app/ui/vistas/base.py:450
 msgid "Necesita iniciar sesión para ver esta sección. Use Archivo, Iniciar sesión (Control+Mayúsculas+L)."
 msgstr "You need to sign in to view this section. Use File, Sign in (Control+Shift+L)."
 
-#: app/ui/vistas/base.py:517
+#: app/ui/vistas/base.py:528
 msgid "No hay elementos."
 msgstr "There are no items."
 
-#: app/ui/vistas/base.py:526
+#: app/ui/vistas/base.py:537
 #, python-brace-format
 msgid "{n} elementos más cargados."
 msgstr "{n} more items loaded."
 
-#: app/ui/vistas/base.py:532
+#: app/ui/vistas/base.py:543
 msgid "No hay más elementos."
 msgstr "There are no more items."
 
-#: app/ui/vistas/base.py:572
+#: app/ui/vistas/base.py:583
 msgid "Cargar &más"
 msgstr "Load &more"
 
-#: app/ui/vistas/base.py:574
+#: app/ui/vistas/base.py:585
 msgid "&Filtrar la lista…"
 msgstr "F&ilter list…"
 
-#: app/ui/vistas/base.py:575
+#: app/ui/vistas/base.py:586
 msgid "&Quitar el filtro"
 msgstr "Cle&ar filter"
 
-#: app/ui/vistas/base.py:577
+#: app/ui/vistas/base.py:588
 msgid "C&opiar la fila"
 msgstr "Cop&y row"
 
-#: app/ui/vistas/base.py:580
+#: app/ui/vistas/base.py:591
 msgid "Ordenar por columna &y sentido…"
 msgstr "S&ort the list…"
 
-#: app/ui/vistas/base.py:584
+#: app/ui/vistas/base.py:595
 msgid "Copiar el &enlace"
 msgstr "Copy lin&k"
 
-#: app/ui/vistas/base.py:587
+#: app/ui/vistas/base.py:598
 msgid "&Detalles completos…"
 msgstr "Full &details…"
 
-#: app/ui/vistas/base.py:669
+#: app/ui/vistas/base.py:680
 #, python-brace-format
 msgid "«{a}» actúa sobre un elemento: entre en la lista con Tabulador o Intro y elíjalo."
 msgstr "“{a}” works on an item: go into the list with Tab or Enter and select it."
 
-#: app/ui/vistas/base.py:681
+#: app/ui/vistas/base.py:692
 msgid "&Texto que deben contener los elementos:"
 msgstr "&Text the items must contain:"
 
-#: app/ui/vistas/base.py:681
+#: app/ui/vistas/base.py:692
 msgid "Filtrar la lista"
 msgstr "Filter list"
 
-#: app/ui/vistas/base.py:730
+#: app/ui/vistas/base.py:741
 msgid "Detalles"
 msgstr "Details"
 
-#: app/ui/vistas/base.py:730
+#: app/ui/vistas/base.py:741
 msgid "&Detalles:"
 msgstr "&Details:"
 
-#: app/ui/vistas/base.py:813
+#: app/ui/vistas/base.py:824
 msgctxt "tecla"
 msgid "Supr"
 msgstr "Del"
 
-#: app/ui/vistas/base.py:813
+#: app/ui/vistas/base.py:824
 msgctxt "tecla"
 msgid "Intro"
 msgstr "Enter"
 
-#: app/ui/vistas/base.py:814
+#: app/ui/vistas/base.py:825
 msgctxt "tecla"
 msgid "Retroceso"
 msgstr "Back"
 
-#: app/ui/vistas/base.py:814
+#: app/ui/vistas/base.py:825
 msgctxt "tecla"
 msgid "Espacio"
 msgstr "Space"
 
-#: app/ui/vistas/base.py:815
+#: app/ui/vistas/base.py:826
 msgctxt "tecla"
 msgid "Inicio"
 msgstr "Home"
 
-#: app/ui/vistas/base.py:815
+#: app/ui/vistas/base.py:826
 msgctxt "tecla"
 msgid "Fin"
 msgstr "End"
 
-#: app/ui/vistas/base.py:815
+#: app/ui/vistas/base.py:826
 msgctxt "tecla"
 msgid "Mayús"
 msgstr "Shift"
 
-#: app/ui/vistas/principales.py:52
+#: app/ui/vistas/principales.py:68
+#, python-brace-format
+msgid "{n}, {f}"
+msgstr "{n}, {f}"
+
+#: app/ui/vistas/principales.py:96
 msgid "Issues abiertas"
 msgstr "Open issues"
 
-#: app/ui/vistas/principales.py:54
+#: app/ui/vistas/principales.py:98
 msgid "Rama principal"
 msgstr "Default branch"
 
-#: app/ui/vistas/principales.py:55
+#: app/ui/vistas/principales.py:99
 msgid "bifurcación"
 msgstr "fork"
 
-#: app/ui/vistas/principales.py:55
+#: app/ui/vistas/principales.py:99
 msgid "archivado"
 msgstr "archived"
 
-#: app/ui/vistas/principales.py:55
+#: app/ui/vistas/principales.py:99
 msgid "plantilla"
 msgstr "template"
 
-#: app/ui/vistas/principales.py:61
+#: app/ui/vistas/principales.py:100 app/ui/vistas/principales.py:163
+msgid "Creado"
+msgstr "Created"
+
+#: app/ui/vistas/principales.py:105
+msgid "Sitio web"
+msgstr "Website"
+
+#: app/ui/vistas/principales.py:106 app/ui/vistas/principales.py:650
+msgid "Enlace"
+msgstr "Link"
+
+#: app/ui/vistas/principales.py:107
+msgid "Clonar por HTTPS"
+msgstr "Clone with HTTPS"
+
+#: app/ui/vistas/principales.py:108
+msgid "Clonar por SSH"
+msgstr "Clone with SSH"
+
+#: app/ui/vistas/principales.py:109
+msgid "Observadores"
+msgstr "Watchers"
+
+#: app/ui/vistas/principales.py:110
+msgid "Última release"
+msgstr "Latest release"
+
+#: app/ui/vistas/principales.py:111
+msgid "Su permiso"
+msgstr "Your permission"
+
+#: app/ui/vistas/principales.py:117
 #, python-brace-format
 msgid "Repositorio: {n}"
 msgstr "Repository: {n}"
 
-#: app/ui/vistas/principales.py:64
+#: app/ui/vistas/principales.py:120
 #, python-brace-format
 msgid "Lenguaje: {l}"
 msgstr "Language: {l}"
 
-#: app/ui/vistas/principales.py:65
+#: app/ui/vistas/principales.py:123
 #, python-brace-format
 msgid "Estrellas: {e}; bifurcaciones: {b}; observadores: {o}; issues abiertas: {i}"
 msgstr "Stars: {e}; forks: {b}; watchers: {o}; open issues: {i}"
 
-#: app/ui/vistas/principales.py:67
+#: app/ui/vistas/principales.py:127
 #, python-brace-format
 msgid "Rama principal: {r}"
 msgstr "Default branch: {r}"
 
-#: app/ui/vistas/principales.py:69
+#: app/ui/vistas/principales.py:129
 #, python-brace-format
 msgid "Licencia: {l}"
 msgstr "License: {l}"
 
-#: app/ui/vistas/principales.py:70
+#: app/ui/vistas/principales.py:130
 #, python-brace-format
 msgid "Temas: {t}"
 msgstr "Topics: {t}"
 
-#: app/ui/vistas/principales.py:71
+#: app/ui/vistas/principales.py:131
 #, python-brace-format
 msgid "Creado: {c}; último envío: {p}"
 msgstr "Created: {c}; last push: {p}"
 
-#: app/ui/vistas/principales.py:72
+#: app/ui/vistas/principales.py:132
 #, python-brace-format
 msgid "Web: {u}"
 msgstr "Website: {u}"
 
-#: app/ui/vistas/principales.py:74
+#: app/ui/vistas/principales.py:134
 #, python-brace-format
 msgid "Clonar por HTTPS: {u}"
 msgstr "Clone with HTTPS: {u}"
 
-#: app/ui/vistas/principales.py:75
+#: app/ui/vistas/principales.py:135
 #, python-brace-format
 msgid "Clonar por SSH: {u}"
 msgstr "Clone with SSH: {u}"
 
-#: app/ui/vistas/principales.py:78
+#: app/ui/vistas/principales.py:140
+#, python-brace-format
+msgid "Última release: {r}"
+msgstr "Latest release: {r}"
+
+#: app/ui/vistas/principales.py:142
 #, python-brace-format
 msgid "Bifurcación de: {p}"
 msgstr "Forked from: {p}"
 
-#: app/ui/vistas/principales.py:80
+#: app/ui/vistas/principales.py:144
 msgid "Archivado (solo lectura)."
 msgstr "Archived (read-only)."
 
-#: app/ui/vistas/principales.py:99
-msgid "Creado"
-msgstr "Created"
-
-#: app/ui/vistas/principales.py:157
+#: app/ui/vistas/principales.py:221
 #, python-brace-format
 msgid "Bifurcación creada: {n}."
 msgstr "Fork created: {n}."
 
-#: app/ui/vistas/principales.py:176 app/ui/vistas/principales.py:778
+#: app/ui/vistas/principales.py:240 app/ui/vistas/principales.py:895
 msgid "Poner o quitar la e&strella"
 msgstr "&Star or unstar"
 
-#: app/ui/vistas/principales.py:177
+#: app/ui/vistas/principales.py:241
 msgid "Vi&gilar…"
 msgstr "Watc&h…"
 
-#: app/ui/vistas/principales.py:178
+#: app/ui/vistas/principales.py:242
 msgid "Bifurcar (for&k)"
 msgstr "&Fork"
 
-#: app/ui/vistas/principales.py:181
+#: app/ui/vistas/principales.py:245
 msgid "Ver &issues"
 msgstr "View iss&ues"
 
-#: app/ui/vistas/principales.py:182
+#: app/ui/vistas/principales.py:246
 msgid "Ver &pull requests"
 msgstr "View &pull requests"
 
-#: app/ui/vistas/principales.py:183
+#: app/ui/vistas/principales.py:247
 msgid "Ver Ac&tions"
 msgstr "View Ac&tions"
 
-#: app/ui/vistas/principales.py:184
+#: app/ui/vistas/principales.py:248
 msgid "Ver &releases"
 msgstr "View rel&eases"
 
-#: app/ui/vistas/principales.py:185
+#: app/ui/vistas/principales.py:249
 msgid "Ver la &wiki"
 msgstr "View &wiki"
 
-#: app/ui/vistas/principales.py:186
+#: app/ui/vistas/principales.py:250
 msgid "&Ver el propietario"
 msgstr "&View owner"
 
-#: app/ui/vistas/principales.py:217
+#: app/ui/vistas/principales.py:281
 msgid "Inicio: actividad de quienes sigue"
 msgstr "Home: activity from people you follow"
 
-#: app/ui/vistas/principales.py:226 app/ui/vistas/principales.py:772
+#: app/ui/vistas/principales.py:290 app/ui/vistas/principales.py:889
 msgid "Ir al &repositorio"
 msgstr "Go to re&pository"
 
-#: app/ui/vistas/principales.py:227
+#: app/ui/vistas/principales.py:291
 msgid "Ver a la &persona"
 msgstr "View &user"
 
-#: app/ui/vistas/principales.py:229
+#: app/ui/vistas/principales.py:293
 msgid "No hay actividad reciente de las personas y repositorios que sigue."
 msgstr "There is no recent activity from the people and repositories you follow."
 
-#: app/ui/vistas/principales.py:257
+#: app/ui/vistas/principales.py:321
 msgid "Marcada como leída."
 msgstr "Marked as read."
 
-#: app/ui/vistas/principales.py:262
+#: app/ui/vistas/principales.py:326
 msgid "Marcada como hecha."
 msgstr "Marked as done."
 
-#: app/ui/vistas/principales.py:266
+#: app/ui/vistas/principales.py:330
 msgid "Todas las notificaciones marcadas como leídas."
 msgstr "All notifications marked as read."
 
-#: app/ui/vistas/principales.py:272
+#: app/ui/vistas/principales.py:336
 msgid "Conversación silenciada: ya no recibirá avisos de ella."
 msgstr "Conversation muted: you will no longer receive notifications about it."
 
-#: app/ui/vistas/principales.py:278
+#: app/ui/vistas/principales.py:342
 #, python-brace-format
 msgid "Notificaciones de {n} marcadas como leídas."
 msgstr "Notifications from {n} marked as read."
 
-#: app/ui/vistas/principales.py:293
+#: app/ui/vistas/principales.py:357
 msgid "Solo no leídas"
 msgstr "Unread only"
 
-#: app/ui/vistas/principales.py:293
+#: app/ui/vistas/principales.py:357
 msgid "Todas, también las leídas"
 msgstr "All, including read"
 
-#: app/ui/vistas/principales.py:294
+#: app/ui/vistas/principales.py:358
 msgid "Filtro de notificaciones"
 msgstr "Notification filter"
 
-#: app/ui/vistas/principales.py:303
+#: app/ui/vistas/principales.py:367
 msgid "No leída"
 msgstr "Unread"
 
-#: app/ui/vistas/principales.py:303
+#: app/ui/vistas/principales.py:367
 msgid "Leída"
 msgstr "Read"
 
-#: app/ui/vistas/principales.py:306
+#: app/ui/vistas/principales.py:370
 msgid "Motivo"
 msgstr "Reason"
 
-#: app/ui/vistas/principales.py:311
+#: app/ui/vistas/principales.py:375
 msgid "Marcar como &leída"
 msgstr "Mark as r&ead"
 
-#: app/ui/vistas/principales.py:312
+#: app/ui/vistas/principales.py:376
 msgid "Marcar como &hecha (quitar de la bandeja)"
 msgstr "Mark as do&ne (remove from inbox)"
 
-#: app/ui/vistas/principales.py:313
+#: app/ui/vistas/principales.py:377
 msgid "&Silenciar esta conversación"
 msgstr "M&ute this conversation"
 
-#: app/ui/vistas/principales.py:314
+#: app/ui/vistas/principales.py:378
 msgid "Marcar como leídas las de este &repositorio"
 msgstr "Mark as read for this re&pository"
 
-#: app/ui/vistas/principales.py:315
+#: app/ui/vistas/principales.py:379
 msgid "Marcar &todas como leídas"
 msgstr "Mark al&l as read"
 
-#: app/ui/vistas/principales.py:316 app/ui/vistas/principales.py:413 app/ui/vistas/principales.py:444 app/ui/vistas/principales.py:494
+#: app/ui/vistas/principales.py:380 app/ui/vistas/principales.py:487 app/ui/vistas/principales.py:518 app/ui/vistas/principales.py:568
 msgid "Cambiar el f&iltro…"
 msgstr "&Change filter…"
 
-#: app/ui/vistas/principales.py:317 app/ui/vistas/principales.py:414 app/ui/vistas/principales.py:445
+#: app/ui/vistas/principales.py:381 app/ui/vistas/principales.py:488 app/ui/vistas/principales.py:519
 msgid "Ir al re&positorio"
 msgstr "Go to repo&sitory"
 
-#: app/ui/vistas/principales.py:319
+#: app/ui/vistas/principales.py:383
 msgid "No tiene notificaciones pendientes."
 msgstr "You have no pending notifications."
 
-#: app/ui/vistas/principales.py:326
+#: app/ui/vistas/principales.py:390
 msgid "Míos"
 msgstr "Owned by me"
 
-#: app/ui/vistas/principales.py:326
+#: app/ui/vistas/principales.py:390
 msgid "Todos a los que tengo acceso"
 msgstr "All I have access to"
 
-#: app/ui/vistas/principales.py:326
+#: app/ui/vistas/principales.py:390
 msgid "De los que soy miembro"
 msgstr "Where I'm a member"
 
-#: app/ui/vistas/principales.py:327
+#: app/ui/vistas/principales.py:391
 msgid "Privados"
 msgstr "Private"
 
-#: app/ui/vistas/principales.py:336
+#: app/ui/vistas/principales.py:400
 msgid "Filtro de repositorios"
 msgstr "Repository filter"
 
-#: app/ui/vistas/principales.py:349
+#: app/ui/vistas/principales.py:413
 msgid "Borrar repositorio"
 msgstr "Delete repository"
 
-#: app/ui/vistas/principales.py:355
+#: app/ui/vistas/principales.py:419
 msgid "N&uevo repositorio…"
 msgstr "&New repository…"
 
-#: app/ui/vistas/principales.py:356
+#: app/ui/vistas/principales.py:420
 msgid "A&justes y configuración del repositorio…"
 msgstr "Repository settin&gs…"
 
-#: app/ui/vistas/principales.py:358
+#: app/ui/vistas/principales.py:422
 msgid "Borrar el repositorio…"
 msgstr "Delete repository…"
 
-#: app/ui/vistas/principales.py:359
+#: app/ui/vistas/principales.py:423
 msgid "&Cambiar el filtro…"
 msgstr "&Change filter…"
 
-#: app/ui/vistas/principales.py:362
+#: app/ui/vistas/principales.py:426
 msgid "No tiene repositorios. Cree uno con Control+N."
 msgstr "You have no repositories. Create one with Control+N."
 
-#: app/ui/vistas/principales.py:366
+#: app/ui/vistas/principales.py:430
 msgid "Repositorios con estrella"
 msgstr "Starred repositories"
 
-#: app/ui/vistas/principales.py:368
+#: app/ui/vistas/principales.py:432
 msgid "No ha puesto estrella a ningún repositorio."
 msgstr "You haven't starred any repositories."
 
-#: app/ui/vistas/principales.py:372
+#: app/ui/vistas/principales.py:436
 msgid "Repositorios vigilados"
 msgstr "Watched repositories"
 
-#: app/ui/vistas/principales.py:374
+#: app/ui/vistas/principales.py:438
 msgid "No vigila ningún repositorio."
 msgstr "You aren't watching any repositories."
 
-#: app/ui/vistas/principales.py:378
-msgid "Asignadas a mí"
-msgstr "Assigned to me"
-
-#: app/ui/vistas/principales.py:378
+#: app/ui/vistas/principales.py:445
 msgid "Creadas por mí"
 msgstr "Created by me"
 
-#: app/ui/vistas/principales.py:378 app/ui/vistas/principales.py:422
+#: app/ui/vistas/principales.py:445
+msgid "Asignadas a mí"
+msgstr "Assigned to me"
+
+#: app/ui/vistas/principales.py:445 app/ui/vistas/principales.py:496
 msgid "Donde me mencionan"
 msgstr "Mentioning me"
 
-#: app/ui/vistas/principales.py:379
-msgid "A las que estoy suscrito"
-msgstr "Subscribed"
+#: app/ui/vistas/principales.py:446
+msgid "En las que he comentado"
+msgstr "Commented on by me"
 
-#: app/ui/vistas/principales.py:379
+#: app/ui/vistas/principales.py:446
+msgid "Todas en las que participo"
+msgstr "All I'm involved in"
+
+#: app/ui/vistas/principales.py:447
 msgid "De mis repositorios"
 msgstr "From my repositories"
 
-#: app/ui/vistas/principales.py:379
-msgid "Todas las que me afectan"
-msgstr "All that involve me"
-
-#: app/ui/vistas/principales.py:381
+#: app/ui/vistas/principales.py:449
 msgid "Todas"
 msgstr "All"
 
-#: app/ui/vistas/principales.py:386
+#: app/ui/vistas/principales.py:456
 msgid "Filtro"
 msgstr "Filter"
 
-#: app/ui/vistas/principales.py:416
+#: app/ui/vistas/principales.py:490
 msgid "No hay issues con este filtro."
 msgstr "There are no issues with this filter."
 
-#: app/ui/vistas/principales.py:421
+#: app/ui/vistas/principales.py:495
 msgid "Me piden revisión"
 msgstr "Review requested from me"
 
-#: app/ui/vistas/principales.py:421
+#: app/ui/vistas/principales.py:495
 msgid "Creados por mí"
 msgstr "Created by me"
 
-#: app/ui/vistas/principales.py:421
+#: app/ui/vistas/principales.py:495
 msgid "Asignados a mí"
 msgstr "Assigned to me"
 
-#: app/ui/vistas/principales.py:422
+#: app/ui/vistas/principales.py:496
 msgid "Todos en los que participo"
 msgstr "All I'm involved in"
 
-#: app/ui/vistas/principales.py:422
+#: app/ui/vistas/principales.py:496
 msgid "Revisados por mí"
 msgstr "Reviewed by me"
 
-#: app/ui/vistas/principales.py:447
+#: app/ui/vistas/principales.py:521
 msgid "No hay pull requests con este filtro."
 msgstr "There are no pull requests with this filter."
 
-#: app/ui/vistas/principales.py:461
+#: app/ui/vistas/principales.py:535
 msgid "Mis gists"
 msgstr "My gists"
 
-#: app/ui/vistas/principales.py:461
+#: app/ui/vistas/principales.py:535
 msgid "Gists con estrella"
 msgstr "Starred gists"
 
-#: app/ui/vistas/principales.py:461
+#: app/ui/vistas/principales.py:535
 msgid "Gists públicos recientes"
 msgstr "Recent public gists"
 
-#: app/ui/vistas/principales.py:474
+#: app/ui/vistas/principales.py:548
 #, python-brace-format
 msgid "¿Borrar el gist «{d}»? No se puede deshacer."
 msgstr "Delete the gist “{d}”? This cannot be undone."
 
-#: app/ui/vistas/principales.py:492
+#: app/ui/vistas/principales.py:566
 msgid "N&uevo gist…"
 msgstr "&New gist…"
 
-#: app/ui/vistas/principales.py:493
+#: app/ui/vistas/principales.py:567
 msgid "Borra&r…"
 msgstr "De&lete…"
 
-#: app/ui/vistas/principales.py:496
+#: app/ui/vistas/principales.py:570
 msgid "No hay gists."
 msgstr "There are no gists."
 
-#: app/ui/vistas/principales.py:510
+#: app/ui/vistas/principales.py:584
 msgid "No pertenece a ninguna organización."
 msgstr "You don't belong to any organization."
 
-#: app/ui/vistas/principales.py:535
+#: app/ui/vistas/principales.py:609
 msgid "No tiene proyectos."
 msgstr "You have no projects."
 
-#: app/ui/vistas/principales.py:546
+#: app/ui/vistas/principales.py:646
+msgid "Repositorios públicos"
+msgstr "Public repositories"
+
+#: app/ui/vistas/principales.py:648
+msgid "En GitHub desde"
+msgstr "On GitHub since"
+
+#: app/ui/vistas/principales.py:649
+msgid "Contribuciones en el último año"
+msgstr "Contributions in the last year"
+
+#: app/ui/vistas/principales.py:663
 msgid "Personas que sigo"
 msgstr "Following"
 
-#: app/ui/vistas/principales.py:563
+#: app/ui/vistas/principales.py:680
 msgid "Borrar codespace"
 msgstr "Delete codespace"
 
-#: app/ui/vistas/principales.py:563
+#: app/ui/vistas/principales.py:680
 #, python-brace-format
 msgid "¿Borrar el codespace {n}? Se perderán los cambios no enviados."
 msgstr "Delete the codespace {n}? Unpushed changes will be lost."
 
-#: app/ui/vistas/principales.py:564
+#: app/ui/vistas/principales.py:681
 msgid "Codespace borrado."
 msgstr "Codespace deleted."
 
-#: app/ui/vistas/principales.py:567
+#: app/ui/vistas/principales.py:684
 msgid "Codespaces"
 msgstr "Codespaces"
 
-#: app/ui/vistas/principales.py:573
+#: app/ui/vistas/principales.py:690
 msgid "Máquina"
 msgstr "Machine"
 
-#: app/ui/vistas/principales.py:579
+#: app/ui/vistas/principales.py:696
 msgid "Abrir el codespace en el na&vegador"
 msgstr "Open codespace in bro&wser"
 
-#: app/ui/vistas/principales.py:580
+#: app/ui/vistas/principales.py:697
 msgid "&Iniciar"
 msgstr "&Start"
 
-#: app/ui/vistas/principales.py:580
+#: app/ui/vistas/principales.py:697
 msgid "Codespace iniciándose."
 msgstr "Codespace starting."
 
-#: app/ui/vistas/principales.py:581
+#: app/ui/vistas/principales.py:698
 msgid "De&tener"
 msgstr "S&top"
 
-#: app/ui/vistas/principales.py:581
+#: app/ui/vistas/principales.py:698
 msgid "Codespace detenido."
 msgstr "Codespace stopped."
 
-#: app/ui/vistas/principales.py:584
+#: app/ui/vistas/principales.py:701
 msgid "No tiene codespaces."
 msgstr "You have no codespaces."
 
-#: app/ui/vistas/principales.py:601
+#: app/ui/vistas/principales.py:718
 msgid "La carpeta ya no existe."
 msgstr "The folder no longer exists."
 
-#: app/ui/vistas/principales.py:608
+#: app/ui/vistas/principales.py:725
 msgid "Elija la carpeta de un repositorio de git"
 msgstr "Choose the folder of a git repository"
 
-#: app/ui/vistas/principales.py:618
+#: app/ui/vistas/principales.py:735
 msgid "La carpeta no es un repositorio de git. ¿Crear uno nuevo en ella (git init)?"
 msgstr "The folder is not a git repository. Do you want to create a new one in it (git init)?"
 
-#: app/ui/vistas/principales.py:628
+#: app/ui/vistas/principales.py:745
 msgid "Quitado de la lista. La carpeta no se ha borrado."
 msgstr "Removed from the list. The folder has not been deleted."
 
-#: app/ui/vistas/principales.py:645
+#: app/ui/vistas/principales.py:762
 msgid "Añadir una &carpeta…"
 msgstr "Add a &folder…"
 
-#: app/ui/vistas/principales.py:646
+#: app/ui/vistas/principales.py:763
 msgid "C&lonar un repositorio…"
 msgstr "C&lone repository…"
 
-#: app/ui/vistas/principales.py:647
+#: app/ui/vistas/principales.py:764
 msgid "Abrir la carpeta en el &Explorador"
 msgstr "Open folder in File &Explorer"
 
-#: app/ui/vistas/principales.py:648
+#: app/ui/vistas/principales.py:765
 msgid "Quitar de la lis&ta"
 msgstr "Remove from lis&t"
 
-#: app/ui/vistas/principales.py:650
+#: app/ui/vistas/principales.py:767
 msgid "No hay repositorios locales. Añada una carpeta con Control+N o clone uno con Control+K."
 msgstr "There are no local repositories. Add a folder with Control+N or clone one with Control+K."
 
-#: app/ui/vistas/principales.py:766
+#: app/ui/vistas/principales.py:883
 msgid "Ver el &propietario (perfil, repositorios, seguir)"
 msgstr "&View owner (profile, repositories, follow)"
 
-#: app/ui/vistas/principales.py:768
+#: app/ui/vistas/principales.py:885
 msgid "Abre el perfil de la persona u organización dueña del repositorio: sus datos, repositorios y el botón Seguir."
 msgstr "Opens the profile of the person or organization that owns the repository: their details, repositories and the Follow button."
 
-#: app/ui/vistas/principales.py:769
+#: app/ui/vistas/principales.py:886
 msgid "Ver al a&utor"
 msgstr "View a&uthor"
 
-#: app/ui/vistas/principales.py:771
+#: app/ui/vistas/principales.py:888
 msgid "Abre el perfil de quien escribió la issue, el pull request, la discusión o el commit."
 msgstr "Opens the profile of whoever wrote the issue, pull request, discussion or commit."
 
-#: app/ui/vistas/principales.py:774
+#: app/ui/vistas/principales.py:891
 msgid "Abre la ventana del repositorio al que pertenece el resultado."
 msgstr "Opens the window of the repository the result belongs to."
 
-#: app/ui/vistas/principales.py:775
+#: app/ui/vistas/principales.py:892
 msgid "Seguir o de&jar de seguir"
 msgstr "Follow or u&nfollow"
 
-#: app/ui/vistas/principales.py:776
+#: app/ui/vistas/principales.py:893
 msgid "Sigue a esta cuenta, o deja de seguirla."
 msgstr "Follows this account, or unfollows it."
 
-#: app/ui/vistas/principales.py:780
+#: app/ui/vistas/principales.py:897
 msgid "V&igilar…"
 msgstr "Watc&h…"
 
-#: app/ui/vistas/principales.py:781
+#: app/ui/vistas/principales.py:898
 msgid "Bifur&car (fork)"
 msgstr "&Fork"
 
-#: app/ui/vistas/principales.py:825
+#: app/ui/vistas/principales.py:942
 msgid "cerrada"
 msgstr "closed"
 
-#: app/ui/vistas/principales.py:825
+#: app/ui/vistas/principales.py:942
 msgid "abierta"
 msgstr "open"
 
-#: app/ui/vistas/principales.py:826
+#: app/ui/vistas/principales.py:943
 msgid "respondida"
 msgstr "answered"
 
-#: app/ui/vistas/principales.py:830
+#: app/ui/vistas/principales.py:947
 msgid "Bot"
 msgstr "Bot"
 
-#: app/ui/vistas/principales.py:839 app/ui/vistas/principales.py:970
+#: app/ui/vistas/principales.py:956 app/ui/vistas/principales.py:1087
 msgid "Resultado"
 msgstr "Result"
 
-#: app/ui/vistas/principales.py:842
+#: app/ui/vistas/principales.py:959
 msgid "Coincidencias"
 msgstr "Matches"
 
-#: app/ui/vistas/principales.py:853
+#: app/ui/vistas/principales.py:970
 msgid "Estrellas en el periodo"
 msgstr "Stars in period"
 
-#: app/ui/vistas/principales.py:855
+#: app/ui/vistas/principales.py:972
 msgid "Construido por"
 msgstr "Built by"
 
-#: app/ui/vistas/principales.py:857
+#: app/ui/vistas/principales.py:974
 msgid "Repositorio popular"
 msgstr "Popular repository"
 
-#: app/ui/vistas/principales.py:860
+#: app/ui/vistas/principales.py:977
 msgid "Destacado"
 msgstr "Featured"
 
-#: app/ui/vistas/principales.py:860
+#: app/ui/vistas/principales.py:977
 msgid "destacado"
 msgstr "featured"
 
-#: app/ui/vistas/principales.py:861
+#: app/ui/vistas/principales.py:978
 msgid "seleccionado"
 msgstr "curated"
 
-#: app/ui/vistas/principales.py:916
+#: app/ui/vistas/principales.py:1033
 msgid "Puede que falten resultados: GitHub cortó la búsqueda por tiempo. Puede repetirla con F5 o acotarla."
 msgstr "Some results may be missing: GitHub stopped the search because it took too long. You can repeat it with F5 or narrow it down."
 
-#: app/ui/vistas/principales.py:987
+#: app/ui/vistas/principales.py:1104
 #, python-brace-format
 msgid "Comentarios: {c}; votos: {v}"
 msgstr "Comments: {c}; votes: {v}"
 
-#: app/ui/vistas/principales.py:997
+#: app/ui/vistas/principales.py:1114
 #, python-brace-format
 msgid ""
 "Archivo: {p}\n"
@@ -19787,87 +19835,87 @@ msgstr ""
 "File: {p}\n"
 "Repository: {r}"
 
-#: app/ui/vistas/principales.py:1002
+#: app/ui/vistas/principales.py:1119
 msgid "Coincidencias:"
 msgstr "Matches:"
 
-#: app/ui/vistas/principales.py:1012
+#: app/ui/vistas/principales.py:1129
 msgid "No hay ninguna búsqueda que abrir."
 msgstr "There is no search to open."
 
-#: app/ui/vistas/principales.py:1030
+#: app/ui/vistas/principales.py:1147
 #, python-brace-format
 msgid "GitHub dice que hay {t} resultados y solo deja ver 1000 por búsqueda. «Traer todos» parte el intervalo de fechas en trozos de menos de 1000 y necesitará unas {p} peticiones; la búsqueda admite 30 por minuto (10 en código), así que puede tardar varios minutos. Puede detenerlo desde este mismo menú. ¿Continuar?"
 msgstr "GitHub reports {t} results but only shows 1000 per search. “Get all” splits the date range into chunks of fewer than 1000 results and will need about {p} requests; search allows 30 requests per minute (10 for code), so it may take several minutes. You can stop it from this same menu. Do you want to continue?"
 
-#: app/ui/vistas/principales.py:1034
+#: app/ui/vistas/principales.py:1151
 msgid "Traer todos los resultados"
 msgstr "Get all results"
 
-#: app/ui/vistas/principales.py:1044
+#: app/ui/vistas/principales.py:1161
 #, python-brace-format
 msgid "{n} resultados"
 msgstr "{n} results"
 
-#: app/ui/vistas/principales.py:1052
+#: app/ui/vistas/principales.py:1169
 #, python-brace-format
 msgid "{n} resultados traídos con {p} peticiones."
 msgstr "{n} results retrieved with {p} requests."
 
-#: app/ui/vistas/principales.py:1054
+#: app/ui/vistas/principales.py:1171
 msgid "Detenido."
 msgstr "Stopped."
 
-#: app/ui/vistas/principales.py:1062
+#: app/ui/vistas/principales.py:1179
 #, python-brace-format
 msgid "No se pudieron traer todos: {m}"
 msgstr "Could not get all results: {m}"
 
-#: app/ui/vistas/principales.py:1064
+#: app/ui/vistas/principales.py:1181
 msgid "Trayendo todos los resultados…"
 msgstr "Getting all results…"
 
-#: app/ui/vistas/principales.py:1070
+#: app/ui/vistas/principales.py:1187
 msgid "Deteniendo «Traer todos»…"
 msgstr "Stopping “Get all”…"
 
-#: app/ui/vistas/principales.py:1073
+#: app/ui/vistas/principales.py:1190
 msgid "Resultados de la búsqueda"
 msgstr "Search results"
 
-#: app/ui/vistas/principales.py:1078
+#: app/ui/vistas/principales.py:1195
 msgid "Nue&va búsqueda…"
 msgstr "New s&earch…"
 
-#: app/ui/vistas/principales.py:1079
+#: app/ui/vistas/principales.py:1196
 msgid "Abrir la búsqueda en la &web"
 msgstr "Open search on the &web"
 
-#: app/ui/vistas/principales.py:1080
+#: app/ui/vistas/principales.py:1197
 msgid "Abre la misma búsqueda en github.com."
 msgstr "Opens the same search on github.com."
 
-#: app/ui/vistas/principales.py:1081
+#: app/ui/vistas/principales.py:1198
 msgid "&Guardar esta búsqueda…"
 msgstr "Save this sear&ch…"
 
-#: app/ui/vistas/principales.py:1082
+#: app/ui/vistas/principales.py:1199
 msgid "Guarda la búsqueda con un nombre para repetirla desde el diálogo de búsqueda."
 msgstr "Saves the search with a name so you can repeat it from the search dialog."
 
-#: app/ui/vistas/principales.py:1083
+#: app/ui/vistas/principales.py:1200
 msgid "&Traer todos los resultados (más de 1000)…"
 msgstr "&Get all results (more than 1000)…"
 
-#: app/ui/vistas/principales.py:1084
+#: app/ui/vistas/principales.py:1201
 msgid "Parte el intervalo de fechas para pasar del tope de 1000 resultados de GitHub."
 msgstr "Splits the date range to get past GitHub's limit of 1000 results."
 
-#: app/ui/vistas/principales.py:1085
+#: app/ui/vistas/principales.py:1202
 msgid "De&tener «Traer todos»"
 msgstr "S&top “Get all”"
 
-#: app/ui/vistas/principales.py:1088
+#: app/ui/vistas/principales.py:1205
 msgid "Sin resultados."
 msgstr "No results."
 

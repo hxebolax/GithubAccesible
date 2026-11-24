@@ -2,6 +2,18 @@
 
 Cada versión tiene su apartado, de la más reciente a la más antigua. Dentro de cada versión, los cambios se agrupan en Novedades, Mejoras y Correcciones, contados con palabras de quien usa la aplicación.
 
+## Versión 1.0.11 - 2026-11-24
+
+### Novedades
+
+- **Seguidores** y **Personas que sigo** muestran los repositorios públicos, los seguidores, desde cuándo está cada persona en GitHub, sus contribuciones del último año y el enlace a su perfil.
+- **Más columnas en las listas de repositorios** (Preferencias, «Columnas de las listas»): fecha de creación, tamaño, licencia, temas, sitio web, enlace, clonar por HTTPS y por SSH, observadores, última release y su permiso. «Mis repositorios» muestra de fábrica la fecha de creación. Control+I también da el permiso y la última release.
+
+### Correcciones
+
+- **«Mis issues» salía vacía** a quien abre issues en repositorios de otras personas. Ahora se buscan en todo GitHub y muestra de fábrica las creadas por usted; F4 cambia a asignadas, menciones, comentadas, todas en las que participa o las de sus repositorios.
+- Control+I en un repositorio daba como observadores el número de estrellas.
+
 ## Versión 1.0.10 - 2026-11-23
 
 ### Novedades

@@ -124,6 +124,9 @@ class DefinicionVista:
 	sonido_carga: bool = True
 	requiere_sesion: bool = True
 	al_cambiar: Callable[[Any], None] | None = None
+	#: ``(api, elementos, ids_de_columnas_visibles) -> None``: completa los elementos recién cargados
+	#: (en el mismo hilo que ``cargar``) con datos que la lista de GitHub no trae, solo si hacen falta.
+	completar: Callable[[Any, list, set[str]], None] | None = None
 
 	def columnas_visibles(self, config: Any) -> list[Columna]:
 		"""Columnas según Preferencias (orden y visibilidad) o las de por defecto."""
@@ -449,9 +452,17 @@ class PanelLista(wx.Panel):
 		self.cargando = True
 		self._actualizar_estado()
 		api = self.ctx.api()
+		columnas_visibles = {c.id for c in self.columnas}
 
 		def trabajo(tarea):
-			return self.definicion.cargar(api, siguiente, self)
+			resultado = self.definicion.cargar(api, siguiente, self)
+			if self.definicion.completar is not None:
+				elementos = getattr(resultado, "elementos", resultado)
+				try:
+					self.definicion.completar(api, list(elementos or []), columnas_visibles)
+				except Exception:  # noqa: BLE001 - sin los datos extra, la lista se ve igual (columnas vacías)
+					log.warning("No se pudieron completar los elementos de %s", self.definicion.id, exc_info=True)
+			return resultado
 
 		def al_terminar(resultado):
 			if not self or version != self._version_carga:

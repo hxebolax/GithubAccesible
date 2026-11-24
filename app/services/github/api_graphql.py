@@ -216,6 +216,83 @@ class ApiGraphQL(_Base):
 		return Pagina(elementos, (info.get("endCursor") or "") if info.get("hasNextPage") else "", None,
 			int(total) if isinstance(total, int) else None)
 
+	def personas(self, seguidores: bool, primeros: int = 30, despues: str | None = None,
+		contribuciones: bool = True) -> Pagina:
+		"""Seguidores o personas que sigue la cuenta, con sus datos de perfil (incidencia #10).
+
+		La lista REST solo trae el usuario; aquí, en UNA consulta por página, llegan también
+		el nombre, los repositorios públicos, los seguidores, la fecha de alta, el enlace y,
+		si ``contribuciones``, las del último año (lo más costoso para GitHub: por eso las
+		páginas son de 30). Los elementos tienen forma REST (``login``, ``html_url``...) con
+		``public_repos``, ``followers``, ``created_at`` y ``contribuciones``.
+		"""
+		campo = "followers" if seguidores else "following"
+		extra = "contributionsCollection { contributionCalendar { totalContributions } }" if contribuciones else ""
+		datos = self.c.graphql(f"""
+		query($n: Int!, $despues: String) {{
+		  viewer {{
+		    {campo}(first: $n, after: $despues) {{
+		      totalCount
+		      pageInfo {{ hasNextPage endCursor }}
+		      nodes {{
+		        login name url createdAt
+		        followers {{ totalCount }}
+		        repositories(privacy: PUBLIC, ownerAffiliations: OWNER) {{ totalCount }}
+		        {extra}
+		      }}
+		    }}
+		  }}
+		}}""", {"n": max(1, min(100, int(primeros))), "despues": despues})
+		conexion = ((datos.get("viewer") or {}).get(campo)) or {}
+		elementos = []
+		for nodo in conexion.get("nodes") or []:
+			if not isinstance(nodo, dict) or not nodo.get("login"):
+				continue
+			calendario = ((nodo.get("contributionsCollection") or {}).get("contributionCalendar") or {})
+			elementos.append({
+				"login": nodo["login"], "name": nodo.get("name") or "", "html_url": nodo.get("url") or "",
+				"type": "User", "created_at": nodo.get("createdAt") or "",
+				"followers": (nodo.get("followers") or {}).get("totalCount"),
+				"public_repos": (nodo.get("repositories") or {}).get("totalCount"),
+				"contribuciones": calendario.get("totalContributions") if contribuciones else None,
+			})
+		info = conexion.get("pageInfo") or {}
+		total = conexion.get("totalCount")
+		return Pagina(elementos, (info.get("endCursor") or "") if info.get("hasNextPage") else "", None,
+			int(total) if isinstance(total, int) else None)
+
+	def datos_extra_repos(self, ids: list[str]) -> dict[str, dict]:
+		"""Observadores reales y última release de varios repositorios en UNA consulta (incidencia #11).
+
+		Las listas REST no los traen (su ``watchers_count`` son en realidad las estrellas).
+		:param ids: ``node_id`` de los repositorios (hasta 100).
+		:return: ``node_id`` → ``{"observadores": int, "ultima_release": {"tag", "nombre", "fecha"} | None}``.
+		"""
+		ids = [i for i in ids if i][:100]
+		if not ids:
+			return {}
+		datos = self.c.graphql("""
+		query($ids: [ID!]!) {
+		  nodes(ids: $ids) {
+		    ... on Repository {
+		      id
+		      watchers { totalCount }
+		      latestRelease { tagName name publishedAt }
+		    }
+		  }
+		}""", {"ids": ids})
+		resultado: dict[str, dict] = {}
+		for nodo in datos.get("nodes") or []:
+			if not isinstance(nodo, dict) or not nodo.get("id"):
+				continue
+			release = nodo.get("latestRelease")
+			resultado[nodo["id"]] = {
+				"observadores": (nodo.get("watchers") or {}).get("totalCount"),
+				"ultima_release": {"tag": release.get("tagName") or "", "nombre": release.get("name") or "",
+					"fecha": release.get("publishedAt") or ""} if isinstance(release, dict) else None,
+			}
+		return resultado
+
 	def discusion(self, nombre: str, numero: int) -> dict:
 		dueno, repo = nombre.split("/", 1)
 		consulta = """

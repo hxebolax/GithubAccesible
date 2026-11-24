@@ -45,7 +45,7 @@ from app.ui.comunes import (
 )
 from app.ui.repositorio import dialogos as d
 from app.ui.vistas.base import Accion, Columna, DefinicionVista, url_html
-from app.ui.vistas.principales import columnas_issue, columnas_repositorio, detalle_issue, detalle_repositorio
+from app.ui.vistas.principales import columnas_issue, columnas_repositorio, completar_repositorios, detalle_issue, detalle_repositorio
 
 log = logging.getLogger(__name__)
 
@@ -1716,7 +1716,7 @@ def vista_bifurcaciones(nombre: str, host: str = "github.com") -> VistaRepo:
 				f"{_web(host, nombre)}/compare/{_rama_defecto(p) or 'main'}...{(r.get('owner') or {}).get('login', '')}:"
 				f"{r.get('default_branch') or 'main'}")),
 		],
-		_("Nadie ha bifurcado este repositorio."), url_html, detalle_repositorio,
+		_("Nadie ha bifurcado este repositorio."), url_html, detalle_repositorio, completar=completar_repositorios,
 	)
 
 

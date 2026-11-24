@@ -41,7 +41,51 @@ def _por_pagina(panel: Any) -> int:
 # ════════════════════════════════════════════════════════════════════════════
 
 
-def columnas_repositorio() -> list[Columna]:
+#: Permiso de la cuenta en un repositorio (``permissions`` de la API), del mayor al menor.
+PERMISOS_REPOSITORIO = [("admin", N_("Administración")), ("maintain", N_("Mantenimiento")), ("push", N_("Escritura")),
+	("triage", N_("Clasificación")), ("pull", N_("Lectura"))]
+#: Columnas cuyos datos no vienen en la lista y se piden aparte (una consulta GraphQL por página).
+COLUMNAS_REPO_EXTRA = {"observadores", "ultima_release"}
+
+
+def permiso_repositorio(r: dict) -> str:
+	permisos = r.get("permissions") or {}
+	return next((_(nombre) for clave, nombre in PERMISOS_REPOSITORIO if permisos.get(clave)), "")
+
+
+def licencia_repositorio(r: dict) -> str:
+	licencia = r.get("license") or {}
+	spdx = licencia.get("spdx_id") or ""
+	return spdx if spdx and spdx != "NOASSERTION" else licencia.get("name") or ""
+
+
+def texto_ultima_release(r: dict, ctx: Any) -> str:
+	release = r.get("_ultima_release")
+	if not release:
+		return ""
+	nombre = release.get("tag") or release.get("nombre") or ""
+	fecha = f.fecha(release.get("fecha"), ctx.relativas()) if release.get("fecha") else ""
+	return _("{n}, {f}").format(n=nombre, f=fecha) if fecha else nombre
+
+
+def completar_repositorios(api: Any, repos: list, columnas: set[str]) -> None:
+	"""Observadores reales y última release, solo si alguna de esas columnas está a la vista (incidencia #11)."""
+	if not columnas & COLUMNAS_REPO_EXTRA:
+		return
+	ids = [r.get("node_id") for r in repos if isinstance(r, dict) and r.get("node_id")]
+	extra: dict = {}
+	for inicio in range(0, len(ids), 100):
+		extra.update(api.datos_extra_repos(ids[inicio:inicio + 100]))
+	for r in repos:
+		datos = extra.get(r.get("node_id")) if isinstance(r, dict) else None
+		if datos:
+			r["_observadores"] = datos.get("observadores")
+			r["_ultima_release"] = datos.get("ultima_release")
+
+
+def columnas_repositorio(creado_visible: bool = False) -> list[Columna]:
+	"""Columnas de las listas de repositorios. Las que no se ven de fábrica se activan en
+	Preferencias, «Columnas de las listas» (incidencia #11)."""
 	return [
 		Columna("nombre", _("Nombre"), lambda r, c: r.get("full_name", ""), 220),
 		Columna("descripcion", _("Descripción"), lambda r, c: r.get("description") or "", 300),
@@ -53,6 +97,18 @@ def columnas_repositorio() -> list[Columna]:
 		Columna("actualizado", _("Actualizado"), lambda r, c: f.fecha(r.get("pushed_at") or r.get("updated_at"), c.relativas()), 120),
 		Columna("rama", _("Rama principal"), lambda r, c: r.get("default_branch", ""), 100, visible=False),
 		Columna("tipo", _("Tipo"), lambda r, c: ", ".join(t for t, s in ((_("bifurcación"), r.get("fork")), (_("archivado"), r.get("archived")), (_("plantilla"), r.get("is_template"))) if s), 120, visible=False),
+		Columna("creado", _("Creado"), lambda r, c: f.fecha(r.get("created_at"), c.relativas()), 120, visible=creado_visible),
+		Columna("tamano", _("Tamaño"), lambda r, c: f.tamano((r.get("size") or 0) * 1024) if r.get("size") is not None else "", 90,
+			visible=False),
+		Columna("licencia", _("Licencia"), lambda r, c: licencia_repositorio(r), 110, visible=False),
+		Columna("temas", _("Temas"), lambda r, c: ", ".join(r.get("topics") or []), 200, visible=False),
+		Columna("web", _("Sitio web"), lambda r, c: r.get("homepage") or "", 200, visible=False),
+		Columna("enlace", _("Enlace"), lambda r, c: r.get("html_url") or "", 250, visible=False),
+		Columna("clonar_https", _("Clonar por HTTPS"), lambda r, c: r.get("clone_url") or "", 250, visible=False),
+		Columna("clonar_ssh", _("Clonar por SSH"), lambda r, c: r.get("ssh_url") or "", 250, visible=False),
+		Columna("observadores", _("Observadores"), lambda r, c: f.numero(r.get("_observadores")), 90, visible=False),
+		Columna("ultima_release", _("Última release"), texto_ultima_release, 160, visible=False),
+		Columna("permiso", _("Su permiso"), lambda r, c: permiso_repositorio(r), 120, visible=False),
 	]
 
 
@@ -62,8 +118,12 @@ def detalle_repositorio(r: dict, ctx: Any) -> str:
 		_("Descripción: {d}").format(d=r.get("description") or _("(sin descripción)")),
 		_("Visibilidad: {v}").format(v=f.estado(r.get("visibility"))),
 		_("Lenguaje: {l}").format(l=r.get("language") or "-"),
+		# «watchers_count» de la API son las estrellas: los observadores reales están en «subscribers_count»
+		# (repositorio pedido de uno en uno) o en «_observadores» (columna de las listas).
 		_("Estrellas: {e}; bifurcaciones: {b}; observadores: {o}; issues abiertas: {i}").format(
-			e=r.get("stargazers_count", 0), b=r.get("forks_count", 0), o=r.get("watchers_count", 0), i=r.get("open_issues_count", 0)),
+			e=r.get("stargazers_count", 0), b=r.get("forks_count", 0),
+			o=r.get("subscribers_count", r.get("_observadores")) if r.get("subscribers_count", r.get("_observadores")) is not None else "-",
+			i=r.get("open_issues_count", 0)),
 		_("Rama principal: {r}").format(r=r.get("default_branch", "")),
 		_("Tamaño: {t}").format(t=f.tamano((r.get("size") or 0) * 1024)),
 		_("Licencia: {l}").format(l=(r.get("license") or {}).get("name") or "-"),
@@ -74,6 +134,10 @@ def detalle_repositorio(r: dict, ctx: Any) -> str:
 		_("Clonar por HTTPS: {u}").format(u=r.get("clone_url", "")),
 		_("Clonar por SSH: {u}").format(u=r.get("ssh_url", "")),
 	]
+	if permiso_repositorio(r):
+		lineas.append(_("Su permiso: {p}").format(p=permiso_repositorio(r)))
+	if texto_ultima_release(r, ctx):
+		lineas.append(_("Última release: {r}").format(r=texto_ultima_release(r, ctx)))
 	if r.get("fork") and r.get("parent"):
 		lineas.append(_("Bifurcación de: {p}").format(p=r["parent"].get("full_name")))
 	if r.get("archived"):
@@ -358,31 +422,37 @@ def vista_mis_repositorios() -> DefinicionVista:
 		Accion(_("Borrar el repositorio…"), borrar, "Supr", disponible=lambda p, r: (r.get("permissions") or {}).get("admin", False)),
 		Accion(_("&Cambiar el filtro…"), cambiar_filtro, "F4", requiere_elemento=False),
 	]
-	return DefinicionVista("repositorios", _("Mis repositorios"), columnas_repositorio(), cargar, _abrir_repo, acciones,
-		_("No tiene repositorios. Cree uno con Control+N."), url_html, detalle_repositorio)
+	return DefinicionVista("repositorios", _("Mis repositorios"), columnas_repositorio(creado_visible=True), cargar, _abrir_repo, acciones,
+		_("No tiene repositorios. Cree uno con Control+N."), url_html, detalle_repositorio, completar=completar_repositorios)
 
 
 def vista_estrellas() -> DefinicionVista:
 	return DefinicionVista("estrellas", _("Repositorios con estrella"), columnas_repositorio(),
 		lambda api, pagina, panel: api.con_estrella(None, pagina) if panel.ctx.usuario else [],
-		_abrir_repo, acciones_repositorio(), _("No ha puesto estrella a ningún repositorio."), url_html, detalle_repositorio)
+		_abrir_repo, acciones_repositorio(), _("No ha puesto estrella a ningún repositorio."), url_html, detalle_repositorio, completar=completar_repositorios)
 
 
 def vista_vigilados() -> DefinicionVista:
 	return DefinicionVista("vigilados", _("Repositorios vigilados"), columnas_repositorio(),
 		lambda api, pagina, panel: api.vigilados(pagina) if panel.ctx.usuario else [],
-		_abrir_repo, acciones_repositorio(), _("No vigila ningún repositorio."), url_html, detalle_repositorio)
+		_abrir_repo, acciones_repositorio(), _("No vigila ningún repositorio."), url_html, detalle_repositorio, completar=completar_repositorios)
 
 
+# Calificadores de la búsqueda de GitHub (incidencia #9). Con la búsqueda salen las issues de
+# CUALQUIER repositorio; «/issues» solo daba las de repositorios propios, de miembro o de organización,
+# así que quien abre issues en proyectos ajenos veía la lista vacía.
 FILTROS_ISSUES = [
-	("assigned", N_("Asignadas a mí")), ("created", N_("Creadas por mí")), ("mentioned", N_("Donde me mencionan")),
-	("subscribed", N_("A las que estoy suscrito")), ("repos", N_("De mis repositorios")), ("all", N_("Todas las que me afectan")),
+	("author:@me", N_("Creadas por mí")), ("assignee:@me", N_("Asignadas a mí")), ("mentions:@me", N_("Donde me mencionan")),
+	("commenter:@me", N_("En las que he comentado")), ("involves:@me", N_("Todas en las que participo")),
+	("user:@me", N_("De mis repositorios")),
 ]
 ESTADOS = [("open", N_("Abiertas")), ("closed", N_("Cerradas")), ("all", N_("Todas"))]
 
 
 def _elegir_filtro_y_estado(panel: Any, filtros: list[tuple[str, str]], clave_filtro: str) -> bool:
-	actual = [c for c, _n in filtros].index(panel.datos.get(clave_filtro, filtros[0][0]))
+	claves = [c for c, _n in filtros]
+	guardado = panel.datos.get(clave_filtro, filtros[0][0])
+	actual = claves.index(guardado) if guardado in claves else 0
 	eleccion = elegir_uno(panel, _("Filtro"), _("&Mostrar:"), [_(n) for _c, n in filtros], actual)
 	if eleccion is None:
 		return False
@@ -400,7 +470,11 @@ def vista_mis_issues() -> DefinicionVista:
 	def cargar(api, pagina, panel):
 		if not panel.ctx.usuario:
 			return []
-		return api.mis_issues(pagina, panel.datos.get("filtro", "assigned"), panel.datos.get("estado", "open"))
+		estado = panel.datos.get("estado", "open")
+		consulta = f"is:issue {panel.datos.get('filtro', FILTROS_ISSUES[0][0])} archived:false"
+		if estado != "all":
+			consulta += f" is:{estado}"
+		return api.buscar("issues", consulta, pagina, "updated", por_pagina=_por_pagina(panel))
 
 	def cambiar(panel, _e):
 		if _elegir_filtro_y_estado(panel, FILTROS_ISSUES, "filtro"):
@@ -536,15 +610,58 @@ def vista_proyectos() -> DefinicionVista:
 	)
 
 
+def cargar_personas(api: Any, pagina: int, datos: dict, seguidores: bool) -> Any:
+	"""Página de seguidores o seguidos con datos de perfil (GraphQL, por cursor).
+
+	Si GitHub no da las contribuciones (consulta demasiado costosa o servidor Enterprise
+	antiguo) se piden sin ellas, y si GraphQL falla del todo, la lista REST de siempre.
+	"""
+	from app.services.github.cliente import ErrorGitHub
+
+	if pagina == 1 or "_cursores" not in datos:
+		datos["_cursores"] = {}
+	cursores = datos["_cursores"]
+	despues = cursores.get(pagina) if pagina > 1 else None
+	for contribuciones in (not datos.get("_sin_contribuciones"), False):
+		try:
+			resultado = api.personas(seguidores, 30, despues, contribuciones=contribuciones)
+		except ErrorGitHub:
+			if not contribuciones:
+				log.info("Lista de personas por REST: GraphQL no ha respondido", exc_info=True)
+				break
+			log.info("Lista de personas sin contribuciones: GitHub no las ha dado", exc_info=True)
+			datos["_sin_contribuciones"] = True
+			continue
+		if resultado.siguiente:
+			cursores[pagina + 1] = resultado.siguiente
+		return resultado
+	return api.seguidores(None, pagina) if seguidores else api.seguidos(None, pagina)
+
+
+def columnas_persona() -> list[Columna]:
+	"""Columnas de las listas de personas (incidencia #10)."""
+	return [
+		Columna("login", _("Usuario"), lambda u, c: u.get("login", ""), 200),
+		Columna("nombre", _("Nombre"), lambda u, c: u.get("name") or "", 200, visible=False),
+		Columna("repos_publicos", _("Repositorios públicos"), lambda u, c: f.numero(u.get("public_repos")), 100),
+		Columna("seguidores", _("Seguidores"), lambda u, c: f.numero(u.get("followers")), 90),
+		Columna("desde", _("En GitHub desde"), lambda u, c: f.fecha(u.get("created_at"), False), 130),
+		Columna("contribuciones", _("Contribuciones en el último año"), lambda u, c: f.numero(u.get("contribuciones")), 110),
+		Columna("enlace", _("Enlace"), lambda u, c: u.get("html_url") or "", 220),
+		Columna("tipo", _("Tipo"), lambda u, c: _("Organización") if u.get("type") == "Organization" else _("Persona"), 110,
+			visible=False),
+	]
+
+
 def vista_personas(seguidores: bool) -> DefinicionVista:
 	def cargar(api, pagina, panel):
 		if not panel.ctx.usuario:
 			return []
-		return api.seguidores(None, pagina) if seguidores else api.seguidos(None, pagina)
+		return cargar_personas(api, pagina, panel.datos, seguidores)
 
 	return DefinicionVista(
 		"seguidores" if seguidores else "seguidos", _("Seguidores") if seguidores else _("Personas que sigo"),
-		[Columna("login", _("Usuario"), lambda u, c: u.get("login", ""), 220), Columna("tipo", _("Tipo"), lambda u, c: _("Organización") if u.get("type") == "Organization" else _("Persona"), 120)],
+		columnas_persona(),
 		cargar, lambda p, u: abrir.usuario(p.ctx, p, u["login"]),
 		[Accion(_("&Ver perfil"), lambda p, u: abrir.usuario(p.ctx, p, u["login"]), "Intro")],
 		_("La lista está vacía."), url_html,
