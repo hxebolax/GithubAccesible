@@ -160,6 +160,16 @@ Se cambian en Preferencias, Teclas globales.
 - Alt+H: deshacer. Alt+G: guardar y marcar como resuelto.
 - Escape: cerrar (pregunta antes si hay cambios).
 
+## Descargas
+
+- Control+Mayúsculas+D: abrir la ventana «Descargas» (desde la ventana principal, la de un repositorio, la de git y las de detalle).
+- Espacio: pausar o reanudar la descarga elegida.
+- Intro: abrir el archivo terminado (si no ha terminado, pausar o reanudar).
+- Suprimir: cancelar la descarga (borra lo bajado) o quitar de la lista una terminada.
+- Control+O: abrir la carpeta del archivo.
+- Control+D: decir el estado de la descarga elegida.
+- Escape: cerrar la ventana (las descargas siguen).
+
 ## Editor de textos
 
 - Control+Intro: enviar.

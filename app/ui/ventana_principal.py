@@ -112,6 +112,7 @@ class VentanaPrincipal(wx.Frame):
 			"abrir_notificaciones": self.abrir_notificaciones_desde_fuera,
 			"buscar": self.buscar_desde_fuera,
 			"comprobar_notificaciones": lambda: self.comprobar_notificaciones(informar=True),
+			"abrir_descargas": self.abrir_descargas,
 		}, avisar=lambda texto: self.ctx.avisar(texto, interrumpir=False))
 		wx.CallAfter(self.teclas_globales.registrar)
 		paleta.instalar(self)
@@ -197,6 +198,9 @@ class VentanaPrincipal(wx.Frame):
 			lambda: paleta.abrir(self), "paleta")
 		self._item(herramientas, _("Ejecuciones de Actions &vigiladas…"), _("Lo que se vigila en segundo plano: ver y dejar de vigilar."),
 			self.ver_vigiladas, "vigiladas")
+		self._item(herramientas, _("Des&cargas…\tCtrl+Shift+D"),
+			_("Gestor de descargas: progreso, pausar, reanudar, cancelar y errores de todas las descargas."),
+			self.abrir_descargas, "descargas")
 		herramientas.AppendSeparator()
 		self._item(herramientas, _("&Límite de uso de la API"), _("Cuántas peticiones quedan y cuándo se renuevan."), self.limite_uso)
 		self._item(herramientas, _("&Estado de GitHub"), _("Si GitHub tiene incidencias en este momento."), self.estado_github)
@@ -994,6 +998,12 @@ class VentanaPrincipal(wx.Frame):
 			return _("{a}: {n} notificaciones sin leer").format(a=NOMBRE_APLICACION, n=self._sin_leer)
 		return NOMBRE_APLICACION
 
+	def abrir_descargas(self) -> None:
+		"""Ventana «Descargas» (el gestor). Desde la bandeja o una tecla global también."""
+		from app.ui.descargas import abrir_gestor
+
+		abrir_gestor(self.ctx)
+
 	def ordenes_bandeja(self) -> list[OrdenBandeja]:
 		"""Órdenes del menú del icono (se piden cada vez que se abre: así dicen lo de ahora)."""
 		notificaciones = _("&Notificaciones ({n} sin leer)").format(n=self._sin_leer) if self._sin_leer else _("&Notificaciones")
@@ -1006,6 +1016,7 @@ class VentanaPrincipal(wx.Frame):
 			(_("&Comprobar notificaciones ahora"), lambda: self.comprobar_notificaciones(informar=True)),
 			None,
 			(_("&Buscar en GitHub…"), self.buscar_desde_fuera),
+			(_("D&escargas…"), self.abrir_descargas),
 			(_("&Preferencias…"), lambda: (self.restaurar(), wx.CallAfter(self.preferencias))),
 		]
 		return ordenes
@@ -1110,6 +1121,16 @@ class VentanaPrincipal(wx.Frame):
 			and confirmar(self, _("¿Salir de {n}?").format(n=NOMBRE_APLICACION), _("Salir")) != wx.ID_YES):
 			evento.Veto()
 			return
+		gestor = getattr(self.ctx, "descargas", None)
+		if evento.CanVeto() and gestor is not None and gestor.hay_activas():
+			activas = sum(1 for d in gestor.descargas() if d.activa)
+			reanudar = self.ctx.config.obtener("descargas.reanudar_al_iniciar", True)
+			texto = ngettext("Hay {n} descarga en curso o en cola.", "Hay {n} descargas en curso o en cola.", activas).format(n=activas)
+			texto += " " + (_("Si sale, se pausan y siguen solas la próxima vez que abra la aplicación. ¿Salir?") if reanudar
+				else _("Si sale, quedan en pausa y podrá reanudarlas en «Descargas». ¿Salir?"))
+			if confirmar(self, texto, _("Salir")) != wx.ID_YES:
+				evento.Veto()
+				return
 		for temporizador in (self._temporizador_buzon, self._temporizador_notificaciones, self._temporizador_estado,
 			self._temporizador_actions):
 			temporizador.Stop()

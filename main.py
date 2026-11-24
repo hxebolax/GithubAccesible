@@ -104,6 +104,7 @@ def crear_contexto(config):
 		voz_ui.hablar(texto, interrumpir=interrumpir, canal=voz_ui.AVISOS)
 
 	contexto = Contexto(config, secretos, cuentas, tareas, reproductor, anunciar=anunciar)
+	contexto.descargas = crear_gestor_descargas(config, cuentas)
 	try:
 		from app.services.borradores import Almacen
 
@@ -124,6 +125,23 @@ def crear_contexto(config):
 	config.suscribir(al_cambiar)
 	_VIVOS["al_cambiar_config"] = al_cambiar  # referencia fuerte: la configuración guarda referencias débiles
 	return contexto
+
+
+def crear_gestor_descargas(config, cuentas):
+	"""Gestor de descargas de la aplicación. Cada descarga usa el token de la cuenta que la pidió."""
+	from app.core import paths
+	from app.services.gestor_descargas import GestorDescargas
+
+	def sesion_para(clave_cuenta: str, aceptar: str):
+		from app.core import red
+
+		cuenta = next((c for c in cuentas.cuentas() if c.clave == clave_cuenta), None)
+		sesion = red.sesion_de_hilo()
+		sesion.headers.update(cuentas.cliente(cuenta).cabeceras_base(aceptar or None))
+		return sesion
+
+	return GestorDescargas(paths.ruta_configuracion(), sesion_para,
+		simultaneas=lambda: int(config.obtener("descargas.simultaneas", 3)))
 
 
 def _principal(argumentos: list[str]) -> int:
@@ -200,7 +218,12 @@ def _principal(argumentos: list[str]) -> int:
 		if not (config.obtener("general.iniciar_en_bandeja", False) and ventana.ocultar_en_bandeja()):
 			ventana.mostrar()
 		contexto.sonar("inicio")
+		from app.ui.descargas import instalar_avisos
+
+		instalar_avisos(contexto)
 		wx.CallAfter(ventana.preparar_actualizaciones)
+		# Las descargas que quedaron a medias siguen (o quedan en pausa, según Preferencias).
+		wx.CallAfter(contexto.descargas.cargar, bool(config.obtener("descargas.reanudar_al_iniciar", True)))
 		wx.CallLater(800, ventana.pedir_sesion_si_falta)
 		wx.CallLater(1200, ventana.programar_notificaciones)
 		for argumento in abrir:
@@ -216,6 +239,8 @@ def _principal(argumentos: list[str]) -> int:
 	from app.ui.accesibilidad import sapi
 
 	sapi.detener()
+	# Lo que se está descargando se pausa conservando lo bajado, para seguir al volver a abrir.
+	contexto.descargas.detener()
 	contexto.tareas.apagar(espera=3.0)
 	if contexto.sonidos is not None:
 		contexto.sonidos.detener()

@@ -57,7 +57,7 @@ Ejecuciones, trabajos y pasos en listas; registro limpio (sin códigos de color 
 
 #### Más de GitHub
 
-Releases (crear con notas automáticas, subir y descargar recursos), gists, discusiones, proyectos (con «Mover a…» en lugar de arrastrar), perfiles, organizaciones y equipos, claves SSH y GPG (y generar una clave SSH nueva), estado de GitHub y límite de uso de la API.
+Releases (crear con notas automáticas, subir y descargar recursos), un **gestor de descargas** (varias a la vez, siguen aunque cierre la ventana, con pausa, reanudación y errores explicados), gists, discusiones, proyectos (con «Mover a…» en lugar de arrastrar), perfiles, organizaciones y equipos, claves SSH y GPG (y generar una clave SSH nueva), estado de GitHub y límite de uso de la API.
 
 #### Git local
 

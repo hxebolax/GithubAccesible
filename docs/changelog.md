@@ -2,6 +2,17 @@
 
 Cada versión tiene su apartado, de la más reciente a la más antigua. Dentro de cada versión, los cambios se agrupan en Novedades, Mejoras y Correcciones, contados con palabras de quien usa la aplicación.
 
+## Versión 1.0.13 - 2026-11-24
+
+### Novedades
+
+- **Gestor de descargas** (Control+Mayúsculas+D, Herramientas, «Descargas», o el menú de la bandeja). Todas las descargas (recursos de releases, artefactos y registros de Actions, código en zip) son de la aplicación: siguen aunque cierre la ventana que las pidió, y se pueden bajar varias a la vez mientras sigue trabajando.
+  - Una lista con el estado, el progreso, lo descargado, la velocidad, el tiempo que queda, el origen, la carpeta y el error explicado si falla.
+  - Pausar y reanudar donde se quedó (Espacio), reintentar las que fallan, cancelar (Suprimir), abrir el archivo (Intro) o su carpeta (Control+O), quitar las terminadas y pausar o reanudar todas.
+  - Aviso y sonido al terminar o fallar cada una, con la ventana cerrada también. La suma SHA-256 de los recursos de una release se comprueba sola.
+  - Si sale con descargas en curso, se pausan y siguen solas al volver a abrir la aplicación.
+  - Preferencias, Descargas: cuántas a la vez, seguir al abrir y abrir la ventana al empezar una. Y una tecla global opcional para abrirla desde cualquier programa.
+
 ## Versión 1.0.12 - 2026-11-24
 
 ### Novedades

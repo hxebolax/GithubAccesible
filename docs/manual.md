@@ -161,7 +161,7 @@ Secciones: Resumen (información y botón para leer el README con formato), Cód
 
 En todas las listas de secciones: Intro abre, Control+N crea, F2 cambia o renombra, Suprimir borra (siempre pregunta antes) y F4 cambia el filtro (por ejemplo, issues abiertas, cerradas o todas, por etiqueta o asignado). Para borrar el repositorio entero hay que escribir su nombre, como en la web.
 
-En el menú Repositorio, **Ver el propietario** (Control+Mayúsculas+P) abre el perfil de quien es dueño del repositorio, para ver sus otros repositorios o seguirle. **Descargar el código en zip** guarda la rama principal en un zip, diciendo cuánto lleva cada 10 MB. Si el repositorio es una bifurcación (fork), **Abrir el repositorio original** va al proyecto del que se copió y **Sincronizar con el original** trae a una rama suya lo nuevo del original, como el botón «Sync fork» de la web; en los demás repositorios esas dos órdenes aparecen como no disponibles.
+En el menú Repositorio, **Ver el propietario** (Control+Mayúsculas+P) abre el perfil de quien es dueño del repositorio, para ver sus otros repositorios o seguirle. **Descargar el código en zip** guarda la rama principal en un zip con el gestor de descargas (ver «Descargas»). Si el repositorio es una bifurcación (fork), **Abrir el repositorio original** va al proyecto del que se copió y **Sincronizar con el original** trae a una rama suya lo nuevo del original, como el botón «Sync fork» de la web; en los demás repositorios esas dos órdenes aparecen como no disponibles.
 
 En la sección Código, «Descargar el repositorio en zip» guarda el código de la rama elegida en un archivo zip sin necesidad de git.
 
@@ -230,7 +230,7 @@ Lo vigilado se recuerda al cerrar la aplicación. En Preferencias, Actions, se e
 
 ## Releases, gists, discusiones y proyectos
 
-- **Releases**: crear (con notas generadas automáticamente), editar, borrar, subir recursos y descargarlos con progreso. Al descargar un recurso, si GitHub publica su suma SHA-256, la aplicación la comprueba sola y dice si es correcta; si no coincide, avisa de que el archivo puede estar dañado. «Copiar la suma SHA-256» la copia para compartirla.
+- **Releases**: crear (con notas generadas automáticamente), editar, borrar, subir recursos y descargarlos con el gestor de descargas (siguen aunque cierre la ventana). Al descargar un recurso, si GitHub publica su suma SHA-256, la aplicación la comprueba sola y dice si es correcta; si no coincide, la descarga queda con error porque el archivo está dañado. «Copiar la suma SHA-256» la copia para compartirla.
 - **Gists**: ver cada archivo, editarlo, añadir, renombrar o borrar archivos, comentarios, historial, estrella y bifurcar.
 - **Discusiones**: comentarios con sus respuestas, marcar la respuesta, votar, cerrar y reabrir.
 - **Perfiles**: Control+U, «Ver el propietario» o «Ver al autor» abren el perfil de una persona. Tiene pestañas de Resumen (datos, fijados y contribuciones), Repositorios, Con estrella, Actividad (lo que ha hecho, como en Inicio: GitHub solo da los eventos de los últimos 30 días, así que al llegar al final se siguen cargando, año a año y hasta su alta en GitHub, sus contribuciones de antes, es decir, commits, issues y pull requests abiertos, revisiones y repositorios creados; cada año gasta 1 punto de los 5.000 por hora que permite GitHub y se puede desactivar en Preferencias, Listas), Seguidores, Seguidos, Gists y Organizaciones. El botón **Leer el README del perfil** (Alt+M) abre con formato la presentación que muestra la web. Si es una organización se abre su ventana propia.
@@ -245,6 +245,20 @@ Desde «Repositorios locales» o con Control+Mayúsculas+G se abre la ventana de
 - **Conflictos**: tras una fusión o reorganización con conflictos, Intro sobre un archivo abre la resolución **bloque a bloque**: se lee cada bloque («Bloque 2 de 5. Su versión… La otra versión…») y se elige con un botón. En una reorganización los lados se invierten y la aplicación lo dice con claridad. Después se continúa o se aborta la operación.
 
 El menú Git trae, tira, envía y sincroniza con progreso hablado (solo en los hitos para no saturar) y con Cancelar. Si el remoto es de GitHub, también abre el repositorio en la aplicación y crea pull requests.
+
+## Descargas
+
+Todo lo que descarga la aplicación (recursos de una release, artefactos y registros de Actions, el código en zip) va al **gestor de descargas**. Las descargas son de la aplicación, no de la ventana que las pide: puede cerrar la ventana de la release y seguir haciendo otras cosas mientras se bajan, varias a la vez.
+
+- Se abre con **Control+Mayúsculas+D** desde la ventana principal, la de un repositorio, la de git o cualquier ventana de detalle (salvo en el visor de diferencias, donde esa tecla da el resumen), con Herramientas, «Descargas», con el menú del icono de la bandeja o con una tecla global si la configura.
+- La **lista de descargas** muestra, de la más reciente a la más antigua, el nombre, el estado (en cola, descargando, en pausa, completada, error o cancelada), el progreso, lo descargado y el total, la velocidad, el tiempo que queda, de dónde viene, la carpeta y, si falló, el error explicado. Las filas se ponen al día solas sin anunciar cada cambio: al moverse por la lista se oye el progreso al momento, y Control+D lo dice.
+- **Espacio** (o «Pausar» y «Reanudar») pausa la descarga elegida conservando lo bajado y la reanuda donde se quedó. Una que falló se vuelve a intentar igual, también desde donde se cortó.
+- **Intro** abre el archivo terminado (si no ha terminado, pausa o reanuda). **Control+O** abre la carpeta con el archivo elegido.
+- **Suprimir** cancela una descarga (pregunta antes y borra lo bajado) o quita de la lista una terminada; el archivo descargado nunca se borra al quitarla de la lista. «Quitar las terminadas» limpia de golpe las completadas y las canceladas; «Pausar todas» y «Reanudar todas las en pausa» actúan sobre todas.
+- Al terminar cada descarga suena y se avisa aunque la ventana esté cerrada; si falla, se dice por qué. En los recursos de una release, si GitHub publica su suma SHA-256, se comprueba sola: si no coincide, la descarga queda con error y el archivo dañado no se guarda.
+- Si sale de la aplicación con descargas en curso, se le pregunta; se pausan conservando lo bajado y siguen solas la próxima vez que la abra.
+
+En Preferencias, **Descargas**, se eligen cuántas se bajan a la vez (de fábrica, 3; las demás esperan en cola), si al abrir la aplicación siguen las que quedaron a medias y si se abre la ventana «Descargas» cada vez que empieza una. La carpeta donde se guardan está en Preferencias, General.
 
 ## Herramientas
 
@@ -263,6 +277,7 @@ Herramientas, Preferencias (Control+P). Los cambios se aplican al momento en las
   - **Explicaciones**: cada control tiene una explicación, la misma que dice Control+H. El lector de pantalla también puede leerla sola al llegar al control. «Explicaciones: leerlas al llegar a botones y casillas» (activada de fábrica) la lee en botones y casillas sueltas. «Explicaciones: leerlas también en cada fila de las listas de casillas» (desactivada de fábrica) la repite en cada fila de una lista de casillas, como «Buscar el texto en» de la búsqueda. Si la desactiva, al moverse por la lista solo oye cada fila y si está marcada. Control+H sigue diciendo la explicación siempre.
 - **Sonidos**: activar, silenciar, volumen, paquete y una lista con cada evento para activar o desactivar su sonido, con un botón para probarlo.
 - **Listas**: elementos por página, fechas relativas o completas y si la actividad de un perfil sigue con los años anteriores (ver «Perfiles»).
+- **Descargas**: cuántas a la vez, seguir al abrir la aplicación con las que quedaron a medias y abrir la ventana «Descargas» al empezar una.
 - **Notificaciones** (también quién lee los avisos en segundo plano: el lector o una voz SAPI 5 con su voz, velocidad y volumen), **Teclas globales** (ver arriba), **Actions** (vigilancia de ejecuciones: de qué resultados avisar, sonido, voz y notificación de Windows; y hora en los registros), **Git**, **Editor** (confirmar al descartar, firma y si el tabulador escribe tabulaciones), **Red y registro**.
 - **Columnas de las listas**: columnas visibles y su orden en cada lista.
 - **Secciones**: para la ventana principal y para la de un repositorio, qué secciones se ven (casillas) y en qué orden (Subir y Bajar). «Resultados de la búsqueda» y «Resumen» no se pueden ocultar. Si abre una sección oculta desde otro sitio, se dice que está oculta.

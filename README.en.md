@@ -57,7 +57,7 @@ Runs, jobs and steps in lists; a clean log (without color codes or timestamps) w
 
 #### More of GitHub
 
-Releases (create them with automatic notes, upload and download assets), gists, discussions, projects (with “Move to…” instead of dragging), profiles, organizations and teams, SSH and GPG keys (including generating a new SSH key), GitHub status and API rate limit.
+Releases (create them with automatic notes, upload and download assets), a **download manager** (several at a time, they continue even if you close the window, with pause, resume and errors explained), gists, discussions, projects (with “Move to…” instead of dragging), profiles, organizations and teams, SSH and GPG keys (including generating a new SSH key), GitHub status and API rate limit.
 
 #### Local git
 

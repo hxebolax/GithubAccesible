@@ -2,6 +2,17 @@
 
 Each version has its own section, from the newest to the oldest. Within each version, changes are grouped into New, Improvements and Fixes, described from the point of view of the person using the application.
 
+## Version 1.0.13 - 2026-11-24
+
+### New
+
+- **Download manager** (Ctrl+Shift+D, Tools, “Downloads”, or the system tray menu). All downloads (release assets, Actions artifacts and logs, code as zip) belong to the application: they continue even if you close the window that started them, and several can download at the same time while you keep working.
+  - A list with the status, progress, amount downloaded, speed, time left, source, folder and, if it fails, the error explained.
+  - Pause and resume where it left off (Space), retry failed ones, cancel (Delete), open the file (Enter) or its folder (Ctrl+O), remove completed ones, and pause or resume all.
+  - A message and a sound when each one finishes or fails, even with the window closed. The SHA-256 checksum of release assets is checked automatically.
+  - If you exit with downloads in progress, they are paused and continue on their own when you open the application again.
+  - Preferences, Downloads: how many at a time, continue when opening, and open the window when one starts. Plus an optional global hotkey to open it from any program.
+
 ## Version 1.0.12 - 2026-11-24
 
 ### New

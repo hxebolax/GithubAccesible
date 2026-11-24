@@ -288,9 +288,9 @@ class VentanaRelease(VentanaDetalle):
 			return
 		url = self.ctx.api().url_descarga_recurso(self.nombre, recurso["id"])
 		destino = Path(carpeta) / nombre_seguro(recurso.get("name"), "recurso")
-		esperada = sha256_de(recurso)
+		# La suma que publica GitHub la comprueba el gestor al terminar: si no coincide, la descarga sale con error.
 		self.descargar(url, destino, aceptar="application/octet-stream", descripcion=recurso.get("name", ""),
-			al_terminar=(lambda ruta: self.comprobar_suma(ruta, esperada)) if esperada else None)
+			sha256=sha256_de(recurso) or "")
 
 	def comprobar_suma(self, ruta: Path, esperada: str) -> None:
 		"""Compara la descarga con la suma de GitHub (leer 64 caracteres con el lector no es práctico)."""

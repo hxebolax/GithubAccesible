@@ -161,7 +161,7 @@ Sections: Overview (information and a button to read the README with formatting)
 
 In all section lists: Enter opens, Ctrl+N creates, F2 changes or renames, Delete deletes (it always asks first) and F4 changes the filter (for example, open, closed or all issues, by label or assignee). To delete the whole repository, you have to type its name, as on the website.
 
-In the Repository menu, **View owner** (Ctrl+Shift+P) opens the profile of the repository's owner, so you can see their other repositories or follow them. **Download the code as zip** saves the default branch to a zip file, reporting progress every 10 MB. If the repository is a fork, **Open original repository** goes to the project it was copied from, and **Sync with the original** brings what is new in the original into one of your branches, like the “Sync fork” button on the website; in other repositories these two commands appear as unavailable.
+In the Repository menu, **View owner** (Ctrl+Shift+P) opens the profile of the repository's owner, so you can see their other repositories or follow them. **Download the code as zip** saves the default branch to a zip file with the download manager (see “Downloads”). If the repository is a fork, **Open original repository** goes to the project it was copied from, and **Sync with the original** brings what is new in the original into one of your branches, like the “Sync fork” button on the website; in other repositories these two commands appear as unavailable.
 
 In the Code section, “Download repository as ZIP” saves the code of the chosen branch to a zip file without needing git.
 
@@ -230,7 +230,7 @@ What is being watched is remembered when you close the application. In Preferenc
 
 ## Releases, gists, discussions and projects
 
-- **Releases**: create (with automatically generated notes), edit, delete, upload assets and download them with progress. When you download an asset, if GitHub publishes its SHA-256 checksum, the application checks it on its own and tells you whether it is correct; if it does not match, it warns you that the file may be damaged. “Copy SHA-256 checksum” copies it so you can share it.
+- **Releases**: create (with automatically generated notes), edit, delete, upload assets and download them with the download manager (they continue even if you close the window). When you download an asset, if GitHub publishes its SHA-256 checksum, the application checks it on its own and tells you whether it is correct; if it does not match, the download ends with an error because the file is damaged. “Copy SHA-256 checksum” copies it so you can share it.
 - **Gists**: view each file, edit it, add, rename or delete files, comments, history, star and fork.
 - **Discussions**: comments with their replies, mark the answer, vote, close and reopen.
 - **Profiles**: Ctrl+U, “View owner” or “View author” open a person's profile. It has tabs for Overview (details, pinned items and contributions), Repositories, Starred, Activity (what they have done, as in Home: GitHub only provides the events from the last 30 days, so when you reach the end, their earlier contributions keep loading year by year, back to when they joined GitHub, namely commits, opened issues and pull requests, reviews and created repositories; each year uses 1 point of the 5,000 per hour that GitHub allows, and this can be turned off in Preferences, Lists), Followers, Following, Gists and Organizations. The **Read profile README** button (Alt+M) opens, with formatting, the introduction shown on the website. If it is an organization, its own window opens.
@@ -245,6 +245,20 @@ From “Local repositories” or with Ctrl+Shift+G, you open the window for a re
 - **Conflicts**: after a merge or rebase with conflicts, Enter on a file opens **block-by-block** resolution: each block is read out (“Block 2 of 5. Your version… The other version…”) and you choose with a button. In a rebase the sides are reversed, and the application tells you so clearly. Afterwards, you continue or abort the operation.
 
 The Git menu fetches, pulls, pushes and syncs with spoken progress (only at milestones, so as not to overwhelm you) and with Cancel. If the remote is on GitHub, it also opens the repository in the application and creates pull requests.
+
+## Downloads
+
+Everything the application downloads (release assets, Actions artifacts and logs, code as zip) goes to the **download manager**. Downloads belong to the application, not to the window that started them: you can close the release window and keep doing other things while they download, several at a time.
+
+- Open it with **Ctrl+Shift+D** from the main window, a repository window, the git window or any detail window (except the diff viewer, where that key gives the summary), from Tools, “Downloads”, from the system tray icon menu, or with a global hotkey if you set one.
+- The **downloads list** shows, newest first, the name, the status (queued, downloading, paused, completed, error or canceled), the progress, how much has been downloaded and the total, the speed, the time left, where it comes from, the folder and, if it failed, the error explained. Rows update on their own without announcing every change: moving through the list gives you the current progress, and Ctrl+D says it.
+- **Space** (or “Pause” and “Resume”) pauses the selected download, keeping what has been downloaded, and resumes it where it left off. A failed one is retried the same way, also from where it stopped.
+- **Enter** opens the finished file (if it hasn't finished, it pauses or resumes). **Ctrl+O** opens the folder with the selected file.
+- **Delete** cancels a download (it asks first and deletes what was downloaded) or removes a finished one from the list; the downloaded file is never deleted when you remove it from the list. “Remove completed” clears all completed and canceled downloads at once; “Pause all” and “Resume all paused” act on all of them.
+- When each download finishes, a sound plays and you are told, even if the window is closed; if it fails, you are told why. For release assets, if GitHub publishes their SHA-256 checksum, it is checked automatically: if it doesn't match, the download ends with an error and the damaged file is not kept.
+- If you exit the application with downloads in progress, you are asked first; they are paused, keeping what was downloaded, and continue on their own the next time you open it.
+
+In Preferences, **Downloads**, you choose how many download at the same time (3 by default; the rest wait in the queue), whether unfinished downloads continue when the application opens, and whether the “Downloads” window opens every time one starts. The folder where they are saved is in Preferences, General.
 
 ## Tools
 
@@ -263,6 +277,7 @@ Tools, Preferences (Ctrl+P). Changes are applied immediately in the open windows
   - **Help**: every control has a help text, the same one that Ctrl+H reads. The screen reader can also read it automatically when you reach the control. “Help: read it when focus reaches buttons and checkboxes” (on by default) reads it on buttons and standalone checkboxes. “Help: also read it on every row of checkbox lists” (off by default) repeats it on each row of a checkbox list, such as “Search text in” in the search window. If you turn it off, when you move through the list you only hear each row and whether it is checked. Ctrl+H always reads the help.
 - **Sounds**: enable, mute, volume, sound pack and a list of every event to turn its sound on or off, with a button to test it.
 - **Lists**: items per page, relative or full dates, and whether a profile's activity continues with earlier years (see “Profiles”).
+- **Downloads**: how many at a time, continuing unfinished downloads when the application opens, and opening the “Downloads” window when one starts.
 - **Notifications** (including who reads background messages: the screen reader or a SAPI 5 voice with its voice, rate and volume), **Global hotkeys** (see above), **Actions** (watching runs: which results to report, sound, voice and Windows notification; and timestamps in logs), **Git**, **Editor** (confirm before discarding, signature and whether Tab types tab characters), **Network and logging**.
 - **List columns**: visible columns and their order in each list.
 - **Sections**: for the main window and for the repository window, which sections are shown (checkboxes) and in what order (Move up and Move down). “Search results” and “Overview” cannot be hidden. If you open a hidden section from somewhere else, you are told that it is hidden.

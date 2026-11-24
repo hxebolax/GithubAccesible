@@ -285,13 +285,11 @@ def descargar_zip(padre: wx.Window | None, ctx: Any, nombre: str) -> None:
 	if not ruta or not ruta.strip():
 		return
 	destino = Path(ruta.strip())
-	api = ctx.api()
+	from app.ui.descargas import iniciar_descarga
 
-	def trabajo() -> Path:
-		return api.cliente.descargar(api.archivo_zip(nombre), destino)
-
-	en_segundo_plano(padre, ctx, trabajo, inicio=_("Descargando el código de {n}…").format(n=nombre),
-		exito=_("Código descargado en {r}.").format(r=destino), titulo_error=_("No se pudo descargar"))
+	# En el gestor de descargas: sigue aunque se cierre la ventana, con pausa y reanudación.
+	iniciar_descarga(padre, ctx, ctx.api().archivo_zip(nombre), destino, destino.name,
+		origen=_("Código de {n}").format(n=nombre), sobrescribir=True)
 
 
 def dialogo_clonar(padre: wx.Window | None, ctx: Any, url: str = "", nombre: str = "",

@@ -211,7 +211,18 @@ def paginas(paquetes: list[str], voces_sapi: list[str] | None = None) -> tuple[P
 					("abrir_notificaciones", N_("Abrir la sección Notificacione&s:")),
 					("buscar", N_("&Buscar en GitHub:")),
 					("comprobar_notificaciones", N_("Comprobar a&hora si hay notificaciones nuevas:")),
+					("abrir_descargas", N_("Abrir el gestor de &descargas:")),
 				)),
+		)),
+		Pagina(N_("Descargas"), (
+			Opcion("descargas.simultaneas", N_("&Descargas a la vez (1 a 10):"), ENTERO,
+				N_("Cuántas descargas se bajan al mismo tiempo; las demás esperan en cola y empiezan solas al terminar otra.")),
+			Opcion("descargas.reanudar_al_iniciar", N_("Al abrir la aplicación, &seguir con las descargas que quedaron a medias"), BOOL,
+				N_("Si se cierra la aplicación con descargas en curso, se pausan conservando lo bajado. Activado, siguen solas al "
+					"volver a abrirla; desactivado, quedan en pausa en «Descargas».")),
+			Opcion("descargas.abrir_gestor", N_("Abrir la ventana «Descargas» al &empezar una descarga"), BOOL,
+				N_("Desactivado, la descarga empieza en segundo plano y se avisa al terminar; la ventana se abre con "
+					"Control+Mayúsculas+D.")),
 		)),
 		Pagina(N_("Actions"), (
 			Opcion("acciones.intervalo_vigilancia_s", N_("&Intervalo para vigilar ejecuciones (segundos, mínimo 15):"), ENTERO,

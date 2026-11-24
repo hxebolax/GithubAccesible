@@ -2,12 +2,13 @@
 
 Por qué un módulo propio: la misma orden está en la sección Código, en las
 listas de repositorios, en los resultados de búsqueda y en el menú
-Repositorio. Aquí se pide dónde guardarlo, se descarga en segundo plano con
-la cabecera correcta (``zipball`` exige JSON: con «octet-stream» GitHub da
-415) y se va diciendo el progreso SOLO en hitos para no saturar al lector.
+Repositorio. Aquí se pide dónde guardarlo y se pone en el gestor de descargas
+de la aplicación (sigue aunque se cierre la ventana; se pausa y se reanuda en
+«Descargas»). La cabecera la elige ``aceptar_para_descarga``: ``zipball`` exige
+JSON (con «octet-stream» GitHub da 415).
 
-GitHub manda el zip sin tamaño total (se genera al vuelo), así que en vez de
-porcentajes se anuncian los megas cada ``AVISO_CADA_MB``.
+GitHub manda el zip sin tamaño total (se genera al vuelo): el gestor muestra lo
+descargado en vez de un porcentaje.
 """
 
 from __future__ import annotations
@@ -19,13 +20,7 @@ from typing import Any
 
 import wx
 
-from app.services import formato as f
-from app.ui.comunes import mensaje_error, mostrar_error
-
 log = logging.getLogger(__name__)
-
-#: Cada cuántos megas se dice cuánto lleva descargado (si GitHub no da el total).
-AVISO_CADA_MB = 10
 
 
 def _(texto: str) -> str:
@@ -69,39 +64,9 @@ def descargar_codigo(padre: wx.Window | None, ctx: Any, nombre: str, ref: str = 
 	destino = destino or pedir_destino(padre, ctx, nombre, ref)
 	if destino is None:
 		return None
-	from app.core.tareas import HitosProgreso
+	from app.ui.descargas import iniciar_descarga
 
-	api = ctx.api()
-	hitos = HitosProgreso(25)
-	avisado = {"mb": 0}
-	ctx.avisar(_("Descargando el código de {n}…").format(n=nombre))
-
-	def trabajo(tarea: Any) -> Path:
-		return api.c.descargar(api.archivo_zip(nombre, ref), destino,
-			progreso=lambda hecho, total: tarea.progresar(hecho, total),
-			cancelado=lambda: bool(getattr(tarea, "cancelado", False)))
-
-	def al_progresar(progreso: Any) -> None:
-		if progreso.porcentaje is not None:
-			hito = hitos.nuevo_hito(progreso.porcentaje)
-			if hito is not None and hito < 100:
-				ctx.avisar(_("{p} por ciento").format(p=hito), interrumpir=False)
-			return
-		megas = int((progreso.hecho or 0) // (1024 * 1024))
-		if megas >= avisado["mb"] + AVISO_CADA_MB:
-			avisado["mb"] = megas - megas % AVISO_CADA_MB
-			ctx.avisar(_("{t} descargados").format(t=f.tamano(progreso.hecho)), interrumpir=False)
-
-	def terminado(ruta: Path) -> None:
-		ctx.sonar("descargado")
-		ruta = Path(ruta)
-		tamano = f.tamano(ruta.stat().st_size) if ruta.exists() else ""
-		ctx.avisar(_("Código de {n} guardado en {r} ({t}).").format(n=nombre, r=ruta, t=tamano))
-
-	def fallado(error: BaseException) -> None:
-		ctx.sonar("error")
-		ventana = padre if isinstance(padre, wx.Window) and padre else None
-		mostrar_error(ventana, mensaje_error(error), _("No se pudo descargar el código"))
-
-	return ctx.tareas.enviar(trabajo, al_terminar=terminado, al_fallar=fallado, al_progresar=al_progresar,
-		nombre=f"zip:{nombre}", duplicadas="permitir")
+	# En el gestor de descargas: sigue aunque se cierre la ventana, se puede pausar y reanudar.
+	descripcion = _("Código de {n}").format(n=nombre) + (f" ({ref})" if ref else "")
+	return iniciar_descarga(padre, ctx, ctx.api().archivo_zip(nombre, ref), destino, destino.name, origen=descripcion,
+		sobrescribir=True)

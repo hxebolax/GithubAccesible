@@ -373,7 +373,9 @@ def test_clonar_sin_git_ofrece_zip(app_wx, tmp_path, dialogo_modal, monkeypatch)
 	dialogo_modal.responder(lambda d: d.ids_opciones[0], lambda d: (d.campo.SetValue(str(destino)), wx.ID_OK)[1])
 	assert clonar.dialogo_clonar(None, ctx, "", "ana/proyecto") is None
 	assert any("Git for Windows" in t for t in dialogo_modal.mostrados[0].textos)
-	api.cliente.descargar.assert_called_once_with("https://api.github.com/repos/ana/proyecto/zipball", destino)
+	zip_pedido = ctx.descargas.pedidas[-1]
+	assert zip_pedido.url == "https://api.github.com/repos/ana/proyecto/zipball" and zip_pedido.destino == str(destino)
+	assert zip_pedido.sobrescribir, "el destino lo eligió la persona"
 	assert clonar.nombre_repo_de("git@github.com:ana/x.git", "", "github.com") == "ana/x"
 
 

@@ -109,6 +109,24 @@ class Manejador(BaseHTTPRequestHandler):
 				except OSError:
 					return  # el cliente canceló y cerró
 				time.sleep(0.02)
+		elif ruta == "/goteo-rangos.bin":
+			# Lento y con rangos: para pausar a media descarga y reanudar (gestor de descargas).
+			rango = self.headers.get("Range")
+			inicio = int(rango.split("=", 1)[1].split("-", 1)[0]) if rango else 0
+			self.send_response(206 if inicio else 200)
+			self.send_header("Content-Length", str(len(CONTENIDO) - inicio))
+			self.send_header("ETag", ETAG)
+			self.send_header("Accept-Ranges", "bytes")
+			if inicio:
+				self.send_header("Content-Range", f"bytes {inicio}-{len(CONTENIDO) - 1}/{len(CONTENIDO)}")
+			self.end_headers()
+			for posicion in range(inicio, len(CONTENIDO), 8192):
+				try:
+					self.wfile.write(CONTENIDO[posicion:posicion + 8192])
+					self.wfile.flush()
+				except OSError:
+					return
+				time.sleep(0.01)
 		elif ruta == "/cortado.bin":
 			if self.headers.get("Range"):
 				self._con_rangos()

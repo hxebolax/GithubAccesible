@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import hashlib
-from pathlib import Path
 from unittest import mock
 
 import wx
@@ -23,17 +22,14 @@ def test_nombre_del_zip():
 def test_descargar_codigo_usa_la_rama_y_avisa(tmp_path):
 	ctx, api, anuncios = crear_contexto()
 	destino = tmp_path / "p.zip"
-
-	def descargar(url, ruta, **_op):
-		Path(ruta).write_bytes(b"PK")
-		return Path(ruta)
-
 	api.archivo_zip.return_value = "https://api.github.com/repos/ana/p/zipball/dev"
-	api.c.descargar.side_effect = descargar
 	dc.descargar_codigo(None, ctx, "ana/p", "dev", destino=destino)
 	api.archivo_zip.assert_called_once_with("ana/p", "dev")
-	assert destino.read_bytes() == b"PK" and "descargado" in ctx.sonidos.eventos
-	assert any("guardado en" in a for a in anuncios)
+	# Va al gestor de descargas (sigue aunque se cierre la ventana) con la cabecera que exige zipball.
+	pedida = ctx.descargas.pedidas[-1]
+	assert pedida.url.endswith("/zipball/dev") and pedida.destino == str(destino) and pedida.sobrescribir
+	assert pedida.aceptar == "application/vnd.github+json" and "(dev)" in pedida.origen
+	assert any("Puede cerrar esta ventana" in a for a in anuncios)
 
 
 def test_persona_de_cualquier_fila():

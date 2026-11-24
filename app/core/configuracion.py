@@ -144,6 +144,14 @@ VALORES_POR_DEFECTO: dict[str, dict[str, Any]] = {
 		# de años anteriores (GraphQL, 1 punto de 5.000 por hora por cada año). Incidencia #12.
 		"historial_actividad": True,
 	},
+	"descargas": {
+		# Cuántas descargas del gestor se bajan a la vez; el resto espera en cola.
+		"simultaneas": 3,
+		# Al abrir la aplicación, seguir con las descargas que quedaron a medias al cerrarla.
+		"reanudar_al_iniciar": True,
+		# Abrir la ventana «Descargas» cada vez que se empieza una.
+		"abrir_gestor": False,
+	},
 	"notificaciones": {
 		"comprobar": True,
 		"intervalo_s": 60,
@@ -190,6 +198,7 @@ VALORES_POR_DEFECTO: dict[str, dict[str, Any]] = {
 		"abrir_notificaciones": "",
 		"buscar": "",
 		"comprobar_notificaciones": "",
+		"abrir_descargas": "",
 	},
 	"secciones": {
 		# Orden y secciones ocultas de cada ventana (vacío: el de fábrica).
@@ -262,6 +271,7 @@ REGLAS: dict[str, Regla] = {
 	"listas.por_pagina": Regla(minimo=10, maximo=100),
 	"notificaciones.intervalo_s": Regla(minimo=30, maximo=86400),
 	"notificaciones.lectura": Regla(opciones=("lector", "sapi5")),
+	"descargas.simultaneas": Regla(minimo=1, maximo=10),
 	"acciones.avisar_resultados": Regla(opciones=("todas", "fallidas", "correctas")),
 	"notificaciones.sapi_velocidad": Regla(minimo=-10, maximo=10),
 	"notificaciones.sapi_volumen": Regla(minimo=0, maximo=100),

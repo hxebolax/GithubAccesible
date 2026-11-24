@@ -186,6 +186,9 @@ class VentanaRepositorio(wx.Frame):
 		self._elemento(menu_ir, _("Ca&mbiar entre secciones y contenido (F6)"), self.alternar_foco)
 		barra.Append(menu_ir, _("&Ir"))
 		self.SetMenuBar(barra)
+		from app.ui.descargas import instalar_tecla
+
+		instalar_tecla(self, self.ctx)
 		self.reconstruir_menu_acciones()
 		self._habilitar_bifurcacion()
 

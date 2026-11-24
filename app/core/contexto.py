@@ -25,6 +25,7 @@ class Contexto:
 	:param tareas: ``GestorTareas`` (trabajo en segundo plano).
 	:param sonidos: reproductor de sonidos (o ``None``).
 	:param anunciar: función que habla un texto por el lector.
+	:param descargas: ``GestorDescargas`` de la aplicación (las descargas no dependen de ninguna ventana).
 	"""
 
 	config: Any
@@ -35,6 +36,7 @@ class Contexto:
 	anunciar: Callable[..., None] = lambda texto, **_: None
 	ventana_principal: Any = None
 	almacen: Any = None
+	descargas: Any = None
 	extra: dict[str, Any] = field(default_factory=dict)
 
 	def api(self, cuenta: Any = None):

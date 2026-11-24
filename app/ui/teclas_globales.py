@@ -46,6 +46,7 @@ ORDENES: tuple[tuple[str, str], ...] = (
 	("abrir_notificaciones", N_("Abrir la sección Notificaciones")),
 	("buscar", N_("Buscar en GitHub")),
 	("comprobar_notificaciones", N_("Comprobar ahora si hay notificaciones nuevas")),
+	("abrir_descargas", N_("Abrir el gestor de descargas")),
 )
 
 # Identificadores de RegisterHotKey: deben estar entre 0 y 0xBFFF en una aplicación.

@@ -9,6 +9,8 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 from typing import Any
 from unittest import mock
 
@@ -77,6 +79,30 @@ class SonidosGrabados:
 		return self.reproducir(evento, True)
 
 
+class GestorDescargasFalso:
+	"""Gestor de descargas que solo apunta lo pedido (las pruebas no bajan nada)."""
+
+	def __init__(self) -> None:
+		self.pedidas: list = []
+
+	def anadir(self, url, destino, nombre="", **opciones):
+		from app.services import gestor_descargas as gd
+
+		descarga = gd.Descarga(url, str(destino), nombre or Path(destino).name, **opciones)
+		descarga.estado = gd.DESCARGANDO
+		self.pedidas.append(descarga)
+		return descarga
+
+	def suscribir(self, funcion):
+		return lambda: None
+
+	def descargas(self):
+		return list(self.pedidas)
+
+	def hay_activas(self) -> bool:
+		return False
+
+
 def crear_contexto(api: Any | None = None, con_cuenta: bool = True):
 	"""Contexto de prueba. Devuelve ``(contexto, api_simulada, anuncios)``."""
 	from app.core.configuracion import Configuracion
@@ -96,4 +122,5 @@ def crear_contexto(api: Any | None = None, con_cuenta: bool = True):
 		anunciar=lambda texto, **_k: anuncios.append(texto))
 	api_simulada = api if api is not None else mock.MagicMock(name="ApiGitHub")
 	contexto.api = lambda cuenta=None: api_simulada  # type: ignore[method-assign]
+	contexto.descargas = GestorDescargasFalso()
 	return contexto, api_simulada, anuncios

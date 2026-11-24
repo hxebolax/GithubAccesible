@@ -193,6 +193,10 @@ class VentanaDetalle(wx.Frame):
 		for titulo, entradas in menus:
 			barra.Append(self._crear_menu(entradas, en_barra=True), titulo)
 		self.SetMenuBar(barra)
+		# Control+Mayúsculas+D abre «Descargas» también desde aquí (si el menú no usa ya esa tecla).
+		from app.ui.descargas import instalar_tecla
+
+		instalar_tecla(self, self.ctx)
 		return barra
 
 	def _crear_menu(self, entradas: Sequence[Entrada], en_barra: bool = False) -> wx.Menu:
@@ -285,49 +289,22 @@ class VentanaDetalle(wx.Frame):
 			inicio=inicio, sonido=sonido)
 
 	def descargar(self, url: str, destino: Path, aceptar: str | None = None, descripcion: str = "",
-		al_terminar: Callable[[Path], None] | None = None) -> Any:
-		"""Descarga a disco con progreso en la barra de estado y anuncios SOLO en los hitos."""
-		from app.core.tareas import HitosProgreso
+		al_terminar: Callable[[Path], None] | None = None, sha256: str = "") -> Any:
+		"""La pone en el gestor de descargas de la aplicación: sigue aunque se cierre esta ventana.
 
-		cliente = self.ctx.api().c
-		descripcion = descripcion or destino.name
-		hitos = HitosProgreso(25)
-		self.ctx.avisar(_("Descargando {d}…").format(d=descripcion))
-		self.estado(_("Descargando {d}…").format(d=descripcion))
-
-		def trabajo(tarea: Any) -> Path:
-			return cliente.descargar(url, destino, aceptar=aceptar,
-				progreso=lambda hecho, total: tarea.progresar(hecho, total),
-				cancelado=lambda: bool(getattr(tarea, "cancelado", False)))
-
-		def al_progresar(progreso: Any) -> None:
-			porcentaje = progreso.porcentaje
-			if porcentaje is None:
-				self.estado(_("{d}: {t} descargados").format(d=descripcion, t=f.tamano(progreso.hecho)))
-				return
-			self.estado(_("{d}: {p} %").format(d=descripcion, p=porcentaje))
-			hito = hitos.nuevo_hito(porcentaje)
-			if hito is not None and hito < 100:
-				self.ctx.avisar(_("{p} por ciento").format(p=hito), interrumpir=False)
+		El progreso, la pausa y los errores se ven en la ventana «Descargas» (Control+Mayúsculas+D);
+		al terminar suena y se avisa desde el gestor. ``al_terminar`` solo se llama si esta ventana
+		sigue abierta.
+		"""
+		from app.ui.descargas import iniciar_descarga
 
 		def terminado(ruta: Path) -> None:
-			self.ctx.sonar("descargado")
-			texto = _("Descargado {d} en {c}.").format(d=descripcion, c=str(Path(ruta).parent))
-			self.ctx.avisar(texto, interrumpir=False)
-			self.estado(texto)
 			if al_terminar is not None and self.viva():
-				al_terminar(Path(ruta))
+				al_terminar(ruta)
 
-		def fallado(error: BaseException) -> None:
-			self.ctx.sonar("error")
-			self.estado(_("Falló la descarga de {d}.").format(d=descripcion))
-			mostrar_error(self if self.viva() else None, mensaje_error(error), _("No se pudo descargar"))
-
-		tarea = self.ctx.tareas.enviar(trabajo, al_terminar=terminado, al_fallar=fallado, al_progresar=al_progresar,
-			nombre=f"descargar:{destino.name}", duplicadas="permitir")
-		if tarea is not None:
-			self._descargas.append(tarea)
-		return tarea
+		self.estado(_("{d}: en el gestor de descargas (Control+Mayúsculas+D).").format(d=descripcion or destino.name))
+		return iniciar_descarga(self, self.ctx, url, destino, descripcion or destino.name, aceptar=aceptar or "",
+			sha256=sha256, origen=self.GetTitle(), al_terminar=terminado if al_terminar is not None else None)
 
 	# ── Eventos ───────────────────────────────────────────────────────────────
 

@@ -316,13 +316,13 @@ def test_ventana_ejecucion_acciones_y_artefactos(app_wx, marco, dialogo_modal, t
 	ventana.cargar()
 
 	ventana.descargar_artefacto()
-	url, destino = api.c.descargar.call_args.args[:2]
-	assert url.endswith("/artifacts/21/zip") and destino == tmp_path / "informe.zip"
-	assert api.c.descargar.call_args.kwargs["aceptar"] == "application/vnd.github+json"
-	assert "descargado" in ctx.sonidos.eventos
+	# Va al gestor de descargas de la aplicación: sigue aunque se cierre la ventana.
+	artefacto = ctx.descargas.pedidas[-1]
+	assert artefacto.url.endswith("/artifacts/21/zip") and artefacto.destino == str(tmp_path / "informe.zip")
+	assert artefacto.aceptar == "application/vnd.github+json" and artefacto.cuenta and artefacto.origen
 
 	ventana.descargar_registros()
-	assert api.c.descargar.call_args.args[0].endswith("/repos/ana/repo/actions/runs/9/logs")
+	assert ctx.descargas.pedidas[-1].url.endswith("/repos/ana/repo/actions/runs/9/logs")
 
 	ventana.volver_a_ejecutar(solo_fallidos=True)
 	api.volver_a_ejecutar.assert_called_with("ana/repo", 9, True, False)
@@ -483,8 +483,8 @@ def test_release_descargar_subir_renombrar_borrar(app_wx, marco, dialogo_modal, 
 	ventana = VentanaRelease(ctx, marco, "ana/repo", RELEASE)
 
 	ventana.descargar_recurso()
-	assert api.c.descargar.call_args.args[1] == tmp_path / "app.zip"
-	assert api.c.descargar.call_args.kwargs["aceptar"] == "application/octet-stream"
+	recurso = ctx.descargas.pedidas[-1]
+	assert recurso.destino == str(tmp_path / "app.zip") and recurso.aceptar == "application/octet-stream"
 
 	archivos = []
 	for nombre in ("uno.txt", "dos.bin"):

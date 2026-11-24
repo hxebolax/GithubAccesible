@@ -302,6 +302,9 @@ class VentanaGit(wx.Frame):
 		self.menu_acciones = wx.Menu()
 		barra.Append(self.menu_acciones, _("&Acciones"))
 		self.SetMenuBar(barra)
+		from app.ui.descargas import instalar_tecla
+
+		instalar_tecla(self, self.ctx)
 		# Un único manejador para el menú «Acciones», que se rehace al abrirlo.
 		self.Bind(wx.EVT_MENU, self._al_menu_accion)
 		self._habilitar_operacion()

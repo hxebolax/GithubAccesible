@@ -160,6 +160,16 @@ You can change them in Preferences, Global hotkeys.
 - Alt+U: undo. Alt+S: save and mark as resolved.
 - Escape: close (asks first if there are changes).
 
+## Downloads
+
+- Ctrl+Shift+D: open the “Downloads” window (from the main window, a repository window, the git window and the detail windows).
+- Space: pause or resume the selected download.
+- Enter: open the finished file (if it hasn't finished, pause or resume).
+- Delete: cancel the download (deletes what was downloaded) or remove a finished one from the list.
+- Ctrl+O: open the file's folder.
+- Ctrl+D: say the status of the selected download.
+- Escape: close the window (the downloads continue).
+
 ## Text editor
 
 - Ctrl+Enter: send.
