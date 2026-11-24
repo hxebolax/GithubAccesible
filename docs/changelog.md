@@ -2,6 +2,12 @@
 
 Cada versión tiene su apartado, de la más reciente a la más antigua. Dentro de cada versión, los cambios se agrupan en Novedades, Mejoras y Correcciones, contados con palabras de quien usa la aplicación.
 
+## Versión 1.0.12 - 2026-11-24
+
+### Novedades
+
+- **La actividad de un perfil ya no se queda en el último mes.** GitHub solo da los eventos de los últimos 30 días; al llegar al final de la lista, la aplicación sigue cargando, año a año y hasta el alta de la persona en GitHub, sus contribuciones anteriores: commits, issues y pull requests abiertos, revisiones y repositorios creados. Cada año gasta 1 punto de los 5.000 por hora que permite GitHub; se puede desactivar en Preferencias, Listas.
+
 ## Versión 1.0.11 - 2026-11-24
 
 ### Novedades

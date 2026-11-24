@@ -10,10 +10,39 @@
 
 from __future__ import annotations
 
+import logging
+from datetime import UTC, datetime, timedelta
 from typing import Any
 
 from app.services.github.api import _Base
-from app.services.github.cliente import Pagina
+from app.services.github.cliente import Pagina, fecha_iso
+
+log = logging.getLogger(__name__)
+
+#: Consulta de las contribuciones de una persona en un intervalo (como máximo un año, lo impone GitHub).
+#: Medido: cuesta 1 punto de los 5.000 por hora de GraphQL; un año de una cuenta activa (300 commits,
+#: 24 repositorios, pull requests y revisiones) cabe en una sola consulta.
+_CONSULTA_CONTRIBUCIONES = """
+query($login: String!, $desde: DateTime!, $hasta: DateTime!) {
+  rateLimit { cost remaining }
+  user(login: $login) {
+    createdAt
+    contributionsCollection(from: $desde, to: $hasta) {
+      commitContributionsByRepository(maxRepositories: 100) {
+        repository { nameWithOwner }
+        contributions(first: 100) { pageInfo { hasNextPage } nodes { occurredAt commitCount } }
+      }
+      issueContributions(first: 100) { pageInfo { hasNextPage } nodes { occurredAt issue { number title url repository { nameWithOwner } } } }
+      pullRequestContributions(first: 100) { pageInfo { hasNextPage } nodes { occurredAt pullRequest { number title url repository { nameWithOwner } } } }
+      pullRequestReviewContributions(first: 100) { pageInfo { hasNextPage } nodes { occurredAt pullRequest { number title url repository { nameWithOwner } } } }
+      repositoryContributions(first: 100) { pageInfo { hasNextPage } nodes { occurredAt repository { nameWithOwner } } }
+    }
+  }
+}"""
+
+
+def _iso(momento: datetime) -> str:
+	return momento.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def _nodos(datos: Any, *ruta: str) -> list:
@@ -292,6 +321,70 @@ class ApiGraphQL(_Base):
 					"fecha": release.get("publishedAt") or ""} if isinstance(release, dict) else None,
 			}
 		return resultado
+
+	def historial_contribuciones(self, login: str, desde: datetime, hasta: datetime) -> tuple[list[dict], str]:
+		"""Contribuciones de ``login`` en ``[desde, hasta)`` con forma de evento del feed (incidencia #12).
+
+		La API de eventos solo da los últimos 30 días (y 300 eventos como mucho); lo anterior
+		solo está en las contribuciones: commits por día y repositorio, issues y pull requests
+		abiertos, revisiones y repositorios creados. Si GitHub corta alguna lista (más de 100
+		elementos: ``hasNextPage``), el intervalo se parte en dos y se vuelve a pedir: no se pierde nada.
+
+		:return: (eventos, fecha de alta de la persona en GitHub en ISO).
+		"""
+		datos = self.c.graphql(_CONSULTA_CONTRIBUCIONES, {"login": login, "desde": _iso(desde), "hasta": _iso(hasta)})
+		coste = datos.get("rateLimit") or {}
+		log.debug("Contribuciones de %s %s-%s: %s puntos, quedan %s", login, _iso(desde), _iso(hasta),
+			coste.get("cost"), coste.get("remaining"))
+		usuario = datos.get("user") or {}
+		coleccion = usuario.get("contributionsCollection") or {}
+		creado = usuario.get("createdAt") or ""
+		eventos: list[dict] = []
+		cortado = False
+		actor = {"login": login}
+
+		def anadir(tipo: str, momento: str, repo: str, carga: dict) -> None:
+			fecha = fecha_iso(momento)
+			# [desde, hasta): un momento justo en el borde no sale en dos tramos.
+			if fecha is not None and desde <= fecha < hasta:
+				eventos.append({"type": tipo, "actor": actor, "repo": {"name": repo}, "created_at": momento,
+					"payload": carga, "_historial": True})
+
+		for grupo in coleccion.get("commitContributionsByRepository") or []:
+			repo = ((grupo or {}).get("repository") or {}).get("nameWithOwner", "")
+			conexion = (grupo or {}).get("contributions") or {}
+			nodos = conexion.get("nodes") or []
+			cortado |= bool((conexion.get("pageInfo") or {}).get("hasNextPage"))
+			for nodo in nodos:
+				anadir("_CommitContribution", nodo.get("occurredAt", ""), repo, {"size": nodo.get("commitCount") or 1})
+		for clave, tipo, campo, accion in (
+			("issueContributions", "IssuesEvent", "issue", "opened"),
+			("pullRequestContributions", "PullRequestEvent", "pullRequest", "opened"),
+			("pullRequestReviewContributions", "PullRequestReviewEvent", "pullRequest", "created"),
+		):
+			conexion = coleccion.get(clave) or {}
+			nodos = conexion.get("nodes") or []
+			cortado |= bool((conexion.get("pageInfo") or {}).get("hasNextPage"))
+			for nodo in nodos:
+				objeto = (nodo or {}).get(campo) or {}
+				repo = (objeto.get("repository") or {}).get("nameWithOwner", "")
+				clave_carga = "issue" if campo == "issue" else "pull_request"
+				anadir(tipo, nodo.get("occurredAt", ""), repo, {"action": accion, clave_carga: {
+					"number": objeto.get("number"), "title": objeto.get("title") or "", "html_url": objeto.get("url") or ""}})
+		conexion = coleccion.get("repositoryContributions") or {}
+		nodos = conexion.get("nodes") or []
+		cortado |= bool((conexion.get("pageInfo") or {}).get("hasNextPage"))
+		for nodo in nodos:
+			repo = ((nodo or {}).get("repository") or {}).get("nameWithOwner", "")
+			anadir("CreateEvent", nodo.get("occurredAt", ""), repo, {"ref_type": "repository"})
+
+		if cortado and hasta - desde > timedelta(days=2):
+			medio = desde + (hasta - desde) / 2
+			recientes, _creado = self.historial_contribuciones(login, medio, hasta)
+			antiguos, _creado = self.historial_contribuciones(login, desde, medio)
+			return recientes + antiguos, creado
+		eventos.sort(key=lambda e: e["created_at"], reverse=True)
+		return eventos, creado
 
 	def discusion(self, nombre: str, numero: int) -> dict:
 		dueno, repo = nombre.split("/", 1)

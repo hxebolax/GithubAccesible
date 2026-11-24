@@ -140,6 +140,9 @@ VALORES_POR_DEFECTO: dict[str, dict[str, Any]] = {
 		"orden": {},
 		"por_pagina": 50,
 		"fechas_relativas": True,
+		# Actividad de un perfil: tras los 30 días de eventos, seguir con las contribuciones
+		# de años anteriores (GraphQL, 1 punto de 5.000 por hora por cada año). Incidencia #12.
+		"historial_actividad": True,
 	},
 	"notificaciones": {
 		"comprobar": True,

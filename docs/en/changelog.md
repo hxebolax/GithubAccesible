@@ -2,6 +2,12 @@
 
 Each version has its own section, from the newest to the oldest. Within each version, changes are grouped into New, Improvements and Fixes, described from the point of view of the person using the application.
 
+## Version 1.0.12 - 2026-11-24
+
+### New
+
+- **A profile's activity no longer stops at the last month.** GitHub only provides the events from the last 30 days; when you reach the end of the list, the application keeps loading the person's earlier contributions year by year, back to when they joined GitHub: commits, opened issues and pull requests, reviews and created repositories. Each year uses 1 point of the 5,000 per hour that GitHub allows; this can be turned off in Preferences, Lists.
+
 ## Version 1.0.11 - 2026-11-24
 
 ### New

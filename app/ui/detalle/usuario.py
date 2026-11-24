@@ -19,6 +19,7 @@ from __future__ import annotations
 import builtins
 import logging
 import webbrowser
+from datetime import UTC, datetime, timedelta
 from typing import Any
 
 import wx
@@ -121,8 +122,58 @@ def _vista_actividad() -> DefinicionVista:
 	from app.ui.vistas.principales import vista_inicio
 
 	return replace(vista_inicio(), id="perfil_actividad", titulo=_("Actividad"),
-		cargar=lambda api, pagina, panel: api.eventos_de(panel.datos["login"], pagina),
-		texto_vacio=_("No hay actividad pública reciente."))
+		cargar=cargar_actividad, texto_vacio=_("No hay actividad pública reciente."))
+
+
+#: Tramo de historial que se pide cada vez: un año, lo máximo que admite GitHub en una consulta
+#: (1 punto de 5.000 por hora). Si un año muy activo pasa de lo que GitHub da de una vez, la API
+#: lo parte sola en trozos más pequeños.
+TRAMO_HISTORIAL = timedelta(days=365)
+#: Tramos vacíos seguidos que se saltan en una misma carga (para no pedir uno a uno los años sin actividad).
+MAXIMO_TRAMOS_VACIOS = 8
+
+
+def cargar_actividad(api: Any, pagina: int, panel: Any) -> Any:
+	"""Eventos de los últimos 30 días y, después, las contribuciones de antes (incidencia #12).
+
+	Fase 1, los eventos (REST, lo que da GitHub: 30 días, 300 como mucho). Cuando se acaban,
+	si Preferencias lo permite, cada página siguiente es un tramo de contribuciones hacia atrás
+	(GraphQL), empezando donde terminan los eventos y hasta el alta de la persona en GitHub.
+	"""
+	from app.services.github.cliente import ErrorGitHub, Pagina
+
+	datos = panel.datos
+	login = datos["login"]
+	if pagina == 1:
+		datos.pop("_historial", None)
+	historial = datos.get("_historial")
+	if historial is None:
+		resultado = api.eventos_de(login, pagina)
+		if resultado.hay_mas or not panel.ctx.config.obtener("listas.historial_actividad", True):
+			return resultado
+		# Fin de los eventos: el historial empieza donde acaba el evento más antiguo ya mostrado.
+		fechas = [fecha for e in panel.elementos + list(resultado.elementos) if (fecha := f.fecha_iso(e.get("created_at")))]
+		datos["_historial"] = {"hasta": min(fechas) if fechas else datetime.now(UTC), "creado": None}
+		return Pagina(list(resultado.elementos), siguiente="historial")
+	eventos: list = []
+	hay_mas = True
+	for _intento in range(MAXIMO_TRAMOS_VACIOS):
+		hasta = historial["hasta"]
+		desde = hasta - TRAMO_HISTORIAL
+		try:
+			eventos, creado = api.historial_contribuciones(login, desde, hasta)
+		except ErrorGitHub:
+			log.warning("No se pudo leer el historial de contribuciones de %s", login, exc_info=True)
+			hay_mas = False
+			break
+		historial["hasta"] = desde
+		historial["creado"] = historial["creado"] or f.fecha_iso(creado)
+		if historial["creado"] is not None and desde <= historial["creado"]:
+			hay_mas = False
+			break
+		if eventos:
+			break
+	return Pagina(eventos, siguiente="historial" if hay_mas else "")
 
 
 def _vista_personas(seguidores: bool) -> DefinicionVista:

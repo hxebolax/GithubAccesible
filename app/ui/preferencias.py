@@ -164,6 +164,12 @@ def paginas(paquetes: list[str], voces_sapi: list[str] | None = None) -> tuple[P
 				N_("Cuántos elementos se piden cada vez. Al llegar al final de la lista se cargan más.")),
 			Opcion("listas.fechas_relativas", N_("&Fechas relativas («hace 3 días»)"), BOOL,
 				N_("Desactivado muestra la fecha y la hora completas.")),
+			Opcion("listas.historial_actividad", N_("En la actividad de un perfil, seg&uir con los años anteriores"), BOOL,
+				N_("GitHub solo da los eventos de los últimos 30 días. Activado, al llegar al final de la lista se siguen "
+					"cargando las contribuciones de antes (commits, issues y pull requests abiertos, revisiones y repositorios "
+					"creados), año a año, hasta el alta en GitHub. Cada año gasta 1 punto de los 5.000 por hora que da GitHub "
+					"para estas consultas (algo más en años muy activos, que se piden por partes): poco, pero si se recorre "
+					"la historia de muchas personas se nota. Desactivado, solo los 30 días.")),
 		)),
 		Pagina(TITULO_NOTIFICACIONES, (
 			Opcion("notificaciones.comprobar", N_("C&omprobar notificaciones nuevas en segundo plano"), BOOL,

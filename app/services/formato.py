@@ -348,6 +348,13 @@ def describir_evento(evento: dict) -> str:
 		rama = str(carga.get("ref", "")).removeprefix("refs/heads/")
 		return ngettext("{a} envió {n} commit a {r} (rama {b})", "{a} envió {n} commits a {r} (rama {b})", n).format(
 			a=actor, n=n, r=repo, b=rama)
+	if tipo == "_CommitContribution":
+		# Del historial de contribuciones (más de 30 días): commits de un día en un repositorio.
+		n = carga.get("size") or 1
+		return ngettext("{a} hizo {n} commit en {r}", "{a} hizo {n} commits en {r}", n).format(a=actor, n=n, r=repo)
+	if tipo == "PullRequestReviewEvent" and (carga.get("pull_request") or {}).get("number"):
+		objeto = carga["pull_request"]
+		return _("{a} revisó el pull request #{n} en {r}: {t}").format(a=actor, n=objeto["number"], r=repo, t=objeto.get("title", ""))
 	if tipo == "CreateEvent":
 		# ref_type llega de GitHub en inglés: se traduce aquí con artículo, no con _() sobre el dato.
 		tipo_ref = carga.get("ref_type", "")
