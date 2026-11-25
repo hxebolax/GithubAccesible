@@ -52,6 +52,7 @@ def N_(texto: str) -> str:  # noqa: N802
 NOMBRES_IDIOMA = {"es", "en"}
 
 TITULO_SONIDOS = N_("Sonidos")
+TITULO_LISTAS = N_("Listas")
 TITULO_NOTIFICACIONES = N_("Notificaciones")
 TITULO_COLUMNAS = N_("Columnas de las listas")
 TITULO_SECCIONES = N_("Secciones")
@@ -241,7 +242,7 @@ def paginas(paquetes: list[str], voces_sapi: list[str] | None = None) -> tuple[P
 				N_("Carpeta de data/sounds con los sonidos. Los que falten se toman del predeterminado."),
 				opciones=tuple((p, p) for p in paquetes)),
 		)),
-		Pagina(N_("Listas"), (
+		Pagina(TITULO_LISTAS, (
 			Opcion("listas.por_pagina", N_("&Elementos por página al cargar (10 a 100):"), ENTERO,
 				N_("Cuántos elementos se piden cada vez. Al llegar al final de la lista se cargan más.")),
 			Opcion("listas.fechas_relativas", N_("&Fechas relativas («hace 3 días»)"), BOOL,
@@ -252,6 +253,22 @@ def paginas(paquetes: list[str], voces_sapi: list[str] | None = None) -> tuple[P
 					"creados), año a año, hasta el alta en GitHub. Cada año gasta 1 punto de los 5.000 por hora que da GitHub "
 					"para estas consultas (algo más en años muy activos, que se piden por partes): poco, pero si se recorre "
 					"la historia de muchas personas se nota. Desactivado, solo los 30 días.")),
+			Opcion("listas.actualizar_sola", N_("Actuali&zar sola la sección que está a la vista"), BOOL,
+				N_("Cada pocos minutos se vuelve a pedir a GitHub la sección que se ve en la ventana principal, si está "
+					"marcada en la lista de abajo, y la lista se pone al día sin mover el foco. Solo la sección a la vista "
+					"y solo con la ventana a la vista: oculta en la bandeja o minimizada no se pide nada. Cada "
+					"actualización gasta 1 petición de las 5.000 por hora que da GitHub (2 o 3 si se ven columnas con "
+					"datos extra); si nada ha cambiado, GitHub responde «sin cambios» y no la descuenta. Mis issues y "
+					"Mis pull requests usan la búsqueda de GitHub, que permite 30 al minuto. Si ha cargado más páginas "
+					"bajando por la lista, no se actualiza sola para no quitarle lo que lee: pulse F5.")),
+			Opcion("listas.actualizar_cada_min", N_("Cada cuántos &minutos (1 a 240):"), ENTERO,
+				N_("Cada cuánto se pone al día la sección a la vista y cuánto tienen que tener sus datos para "
+					"actualizarla al volver a ella. Con 5 minutos, una sección gasta como mucho 12 peticiones por hora.")),
+			Opcion("listas.actualizar_al_volver", N_("Al &volver a una sección, actualizarla si han pasado esos minutos"), BOOL,
+				N_("Al elegir en la lista de secciones una que se cargó hace más de esos minutos, se pone al día sola. "
+					"Solo las secciones marcadas abajo.")),
+			Opcion("listas.anunciar_nuevos", N_("Decir cuántos elementos &nuevos llegan al actualizarse sola"), BOOL,
+				N_("Suena y dice, por ejemplo, «3 elementos nuevos en Inicio». Desactivado, la lista cambia en silencio.")),
 		)),
 		Pagina(TITULO_NOTIFICACIONES, (
 			Opcion("notificaciones.comprobar", N_("C&omprobar notificaciones nuevas en segundo plano"), BOOL,
@@ -409,6 +426,23 @@ class DialogoPreferenciasGitHub(DialogoPreferencias):
 			self.boton_probar_voz.SetHelpText(_("Dice una frase de ejemplo con la voz, la velocidad y el volumen elegidos, sin guardarlos."))
 			self.boton_probar_voz.Bind(wx.EVT_BUTTON, self._al_probar_voz)
 			panel.GetSizer().Add(self.boton_probar_voz, 0, wx.ALL, 6)
+			panel.Layout()
+		if pagina.titulo == TITULO_LISTAS:
+			sizer = panel.GetSizer()
+			from app.ui.ventana_principal import SECCIONES_SIN_ACTUALIZACION
+
+			self._secciones_auto = [(c, t) for c, t in secciones_de("principal") if c not in SECCIONES_SIN_ACTUALIZACION]
+			sizer.Add(wx.StaticText(panel, label=_("&Secciones que se actualizan solas (marcadas = sí):")), 0, wx.LEFT | wx.TOP, 6)
+			self.lista_actualizar = ListaCasillas(panel, _("Secciones que se actualizan solas"),
+				[t for _c, t in self._secciones_auto], config=self.ctx.config)
+			self.lista_actualizar.SetHelpText(_(
+				"Las secciones de la ventana principal que se ponen al día solas cuando están a la vista, y al volver "
+				"a ellas. Notificaciones no está porque ya se comprueba sola (Preferencias, Notificaciones), ni Búsqueda."))
+			marcadas = set(self.ctx.config.obtener("listas.actualizar_secciones", []) or [])
+			for indice_seccion, (clave_seccion, _titulo) in enumerate(self._secciones_auto):
+				wx.CheckListBox.Check(self.lista_actualizar, indice_seccion, clave_seccion in marcadas)
+			self.lista_actualizar.SetMinSize(self.FromDIP(wx.Size(-1, 160)))
+			sizer.Add(self.lista_actualizar, 1, wx.EXPAND | wx.ALL, 6)
 			panel.Layout()
 		if pagina.titulo == TITULO_TRADUCCION:
 			self.boton_probar_traduccion = wx.Button(panel, label=_("Pro&bar el motor elegido"))
@@ -726,6 +760,10 @@ class DialogoPreferenciasGitHub(DialogoPreferencias):
 		if not super().aplicar():
 			return False
 		cambios: dict[str, Any] = {}
+		if hasattr(self, "lista_actualizar"):
+			elegidas = [c for i, (c, _t) in enumerate(self._secciones_auto) if self.lista_actualizar.IsChecked(i)]
+			if elegidas != list(self.ctx.config.obtener("listas.actualizar_secciones", []) or []):
+				cambios["listas.actualizar_secciones"] = elegidas
 		if hasattr(self, "lista_eventos"):
 			desactivados = [e for i, e in enumerate(self._eventos) if not self.lista_eventos.IsChecked(i)]
 			if desactivados != list(self.ctx.config.obtener("sonidos.desactivados", []) or []):
@@ -744,6 +782,12 @@ class DialogoPreferenciasGitHub(DialogoPreferencias):
 		if hasattr(self, "lista_eventos"):
 			for indice in range(self.lista_eventos.GetCount()):
 				wx.CheckListBox.Check(self.lista_eventos, indice, True)
+		if hasattr(self, "lista_actualizar"):
+			from app.core.configuracion import VALORES_POR_DEFECTO
+
+			de_fabrica = set(VALORES_POR_DEFECTO["listas"]["actualizar_secciones"])
+			for indice, (clave, _t) in enumerate(self._secciones_auto):
+				wx.CheckListBox.Check(self.lista_actualizar, indice, clave in de_fabrica)
 		if self._vistas:
 			self._columnas_elegidas = {}
 			self._mostrar_columnas()

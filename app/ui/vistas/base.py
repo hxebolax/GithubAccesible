@@ -16,6 +16,9 @@ forma idéntica y accesible:
 - Filtro rápido (Ctrl+F), copiar fila (Ctrl+C), copiar enlace (Ctrl+Mayús+C),
   abrir en el navegador (Ctrl+B), detalles (Ctrl+I), actualizar (F5).
 - Columnas visibles y su orden, configurables por vista en Preferencias.
+- Actualización silenciosa (``actualizar_en_silencio``): recarga la primera página sin
+  anunciar nada, sin repintar si no cambió y sin perder el elemento enfocado. La usa la
+  ventana principal para que las secciones se pongan al día solas (incidencia #14).
 """
 
 from __future__ import annotations
@@ -23,6 +26,7 @@ from __future__ import annotations
 import builtins
 import logging
 import re
+import time
 import webbrowser
 from collections.abc import Callable
 from dataclasses import dataclass, field
@@ -205,6 +209,8 @@ class PanelLista(wx.Panel):
 		self.cargado = False
 		self._tarea = None
 		self._version_carga = 0
+		#: Cuándo llegaron los datos por última vez (``time.monotonic``); 0 si nunca.
+		self.ultima_carga = 0.0
 		# (columna, descendente) o None (el orden en que llegan de GitHub). Se recuerda por vista.
 		self.orden: tuple[str, bool] | None = self._orden_guardado()
 
@@ -434,8 +440,12 @@ class PanelLista(wx.Panel):
 
 	# ── Carga ─────────────────────────────────────────────────────────────────
 
-	def cargar(self, reiniciar: bool = True, anunciar: bool = True) -> None:
-		"""Pide los datos en segundo plano. Con ``reiniciar`` empieza por la primera página."""
+	def cargar(self, reiniciar: bool = True, anunciar: bool = True, silenciosa: bool = False) -> None:
+		"""Pide los datos en segundo plano. Con ``reiniciar`` empieza por la primera página.
+
+		:param silenciosa: actualización que no ha pedido la persona: no suena ni avisa si falla,
+			no repinta si nada cambió y conserva el elemento enfocado (ver ``actualizar_en_silencio``).
+		"""
 		if self.cargando and not reiniciar:
 			return
 		if reiniciar:
@@ -467,7 +477,10 @@ class PanelLista(wx.Panel):
 		def al_terminar(resultado):
 			if not self or version != self._version_carga:
 				return  # una recarga posterior ya sustituyó a esta
-			self._recibir(resultado, siguiente, reiniciar, anunciar)
+			if silenciosa:
+				self._recibir_en_silencio(resultado)
+			else:
+				self._recibir(resultado, siguiente, reiniciar, anunciar)
 
 		def al_fallar(error):
 			if not self or version != self._version_carga:
@@ -475,6 +488,10 @@ class PanelLista(wx.Panel):
 			self.cargando = False
 			self._actualizar_estado()
 			mensaje = getattr(error, "mensaje_usuario", None) or str(error)
+			if silenciosa:
+				# Nadie lo ha pedido: no se interrumpe con un error. Se reintentará en la próxima vuelta.
+				log.info("La actualización automática de %s ha fallado: %s", self.definicion.id, mensaje)
+				return
 			self.estado.SetLabel(_("No se pudo cargar: {m}").format(m=mensaje))
 			self.ctx.sonar("error")
 			self.ctx.avisar(_("Error al cargar {t}: {m}").format(t=self.definicion.titulo, m=mensaje))
@@ -498,6 +515,7 @@ class PanelLista(wx.Panel):
 		self.pagina = numero
 		self.cargando = False
 		self.cargado = True
+		self.ultima_carga = time.monotonic()
 		if reiniciar:
 			self.elementos = nuevos
 			self._aplicar_filtro()
@@ -535,6 +553,69 @@ class PanelLista(wx.Panel):
 		else:
 			self.ctx.sonar("pagina")
 			self.ctx.avisar(_("{n} elementos más cargados.").format(n=len(nuevos)), interrumpir=False)
+
+	def identidad(self, elemento: Any) -> Any:
+		"""Lo que identifica a un elemento entre dos cargas (para no perderlo ni contarlo como nuevo)."""
+		if isinstance(elemento, dict):
+			for clave in ("node_id", "id", "full_name", "html_url", "url", "login", "name"):
+				valor = elemento.get(clave)
+				if valor:
+					return clave, valor
+		for atributo in ("id", "ruta", "nombre"):
+			valor = getattr(elemento, atributo, None)
+			if isinstance(valor, (str, int)) and valor:
+				return atributo, valor
+		return tuple(self.fila_de(elemento))
+
+	def actualizar_en_silencio(self) -> bool:
+		"""Vuelve a pedir la primera página sin molestar. Devuelve si se ha pedido.
+
+		No se hace si está cargando, si aún no se cargó nunca (eso lo hace mostrar la sección)
+		o si la persona ya ha ido cargando más páginas: recargar solo la primera le quitaría lo
+		que estaba leyendo. En ese caso, F5.
+		"""
+		if self.cargando or not self.cargado or self.pagina > 1:
+			return False
+		if self.definicion.requiere_sesion and getattr(self.ctx, "cuenta", True) is None:
+			return False
+		self.cargar(reiniciar=True, anunciar=False, silenciosa=True)
+		return True
+
+	def _recibir_en_silencio(self, resultado: Any) -> None:
+		from app.services.github.cliente import Pagina
+
+		if isinstance(resultado, Pagina):
+			nuevos = list(resultado.elementos)
+			self.hay_mas = self.definicion.paginada and resultado.hay_mas
+			if resultado.total is not None:
+				self.total = resultado.total
+		else:
+			nuevos = list(resultado or [])
+			self.hay_mas = False
+		self.pagina = 1
+		self.cargando = False
+		self.ultima_carga = time.monotonic()
+		antes = {self.identidad(e) for e in self.elementos}
+		filas_antes = [self.fila_de(e) for e in self.visibles]
+		enfocado = self.elemento
+		identidad_enfocado = self.identidad(enfocado) if enfocado is not None else None
+		self.elementos = nuevos
+		self._aplicar_filtro()
+		filas = [self.fila_de(e) for e in self.visibles]
+		if filas != filas_antes:
+			self.lista.reemplazar_filas(filas, conservar_foco=True)
+			# Se sigue en el mismo elemento aunque hayan llegado otros encima (Inicio, por ejemplo).
+			if identidad_enfocado is not None:
+				posicion = next((i for i, e in enumerate(self.visibles) if self.identidad(e) == identidad_enfocado), None)
+				if posicion is not None and posicion != self.lista.fila_actual():
+					self.lista.enfocar_fila(posicion, anunciar=False)
+		self._actualizar_estado()
+		self._avisar_cambio()
+		llegados = sum(1 for e in nuevos if self.identidad(e) not in antes)
+		if llegados and antes and self.ctx.config.obtener("listas.anunciar_nuevos", True):
+			self.ctx.sonar("pagina")
+			self.ctx.avisar(ngettext("{n} elemento nuevo en {t}.", "{n} elementos nuevos en {t}.", llegados).format(
+				n=llegados, t=self.definicion.titulo), interrumpir=False)
 
 	def cargar_mas(self) -> None:
 		if self.hay_mas and not self.cargando:

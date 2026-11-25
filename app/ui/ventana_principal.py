@@ -21,6 +21,7 @@ from __future__ import annotations
 import builtins
 import logging
 import os
+import time
 import webbrowser
 from collections.abc import Callable
 from pathlib import Path
@@ -41,6 +42,12 @@ from app.ui.teclas_globales import GestorTeclasGlobales
 from app.ui.vistas.base import PanelLista, atajo_visible
 
 log = logging.getLogger(__name__)
+
+#: Secciones que no se actualizan solas: Notificaciones ya se comprueba en segundo plano y
+#: Búsqueda es lo que la persona ha buscado (y su límite de GitHub es mucho más bajo).
+SECCIONES_SIN_ACTUALIZACION = ("notificaciones", "busqueda")
+#: Cada cuánto se mira si la sección a la vista ya toca actualizarse.
+INTERVALO_REVISAR_LISTAS_MS = 30_000
 
 INTERVALO_BUZON_MS = 700
 TAMANO_MINIMO = (640, 420)
@@ -123,6 +130,13 @@ class VentanaPrincipal(wx.Frame):
 		self.Bind(wx.EVT_TIMER, lambda _e: self.comprobar_vigiladas(), self._temporizador_actions)
 		wx.CallAfter(self.programar_vigilancia)
 		wx.CallAfter(self._actualizar_bandeja)
+
+		# Secciones que se ponen al día solas (incidencia #14). El temporizador solo mira cada
+		# poco si la sección a la vista ya toca: las peticiones las decide «cada cuántos minutos».
+		self._temporizador_listas = wx.Timer(self)
+		self.Bind(wx.EVT_TIMER, lambda _e: self.actualizar_seccion_sola(), self._temporizador_listas)
+		contexto.config.suscribir(self._al_cambiar_config, prefijo="listas.actualizar")
+		wx.CallAfter(self.programar_actualizacion_listas)
 
 		inicial = contexto.config.obtener("general.seccion_inicial", "notificaciones")
 		visibles = dict(self.definiciones)
@@ -329,7 +343,10 @@ class VentanaPrincipal(wx.Frame):
 			self.libro.AddPage(panel, definicion.titulo)
 		self.libro.ChangeSelection(self.libro.FindPage(panel))
 		if clave != "busqueda":
-			panel.cargar_si_hace_falta()
+			if not panel.cargado:
+				panel.cargar_si_hace_falta()
+			elif self._toca_actualizar(clave, panel, al_volver=True):
+				panel.actualizar_en_silencio()
 		if en_secciones:
 			self._mantener_foco_en_secciones()
 		return panel
@@ -727,6 +744,8 @@ class VentanaPrincipal(wx.Frame):
 			wx.CallAfter(self._actualizar_bandeja)
 		elif clave == "acciones.intervalo_vigilancia_s":
 			wx.CallAfter(self.programar_vigilancia)
+		elif clave.startswith("listas.actualizar"):
+			wx.CallAfter(self.programar_actualizacion_listas)
 
 	def _reprogramar_teclas(self) -> None:
 		# Varias claves cambian a la vez al Aplicar: se registra una sola vez, al final.
@@ -833,6 +852,56 @@ class VentanaPrincipal(wx.Frame):
 		from app.services import vigilancia_actions as va
 
 		return any(va.misma(elemento, v) for v in self.vigiladas)
+
+	# ── Secciones que se actualizan solas (incidencia #14) ───────────────────
+
+	def _minutos_actualizacion(self) -> int:
+		return max(1, int(self.ctx.config.obtener("listas.actualizar_cada_min", 5) or 5))
+
+	def _toca_actualizar(self, clave: str, panel: PanelLista, al_volver: bool = False) -> bool:
+		"""Si la sección ``clave`` está entre las elegidas y sus datos ya tienen los minutos configurados."""
+		config = self.ctx.config
+		if not config.obtener("listas.actualizar_al_volver" if al_volver else "listas.actualizar_sola", True):
+			return False
+		if clave in SECCIONES_SIN_ACTUALIZACION or clave not in (config.obtener("listas.actualizar_secciones", []) or []):
+			return False
+		return time.monotonic() - panel.ultima_carga >= self._minutos_actualizacion() * 60
+
+	def _temporizadores(self) -> tuple[wx.Timer, ...]:
+		return (self._temporizador_buzon, self._temporizador_notificaciones, self._temporizador_estado,
+			self._temporizador_actions, self._temporizador_listas)
+
+	def Destroy(self) -> bool:  # noqa: N802 - nombre de wx
+		# Un temporizador que siguiera en marcha tras destruir la ventana avisaría a un objeto que ya
+		# no existe (y Windows acaba la aplicación con «corrupción del montón», 0xc0000374). Al cerrar
+		# se paran en _al_cerrar; aquí también, para quien destruye la ventana sin cerrarla. Y un
+		# CallAfter pendiente no debe volver a arrancar el de las listas mientras se destruye.
+		self._destruyendose = True
+		for temporizador in self._temporizadores():
+			temporizador.Stop()
+		return super().Destroy()
+
+	def programar_actualizacion_listas(self) -> None:
+		if not self or getattr(self, "_destruyendose", False) or self.IsBeingDeleted():
+			return
+		self._temporizador_listas.Stop()
+		if self.ctx.config.obtener("listas.actualizar_sola", True):
+			self._temporizador_listas.Start(INTERVALO_REVISAR_LISTAS_MS)
+
+	def actualizar_seccion_sola(self) -> bool:
+		"""Pone al día la sección a la vista si ya toca. Devuelve si se ha pedido.
+
+		Solo la que se ve y solo con la ventana a la vista: oculta en la bandeja o minimizada no
+		gasta peticiones a GitHub. Lo que no ha cambiado llega como 304 (ETag) y GitHub no lo
+		descuenta del límite; si algo cambió, la lista se rehace sin mover el foco.
+		"""
+		if not self or not self.IsShown() or self.IsIconized():
+			return False
+		clave = self._clave_actual()
+		panel = self.paneles.get(clave)
+		if panel is None or not self._toca_actualizar(clave, panel):
+			return False
+		return panel.actualizar_en_silencio()
 
 	def programar_vigilancia(self) -> None:
 		if not self:
@@ -1139,8 +1208,7 @@ class VentanaPrincipal(wx.Frame):
 			if confirmar(self, texto, _("Salir")) != wx.ID_YES:
 				evento.Veto()
 				return
-		for temporizador in (self._temporizador_buzon, self._temporizador_notificaciones, self._temporizador_estado,
-			self._temporizador_actions):
+		for temporizador in self._temporizadores():
 			temporizador.Stop()
 		self.teclas_globales.quitar()
 		if self.comprobador_actualizaciones is not None:

@@ -44,6 +44,7 @@ Overview and formatted README, code browser, issues, pull requests, discussions,
 - The full conversation in a list (description, comments and events), with the complete text of the focused item.
 - Comment, quote reply, edit, react, close, reopen, labels, assignees, milestones, lock and transfer.
 - **Translator**: read what is written in other languages translated (Ctrl+T in a conversation) and write in yours and send in another, reviewing the translation first. Free Google Translate and other engines, also with your own key (DeepL, Gemini, ChatGPT, Claude...).
+- **Sections that refresh automatically** (Home, Starred, Watched and any you choose), without moving the focus and using as little of the API as possible.
 - **Attach text files** (`.log` files, for example) to issues, pull requests, discussions and comments: collapsed inside the text or uploaded to a secret gist with its link.
 - Pull requests with tabs for conversation, commits, files changed, checks and review threads.
 - **Line-by-line review**: Enter on a diff line comments on it; commented lines are marked and announced; you can approve, request changes, resolve threads and merge (merge, squash or rebase).

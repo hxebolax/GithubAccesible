@@ -2,6 +2,18 @@
 
 Each version has its own section, from the newest to the oldest. Within each version, changes are grouped into New, Improvements and Fixes, described from the point of view of the person using the application.
 
+## Version 1.0.15 - 2026-11-25
+
+### New
+
+- **Sections refresh automatically** (issue #14). Home, Starred repositories and Watched repositories are refreshed every 5 minutes while they are in view, and when you go back to them. The list changes without moving the focus or losing the item you are on, and you are told how many new items have arrived.
+  - Only the section in view and while the window is visible: hidden in the system tray, it uses no requests. If nothing has changed, GitHub does not count it against the limit.
+  - Preferences, Lists: turn it on or off, how many minutes between refreshes, when going back to a section, announcing new items, and a checkbox list with the sections that refresh (My repositories, My issues, Gists… too). The explanation of each option says how much API it uses.
+
+### Fixes
+
+- In English, two options in Preferences, Translation and Translation keys, had the same access key as the OK button.
+
 ## Version 1.0.14 - 2026-11-24
 
 ### New

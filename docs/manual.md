@@ -69,6 +69,15 @@ En la sección Notificaciones, Control+L marca como leída la elegida y Control+
 
 Los avisos que llegan solos (notificaciones nuevas y el final de las ejecuciones de Actions vigiladas) los dice el lector de pantalla, que los corta en cuanto se pulsa una tecla. Si prefiere oírlos enteros mientras escribe, en Preferencias, Notificaciones, «Leer los avisos en segundo plano con», elija «Una voz SAPI 5 propia» y, si quiere, la voz, la velocidad y el volumen; «Probar la voz SAPI 5» le deja oírla antes de aceptar. Esa voz puede sonar a la vez que el lector. Lo que pide con el teclado (columnas, Control+H, Control+Alt+Mayúsculas+N) lo sigue diciendo el lector.
 
+### Secciones que se actualizan solas
+
+**Inicio**, **Repositorios con estrella** y **Repositorios vigilados** se ponen al día solas cada 5 minutos mientras están a la vista, y también al volver a ellas si sus datos tienen más de esos minutos. La lista cambia sin mover el foco: sigue en el mismo elemento aunque lleguen otros encima, y se dice cuántos han llegado («3 elementos nuevos en Inicio»). Si no ha cambiado nada, no se oye nada.
+
+- Solo se actualiza la sección que se ve y solo con la ventana a la vista: oculta en la bandeja o minimizada no se pide nada a GitHub.
+- Si ha cargado más páginas bajando por la lista, no se actualiza sola, para no quitarle lo que está leyendo: pulse F5.
+- **Gasto de la API**: cada actualización es 1 petición de las 5.000 por hora que da GitHub (2 o 3 si se ven columnas con datos extra, como los observadores o la última release). Cuando nada ha cambiado, GitHub contesta «sin cambios» y no la descuenta. Con 5 minutos, una sección gasta como mucho 12 peticiones por hora. Mis issues y Mis pull requests usan la búsqueda de GitHub, que permite 30 al minuto.
+- Todo se elige en Preferencias, **Listas**: si se actualiza sola la sección a la vista, cada cuántos minutos (de 1 a 240), si se actualiza al volver a ella, si se dicen los elementos nuevos y **qué secciones** (una lista de casillas). Notificaciones no está porque ya se comprueba sola (ver arriba), ni Resultados de la búsqueda.
+
 ### La bandeja del sistema
 
 La aplicación puede seguir funcionando con la ventana oculta, con un icono junto al reloj (Windows+B lleva a la bandeja; las flechas, al icono). Archivo, «Ocultar en la bandeja del sistema», la oculta. En Preferencias, General, se elige:
@@ -296,7 +305,7 @@ Herramientas, Preferencias (Control+P). Los cambios se aplican al momento en las
 - **Accesibilidad**: avisos por voz y braille, retardo, lectura por columnas, anuncio de las listas de casillas (estado, si va antes del texto, posición), explicaciones que lee el lector, columnas del visor de diferencias y sus sonidos, y formato HTML.
   - **Explicaciones**: cada control tiene una explicación, la misma que dice Control+H. El lector de pantalla también puede leerla sola al llegar al control. «Explicaciones: leerlas al llegar a botones y casillas» (activada de fábrica) la lee en botones y casillas sueltas. «Explicaciones: leerlas también en cada fila de las listas de casillas» (desactivada de fábrica) la repite en cada fila de una lista de casillas, como «Buscar el texto en» de la búsqueda. Si la desactiva, al moverse por la lista solo oye cada fila y si está marcada. Control+H sigue diciendo la explicación siempre.
 - **Sonidos**: activar, silenciar, volumen, paquete y una lista con cada evento para activar o desactivar su sonido, con un botón para probarlo.
-- **Listas**: elementos por página, fechas relativas o completas y si la actividad de un perfil sigue con los años anteriores (ver «Perfiles»).
+- **Listas**: elementos por página, fechas relativas o completas, si la actividad de un perfil sigue con los años anteriores (ver «Perfiles») y las secciones que se actualizan solas: cada cuántos minutos, al volver a ellas, si se dicen los nuevos y cuáles (ver «Secciones que se actualizan solas»).
 - **Descargas**: cuántas a la vez, seguir al abrir la aplicación con las que quedaron a medias y abrir la ventana «Descargas» al empezar una.
 - **Notificaciones** (también quién lee los avisos en segundo plano: el lector o una voz SAPI 5 con su voz, velocidad y volumen), **Teclas globales** (ver arriba), **Actions** (vigilancia de ejecuciones: de qué resultados avisar, sonido, voz y notificación de Windows; y hora en los registros), **Git**, **Editor** (confirmar al descartar, firma y si el tabulador escribe tabulaciones), **Red y registro**.
 - **Traducción**: motor, idioma al que se traduce lo que lee y de cuál, idioma al que se traduce lo que envía, añadir el original plegado, probar con los motores gratuitos si falla el elegido, y «Probar el motor elegido». **Claves de traducción**: el correo para MyMemory, el servidor de LibreTranslate y las claves y modelos de los motores que las piden (ver «Traductor»).

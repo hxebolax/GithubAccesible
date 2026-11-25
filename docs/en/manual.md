@@ -69,6 +69,15 @@ In the Notifications section, Ctrl+L marks the selected notification as read and
 
 Messages that arrive on their own (new notifications and the end of watched Actions runs) are read by the screen reader, which cuts them off as soon as you press a key. If you prefer to hear them in full while you type, go to Preferences, Notifications, “Read background messages with”, choose “A separate SAPI 5 voice” and, if you like, the voice, rate and volume; “Test the SAPI 5 voice” lets you hear it before you click OK. That voice may speak at the same time as the screen reader. Whatever you ask for with the keyboard (columns, Ctrl+H, Ctrl+Alt+Shift+N) is still read by the screen reader.
 
+### Sections that refresh automatically
+
+**Home**, **Starred repositories** and **Watched repositories** refresh automatically every 5 minutes while they are in view, and also when you go back to them if their data is older than that. The list changes without moving the focus: it stays on the same item even if others arrive above it, and you are told how many have arrived (“3 new items in Home”). If nothing has changed, you hear nothing.
+
+- Only the section in view is refreshed, and only while the window is visible: nothing is requested from GitHub while it is hidden in the system tray or minimized.
+- If you have loaded more pages by moving down the list, it is not refreshed automatically so that you do not lose what you are reading: press F5.
+- **API usage**: each refresh is 1 of the 5,000 requests per hour that GitHub allows (2 or 3 if columns with extra data are shown, such as watchers or the latest release). When nothing has changed, GitHub replies “not modified” and does not count it. With 5 minutes, a section uses at most 12 requests per hour. My issues and My pull requests use GitHub search, which allows 30 per minute.
+- Everything is chosen in Preferences, **Lists**: whether the section in view refreshes automatically, how many minutes between refreshes (1 to 240), whether it refreshes when you go back to it, whether new items are announced, and **which sections** (a checkbox list). Notifications is not included because it is already checked automatically (see above), nor is Search results.
+
 ### The system tray
 
 The application can keep running with its window hidden, with an icon next to the clock (Windows+B takes you to the system tray; the arrow keys, to the icon). File, “Hide to system tray”, hides it. In Preferences, General, you can choose:
@@ -296,7 +305,7 @@ Tools, Preferences (Ctrl+P). Changes are applied immediately in the open windows
 - **Accessibility**: speech and braille messages, delay, column-by-column reading, announcement of checkbox lists (state, whether it comes before the text, position), help that the screen reader reads, diff viewer columns and their sounds, and HTML formatting.
   - **Help**: every control has a help text, the same one that Ctrl+H reads. The screen reader can also read it automatically when you reach the control. “Help: read it when focus reaches buttons and checkboxes” (on by default) reads it on buttons and standalone checkboxes. “Help: also read it on every row of checkbox lists” (off by default) repeats it on each row of a checkbox list, such as “Search text in” in the search window. If you turn it off, when you move through the list you only hear each row and whether it is checked. Ctrl+H always reads the help.
 - **Sounds**: enable, mute, volume, sound pack and a list of every event to turn its sound on or off, with a button to test it.
-- **Lists**: items per page, relative or full dates, and whether a profile's activity continues with earlier years (see “Profiles”).
+- **Lists**: items per page, relative or full dates, whether a profile's activity continues with earlier years (see “Profiles”), and the sections that refresh automatically: how many minutes between refreshes, when going back to them, whether new items are announced, and which ones (see “Sections that refresh automatically”).
 - **Downloads**: how many at a time, continuing unfinished downloads when the application opens, and opening the “Downloads” window when one starts.
 - **Notifications** (including who reads background messages: the screen reader or a SAPI 5 voice with its voice, rate and volume), **Global hotkeys** (see above), **Actions** (watching runs: which results to report, sound, voice and Windows notification; and timestamps in logs), **Git**, **Editor** (confirm before discarding, signature and whether Tab types tab characters), **Network and logging**.
 - **Translation**: engine, the language to translate what you read into and from, the language to translate what you send into, adding the collapsed original, trying the free engines if the chosen one fails, and “Test the chosen engine”. **Translation keys**: the email for MyMemory, the LibreTranslate server, and the keys and models of the engines that need them (see “Translator”).

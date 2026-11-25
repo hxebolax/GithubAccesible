@@ -2,6 +2,18 @@
 
 Cada versión tiene su apartado, de la más reciente a la más antigua. Dentro de cada versión, los cambios se agrupan en Novedades, Mejoras y Correcciones, contados con palabras de quien usa la aplicación.
 
+## Versión 1.0.15 - 2026-11-25
+
+### Novedades
+
+- **Las secciones se actualizan solas** (incidencia #14). Inicio, Repositorios con estrella y Repositorios vigilados se ponen al día cada 5 minutos mientras están a la vista, y al volver a ellas. La lista cambia sin mover el foco ni perder el elemento en el que está, y se dice cuántos elementos nuevos han llegado.
+  - Solo la sección que se ve y con la ventana a la vista: oculta en la bandeja no gasta peticiones. Si nada ha cambiado, GitHub no lo descuenta del límite.
+  - Preferencias, Listas: activarlo o no, cada cuántos minutos, al volver a una sección, decir los nuevos y una lista de casillas con las secciones que se actualizan (también Mis repositorios, Mis issues, Gists…). La explicación de cada opción dice cuánto gasta de la API.
+
+### Correcciones
+
+- En inglés, dos opciones de Preferencias, Translation y Translation keys, tenían la misma letra de acceso que el botón OK.
+
 ## Versión 1.0.14 - 2026-11-24
 
 ### Novedades
