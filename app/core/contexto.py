@@ -90,5 +90,15 @@ class Contexto:
 				return
 		self.avisar(texto, interrumpir=False)
 
+	@property
+	def horas_silencio(self):
+		"""``HorasSilencio`` de la aplicación (incidencia #15): una sola, para que el recuento de lo
+		callado sea el mismo para las notificaciones, las Actions y las descargas."""
+		if "horas_silencio" not in self.extra:
+			from app.services.horas_silencio import HorasSilencio
+
+			self.extra["horas_silencio"] = HorasSilencio(self.config)
+		return self.extra["horas_silencio"]
+
 	def relativas(self) -> bool:
 		return bool(self.config.obtener("listas.fechas_relativas", True))

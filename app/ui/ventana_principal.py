@@ -451,7 +451,12 @@ class VentanaPrincipal(wx.Frame):
 		if not self:
 			return
 		cuenta = self.ctx.cuenta
-		self.SetStatusText(_("Cuenta: {c}").format(c=cuenta.descripcion()) if cuenta else _("Sin sesión iniciada"), 0)
+		estado = _("Cuenta: {c}").format(c=cuenta.descripcion()) if cuenta else _("Sin sesión iniciada")
+		silencio = self.ctx.horas_silencio
+		if silencio.activas():
+			estado = _("{e}. Avisos en silencio hasta las {h}").format(e=estado, h=silencio.hasta())
+		self.SetStatusText(estado, 0)
+		self._revisar_fin_silencio()
 		try:
 			self.SetStatusText(self.ctx.cuentas.cliente().limite.describir(), 1)
 		except Exception:  # noqa: BLE001 - la barra de estado es informativa
@@ -801,7 +806,7 @@ class VentanaPrincipal(wx.Frame):
 				self._primera_comprobacion = False
 				if nuevas:
 					self._avisar_nuevas(nuevas)
-				elif sin_leer:
+				elif sin_leer and not self.ctx.horas_silencio.activas():
 					self.ctx.avisar_en_segundo_plano(_("Tiene {n} notificaciones sin leer.").format(n=sin_leer))
 				return
 			if nuevas:
@@ -956,6 +961,11 @@ class VentanaPrincipal(wx.Frame):
 		if not va.hay_que_avisar(aviso, str(config.obtener("acciones.avisar_resultados", "todas"))):
 			log.info("Ejecución terminada sin aviso por las preferencias: %s", aviso.texto)
 			return
+		from app.services.horas_silencio import OTRO
+
+		if self.ctx.horas_silencio.silenciar(OTRO):
+			log.info("Ejecución terminada durante las horas de silencio: %s", aviso.texto)
+			return
 		if config.obtener("acciones.sonido_al_terminar", True):
 			self.ctx.sonar("accion_exito" if aviso.correcta else "accion_fallo")
 		if config.obtener("acciones.voz_al_terminar", True):
@@ -1036,7 +1046,31 @@ class VentanaPrincipal(wx.Frame):
 		self.restaurar()
 		wx.CallAfter(lambda: self and self.buscar())
 
+	def _revisar_fin_silencio(self) -> None:
+		"""Al terminar las horas de silencio (incidencia #15), dice en un solo aviso lo que se calló.
+
+		Lo llama el temporizador de la barra de estado (cada 20 segundos), que sigue en marcha
+		aunque la ventana esté en la bandeja.
+		"""
+		recuento = self.ctx.horas_silencio.revisar()
+		if recuento is None or not self.ctx.config.obtener("notificaciones.silencio_resumen", True):
+			return
+		partes = [_("Terminan las horas de silencio.")]
+		if recuento.notificaciones:
+			partes.append(ngettext("Mientras tanto llegó {n} notificación nueva.", "Mientras tanto llegaron {n} notificaciones nuevas.",
+				recuento.notificaciones).format(n=recuento.notificaciones))
+		if recuento.otros:
+			partes.append(ngettext("Se calló {n} aviso de Actions o de descargas.", "Se callaron {n} avisos de Actions o de descargas.",
+				recuento.otros).format(n=recuento.otros))
+		if self._sin_leer:
+			partes.append(self.texto_sin_leer())
+		if recuento.notificaciones and self.ctx.config.obtener("notificaciones.sonido", True):
+			self.ctx.sonar("notificacion")
+		self.ctx.avisar_en_segundo_plano(" ".join(partes))
+
 	def _avisar_nuevas(self, nuevas: list) -> None:
+		if self.ctx.horas_silencio.silenciar(cantidad=len(nuevas)):
+			return  # horas de silencio (incidencia #15): se cuentan y se resumen al terminar
 		importante = any(n.get("reason") in ("mention", "team_mention", "review_requested", "assign") for n in nuevas)
 		if self.ctx.config.obtener("notificaciones.sonido", True):
 			self.ctx.sonar("mencion" if importante else "notificacion")

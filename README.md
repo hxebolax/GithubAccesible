@@ -44,6 +44,7 @@ Resumen y README con formato, explorador de código, issues, pull requests, disc
 - Conversación completa en una lista (descripción, comentarios y eventos) con el texto íntegro del elemento enfocado.
 - Comentar, responder citando, editar, reaccionar, cerrar, reabrir, etiquetas, asignados, hitos, bloquear y transferir.
 - **Traductor**: leer traducido lo que se escribe en otros idiomas (Control+T en una conversación) y escribir en el suyo y enviar en otro, revisando la traducción antes. Google Translate gratis y otros motores, también con su propia clave (DeepL, Gemini, ChatGPT, Claude...).
+- **Horas de silencio**: de noche, por ejemplo de 23:00 a 7:00, las notificaciones no suenan ni se dicen, y al terminar se resume lo que llegó.
 - **Secciones que se actualizan solas** (Inicio, Estrellas, Vigilados y las que elija), sin mover el foco y gastando lo mínimo de la API.
 - **Adjuntar archivos de texto** (registros `.log`, por ejemplo) a issues, pull requests, discusiones y comentarios: plegados dentro del texto o subidos a un gist secreto con su enlace.
 - Pull requests con pestañas de conversación, commits, archivos cambiados, checks e hilos de revisión.

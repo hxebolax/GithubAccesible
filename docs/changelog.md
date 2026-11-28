@@ -2,6 +2,14 @@
 
 Cada versión tiene su apartado, de la más reciente a la más antigua. Dentro de cada versión, los cambios se agrupan en Novedades, Mejoras y Correcciones, contados con palabras de quien usa la aplicación.
 
+## Versión 1.0.16 - 2026-11-28
+
+### Novedades
+
+- **Horas de silencio** (incidencia #15). Entre dos horas que elija, por ejemplo de 23:00 a 7:00, las notificaciones nuevas no suenan, no se dicen y no muestran la notificación de Windows, sin tener que desactivarlas a mano cada noche.
+  - Preferencias, Horas de silencio: activarlas, «Desde las» y «Hasta las» con horas y minutos (pueden cruzar la medianoche), silenciar también los avisos de Actions y de las descargas, y decir un resumen al terminar.
+  - Se siguen comprobando: el número de sin leer sigue al día y la barra de estado dice hasta qué hora dura el silencio. Al terminar, un solo aviso dice cuántas notificaciones llegaron, cuántos avisos más se callaron y las que hay sin leer.
+
 ## Versión 1.0.15 - 2026-11-25
 
 ### Novedades

@@ -69,6 +69,14 @@ En la sección Notificaciones, Control+L marca como leída la elegida y Control+
 
 Los avisos que llegan solos (notificaciones nuevas y el final de las ejecuciones de Actions vigiladas) los dice el lector de pantalla, que los corta en cuanto se pulsa una tecla. Si prefiere oírlos enteros mientras escribe, en Preferencias, Notificaciones, «Leer los avisos en segundo plano con», elija «Una voz SAPI 5 propia» y, si quiere, la voz, la velocidad y el volumen; «Probar la voz SAPI 5» le deja oírla antes de aceptar. Esa voz puede sonar a la vez que el lector. Lo que pide con el teclado (columnas, Control+H, Control+Alt+Mayúsculas+N) lo sigue diciendo el lector.
 
+### Horas de silencio
+
+Para que de noche, con el ordenador encendido, no le interrumpan los avisos sin tener que desactivarlos a mano cada vez, en Preferencias, Horas de silencio, marque «Activar las horas de silencio» y escriba «Desde las» y «Hasta las», por ejemplo 23:00 y 7:00. Admite horas y minutos (22:30, 7.15) o solo la hora (23). Si la primera es mayor que la segunda, el silencio cruza la medianoche; a la hora de terminar ya se avisa. Con las dos iguales no se silencia nada.
+
+Durante esas horas las notificaciones nuevas no suenan, no se dicen y no muestran la notificación de Windows. Se siguen comprobando: el número de sin leer de la sección Notificaciones y del icono de la bandeja sigue al día, y la barra de estado dice «Avisos en silencio hasta las 07:00». Con «Silenciar también los avisos de Actions y de las descargas» (activada de fábrica) tampoco se avisa del final de las ejecuciones vigiladas ni de las descargas.
+
+Al terminar, si se calló algo, un solo aviso lo resume: cuántas notificaciones llegaron, cuántos avisos más se callaron y las notificaciones sin leer. Se quita con «Al terminar, decir un resumen de lo silenciado». Lo que pide con el teclado (Control+Alt+Mayúsculas+N, por ejemplo) se dice siempre.
+
 ### Secciones que se actualizan solas
 
 **Inicio**, **Repositorios con estrella** y **Repositorios vigilados** se ponen al día solas cada 5 minutos mientras están a la vista, y también al volver a ellas si sus datos tienen más de esos minutos. La lista cambia sin mover el foco: sigue en el mismo elemento aunque lleguen otros encima, y se dice cuántos han llegado («3 elementos nuevos en Inicio»). Si no ha cambiado nada, no se oye nada.
@@ -307,7 +315,7 @@ Herramientas, Preferencias (Control+P). Los cambios se aplican al momento en las
 - **Sonidos**: activar, silenciar, volumen, paquete y una lista con cada evento para activar o desactivar su sonido, con un botón para probarlo.
 - **Listas**: elementos por página, fechas relativas o completas, si la actividad de un perfil sigue con los años anteriores (ver «Perfiles») y las secciones que se actualizan solas: cada cuántos minutos, al volver a ellas, si se dicen los nuevos y cuáles (ver «Secciones que se actualizan solas»).
 - **Descargas**: cuántas a la vez, seguir al abrir la aplicación con las que quedaron a medias y abrir la ventana «Descargas» al empezar una.
-- **Notificaciones** (también quién lee los avisos en segundo plano: el lector o una voz SAPI 5 con su voz, velocidad y volumen), **Teclas globales** (ver arriba), **Actions** (vigilancia de ejecuciones: de qué resultados avisar, sonido, voz y notificación de Windows; y hora en los registros), **Git**, **Editor** (confirmar al descartar, firma y si el tabulador escribe tabulaciones), **Red y registro**.
+- **Notificaciones** (también quién lee los avisos en segundo plano: el lector o una voz SAPI 5 con su voz, velocidad y volumen), **Horas de silencio** (ver «Horas de silencio»), **Teclas globales** (ver arriba), **Actions** (vigilancia de ejecuciones: de qué resultados avisar, sonido, voz y notificación de Windows; y hora en los registros), **Git**, **Editor** (confirmar al descartar, firma y si el tabulador escribe tabulaciones), **Red y registro**.
 - **Traducción**: motor, idioma al que se traduce lo que lee y de cuál, idioma al que se traduce lo que envía, añadir el original plegado, probar con los motores gratuitos si falla el elegido, y «Probar el motor elegido». **Claves de traducción**: el correo para MyMemory, el servidor de LibreTranslate y las claves y modelos de los motores que las piden (ver «Traductor»).
 - **Columnas de las listas**: columnas visibles y su orden en cada lista.
 - **Secciones**: para la ventana principal y para la de un repositorio, qué secciones se ven (casillas) y en qué orden (Subir y Bajar). «Resultados de la búsqueda» y «Resumen» no se pueden ocultar. Si abre una sección oculta desde otro sitio, se dice que está oculta.

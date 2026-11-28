@@ -69,6 +69,14 @@ In the Notifications section, Ctrl+L marks the selected notification as read and
 
 Messages that arrive on their own (new notifications and the end of watched Actions runs) are read by the screen reader, which cuts them off as soon as you press a key. If you prefer to hear them in full while you type, go to Preferences, Notifications, “Read background messages with”, choose “A separate SAPI 5 voice” and, if you like, the voice, rate and volume; “Test the SAPI 5 voice” lets you hear it before you click OK. That voice may speak at the same time as the screen reader. Whatever you ask for with the keyboard (columns, Ctrl+H, Ctrl+Alt+Shift+N) is still read by the screen reader.
 
+### Quiet hours
+
+So that notices do not disturb you at night while the computer is on, without having to turn them off by hand each time, go to Preferences, Quiet hours, check “Turn on quiet hours” and type “From” and “Until”, for example 23:00 and 7:00. You can type hours and minutes (22:30, 7.15) or just the hour (23). If the first time is later than the second, quiet hours run past midnight; notices are given again from the end time. If both are the same, nothing is silenced.
+
+During those hours, new notifications make no sound, are not spoken and show no Windows notification. They are still checked: the unread count of the Notifications section and of the system tray icon stays up to date, and the status bar says “Notices silenced until 07:00”. With “Also silence Actions and download notices” (on by default), you are not told about the end of watched runs or downloads either.
+
+When they end, if anything was silenced, a single message sums it up: how many notifications arrived, how many other notices were silenced and the unread notifications. You can turn it off with “When they end, read a summary of what was silenced”. Whatever you ask for with the keyboard (Ctrl+Alt+Shift+N, for example) is always read.
+
 ### Sections that refresh automatically
 
 **Home**, **Starred repositories** and **Watched repositories** refresh automatically every 5 minutes while they are in view, and also when you go back to them if their data is older than that. The list changes without moving the focus: it stays on the same item even if others arrive above it, and you are told how many have arrived (“3 new items in Home”). If nothing has changed, you hear nothing.
@@ -307,7 +315,7 @@ Tools, Preferences (Ctrl+P). Changes are applied immediately in the open windows
 - **Sounds**: enable, mute, volume, sound pack and a list of every event to turn its sound on or off, with a button to test it.
 - **Lists**: items per page, relative or full dates, whether a profile's activity continues with earlier years (see “Profiles”), and the sections that refresh automatically: how many minutes between refreshes, when going back to them, whether new items are announced, and which ones (see “Sections that refresh automatically”).
 - **Downloads**: how many at a time, continuing unfinished downloads when the application opens, and opening the “Downloads” window when one starts.
-- **Notifications** (including who reads background messages: the screen reader or a SAPI 5 voice with its voice, rate and volume), **Global hotkeys** (see above), **Actions** (watching runs: which results to report, sound, voice and Windows notification; and timestamps in logs), **Git**, **Editor** (confirm before discarding, signature and whether Tab types tab characters), **Network and logging**.
+- **Notifications** (including who reads background messages: the screen reader or a SAPI 5 voice with its voice, rate and volume), **Quiet hours** (see “Quiet hours”), **Global hotkeys** (see above), **Actions** (watching runs: which results to report, sound, voice and Windows notification; and timestamps in logs), **Git**, **Editor** (confirm before discarding, signature and whether Tab types tab characters), **Network and logging**.
 - **Translation**: engine, the language to translate what you read into and from, the language to translate what you send into, adding the collapsed original, trying the free engines if the chosen one fails, and “Test the chosen engine”. **Translation keys**: the email for MyMemory, the LibreTranslate server, and the keys and models of the engines that need them (see “Translator”).
 - **List columns**: visible columns and their order in each list.
 - **Sections**: for the main window and for the repository window, which sections are shown (checkboxes) and in what order (Move up and Move down). “Search results” and “Overview” cannot be hidden. If you open a hidden section from somewhere else, you are told that it is hidden.

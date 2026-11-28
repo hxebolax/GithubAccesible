@@ -38,6 +38,7 @@ import copy
 import json
 import logging
 import os
+import re
 import shutil
 import sys
 import threading
@@ -195,6 +196,15 @@ VALORES_POR_DEFECTO: dict[str, dict[str, Any]] = {
 		"sapi_voz": "",
 		"sapi_velocidad": 0,
 		"sapi_volumen": 100,
+		# Horas de silencio (incidencia #15): entre «desde» y «hasta» (HH:MM, puede cruzar la
+		# medianoche) los avisos en segundo plano no suenan, no se dicen ni muestran la
+		# notificación de Windows. Se siguen comprobando y al terminar se resume lo callado.
+		"silencio_activado": False,
+		"silencio_desde": "23:00",
+		"silencio_hasta": "07:00",
+		# Callar también los avisos de las ejecuciones de Actions vigiladas y de las descargas.
+		"silencio_actions": True,
+		"silencio_resumen": True,
 	},
 	"git": {
 		"ruta": "",
@@ -278,13 +288,20 @@ class Regla:
 	:param maximo: valor máximo (números).
 	:param opciones: valores admitidos (listas cerradas: tema, idioma...).
 	:param longitud_maxima: longitud máxima (textos).
+	:param patron: expresión regular que tiene que cumplir el texto entero.
+	:param mensaje: explicación (``N_``) que se da si no la cumple, en lugar de la genérica.
 	"""
 
 	minimo: float | None = None
 	maximo: float | None = None
 	opciones: tuple[Any, ...] | None = None
 	longitud_maxima: int | None = None
+	patron: str | None = None
+	mensaje: str = ""
 
+
+#: Hora del día como se escribe en Preferencias: «23:30», «7:05», «7.05», «7h30», «7h» o «7».
+PATRON_HORA = r"\s*([01]?\d|2[0-3])\s*(?:[:.,hH]\s*([0-5]\d)?)?\s*"
 
 # Reglas por clave «seccion.clave». Las claves sin regla solo comprueban el tipo.
 REGLAS: dict[str, Regla] = {
@@ -300,6 +317,8 @@ REGLAS: dict[str, Regla] = {
 	"listas.por_pagina": Regla(minimo=10, maximo=100),
 	"notificaciones.intervalo_s": Regla(minimo=30, maximo=86400),
 	"notificaciones.lectura": Regla(opciones=("lector", "sapi5")),
+	"notificaciones.silencio_desde": Regla(patron=PATRON_HORA, mensaje=N_("Escriba una hora entre 0:00 y 23:59, por ejemplo 23:30 o 7:00.")),
+	"notificaciones.silencio_hasta": Regla(patron=PATRON_HORA, mensaje=N_("Escriba una hora entre 0:00 y 23:59, por ejemplo 23:30 o 7:00.")),
 	"descargas.simultaneas": Regla(minimo=1, maximo=10),
 	"listas.actualizar_cada_min": Regla(minimo=1, maximo=240),
 	"traduccion.motor": Regla(opciones=("google", "mymemory", "libretranslate", "google_cloud", "microsoft", "deepl", "gemini", "openai", "deepseek", "claude")),
@@ -458,6 +477,8 @@ def validar_valor(clave: str, valor: Any, reglas: dict[str, Regla] | None = None
 			raise ErrorValidacion(_("«{clave}» debe ser como máximo {maximo}.").format(clave=clave, maximo=regla.maximo))
 	if isinstance(valor, str) and regla.longitud_maxima is not None and len(valor) > regla.longitud_maxima:
 		raise ErrorValidacion(_("«{clave}» admite como máximo {n} caracteres.").format(clave=clave, n=regla.longitud_maxima))
+	if isinstance(valor, str) and regla.patron is not None and re.fullmatch(regla.patron, valor) is None:
+		raise ErrorValidacion(_(regla.mensaje) if regla.mensaje else _("«{clave}» no tiene un formato válido.").format(clave=clave))
 
 
 def _reemplazar(origen: Path, destino: Path, intentos: int = 5) -> None:

@@ -54,6 +54,7 @@ NOMBRES_IDIOMA = {"es", "en"}
 TITULO_SONIDOS = N_("Sonidos")
 TITULO_LISTAS = N_("Listas")
 TITULO_NOTIFICACIONES = N_("Notificaciones")
+TITULO_HORAS_SILENCIO = N_("Horas de silencio")
 TITULO_COLUMNAS = N_("Columnas de las listas")
 TITULO_SECCIONES = N_("Secciones")
 TITULO_TRADUCCION = N_("Traducción")
@@ -296,6 +297,24 @@ def paginas(paquetes: list[str], voces_sapi: list[str] | None = None) -> tuple[P
 				N_("0 es la velocidad normal; los negativos, más despacio, y los positivos, más deprisa.")),
 			Opcion("notificaciones.sapi_volumen", N_("Vol&umen de la voz SAPI 5 (0 a 100):"), ENTERO,
 				N_("Volumen de la voz SAPI 5, independiente del lector de pantalla.")),
+		)),
+		Pagina(TITULO_HORAS_SILENCIO, (
+			Opcion("notificaciones.silencio_activado", N_("Activar las horas de &silencio"), BOOL,
+				N_("Entre las dos horas de abajo, las notificaciones nuevas no suenan, no se dicen y no muestran la "
+					"notificación de Windows. Útil de noche con el ordenador encendido. Se siguen comprobando: el número "
+					"de sin leer de la sección Notificaciones y del icono de la bandeja sigue al día.")),
+			Opcion("notificaciones.silencio_desde", N_("&Desde las (HH:MM):"), TEXTO,
+				N_("Hora en que empieza el silencio, de 0:00 a 23:59; por ejemplo 23:00 o 22:30. También vale escribir "
+					"solo la hora, como 23. Si es mayor que la de terminar, el silencio cruza la medianoche.")),
+			Opcion("notificaciones.silencio_hasta", N_("&Hasta las (HH:MM):"), TEXTO,
+				N_("Hora en que termina el silencio (a esa hora ya se avisa); por ejemplo 7:00 o 8:30. Si es la misma "
+					"que la de empezar, no se silencia nada.")),
+			Opcion("notificaciones.silencio_actions", N_("Silenciar también los avisos de Actions y de las d&escargas"), BOOL,
+				N_("Durante las horas de silencio tampoco suena ni se dice el final de las ejecuciones de Actions "
+					"vigiladas ni el de las descargas.")),
+			Opcion("notificaciones.silencio_resumen", N_("Al terminar, decir un resu&men de lo silenciado"), BOOL,
+				N_("Cuando terminan las horas de silencio, dice cuántas notificaciones llegaron y cuántos avisos se "
+					"callaron, y las notificaciones sin leer. Si no se calló nada, no dice nada.")),
 		)),
 		Pagina(N_("Teclas globales"), (
 			Opcion("teclas_globales.activadas", N_("Acti&var las teclas globales"), BOOL,

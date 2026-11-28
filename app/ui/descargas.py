@@ -98,6 +98,8 @@ def instalar_avisos(ctx: Any) -> None:
 			return
 
 		def avisar() -> None:
+			if ctx.horas_silencio.silenciar("otro"):
+				return  # horas de silencio (incidencia #15): se resume al terminar
 			if descarga.estado == gd.COMPLETADA:
 				ctx.sonar("descargado")
 				texto = _("Descarga completada: {n}.").format(n=descarga.nombre)

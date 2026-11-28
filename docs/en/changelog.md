@@ -2,6 +2,14 @@
 
 Each version has its own section, from the newest to the oldest. Within each version, changes are grouped into New, Improvements and Fixes, described from the point of view of the person using the application.
 
+## Version 1.0.16 - 2026-11-28
+
+### New
+
+- **Quiet hours** (issue #15). Between two times of your choice, for example from 23:00 to 7:00, new notifications make no sound, are not spoken and show no Windows notification, without having to turn them off by hand every night.
+  - Preferences, Quiet hours: turn them on, “From” and “Until” in hours and minutes (they can run past midnight), also silence Actions and download notices, and read a summary when they end.
+  - Notifications are still checked: the unread count stays up to date and the status bar says until what time quiet hours last. When they end, a single message says how many notifications arrived, how many other notices were silenced and how many are unread.
+
 ## Version 1.0.15 - 2026-11-25
 
 ### New
